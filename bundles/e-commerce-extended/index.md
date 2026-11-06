@@ -1,5 +1,5 @@
 ---
-title: "E-Commerce by Context"
+title: "E-Commerce Extended"
 description: |
   The whole e-commerce business in one model, split into four contexts (Marketing, Sales,
   Product, Finance) that share their core Data Marts. An online retail business modeled end to end — from the traffic that arrives on the
@@ -71,7 +71,7 @@ timestamp: 2026-10-20T20:04:21Z
 
 # Explore this model
 
-**[▶ Explore on canvas](https://model.owox.com/?okf=https://raw.githubusercontent.com/ikrasovytskyi/owox-model-canvas/main/bundles/e-commerce-contexts/index.md)**
+**[▶ Explore on canvas](https://model.owox.com/?okf=https://raw.githubusercontent.com/ikrasovytskyi/owox-model-canvas/main/bundles/e-commerce-extended/index.md)**
 
 One click opens this model in a free OWOX canvas you can poke around in — no account needed.
 
@@ -90,4 +90,4 @@ The business runs on four contexts. Each one answers to its own leader, and they
 
 ## Model preview
 
-![E-Commerce by Context model diagram](../res/screens/e-commerce-contexts.svg)
+![E-Commerce Extended model diagram](../res/screens/e-commerce-extended.svg)
