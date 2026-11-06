@@ -27,14 +27,14 @@ sources:
 | `id` | STRING | ID | PK. Stripe object id, unique across the account. |
 | `account_id` | STRING | Account ID | Your Stripe account id (acct_…) as entered in the connector; lets several Stripe accounts share one table. |
 | `livemode` | BOOLEAN | Livemode | true for live-mode objects, false for test mode. |
-| `created` | TIMESTAMP | Created | When Stripe created the object (UTC). The field the daily window filters on. |
+| `created` | INTEGER | Created | When Stripe created the object, as Unix time in seconds (UTC); TIMESTAMP_SECONDS(created) in SQL. The field the daily window filters on. |
 | `amount` | INTEGER | Amount | Amount sent to the bank in the smallest currency unit (cents for USD). |
 | `currency` | STRING | Currency | Three-letter ISO currency code, lowercase. |
 | `status` | STRING | Status | paid, pending, in_transit, canceled or failed. |
 | `type` | STRING | Type | bank_account or card. |
 | `method` | STRING | Method | standard or instant. |
 | `automatic` | BOOLEAN | Automatic | true for payouts Stripe created on the payout schedule, false for manual ones. |
-| `arrival_date` | TIMESTAMP | Arrival Date | Date the funds are expected in (or arrived at) the bank. The cash date. |
+| `arrival_date` | INTEGER | Arrival Date | Date the funds are expected in (or arrived at) the bank. The cash date, as Unix time in seconds (UTC); use TIMESTAMP_SECONDS() in SQL. |
 | `balance_transaction` | STRING | Balance Transaction | FK to [Balance transactions](./balance-transactions.md). Balance transaction id (txn_) of the payout itself (type payout). Join to balance_transactions. |
 | `destination` | STRING | Destination | Bank account (ba_) or card (card_) the payout went to. |
 | `failure_code` | STRING | Failure Code | Why a payout failed (account_closed, no_account, …). |

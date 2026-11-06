@@ -27,7 +27,7 @@ sources:
 | `id` | STRING | ID | PK. Stripe object id, unique across the account. |
 | `account_id` | STRING | Account ID | Your Stripe account id (acct_…) as entered in the connector; lets several Stripe accounts share one table. |
 | `livemode` | BOOLEAN | Livemode | true for live-mode objects, false for test mode. |
-| `created` | TIMESTAMP | Created | When Stripe created the object (UTC). The field the daily window filters on. |
+| `created` | INTEGER | Created | When Stripe created the object, as Unix time in seconds (UTC); TIMESTAMP_SECONDS(created) in SQL. The field the daily window filters on. |
 | `customer` | STRING | Customer | FK to [Customers](./customers.md). Customer id (cus_). Join to customers. |
 | `subscription` | STRING | Subscription | FK to [Subscriptions](./subscriptions.md). Subscription id (sub_) when the invoice bills a subscription. Join to subscriptions. |
 | `status` | STRING | Status | draft, open, paid, uncollectible or void. |
@@ -35,12 +35,12 @@ sources:
 | `billing_reason` | STRING | Billing Reason | subscription_create, subscription_cycle, subscription_update, manual, upcoming, … |
 | `collection_method` | STRING | Collection Method | charge_automatically or send_invoice. |
 | `currency` | STRING | Currency | Three-letter ISO currency code, lowercase. |
-| `period_start` | TIMESTAMP | Period Start | Start of the usage period the invoice covers. |
-| `period_end` | TIMESTAMP | Period End | End of the usage period. |
-| `due_date` | TIMESTAMP | Due Date | When payment is due (send_invoice collection). |
-| `paid_at` | TIMESTAMP | Paid At | When the invoice was paid. |
-| `finalized_at` | TIMESTAMP | Finalized At | When the invoice was finalized. |
-| `voided_at` | TIMESTAMP | Voided At | When the invoice was voided. |
+| `period_start` | INTEGER | Period Start | Start of the usage period the invoice covers, as Unix time in seconds (UTC); use TIMESTAMP_SECONDS() in SQL. |
+| `period_end` | INTEGER | Period End | End of the usage period, as Unix time in seconds (UTC); use TIMESTAMP_SECONDS() in SQL. |
+| `due_date` | INTEGER | Due Date | When payment is due (send_invoice collection), as Unix time in seconds (UTC); use TIMESTAMP_SECONDS() in SQL. |
+| `paid_at` | INTEGER | Paid At | When the invoice was paid, as Unix time in seconds (UTC); use TIMESTAMP_SECONDS() in SQL. |
+| `finalized_at` | INTEGER | Finalized At | When the invoice was finalized, as Unix time in seconds (UTC); use TIMESTAMP_SECONDS() in SQL. |
+| `voided_at` | INTEGER | Voided At | When the invoice was voided, as Unix time in seconds (UTC); use TIMESTAMP_SECONDS() in SQL. |
 | `amount_due` | INTEGER | Amount Due | Amount still to collect when finalized in the smallest currency unit (cents for USD). |
 | `amount_paid` | INTEGER | Amount Paid | Amount paid in the smallest currency unit (cents for USD). |
 | `amount_remaining` | INTEGER | Amount Remaining | Amount outstanding in the smallest currency unit (cents for USD). |

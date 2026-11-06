@@ -27,7 +27,7 @@ sources:
 | `id` | STRING | ID | PK. Stripe object id, unique across the account. |
 | `account_id` | STRING | Account ID | Your Stripe account id (acct_…) as entered in the connector; lets several Stripe accounts share one table. |
 | `livemode` | BOOLEAN | Livemode | true for live-mode objects, false for test mode. |
-| `created` | TIMESTAMP | Created | When Stripe created the object (UTC). The field the daily window filters on. |
+| `created` | INTEGER | Created | When Stripe created the object, as Unix time in seconds (UTC); TIMESTAMP_SECONDS(created) in SQL. The field the daily window filters on. |
 | `amount` | INTEGER | Amount | Disputed amount in the smallest currency unit (cents for USD). |
 | `currency` | STRING | Currency | Three-letter ISO currency code, lowercase. |
 | `charge` | STRING | Charge | FK to [Charges](./charges.md). Charge id (ch_) disputed. Join to charges. |
@@ -35,7 +35,7 @@ sources:
 | `reason` | STRING | Reason | fraudulent, product_not_received, duplicate, subscription_canceled, credit_not_processed, general, … |
 | `status` | STRING | Status | warning_needs_response, warning_under_review, warning_closed, needs_response, under_review, won or lost. |
 | `is_charge_refundable` | BOOLEAN | Is Charge Refundable | Whether the charge can still be refunded instead of fought. |
-| `evidence_due_by` | TIMESTAMP | Evidence Due By | Deadline to submit evidence. |
+| `evidence_due_by` | INTEGER | Evidence Due By | Deadline to submit evidence, as Unix time in seconds (UTC); use TIMESTAMP_SECONDS() in SQL. |
 | `evidence_has_evidence` | BOOLEAN | Evidence Has Evidence | Whether evidence has been submitted. |
 | `balance_transactions` | JSON | Balance Transactions | JSON list of the balance transactions (debit and, if won, credit) tied to the dispute. |
 

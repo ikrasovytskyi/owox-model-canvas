@@ -31,8 +31,8 @@ sources:
 | `currency` | STRING | Currency | Three-letter ISO currency code, lowercase. |
 | `description` | STRING | Description | Line description as printed. |
 | `quantity` | INTEGER | Quantity | Units billed. |
-| `period_start` | TIMESTAMP | Period Start | Start of the period this line covers. |
-| `period_end` | TIMESTAMP | Period End | End of the period. |
+| `period_start` | INTEGER | Period Start | Start of the period this line covers, as Unix time in seconds (UTC); use TIMESTAMP_SECONDS() in SQL. |
+| `period_end` | INTEGER | Period End | End of the period, as Unix time in seconds (UTC); use TIMESTAMP_SECONDS() in SQL. |
 | `price_id` | STRING | Price ID | FK to [Prices](./prices.md). Price id (price_). Join to prices. |
 | `product_id` | STRING | Product ID | FK to [Products](./products.md). Product id (prod_). Join to products. |
 | `unit_amount` | INTEGER | Unit Amount | Unit price in the smallest currency unit (cents for USD). |

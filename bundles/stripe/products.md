@@ -26,7 +26,7 @@ sources:
 | `id` | STRING | ID | PK. Stripe object id, unique across the account. |
 | `account_id` | STRING | Account ID | Your Stripe account id (acct_…) as entered in the connector; lets several Stripe accounts share one table. |
 | `livemode` | BOOLEAN | Livemode | true for live-mode objects, false for test mode. |
-| `created` | TIMESTAMP | Created | When Stripe created the object (UTC). The field the daily window filters on. |
+| `created` | INTEGER | Created | When Stripe created the object, as Unix time in seconds (UTC); TIMESTAMP_SECONDS(created) in SQL. The field the daily window filters on. |
 | `name` | STRING | Name | Product name. |
 | `active` | BOOLEAN | Active | Whether the product can be sold. |
 | `description` | STRING | Description | Product description. |
@@ -34,7 +34,7 @@ sources:
 | `default_price` | STRING | Default Price | Default price id (price_). |
 | `unit_label` | STRING | Unit Label | Label for units (seat, GB) shown on invoices. |
 | `statement_descriptor` | STRING | Statement Descriptor | Statement descriptor override. |
-| `updated` | TIMESTAMP | Updated | Last update time. |
+| `updated` | INTEGER | Updated | Last update time, as Unix time in seconds (UTC); use TIMESTAMP_SECONDS() in SQL. |
 | `metadata` | JSON | Metadata | Metadata object as a JSON string. |
 
 # Example Questions

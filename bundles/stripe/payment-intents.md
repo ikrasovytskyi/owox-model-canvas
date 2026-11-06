@@ -27,7 +27,7 @@ sources:
 | `id` | STRING | ID | PK. Stripe object id, unique across the account. |
 | `account_id` | STRING | Account ID | Your Stripe account id (acct_…) as entered in the connector; lets several Stripe accounts share one table. |
 | `livemode` | BOOLEAN | Livemode | true for live-mode objects, false for test mode. |
-| `created` | TIMESTAMP | Created | When Stripe created the object (UTC). The field the daily window filters on. |
+| `created` | INTEGER | Created | When Stripe created the object, as Unix time in seconds (UTC); TIMESTAMP_SECONDS(created) in SQL. The field the daily window filters on. |
 | `amount` | INTEGER | Amount | Amount intended in the smallest currency unit (cents for USD). |
 | `amount_received` | INTEGER | Amount Received | Amount received so far in the smallest currency unit (cents for USD). |
 | `amount_capturable` | INTEGER | Amount Capturable | Amount authorized but not yet captured in the smallest currency unit (cents for USD). |
@@ -39,7 +39,7 @@ sources:
 | `payment_method` | STRING | Payment Method | Payment method id (pm_). |
 | `payment_method_types` | JSON | Payment Method Types | JSON list of payment method types offered. |
 | `capture_method` | STRING | Capture Method | automatic, automatic_async or manual. |
-| `canceled_at` | TIMESTAMP | Canceled At | When the intent was canceled. |
+| `canceled_at` | INTEGER | Canceled At | When the intent was canceled, as Unix time in seconds (UTC); use TIMESTAMP_SECONDS() in SQL. |
 | `cancellation_reason` | STRING | Cancellation Reason | duplicate, fraudulent, requested_by_customer, abandoned, failed_invoice, automatic, … |
 | `last_error_code` | STRING | Last Error Code | Code of the last payment error. |
 | `last_error_decline_code` | STRING | Last Error Decline Code | Card network decline code of the last error. |
