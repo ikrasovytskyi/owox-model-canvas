@@ -38,3 +38,13 @@ describe("detachFromOwox", () => {
     expect(g.nodes[0].owoxId).toBe("owox_a");
   });
 });
+
+describe("detachFromOwox description", () => {
+  it("keeps the relationship description", () => {
+    const withDesc = { ...g, edges: [{ ...g.edges[0], description: "meaning" }] };
+    expect(detachFromOwox(withDesc).edges[0].description).toBe("meaning");
+  });
+  it("keeps the model description", () => {
+    expect(detachFromOwox({ ...g, description: "Retail model" }).description).toBe("Retail model");
+  });
+});

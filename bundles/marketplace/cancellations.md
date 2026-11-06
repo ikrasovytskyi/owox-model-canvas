@@ -1,0 +1,54 @@
+---
+title: "Cancellations"
+description: |
+  One row for every [order](./orders.md) that was cancelled — and only those. Each row records who pulled
+  the plug (buyer, seller or platform), at which stage (pre-payment, pre-fulfilment or
+  in-transit), the stated reason, and how much was refunded. Because refund magnitude scales
+  with stage — near zero pre-payment, close to full once fulfilment is underway — this is
+  where an ops or trust-and-safety lead finds the fixable concentration of fill-rate failures.
+tags: ["owox"]
+type: "OWOX Data Mart"
+timestamp: 2026-10-20T11:45:13.000Z
+---
+
+# Schema
+
+| Column | Type | Alias | Description |
+|--------|------|-------|-------------|
+| `cancellation_id` | STRING | Cancellation ID | PK. Unique cancellation identifier. |
+| `order_id` | STRING | Order ID | Order that was cancelled. FK to [Orders](./orders.md) |
+| `cancelled_at` | TIMESTAMP | Cancelled At | When the cancellation happened. |
+| `cancelled_by` | STRING | Cancelled By | Who cancelled: buyer, seller or platform. |
+| `stage` | STRING | Stage | Order stage at cancellation: pre-payment, pre-fulfilment or in-transit. |
+| `reason` | STRING | Reason | Stated cancellation reason. |
+| `refund_amount` | NUMERIC | Refund Amount | Amount refunded to the buyer (never more than the order's gmv). |
+
+## Calculated fields
+
+### `sellers_with_cancellations` · INTEGER · Metric
+
+- **Alias:** Sellers With Cancellations
+
+Distinct sellers behind the cancelled orders in the selected rows, read through the order. Filter Cancelled By to `seller` for sellers who cancelled their own orders. A distinct count across the join: rows do not add up to the total.
+
+```sql
+COUNT(DISTINCT orders.seller_id)
+```
+
+# Example Questions
+
+- Are cancellations concentrated in a stage or reason we can actually fix, and who is driving them — `buyers`, `sellers` or our own platform?
+- What is the refund exposure by `category`, and how does it track the cancellation stage mix?
+- Which `sellers` cancel disproportionately, hurting the `buyer` experience?
+
+## Joins
+
+- [Orders](./orders.md) as `orders` — `order_id = order_id` [N:1] — The order that was cancelled.
+  - [Orders Buyer](./buyer.md) — The buyer whose order was cancelled.
+  - [Orders Category](./category.md) — The category of the cancelled order.
+  - [Orders Listings](./listings.md) — The listing that was cancelled.
+    - [Listing Category](./category.md) — The category the cancelled listing is filed under.
+    - [Listing Seller](./seller.md) — The seller who owns the cancelled listing.
+      - [Listing Seller Category](./category.md) — The primary category of that listing's seller.
+  - [Orders Seller](./seller.md) — The seller whose sale was cancelled.
+    - [Seller Category](./category.md) — The primary category of the seller who lost the sale.

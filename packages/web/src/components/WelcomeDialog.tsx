@@ -1,8 +1,7 @@
-import { X, Rocket, Plus, Download, ExternalLink } from "lucide-react";
+import { X, Plus, Download, ExternalLink } from "lucide-react";
 import type { ModelGraph } from "@mc/okf";
-import { TEMPLATES } from "../templates";
-import { LibraryIcon } from "../lib/icons";
 import { IMPORT_GUIDE_URL } from "../lib/links";
+import { TemplateGallery } from "./TemplateGallery";
 
 interface Props {
   /** Roll a template onto the canvas. */
@@ -26,36 +25,23 @@ export function WelcomeDialog({ onUseTemplate, onStartBlank, onImport }: Props) 
         {/* Header */}
         <div className="flex items-start gap-3 px-6 pt-5 pb-4 border-b border-[#e6e9f0] flex-shrink-0">
           <div className="flex-1">
-            <h2 className="text-[17px] font-semibold tracking-[-0.2px]">Start your data model</h2>
+            {/* Googlebot renders the page as a first-time visitor, so this is the
+                H1 search engines index for model.owox.com. */}
+            <h1 className="text-[11.5px] font-[550] uppercase tracking-[0.06em] text-slate-400">
+              OWOX Model Canvas · free data modeling canvas
+            </h1>
+            <h2 className="mt-1 text-[17px] font-semibold tracking-[-0.2px]">Start your data model</h2>
             <p className="mt-1 text-[13px] leading-relaxed text-slate-500">
-              Pick a template to explore, start from a blank canvas, or import an existing model.
-              It's free — no sign-in needed.
+              Pick a template to explore, start from a blank canvas, or import an Open Knowledge Format (OKF)
+              or Apache Ossie model. It's free — no sign-in needed.
             </p>
           </div>
           <button onClick={onStartBlank} aria-label="Close" className="text-slate-400 hover:text-slate-700"><X size={18} /></button>
         </div>
 
         {/* Templates */}
-        <div className="overflow-y-auto px-4 py-3 flex flex-col gap-2">
-          <div className="flex items-center gap-2 px-1 text-[11px] font-semibold uppercase tracking-wide text-slate-500">
-            <LibraryIcon size={14} className="text-[#1e88e5]" /> Start from a template
-          </div>
-          {TEMPLATES.map(t => (
-            <div key={t.id} className="flex items-center gap-3 rounded-xl border border-[#e2e6ec] px-4 py-3 hover:bg-[#f8fafc]">
-              <div className="flex-1 min-w-0">
-                <div className="text-[14px] font-semibold">{t.name}</div>
-                <div className="text-[12px] text-slate-500 truncate">{t.description}</div>
-              </div>
-              <span className="text-[11px] text-slate-500 whitespace-nowrap">{t.graph.nodes.length} marts · {t.graph.edges.length} links</span>
-              <button
-                onClick={() => onUseTemplate(structuredClone(t.graph), t.name)}
-                title={`Roll out the ${t.name} model`}
-                className="flex items-center gap-[6px] rounded-lg bg-[#1e88e5] px-3 py-[6px] text-[12px] font-semibold text-white hover:bg-[#1976d2] whitespace-nowrap"
-              >
-                <Rocket size={13} /> Use
-              </button>
-            </div>
-          ))}
+        <div className="overflow-y-auto px-4 py-3">
+          <TemplateGallery onUse={onUseTemplate} />
         </div>
 
         {/* Footer: start blank / import */}
@@ -70,7 +56,7 @@ export function WelcomeDialog({ onUseTemplate, onStartBlank, onImport }: Props) 
             onClick={onImport}
             className="flex items-center gap-[7px] text-[13px] font-[550] border border-[#d8dee8] bg-white text-slate-900 rounded-lg px-3 py-[8px] cursor-pointer hover:bg-[#f1f3f7]"
           >
-            <Download size={15} /> Import OKF
+            <Download size={15} /> Import a model (OKF / Ossie)
           </button>
           <div className="flex-1" />
           <a

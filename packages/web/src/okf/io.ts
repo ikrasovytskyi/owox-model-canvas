@@ -1,4 +1,4 @@
-import { serializeBundle, parseBundle, type ModelGraph } from "@mc/okf";
+import { serializeBundle, parseBundle, isBundleIndex, detectModelFormat, parseFrontmatter, slugify, type ModelGraph } from "@mc/okf";
 import { zipSync, unzipSync, strToU8, strFromU8 } from "fflate";
 
 // Branded footer appended to the bundle index — every exported model carries an
@@ -7,12 +7,12 @@ const OKF_FOOTER =
   "\n\n---\n\n" +
   "_Generated with [OWOX Data Marts](https://www.owox.com/) · " +
   "[Model Canvas](https://model.owox.com/) · " +
-  "[open source](https://github.com/OWOX/owox-model-canvas)_\n";
+  "[open source](https://github.com/OWOX/models)_\n";
 
 export function graphToBundleFiles(g: ModelGraph, projectTitle: string): Record<string, string> {
   const files = serializeBundle(g, projectTitle).files;
   // Append the OWOX footer to the bundle's index.md (per-mart docs stay clean).
-  const indexKey = Object.keys(files).find(k => k.endsWith("index.md"));
+  const indexKey = Object.keys(files).find(isBundleIndex);
   if (indexKey) files[indexKey] = files[indexKey].replace(/\s*$/, "") + OKF_FOOTER;
   return files;
 }
@@ -65,4 +65,110 @@ export function parsePastedMarkdown(text: string): Record<string, string> {
   const files: Record<string, string> = {};
   for (let i = 0; i < parts.length; i += 2) files[parts[i]] = parts[i + 1] || "";
   return files;
+}
+
+export type ModelFormat = "okf" | "ossie";
+
+export interface LoadedModel {
+  format: ModelFormat;
+  graph: ModelGraph;
+  name: string | null;
+  notImported: string[];
+  warnings: string[];
+}
+
+// Model name from the bundle's index frontmatter title, when present.
+function okfModelName(files: Record<string, string>): string | null {
+  const idx = Object.entries(files).find(([p]) => isBundleIndex(p));
+  if (!idx) return null;
+  try {
+    const t = parseFrontmatter(idx[1]).data.title;
+    return typeof t === "string" && t.trim() ? t.trim() : null;
+  } catch {
+    return null;
+  }
+}
+
+// The Ossie reader/writer (and the `yaml` parser behind it) is a separate chunk,
+// fetched the first time a user imports or exports Ossie — not on page load.
+type OssieModule = typeof import("@mc/okf/ossie");
+let ossieModule: Promise<OssieModule> | null = null;
+export const OSSIE_LOAD_FAILED = "Couldn't load the Apache Ossie support. Check your connection, reload the page and try again.";
+export function loadOssieModule(): Promise<OssieModule> {
+  ossieModule ??= import("@mc/okf/ossie").catch(() => {
+    ossieModule = null; // let the next attempt retry (offline, or a stale chunk after a deploy)
+    throw new Error(OSSIE_LOAD_FAILED);
+  });
+  return ossieModule;
+}
+
+/** `ossieDialect`: the OWOX storage's Ossie dialect (ossieDialectForStorage) —
+ *  of an expression's dialects, the canvas shows and pushes that one. */
+export interface LoadOptions { ossieDialect?: string }
+
+async function loadOssieText(text: string, opts: LoadOptions): Promise<LoadedModel> {
+  const { parseOssie } = await loadOssieModule();
+  const r = parseOssie(text, { dialect: opts.ossieDialect });
+  return { format: "ossie", graph: r.graph, name: r.name ?? null, notImported: r.notImported, warnings: r.warnings };
+}
+
+// The exporter's stock index description — not something the user wrote.
+const DEFAULT_INDEX_DESCRIPTION = "Index of exported OWOX data marts.";
+
+function okfModelDescription(files: Record<string, string>): string | null {
+  const idx = Object.entries(files).find(([p]) => isBundleIndex(p));
+  if (!idx) return null;
+  try {
+    const d = parseFrontmatter(idx[1]).data.description;
+    return typeof d === "string" && d.trim() && d.trim() !== DEFAULT_INDEX_DESCRIPTION ? d.trim() : null;
+  } catch {
+    return null;
+  }
+}
+
+function loadOkfFiles(files: Record<string, string>): LoadedModel {
+  const graph = filesToGraph(files);
+  const description = okfModelDescription(files);
+  return { format: "okf", graph: description ? { ...graph, description } : graph, name: okfModelName(files), notImported: [], warnings: [] };
+}
+
+export const MAX_MODEL_BYTES = 5 * 1024 * 1024;
+export const TOO_LARGE = "This file is too large (max 5 MB).";
+const tooLarge = (texts: string[]) => texts.reduce((n, t) => n + t.length, 0) > MAX_MODEL_BYTES;
+
+export async function loadModelFiles(files: Record<string, string>, opts: LoadOptions = {}): Promise<LoadedModel> {
+  if (tooLarge(Object.values(files))) throw new Error(TOO_LARGE);
+  const names = Object.keys(files);
+  const dataNames = names.filter(n => /\.(ya?ml|json)$/i.test(n));
+  // A pure OKF upload never loads the Ossie chunk.
+  const isOssieModelText = dataNames.length > 0 ? (await loadOssieModule()).isOssieModelText : () => false;
+  const ossie = dataNames.filter(n => isOssieModelText(files[n]));
+  const hasDocs = names.some(n => !dataNames.includes(n));
+  if (ossie.length > 1) throw new Error("Import one Ossie file at a time");
+  if (ossie.length === 1) {
+    if (hasDocs) throw new Error("Import one format at a time");
+    return loadOssieText(files[ossie[0]], opts);
+  }
+  // A lone data file that isn't an Ossie model: let the Ossie parser explain.
+  if (dataNames.length > 0 && !hasDocs) return loadOssieText(files[dataNames[0]], opts);
+  // Otherwise OKF; stray data files (package.json, configs) are ignored by parseBundle.
+  return loadOkfFiles(files);
+}
+
+export async function loadModelText(text: string, opts: LoadOptions = {}): Promise<LoadedModel> {
+  if (tooLarge([text])) throw new Error(TOO_LARGE);
+  if (detectModelFormat({ text }) === "ossie") return loadOssieText(text, opts);
+  return loadOkfFiles(parsePastedMarkdown(text));
+}
+
+/** `dialect` labels the expressions the canvas writes itself (default ANSI_SQL). */
+export async function downloadOssie(graph: ModelGraph, modelName: string, dialect?: string): Promise<string[]> {
+  const { serializeOssie } = await loadOssieModule();
+  const { yaml, warnings } = serializeOssie(graph, modelName, { dialect });
+  const blob = new Blob([yaml], { type: "application/yaml" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = `${slugify(modelName, "model")}.ossie.yaml`;
+  a.click();
+  return warnings;
 }

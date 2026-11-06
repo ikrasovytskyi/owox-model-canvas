@@ -1,3 +1,4 @@
+import { renderOwoxRefs } from "@mc/okf";
 import type { OwoxKeyParts, DataMartListItem, CreateDataMartInput, ImportMart, ImportRelationship } from "./types";
 type FetchFn = typeof fetch;
 
@@ -48,6 +49,35 @@ export function decodeProjectFromToken(token: string): { projectTitle?: string; 
   } catch { return {}; }
 }
 
+// OWOX puts the actionable part of a validation error at the END of its message
+// ("Invalid enum value. Expected 'INTEGER' | … , received 'VARIANT'"), so slicing
+// the head off a raw error body hides exactly the bit the user needs — the enum
+// list alone eats ~300 chars. Prefer the JSON `message` over the whole envelope
+// (which repeats the path and timestamp) and, when it still must be shortened,
+// keep both ends.
+const MAX_ERROR_DETAIL = 600;
+
+export function owoxErrorDetail(body: string): string {
+  let detail = body;
+  try {
+    const j = JSON.parse(body) as { message?: unknown; error?: unknown; errorDetails?: { errors?: unknown } };
+    const msg = Array.isArray(j.message) ? j.message.join("; ") : j.message;
+    if (typeof msg === "string" && msg) detail = msg;
+    else if (typeof j.error === "string" && j.error) detail = j.error;
+    // Calculated-field validation: the reason lives in errorDetails.errors[].message,
+    // the top-level message is only "Calculated field validation failed".
+    const errs = j.errorDetails?.errors;
+    if (Array.isArray(errs)) {
+      const reasons = errs.map(e => (e as { message?: unknown })?.message).filter((m): m is string => typeof m === "string" && !!m);
+      if (reasons.length) detail = typeof msg === "string" && msg ? `${msg}: ${reasons.join("; ")}` : reasons.join("; ");
+    }
+  } catch { /* not JSON — keep the raw body */ }
+  detail = detail.replace(/\s+/g, " ").trim();
+  if (detail.length <= MAX_ERROR_DETAIL) return detail;
+  const head = Math.ceil((MAX_ERROR_DETAIL - 1) / 2);
+  return `${detail.slice(0, head)}…${detail.slice(head - (MAX_ERROR_DETAIL - 1))}`;
+}
+
 export class OwoxClient {
   constructor(private origin: string, private token: string, private keyId: string, private f: FetchFn = fetch) {}
   // Every /api/* call needs BOTH x-owox-authorization AND X-OWOX-Api-Key-Id;
@@ -55,8 +85,19 @@ export class OwoxClient {
   private h() { return { "x-owox-authorization": `Bearer ${this.token}`, "X-OWOX-Api-Key-Id": this.keyId, "Content-Type": "application/json" }; }
   private async json<T>(method: string, path: string, body?: unknown): Promise<T> {
     const res = await this.f(`${this.origin}${path}`, { method, headers: this.h(), body: body ? JSON.stringify(body) : undefined });
-    if (!res.ok) throw new Error(`OWOX ${method} ${path} -> ${res.status} ${await res.text().catch(() => "")}`.slice(0, 300));
-    return (res.status === 204 ? undefined : await res.json()) as T;
+    if (!res.ok) {
+      const body = await res.text().catch(() => "");
+      // Carry the upstream status on the error, not just inside the message: the
+      // 401 of an expired access token has to be told apart from every other
+      // upstream failure so the browser can re-connect and retry (see app.ts).
+      const err = new Error(`OWOX ${method} ${path} -> ${res.status} ${owoxErrorDetail(body)}`) as Error & { owoxStatus?: number };
+      err.owoxStatus = res.status;
+      throw err;
+    }
+    // 204, or a 200 with an empty body (DELETE /data-marts/{id} answers that way).
+    if (res.status === 204) return undefined as T;
+    const text = await res.text();
+    return (text.trim() ? JSON.parse(text) : undefined) as T;
   }
   async listDataMarts(): Promise<DataMartListItem[]> {
     const out: DataMartListItem[] = []; let offset: number | undefined;
@@ -74,11 +115,38 @@ export class OwoxClient {
   updateDefinition(id: string, body: unknown) { return this.json("PUT", `/api/data-marts/${id}/definition`, body); }
   // body is the storage-specific envelope: { schema: { type, fields:[...] } }
   updateSchema(id: string, body: unknown) { return this.json("PUT", `/api/data-marts/${id}/schema`, body); }
+  publishDataMart(id: string) { return this.json("PUT", `/api/data-marts/${encodeURIComponent(id)}/publish`); }
+  // Re-read the warehouse so every column becomes CONNECTED — OWOX accepts a formula
+  // reference only to a CONNECTED field. Starts a trigger, polls its status, then reads
+  // the verdict. Live it takes 3–5 s.
+  async actualizeSchema(
+    id: string,
+    opts: { intervalMs?: number; timeoutMs?: number; sleep?: (ms: number) => Promise<void> } = {},
+  ): Promise<{ success: boolean; error?: string }> {
+    const interval = opts.intervalMs ?? 1000;
+    const timeout = opts.timeoutMs ?? 60_000;
+    const sleep = opts.sleep ?? ((ms: number) => new Promise<void>(r => setTimeout(r, ms)));
+    const base = `/api/data-marts/${encodeURIComponent(id)}/schema-actualize-triggers`;
+    const { triggerId } = await this.json<{ triggerId: string }>("POST", base);
+    const tp = `${base}/${encodeURIComponent(triggerId)}`;
+    let done = false;
+    let last = "";
+    for (let waited = 0; waited <= timeout; waited += interval) {
+      const { status } = await this.json<{ status: string }>("GET", `${tp}/status`);
+      if (status && !["IDLE", "READY", "PROCESSING"].includes(status)) { last = status; done = true; break; }
+      await sleep(interval);
+    }
+    if (!done) return { success: false, error: "Schema check timed out" };
+    const r = await this.json<{ success?: boolean; error?: string }>("GET", tp);
+    if (last === "SUCCESS" && r?.success) return { success: true };
+    if (r?.error) return { success: false, error: r.error };
+    return { success: false, error: last === "ERROR" || last === "SUCCESS" ? "Schema actualization failed" : `Schema actualization ${last}` };
+  }
   deleteDataMart(id: string) { return this.json("DELETE", `/api/data-marts/${id}`); }
   listStorages() { return this.json<any[]>("GET", "/api/data-storages"); }
   // Joinable relationship (confirmed live): POST .../{sourceId}/relationships,
   // body { targetDataMartId, targetAlias (required), joinConditions:[{sourceFieldName,targetFieldName}] }.
-  createRelationship(sourceId: string, body: { targetDataMartId: string; targetAlias: string; joinConditions: { sourceFieldName: string; targetFieldName: string }[] }) {
+  createRelationship(sourceId: string, body: { targetDataMartId: string; targetAlias: string; description?: string; joinConditions: { sourceFieldName: string; targetFieldName: string }[] }) {
     return this.json<{ id: string }>("POST", `/api/data-marts/${encodeURIComponent(sourceId)}/relationships`, body);
   }
   // A storage's marts, matched by storage title + type (list items carry
@@ -109,6 +177,7 @@ export class OwoxClient {
         name: f.name, type: f.type, pk: !!f.isPrimaryKey,
         ...(f.alias ? { alias: f.alias } : {}),
         ...(f.description ? { description: f.description } : {}),
+        ...(f.calculated?.formula != null ? { formula: renderOwoxRefs(String(f.calculated.formula)) } : {}),
       })),
       inputSource, definition,
     };
@@ -129,6 +198,8 @@ export class OwoxClient {
       out.push({
         sourceId: r.sourceDataMart.id,
         targetId: r.targetDataMart.id,
+        ...(r.targetAlias ? { targetAlias: r.targetAlias } : {}),
+        ...(typeof r.description === "string" && r.description ? { description: r.description } : {}),
         joinConditions: (r.joinConditions ?? []).map((j: any) => ({
           sourceFieldName: j.sourceFieldName, targetFieldName: j.targetFieldName,
         })),

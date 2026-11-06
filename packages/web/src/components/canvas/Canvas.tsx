@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useSyncExternalStore, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useSyncExternalStore, useState } from "react";
 import type { FC } from "react";
 import {
   ReactFlow as ReactFlowBase,
@@ -25,16 +25,27 @@ import { X, Sparkles, MessageSquare } from "lucide-react";
 import { createModelStore } from "../../state/model";
 import { loadPersistedGraph, persistGraph } from "../../state/persist";
 import { loadViewMode, persistViewMode, type ViewMode } from "../../state/viewMode";
-import type { ModelNode, ModelEdge, ModelGraph } from "@mc/okf";
+import { loadRelLabelMode, persistRelLabelMode, type RelLabelMode } from "../../state/relLabels";
+import { loadObjHidden, persistObjHidden, type ObjHidden } from "../../state/objLabels";
+import { persistExportFormat, type ExportFormat } from "../../state/exportFormat";
+import { loadModelName, persistModelName, DEFAULT_MODEL_NAME, templateModelName } from "../../state/modelName";
+import { ossieDialectForStorage, type ModelNode, type ModelEdge, type ModelGraph } from "@mc/okf";
 
-import { graphToBundleFiles, downloadBundle } from "../../okf/io";
-import { buildShareUrl, readSharedModel, clearSharedModelFromUrl } from "../../share/url";
-import { exportCanvasSvg } from "../../share/exportImage";
-import { pushModel, pushPreview, type PushResult } from "../../sync/push";
+import { graphToBundleFiles, downloadBundle, downloadOssie } from "../../okf/io";
+import { buildShareUrl, readSharedModel, readSharedName, clearSharedModelFromUrl } from "../../share/url";
+import { readTemplateModel, clearTemplateFromUrl } from "../../lib/templateLink";
+import { readOkfImportUrl, clearOkfFromUrl, readOssieImportUrl, clearOssieFromUrl } from "../../share/okfLink";
+import { hasStoredPositions } from "./importLayout";
+import { exportCanvasPng, exportCanvasSvg, exportCanvasVectorSvg } from "../../share/exportImage";
+import { pushModel, pushPreview, type PushResult, type PushOptions } from "../../sync/push";
 import { detachFromOwox } from "../../sync/detach";
 
 import { api } from "../../lib/api";
 import { useAuth } from "../../lib/auth";
+import { useAccount } from "../../lib/account";
+import { supabaseEnabled } from "../../lib/supabase";
+import { isAuthRedirecting } from "../../lib/authRedirect";
+import { createModel, updateModel, createVersion, listModels, loadModel, deleteModel, listVersions, loadVersion, type SavedModel, type ModelVersion } from "../../lib/models";
 import { TopBar, type StorageOption } from "../TopBar";
 import { ImportDialog } from "../ImportDialog";
 import { OwoxImportDialog } from "../OwoxImportDialog";
@@ -44,15 +55,31 @@ import { TemplateApplyDialog } from "../TemplateApplyDialog";
 import { WelcomeDialog } from "../WelcomeDialog";
 import { SignInModal } from "../SignInModal";
 import { PushConfirmDialog } from "../PushConfirmDialog";
+import { PushToast } from "../PushToast";
 import { ClearCanvasDialog } from "../ClearCanvasDialog";
+import { NewModelDialog } from "../NewModelDialog";
 import { pushIntent } from "../../sync/pushGate";
 import { reconcileStorageId } from "../../sync/storageReconcile";
 import { Dock, type Tool } from "./Dock";
 import { MartNode } from "./MartNode";
 import { RelEdge } from "./RelEdge";
 import { buildRfEdges, isEdgeReconnectable } from "./edges";
-import { erdAwareNodeSize } from "./layoutSize";
+import { COMPACT_NODE_WIDTH, erdAwareNodeSize } from "./layoutSize";
+import { relationshipsByNode, type CardRelationship } from "./relationships";
 import { Inspector } from "../inspector/Inspector";
+import { RightRail } from "../rail/RightRail";
+import { ModelSheet } from "../rail/ModelSheet";
+import { ModelPanel } from "../rail/ModelPanel";
+import { ModelTitleBlock } from "./ModelTitleBlock";
+import { useRightPanel, gatedPanelId, type RightPanelId } from "../rail/useRightPanel";
+import { EnablePanel } from "../rail/EnablePanel";
+import { AccountPanel } from "../rail/AccountPanel";
+import { MyModelsPanel } from "../rail/MyModelsPanel";
+import { HistoryPanel } from "../rail/HistoryPanel";
+import { SharePanel } from "../rail/SharePanel";
+import type { ImageBackground, ImageFormat } from "../ui/imageFormats";
+import { ImageBackgroundDialog } from "../ImageBackgroundDialog";
+import { DiffDialog } from "../DiffDialog";
 import { GoalDialog } from "../GoalDialog";
 import { loadGoal, persistGoal, type BusinessGoal } from "../../state/goal";
 
@@ -60,26 +87,47 @@ import { loadGoal, persistGoal, type BusinessGoal } from "../../state/goal";
 const ReactFlow = ReactFlowBase as unknown as FC<ReactFlowProps>;
 
 // ── store singleton (exported so external modules can share this instance) ───
-// A shared link (#m=…) wins over localStorage: opening it reopens that exact
-// model. Otherwise rehydrate from localStorage so a refresh doesn't wipe work.
-const sharedGraph = readSharedModel();
-const persistedGraph = loadPersistedGraph();
-export const store = createModelStore(sharedGraph ?? persistedGraph);
-if (sharedGraph) {
-  // Persist the opened model right away — it's the store's initial value, so it
-  // never fires a change that the mirror-to-localStorage effect would catch; a
-  // refresh would otherwise lose it once the hash is cleared.
-  persistGraph(store.get());
-  // Drop the payload from the address bar so a refresh doesn't re-clobber the
-  // canvas and the URL stays clean.
-  clearSharedModelFromUrl();
+// Precedence: a `?template=<id>` deep-link and a `#m=…` share link are both
+// explicit "open this model" intents, so they win over localStorage; otherwise
+// rehydrate from localStorage so a refresh doesn't wipe work.
+//
+// `?template=<id>` opens a named built-in template (the CTA target for the blog
+// gallery, launch emails and posts). Templates ship at (0,0), so we Dagre-lay it
+// out here — runDagreLayout is a hoisted function declaration, available now.
+const templateGraph = readTemplateModel();
+clearTemplateFromUrl(); // strip the param (clean URL on refresh) even if the id was unknown
+let templateInitial: ModelGraph | undefined;
+if (templateGraph) {
+  const positions = runDagreLayout(templateGraph.nodes, templateGraph.edges, loadViewMode(), loadObjHidden());
+  templateInitial = { ...templateGraph, nodes: templateGraph.nodes.map(n => ({ ...n, position: positions.get(n.key) ?? n.position })) };
 }
 
-// A truly first-ever visit has no persisted model and no shared link. Captured at
-// module load — before the persist effect writes an (empty) graph — so it stays
-// true for the session. Gates the first-screen "start" chooser: shown once for
-// new visitors, never over a returning user's model or an opened shared link.
-const isFirstVisit = !sharedGraph && persistedGraph === undefined;
+const sharedGraph = readSharedModel();
+const sharedModelName = readSharedName(); // name carried alongside a shared link, if any
+const persistedGraph = loadPersistedGraph();
+export const store = createModelStore(templateInitial ?? sharedGraph ?? persistedGraph);
+if (templateInitial || sharedGraph) {
+  // Persist the opened model right away — it's the store's initial value, so it
+  // never fires a change that the mirror-to-localStorage effect would catch; a
+  // refresh would otherwise lose it once the URL is cleaned.
+  persistGraph(store.get());
+}
+// Drop the share payload from the address bar so a refresh doesn't re-clobber the
+// canvas and the URL stays clean (the template param is already cleared above).
+if (sharedGraph) clearSharedModelFromUrl();
+
+// A truly first-ever visit has no template deep-link, no persisted model and no
+// shared link. Captured at module load — before the persist effect writes an
+// (empty) graph — so it stays true for the session. Gates the first-screen
+// "start" chooser: shown once for new visitors, never over an opened model.
+const isFirstVisit = !templateInitial && !sharedGraph && persistedGraph === undefined;
+
+// `?okf=<github-url>` opens the Import dialog pre-filled with a public bundle URL
+// (marketing CTA for individual models). Captured at module load; the actual
+// fetch is async, so CanvasInner opens the dialog on mount and clears the param.
+const okfImportUrl = readOkfImportUrl();
+const ossieImportUrl = readOssieImportUrl();
+const deeplinkImportUrl = okfImportUrl ?? ossieImportUrl;
 
 // Map a loaded template (by its display name) to the closest Insight-Questions
 // niche, so opening the Business Goal dialog after a template can pre-pick it.
@@ -94,13 +142,47 @@ const TEMPLATE_NICHE: Record<string, string> = {
 };
 
 // ── helpers to convert between model and RF types ───────────────────────────
-function toRFNode(n: ModelNode, viewMode: ViewMode, keyFields?: string[]): Node {
+type CardExtras = {
+  keyFields: string[];
+  relationships: CardRelationship[];
+  sides: { left: boolean; right: boolean };
+  raised: boolean;
+  onRaisedChange: (key: string, raised: boolean) => void;
+};
+
+// A card lifted above its neighbours while a list it opened runs past it.
+const RAISED_NODE_Z_INDEX = 1000;
+
+function toRFNode(n: ModelNode, viewMode: ViewMode, objHidden: ObjHidden, extras: CardExtras): Node {
   return {
     id: n.key,
     type: "mart",
     position: n.position,
-    data: { ...n, _viewMode: viewMode, _keyFields: keyFields } as unknown as Record<string, unknown>,
+    zIndex: extras.raised ? RAISED_NODE_Z_INDEX : 0,
+    data: {
+      ...n,
+      _viewMode: viewMode,
+      _keyFields: extras.keyFields,
+      _objHidden: objHidden,
+      _relationships: extras.relationships,
+      _sides: extras.sides,
+      _onRaisedChange: extras.onRaisedChange,
+    } as unknown as Record<string, unknown>,
   };
+}
+
+// Which sides of each card a card-level edge (not a field-row anchor) attaches
+// to — those sides keep their socket dot on screen.
+function socketSides(rfEdges: Edge[]): Map<string, { left: boolean; right: boolean }> {
+  const m = new Map<string, { left: boolean; right: boolean }>();
+  const mark = (key: string, handle: string | null | undefined) => {
+    if (handle !== "left" && handle !== "right") return;
+    const sides = m.get(key) ?? { left: false, right: false };
+    sides[handle] = true;
+    m.set(key, sides);
+  };
+  for (const e of rfEdges) { mark(e.source, e.sourceHandle); mark(e.target, e.targetHandle); }
+  return m;
 }
 
 // Field names involved in a relationship, per node key — so the ERD node can keep
@@ -117,20 +199,29 @@ function keyFieldsByNode(edges: ModelEdge[]): Map<string, Set<string>> {
 }
 
 // ── Dagre auto-layout ────────────────────────────────────────────────────────
-const NODE_W = 200;
-const NODE_H = 90;
+// A new card is dropped centred on the click; its height is the bare title row + padding.
+const NODE_W = COMPACT_NODE_WIDTH;
+const NODE_H = 52;
 
-function runDagreLayout(nodes: ModelNode[], edges: ModelEdge[], viewMode: ViewMode): Map<string, { x: number; y: number }> {
+function runDagreLayout(nodes: ModelNode[], edges: ModelEdge[], viewMode: ViewMode, hidden: ObjHidden): Map<string, { x: number; y: number }> {
   const g = new dagre.graphlib.Graph();
   g.setDefaultEdgeLabel(() => ({}));
   g.setGraph({ rankdir: "LR", nodesep: 60, ranksep: 150 });
-  nodes.forEach(n => { const s = erdAwareNodeSize(n, viewMode); g.setNode(n.key, { width: s.width, height: s.height }); });
+  // Size every card from what it will show: its badges and, in ERD, its collapsed rows.
+  const rels = relationshipsByNode(nodes, edges);
+  const kf = keyFieldsByNode(edges);
+  const sizes = new Map(nodes.map(n => [n.key, erdAwareNodeSize(n, viewMode, {
+    hidden,
+    relationshipCount: rels.get(n.key)?.length ?? 0,
+    keyFields: [...(kf.get(n.key) ?? [])],
+  })]));
+  nodes.forEach(n => { const s = sizes.get(n.key)!; g.setNode(n.key, { width: s.width, height: s.height }); });
   edges.forEach(e => g.setEdge(e.from, e.to));
   dagre.layout(g);
   const positions = new Map<string, { x: number; y: number }>();
   nodes.forEach(n => {
     const pos = g.node(n.key);
-    const s = erdAwareNodeSize(n, viewMode);
+    const s = sizes.get(n.key)!;
     positions.set(n.key, { x: pos.x - s.width / 2, y: pos.y - s.height / 2 });
   });
   return positions;
@@ -141,6 +232,12 @@ type Selection =
   | { type: "node"; id: string }
   | { type: "edge"; id: string }
   | null;
+
+// Titles shown in the right Sheet header per active panel.
+const SHEET_TITLES: Record<NonNullable<ReturnType<typeof useRightPanel>["active"]>, string> = {
+  inspect: "Inspect", models: "My Models", history: "Version history",
+  share: "Share model", enable: "Enable Model Canvas", account: "Account", model: "Model",
+};
 
 // ── Inner canvas (needs ReactFlowProvider context) ────────────────────────────
 const nodeTypes = { mart: MartNode };
@@ -154,6 +251,13 @@ function CanvasInner() {
   const [layoutAnimating, setLayoutAnimating] = useState(false);
 
   const [selection, setSelection] = useState<Selection>(null);
+  // Single right-side panel state (which rail entry is open in the Sheet).
+  const panel = useRightPanel();
+  // Tracks the visually-highlighted rail icon independently from panel.active so
+  // that a gated redirect (models/history → "enable") still lights the clicked icon.
+  const [visualRailId, setVisualRailId] = useState<RightPanelId | null>(null);
+  // Selecting a node/edge auto-opens the Inspect panel — preserves current UX.
+  useEffect(() => { if (selection) { panel.open("inspect"); setVisualRailId(null); } }, [selection]); // eslint-disable-line react-hooks/exhaustive-deps
   const [goal, setGoalState] = useState<BusinessGoal | null>(loadGoal());
   const [showGoal, setShowGoal] = useState(false);
   // Niche guessed from the last template loaded — pre-fills the Business Goal
@@ -170,43 +274,123 @@ function CanvasInner() {
   }, []);
   const [tool, setTool] = useState<Tool>("select");
   const [viewMode, setViewMode] = useState<ViewMode>(loadViewMode());
+  const [relLabelMode, setRelLabelMode] = useState<RelLabelMode>(loadRelLabelMode());
+  const handleRelLabelModeChange = useCallback((mode: RelLabelMode) => {
+    setRelLabelMode(mode);
+    persistRelLabelMode(mode);
+  }, []);
+  const [objHidden, setObjHidden] = useState<ObjHidden>(loadObjHidden());
+  const handleObjHiddenChange = useCallback((hidden: ObjHidden) => {
+    setObjHidden(hidden);
+    persistObjHidden(hidden);
+  }, []);
   const [showImport, setShowImport] = useState(false);
+  // Deeplink: open Import pre-filled for a `?okf=` bundle URL, once, on mount.
+  const [okfInitialUrl, setOkfInitialUrl] = useState<string | null>(null);
+  useEffect(() => {
+    if (deeplinkImportUrl) {
+      setOkfInitialUrl(deeplinkImportUrl);
+      setShowImport(true);
+      if (okfImportUrl) clearOkfFromUrl();
+      if (ossieImportUrl) clearOssieFromUrl();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const [showOwoxImport, setShowOwoxImport] = useState(false);
   const [showLibrary, setShowLibrary] = useState(false);
   // A template chosen from the library while the canvas already had content —
   // held until the user confirms Replace vs Merge in the TemplateApplyDialog.
   const [pendingTemplate, setPendingTemplate] = useState<{ graph: ModelGraph; name: string } | null>(null);
   // First-screen chooser — shown once to brand-new visitors (no persisted model).
-  const [showWelcome, setShowWelcome] = useState(isFirstVisit);
+  const [showWelcome, setShowWelcome] = useState(isFirstVisit && !deeplinkImportUrl);
   const [pushing, setPushing] = useState(false);
   const [pushResult, setPushResult] = useState<PushResult | null>(null);
-  const [shareToast, setShareToast] = useState<string | null>(null);
+  const [shareToast, setShareToast] = useState<string | { message: string; sticky: true } | null>(null);
   const [storages, setStorages] = useState<StorageOption[]>([]);
   const [signIn, setSignIn] = useState<{ mode: "connect" | "push" } | null>(null);
   const [showPushConfirm, setShowPushConfirm] = useState(false);
   const [showClear, setShowClear] = useState(false);
+  const [showNewModel, setShowNewModel] = useState(false);
   const { me, connect, signOut } = useAuth();
+  // Supabase account ("Save your model") — independent of the OWOX connect above.
+  const { user: account, signOut: accountSignOut, signInWithGoogle, signInWithGitHub, signInWithEmail } = useAccount();
+  // Clear the gated highlight once the user signs in so the stale icon doesn't persist.
+  useEffect(() => { if (account) setVisualRailId(null); }, [account]);
+  // Close gated panels if the account disappears (sign-out, session expiry) so
+  // the user isn't left staring at an authenticated-only panel with no content.
+  useEffect(() => {
+    if (!account && (panel.active === "models" || panel.active === "history" || panel.active === "account")) {
+      panel.close();
+    }
+  }, [account, panel.active]); // eslint-disable-line react-hooks/exhaustive-deps
+  // Load the saved models list whenever the My Models panel becomes active.
+  useEffect(() => {
+    if (panel.active === "models" && account) {
+      listModels().then(setSavedModels).catch(() => {});
+    }
+  }, [panel.active, account]);
+  const [saving, setSaving] = useState(false);
+  // The id of the saved model currently open (so Save updates it instead of
+  // creating a duplicate). Reset on Clear / opening a different model.
+  const [savedModelId, setSavedModelId] = useState<string | null>(null);
+  // List of the user's saved models — populated when the My Models panel opens.
+  const [savedModels, setSavedModels] = useState<SavedModel[]>([]);
+  // Bumped on each save so the History rail re-fetches the version list.
+  const [versionsBump, setVersionsBump] = useState(0);
+  // Versions for the current model — populated when the History panel opens.
+  const [versions, setVersions] = useState<ModelVersion[]>([]);
+  // A past version's graph staged for the DiffDialog; null = dialog closed.
+  const [historyDiff, setHistoryDiff] = useState<{ prev: ModelGraph; label: string } | null>(null);
+  // Load version list whenever the History panel is active or a new save is made.
+  useEffect(() => {
+    if (panel.active === "history" && account && savedModelId) {
+      listVersions(savedModelId).then(setVersions).catch(() => {});
+    }
+  }, [panel.active, account, savedModelId, versionsBump]); // eslint-disable-line react-hooks/exhaustive-deps
+  // Snapshot of the graph (JSON) as it was at the last Save / open — the baseline
+  // for "are there unsaved edits?". Comparing against this at click time avoids
+  // the races a boolean dirty-flag effect would have (e.g. open's store.set
+  // re-marking the freshly-loaded model dirty). null = no saved baseline yet.
+  const [savedSnapshot, setSavedSnapshot] = useState<string | null>(null);
+  // Editable model name (shown in the top bar, used as the Save default).
+  // A shared link's name wins on first load (opening someone's named model);
+  // otherwise restore the locally-persisted name.
+  const [modelName, setModelName] = useState(sharedModelName ?? loadModelName());
+  useEffect(() => { persistModelName(modelName); }, [modelName]);
 
   // Load the project's storages once signed in; retry through OWOX's transient
   // 500s. Anonymous users have no session, so we skip the call entirely and
   // clear any stale list.
+  // Keep the current storage only if it's still in this project; otherwise fall
+  // back to the first available so we never push to a stale storage (e.g. after
+  // signing into a different project, or after the storage was deleted in OWOX).
+  const applyStorages = useCallback((list: StorageOption[]) => {
+    setStorages(list);
+    const reconciled = reconcileStorageId(store.get().storageId, list);
+    if (reconciled !== store.get().storageId) store.set({ ...store.get(), storageId: reconciled });
+  }, []);
+
   const loadStorages = useCallback(async (): Promise<StorageOption[]> => {
     for (let attempt = 0; attempt < 4; attempt++) {
       try {
         const list = await api<StorageOption[]>("/api/storages");
-        setStorages(list);
-        // Keep the current storage only if it's still in this project; otherwise
-        // fall back to the first available so we never push to a stale storage
-        // (e.g. after signing into a different project).
-        const reconciled = reconcileStorageId(store.get().storageId, list);
-        if (reconciled !== store.get().storageId) store.set({ ...store.get(), storageId: reconciled });
+        applyStorages(list);
         return list;
       } catch {
         await new Promise(r => setTimeout(r, 1200));
       }
     }
     return [];
-  }, []);
+  }, [applyStorages]);
+
+  // User-initiated refresh from the Storage picker. One attempt and the error is
+  // propagated: waiting out four silent retries feels broken, and an empty list
+  // must not be mistaken for "this project has no storages".
+  const refreshStorages = useCallback(async (): Promise<StorageOption[]> => {
+    const list = await api<StorageOption[]>("/api/storages");
+    applyStorages(list);
+    return list;
+  }, [applyStorages]);
 
   useEffect(() => {
     if (!me) { setStorages([]); return; }
@@ -222,35 +406,68 @@ function CanvasInner() {
   const [rfNodes, setRfNodes, onRfNodesChange] = useNodesState<Node>([]);
   const [rfEdges, setRfEdges, onRfEdgesChange] = useEdgesState<Edge>([]);
 
+  // Cards whose opened list runs past them — lifted over their neighbours. Kept
+  // in a ref too, so a rebuild of the nodes array keeps the lift.
+  const raisedRef = useRef<Set<string>>(new Set());
+  const handleRaisedChange = useCallback((key: string, raised: boolean) => {
+    if (raisedRef.current.has(key) === raised) return;
+    if (raised) raisedRef.current.add(key);
+    else raisedRef.current.delete(key);
+    const zIndex = raised ? RAISED_NODE_Z_INDEX : 0;
+    setRfNodes(nds => nds.map(n => (n.id === key && (n.zIndex ?? 0) !== zIndex ? { ...n, zIndex } : n)));
+  }, [setRfNodes]);
+
+  const builtEdges = useMemo(
+    () => buildRfEdges(graph.edges, graph.nodes, viewMode, relLabelMode),
+    [graph.edges, graph.nodes, viewMode, relLabelMode],
+  );
+
   useEffect(() => {
     const kf = keyFieldsByNode(graph.edges);
-    setRfNodes(graph.nodes.map(n => toRFNode(n, viewMode, [...(kf.get(n.key) ?? [])])));
-  }, [graph.nodes, graph.edges, viewMode, setRfNodes]);
-  useEffect(() => { setRfEdges(buildRfEdges(graph.edges, graph.nodes, viewMode)); }, [graph.edges, graph.nodes, viewMode, setRfEdges]);
+    const rels = relationshipsByNode(graph.nodes, graph.edges);
+    const sides = socketSides(builtEdges);
+    setRfNodes(graph.nodes.map(n => toRFNode(n, viewMode, objHidden, {
+      keyFields: [...(kf.get(n.key) ?? [])],
+      relationships: rels.get(n.key) ?? [],
+      sides: sides.get(n.key) ?? { left: false, right: false },
+      raised: raisedRef.current.has(n.key),
+      onRaisedChange: handleRaisedChange,
+    })));
+  }, [graph.nodes, graph.edges, builtEdges, viewMode, objHidden, setRfNodes, handleRaisedChange]);
+  useEffect(() => { setRfEdges(builtEdges); }, [builtEdges, setRfEdges]);
 
   // Mark only the selected relationship as reconnectable so dragging an endpoint
   // moves the line the user picked (not whichever overlapping edge RF would grab),
   // and raise it above the others so its reconnect anchor isn't buried under an
   // overlapping line (otherwise the drag handle never appears). Patches in place —
   // never touches `selected` — and re-applies after any rebuild of the edges array.
+  //
+  // A selected card lights up every edge connected to it (as in the product), so
+  // all of its relationships read at once; those edges rise above the rest too.
   useEffect(() => {
     const selId = selection?.type === "edge" ? selection.id : null;
+    const nodeId = selection?.type === "node" ? selection.id : null;
     setRfEdges(eds => eds.map(e => {
-      const modelEdgeId = (e.data as { modelEdgeId?: string } | undefined)?.modelEdgeId;
+      const data = e.data as { modelEdgeId?: string; highlighted?: boolean } | undefined;
+      const modelEdgeId = data?.modelEdgeId;
       const reconnectable = isEdgeReconnectable(modelEdgeId, selId, viewMode);
-      const zIndex = modelEdgeId != null && modelEdgeId === selId ? 1000 : 0;
-      return (e.reconnectable === reconnectable && e.zIndex === zIndex) ? e : { ...e, reconnectable, zIndex };
+      const highlighted = nodeId != null && (e.source === nodeId || e.target === nodeId);
+      const zIndex = (modelEdgeId != null && modelEdgeId === selId) || highlighted ? 1000 : 0;
+      if (e.reconnectable === reconnectable && e.zIndex === zIndex && Boolean(data?.highlighted) === highlighted) return e;
+      return { ...e, reconnectable, zIndex, data: { ...e.data, highlighted } };
     }));
-  }, [selection, viewMode, graph.edges, graph.nodes, setRfEdges]);
+  }, [selection, viewMode, builtEdges, setRfEdges]);
 
   // Mirror the model to localStorage on every change so a refresh/crash doesn't
   // lose work (Push to OWOX remains the real save).
   useEffect(() => { persistGraph(graph); }, [graph]);
 
+
   // Warn before leaving while there's unpushed work — the model lives in the
   // session and may not all be in OWOX yet.
   useEffect(() => {
     const handler = (e: BeforeUnloadEvent) => {
+      if (isAuthRedirecting()) return; // intentional OAuth redirect, not a real exit
       if (!store.get().nodes.some(n => n.status !== "created")) return;
       e.preventDefault();
       e.returnValue = ""; // required for Chrome to show the native prompt
@@ -323,7 +540,7 @@ function CanvasInner() {
   const handleToolChange = useCallback((t: Tool) => {
     if (t === "layout") {
       const { nodes, edges } = store.get();
-      const positions = runDagreLayout(nodes, edges, viewMode);
+      const positions = runDagreLayout(nodes, edges, viewMode, objHidden);
       // Turn on node transitions, move everything, then frame the result — so the
       // model visibly "organizes itself" instead of snapping. Cleared after the
       // glide so dragging stays instant.
@@ -334,7 +551,7 @@ function CanvasInner() {
       return;
     }
     setTool(t);
-  }, [viewMode, fitView]);
+  }, [viewMode, objHidden, fitView]);
 
   const handleToggleView = useCallback(() => {
     setViewMode(prev => {
@@ -360,6 +577,7 @@ function CanvasInner() {
     // Only fire when clicking the pane (not on a node card or edge)
     const target = e.target as HTMLElement;
     if (target.closest(".react-flow__node") || target.closest(".react-flow__edge")) return;
+    if (target.closest("[data-dock]") || target.closest("[data-canvas-overlay]")) return; // double-clicking the toolbar shouldn't drop a node
     const position = screenToFlowPosition({ x: e.clientX, y: e.clientY });
     const n = store.addNode({ x: position.x - NODE_W / 2, y: position.y - NODE_H / 2 });
     setSelection({ type: "node", id: n.key });
@@ -367,11 +585,30 @@ function CanvasInner() {
   }, [screenToFlowPosition]);
 
   // ── Import / Export / Push handlers ───────────────────────────────────────
-  const handleExport = useCallback(() => {
-    const title = me?.projectTitle ?? "model-okf";
-    const files = graphToBundleFiles(store.get(), title);
+  // Resolves to what the export could not hold, or null when it failed (the
+  // Ossie writer is loaded on demand and can fail to load) — a toast says so.
+  const handleExport = useCallback(async (format: ExportFormat): Promise<string[] | null> => {
+    const graph = store.get();
+    // An empty Ossie document is schema-invalid; the top bar already blocks this.
+    if (graph.nodes.length === 0) return [];
+    persistExportFormat(format);
+    if (format === "ossie") {
+      let warnings: string[];
+      try {
+        const dialect = ossieDialectForStorage(storages.find(s => s.id === graph.storageId)?.type);
+        warnings = await downloadOssie(graph, modelName.trim() || DEFAULT_MODEL_NAME, dialect);
+      } catch (e) {
+        setShareToast({ message: (e as Error).message, sticky: true });
+        return null;
+      }
+      if (warnings.length > 0) setShareToast({ message: "Exported as Apache Ossie with warnings: " + warnings.join("; "), sticky: true });
+      return warnings;
+    }
+    const title = modelName.trim() || DEFAULT_MODEL_NAME;
+    const files = graphToBundleFiles(graph, title);
     downloadBundle(files, title);
-  }, [me]);
+    return [];
+  }, [me, modelName, storages]);
 
   // Clear the canvas: permanently wipe every node + edge (keep the selected
   // storage). No undo — the dialog warns and offers an OKF export first.
@@ -379,24 +616,43 @@ function CanvasInner() {
     store.set({ storageId: store.get().storageId, nodes: [], edges: [] });
     setSelection(null);
     setShowClear(false);
+    setSavedModelId(null); // a cleared canvas is a fresh model — next Save creates a new row
+    setModelName(DEFAULT_MODEL_NAME);
+    setSavedSnapshot(null); // no saved baseline for a fresh canvas
   }, []);
 
-  const handleExportAndClear = useCallback(() => {
-    handleExport();
-    clearCanvas();
+  // With Ossie warnings the dialog stays open and decides (Delete anyway / Export OKF instead).
+  // A failed export (null) keeps the canvas and the dialog open.
+  const handleExportAndClear = useCallback(async (format: ExportFormat): Promise<string[]> => {
+    const warnings = await handleExport(format);
+    if (warnings === null) return [];
+    if (warnings.length === 0) clearCanvas();
+    return warnings;
   }, [handleExport, clearCanvas]);
 
-  // Export the canvas as an SVG (whole model, OWOX watermark). Uses the live RF
-  // node list (measured sizes) to frame the export.
+  // Export the canvas as an image (whole model, OWOX watermark). Uses the live
+  // RF node list (measured sizes) to frame the export; exportImage.ts explains
+  // why there are three formats. Picking a format opens the background dialog
+  // rather than downloading straight away — white or transparent is a real
+  // choice, and it depends on where the file is going.
   const imageName = (me?.projectTitle ?? "model").trim() || "model";
-  const handleExportSvg = useCallback(() => {
-    exportCanvasSvg(rfNodes, imageName).catch(() => setShareToast("Couldn't export the image — please try again."));
+  const [pendingFormat, setPendingFormat] = useState<ImageFormat | null>(null);
+  const [imageBackground, setImageBackground] = useState<ImageBackground>("white");
+  const runExportImage = useCallback((format: ImageFormat, background: ImageBackground) => {
+    setImageBackground(background); // remembered as the default for the next export
+    setPendingFormat(null);
+    const opts = { transparent: background === "transparent" };
+    const run =
+      format === "png" ? exportCanvasPng(rfNodes, imageName, opts)
+      : format === "vector" ? exportCanvasVectorSvg(rfNodes, imageName, opts)
+      : exportCanvasSvg(rfNodes, imageName, opts);
+    run.catch(() => setShareToast("Couldn't export the image — please try again."));
   }, [rfNodes, imageName]);
 
   // Copy a shareable link that reopens this exact model. Falls back to a prompt
   // if the clipboard API is blocked (insecure context / permissions).
   const handleShare = useCallback(async () => {
-    const url = buildShareUrl(store.get());
+    const url = buildShareUrl(store.get(), modelName.trim() || DEFAULT_MODEL_NAME);
     // The whole model rides in the link's #hash, so it works on whatever origin
     // serves the app. On localhost that's only this machine — flag it so a local
     // dev doesn't think the link is broken; on model.owox.com it just works.
@@ -410,47 +666,198 @@ function CanvasInner() {
     } catch {
       window.prompt("Copy this shareable link:", url);
     }
-  }, []);
+  }, [modelName]);
 
   // Auto-layout a freshly loaded graph (import or template). The OKF format does
   // not persist node positions (Dagre re-lays out on load, by design), so without
   // this every imported node piles up at the origin and must be dragged apart.
   const withLayout = useCallback((g: ModelGraph): ModelGraph => {
-    const positions = runDagreLayout(g.nodes, g.edges, viewMode);
+    const positions = runDagreLayout(g.nodes, g.edges, viewMode, objHidden);
     return { ...g, nodes: g.nodes.map(n => ({ ...n, position: positions.get(n.key) ?? n.position })) };
-  }, [viewMode]);
+  }, [viewMode, objHidden]);
 
   // Merge a freshly loaded graph into the canvas, laying out only the new nodes
   // so the existing layout isn't reshuffled. Shared by OKF + OWOX import (merge).
   const applyMergeWithLayout = useCallback((g: ModelGraph) => {
     const { graph, newKeys } = mergeGraphs(store.get(), g);
-    const positions = runDagreLayout(graph.nodes, graph.edges, viewMode);
+    const positions = runDagreLayout(graph.nodes, graph.edges, viewMode, objHidden);
     store.set({ ...graph, nodes: graph.nodes.map(n => newKeys.has(n.key) ? { ...n, position: positions.get(n.key) ?? n.position } : n) });
-  }, [viewMode]);
+  }, [viewMode, objHidden]);
 
-  const handleImportConfirm = useCallback((g: ModelGraph, mode: "replace" | "merge") => {
+  const handleImportConfirm = useCallback((g: ModelGraph, mode: "replace" | "merge", name: string | null) => {
     if (mode === "merge") {
       applyMergeWithLayout(g);
     } else {
       // Keep the currently-selected storage. The OKF bundle format doesn't carry a
       // storageId (parse returns null), so taking the imported value would blank the
       // selection. Fall back to the imported id only when none is selected yet.
-      store.set({ ...withLayout(g), storageId: store.get().storageId ?? g.storageId });
+      store.set({ ...(hasStoredPositions(g) ? g : withLayout(g)), storageId: store.get().storageId ?? g.storageId });
+      // Replace swaps in the file's model name too (its description rides in the graph).
+      setModelName(name?.trim() || DEFAULT_MODEL_NAME);
+      setSavedModelId(null); // a Replace is a new model — the next Save creates a row
+      setSavedSnapshot(null);
     }
     setShowImport(false);
+    setOkfInitialUrl(null);
   }, [withLayout, applyMergeWithLayout]);
 
   const handleOwoxImportConfirm = useCallback((g: ModelGraph, mode: "replace" | "merge") => {
     if (mode === "merge") applyMergeWithLayout(g);
-    else store.set({ ...withLayout(g), storageId: g.storageId });
+    else {
+      store.set({ ...withLayout(g), storageId: g.storageId });
+      setModelName(me?.projectTitle?.trim() || DEFAULT_MODEL_NAME);
+      setSavedModelId(null);
+      setSavedSnapshot(null);
+    }
     setShowOwoxImport(false);
-  }, [withLayout, applyMergeWithLayout]);
+  }, [withLayout, applyMergeWithLayout, me?.projectTitle]);
 
   const applyTemplate = useCallback((g: ModelGraph, mode: "replace" | "merge") => {
     // Keep the model on the currently selected storage; auto-layout the template.
     if (mode === "merge") applyMergeWithLayout(g);
     else store.set({ ...withLayout(g), storageId: store.get().storageId });
   }, [withLayout, applyMergeWithLayout]);
+
+  // Save to the Supabase account. Anonymous-first: if not signed in, open the
+  // sign-in dialog instead (the user clicks Save again after returning). On an
+  // already-saved model, update it in place; otherwise create a new row.
+  const handleSave = useCallback(async () => {
+    if (!account) { panel.open("enable"); return; }
+    setSaving(true);
+    try {
+      const graph = store.get();
+      const name = modelName.trim() || DEFAULT_MODEL_NAME;
+      let id = savedModelId;
+      if (id) {
+        await updateModel(id, { name, graph });
+      } else {
+        id = await createModel(name, graph);
+        setSavedModelId(id);
+      }
+      await createVersion(id, graph); // snapshot history (#4953)
+      setVersionsBump(b => b + 1); // tell the History rail to refresh
+      setSavedSnapshot(JSON.stringify(graph)); // baseline = what we just saved
+      setShareToast("Model saved");
+    } catch (e) {
+      setShareToast(`Save failed: ${(e as Error).message}`);
+    } finally {
+      setSaving(false);
+    }
+  }, [account, savedModelId, modelName]);
+
+  // Open a saved model. It already carries layout positions, so load it straight
+  // in (no re-layout) and remember its id so the next Save updates it.
+  const handleOpenSaved = useCallback((g: ModelGraph, id: string, name: string) => {
+    store.set({ ...g });
+    setSavedModelId(id);
+    setModelName(name);
+    setSavedSnapshot(JSON.stringify(g)); // baseline = the opened model as-is
+  }, []);
+
+  // Open a saved model by id from the My Models panel (loads the graph, then hands
+  // off to handleOpenSaved which sets the Canvas state).
+  const handleOpenModelById = useCallback(async (id: string) => {
+    try {
+      const g = await loadModel(id);
+      const m = savedModels.find(m => m.id === id);
+      handleOpenSaved(g, id, m?.name ?? "");
+      panel.close();
+    } catch (e) {
+      setShareToast(`Open failed: ${(e as Error).message}`);
+    }
+  }, [savedModels, handleOpenSaved, panel]);
+
+  // Rename a saved model. Also updates `modelName` when renaming the current
+  // model, which keeps the top-bar name (and Enable-control subtext) in sync.
+  const handleRenameModel = useCallback(async (id: string, name: string) => {
+    try {
+      await updateModel(id, { name });
+      if (id === savedModelId) setModelName(name);
+      setSavedModels(await listModels());
+    } catch (e) {
+      setShareToast(`Rename failed: ${(e as Error).message}`);
+    }
+  }, [savedModelId]);
+
+  // Delete a saved model and refresh the list. If it was the open model, detach
+  // the canvas from the deleted record so the next Save creates a new one.
+  const handleDeleteModel = useCallback(async (id: string) => {
+    try {
+      await deleteModel(id);
+      if (id === savedModelId) setSavedModelId(null);
+      setSavedModels(await listModels());
+    } catch (e) {
+      setShareToast(`Delete failed: ${(e as Error).message}`);
+    }
+  }, [savedModelId]);
+
+  // Restore a past version onto the canvas. Keep it the same open model (don't
+  // touch savedModelId/name) — the next Save snapshots this restored state as a
+  // new version, so nothing is destroyed.
+  const handleRestoreVersion = useCallback((g: ModelGraph) => {
+    store.set({ ...g });
+    setShareToast("Version restored to the canvas — Save to keep it.");
+  }, []);
+
+  // Load a version by id and show the DiffDialog comparing it to the current canvas.
+  const handleCompare = useCallback(async (id: string) => {
+    try {
+      const prev = await loadVersion(id);
+      const v = versions.find(v => v.id === id);
+      const label = v ? new Date(v.created_at).toLocaleString() : "that version";
+      setHistoryDiff({ prev, label });
+    } catch (e) {
+      setShareToast(`Compare failed: ${(e as Error).message}`);
+    }
+  }, [versions]);
+
+  // Load a version by id and restore it to the canvas.
+  const handleRestoreById = useCallback(async (id: string) => {
+    try {
+      const g = await loadVersion(id);
+      handleRestoreVersion(g);
+    } catch (e) {
+      setShareToast(`Restore failed: ${(e as Error).message}`);
+    }
+  }, [handleRestoreVersion]);
+
+  // "New model" from the rail. Nothing to lose → just start fresh: an empty
+  // canvas, or a saved model with no edits since its last Save (it's safely in
+  // Models). Only confirm when there's genuinely unsaved work on the canvas.
+  const handleNewModel = useCallback(() => {
+    const g = store.get();
+    // Nothing unsaved to lose when the canvas is empty, or it's a saved model
+    // whose graph still matches its last-saved snapshot. Otherwise confirm.
+    const clean = !!savedModelId && savedSnapshot !== null && JSON.stringify(g) === savedSnapshot;
+    if (g.nodes.length === 0 || clean) clearCanvas();
+    else setShowNewModel(true);
+  }, [clearCanvas, savedModelId, savedSnapshot]);
+
+  // Open the Enable panel (signed-out auth) or Account panel (signed-in) — the
+  // single "Enable" top-bar control toggles between them based on sign-in state.
+  const handleEnable = useCallback(() => {
+    setVisualRailId(null); // Account/Enable aren't rail panels — clear any prior rail highlight.
+    panel.open(account ? "account" : "enable");
+  }, [account, panel]);
+
+  // Rail open with gating: models/history require a Supabase account; redirect to
+  // the Enable panel when signed out so the user can create one. visualRailId is
+  // ONLY needed for that gated case (active routes to "enable" but we still want
+  // the clicked icon lit). For normal opens the highlight follows panel.active.
+  const handleRailOpen = useCallback((id: RightPanelId) => {
+    const target = gatedPanelId(id, !!account);
+    setVisualRailId(target === id ? null : id);
+    panel.open(target);
+  }, [account, panel]);
+
+  // Confirmed start-new: wipe to a fresh model (clearCanvas resets id + name).
+  const startNewModel = useCallback(() => { clearCanvas(); setShowNewModel(false); }, [clearCanvas]);
+  const exportAndStartNewModel = useCallback(async (format: ExportFormat): Promise<string[]> => {
+    const warnings = await handleExport(format);
+    if (warnings === null) return [];
+    if (warnings.length === 0) startNewModel();
+    return warnings;
+  }, [handleExport, startNewModel]);
 
   const handleUseTemplate = useCallback((g: ModelGraph, name: string) => {
     // Remember the matching niche so the Business Goal dialog can pre-pick it.
@@ -459,6 +866,8 @@ function CanvasInner() {
     // Merge first (mirrors the OKF/OWOX import dialogs) so existing work isn't
     // silently wiped.
     if (store.get().nodes.length === 0) {
+      setModelName(templateModelName(name)); // "My {template} data model with OWOX"
+      setSavedModelId(null); // a fresh model from a template, not the open saved one
       applyTemplate(g, "replace");
       setShowLibrary(false);
     } else {
@@ -467,20 +876,25 @@ function CanvasInner() {
   }, [applyTemplate]);
 
   const handleTemplateApplyConfirm = useCallback((mode: "replace" | "merge") => {
-    if (pendingTemplate) applyTemplate(pendingTemplate.graph, mode);
+    if (pendingTemplate) {
+      // Replacing = a fresh model from this template, so re-seed the name; merging
+      // keeps the current model (and its name) and just folds the template in.
+      if (mode === "replace") { setModelName(templateModelName(pendingTemplate.name)); setSavedModelId(null); }
+      applyTemplate(pendingTemplate.graph, mode);
+    }
     setPendingTemplate(null);
     setShowLibrary(false);
   }, [pendingTemplate, applyTemplate]);
 
-  const runPush = useCallback(async (storagesList: StorageOption[] = storages) => {
+  const runPush = useCallback(async (storagesList: StorageOption[] = storages, opts?: PushOptions) => {
     setPushResult(null);
     setPushing(true);
     try {
       const storageType = storagesList.find(s => s.id === store.get().storageId)?.type;
-      const result = await pushModel(store, undefined, storageType);
+      const result = await pushModel(store, undefined, storageType, opts);
       setPushResult(result);
     } catch (e) {
-      setPushResult({ created: 0, updated: 0, failed: 0, relationshipsCreated: 0, relationshipsFailed: 0, errors: [(e as Error).message] });
+      setPushResult({ created: 0, updated: 0, failed: 0, blocked: 0, recreated: 0, relationshipsCreated: 0, relationshipsFailed: 0, relationshipsWithoutKeys: 0, published: 0, calculatedFailed: 0, incomplete: 0, errors: [(e as Error).message] });
     } finally {
       setPushing(false);
     }
@@ -518,6 +932,15 @@ function CanvasInner() {
     layoutAnimating ? "canvas-animating" : "",
   ].filter(Boolean).join(" ");
 
+  // Save-state caption for the top bar: empty canvas → hide; matches last saved
+  // snapshot → "saved"; otherwise "unsaved".
+  const saveState: "saved" | "unsaved" | null =
+    graph.nodes.length === 0
+      ? null
+      : savedModelId && savedSnapshot !== null && JSON.stringify(graph) === savedSnapshot
+        ? "saved"
+        : "unsaved";
+
   return (
     <div
       className="flex flex-col h-screen overflow-hidden bg-[#f7f8fa]"
@@ -530,24 +953,28 @@ function CanvasInner() {
         storages={storages}
         storageId={graph.storageId}
         onStorageChange={handleStorageChange}
+        onRefreshStorages={refreshStorages}
         onImport={() => setShowImport(true)}
         onImportFromOwox={() => setShowOwoxImport(true)}
         onExport={handleExport}
-        onExportSvg={handleExportSvg}
+        onExportImage={setPendingFormat}
         exportDisabled={graph.nodes.length === 0}
         onShare={handleShare}
         shareDisabled={graph.nodes.length === 0}
         onPush={handlePush}
+        onSignOut={handleSignOut}
         onLibrary={() => setShowLibrary(true)}
         onOpenGoal={() => setShowGoal(true)}
         goalSet={!!goal}
         questionsEnabled={questionsEnabled}
         signedIn={!!me}
         projectTitle={me?.projectTitle}
-        onSignIn={() => setSignIn({ mode: "connect" })}
-        onSignOut={handleSignOut}
+        modelName={modelName}
+        supabaseEnabled={supabaseEnabled}
+        accountEmail={account?.email ?? null}
+        onEnable={handleEnable}
       />
-      {shareToast && <ShareToast message={shareToast} onClose={() => setShareToast(null)} />}
+      {shareToast && <ShareToast message={typeof shareToast === "string" ? shareToast : shareToast.message} sticky={typeof shareToast !== "string"} onClose={() => setShareToast(null)} />}
       {pushing && (
         <div className="fixed bottom-4 right-4 z-50 bg-slate-900 text-white text-[13px] px-4 py-2 rounded-lg shadow-lg">
           Pushing to OWOX…
@@ -558,8 +985,11 @@ function CanvasInner() {
       )}
       {showImport && (
         <ImportDialog
+          initialUrl={okfInitialUrl ?? undefined}
+          hasExistingModel={graph.nodes.length > 0}
+          ossieDialect={ossieDialectForStorage(storages.find(s => s.id === graph.storageId)?.type)}
           onConfirm={handleImportConfirm}
-          onClose={() => setShowImport(false)}
+          onClose={() => { setShowImport(false); setOkfInitialUrl(null); }}
         />
       )}
       {showOwoxImport && (
@@ -575,8 +1005,17 @@ function CanvasInner() {
           storage={storages.find(s => s.id === graph.storageId) ?? null}
           counts={pushPreview(graph, graph.storageId)}
           onConfirm={() => { setShowPushConfirm(false); void runPush(); }}
+          onForcePush={() => { setShowPushConfirm(false); void runPush(storages, { force: true }); }}
           onChangeProject={handleChangeProject}
           onClose={() => setShowPushConfirm(false)}
+        />
+      )}
+      {pendingFormat !== null && (
+        <ImageBackgroundDialog
+          format={pendingFormat}
+          initial={imageBackground}
+          onConfirm={background => runExportImage(pendingFormat, background)}
+          onClose={() => setPendingFormat(null)}
         />
       )}
       {showClear && (
@@ -585,6 +1024,15 @@ function CanvasInner() {
           onDelete={clearCanvas}
           onExportAndDelete={handleExportAndClear}
           onClose={() => setShowClear(false)}
+        />
+      )}
+      {showNewModel && (
+        <NewModelDialog
+          counts={{ marts: graph.nodes.length, relationships: graph.edges.length }}
+          savedModel={!!savedModelId}
+          onStart={startNewModel}
+          onExportAndStart={exportAndStartNewModel}
+          onClose={() => setShowNewModel(false)}
         />
       )}
       {showWelcome && (
@@ -617,6 +1065,14 @@ function CanvasInner() {
           onClose={() => setShowGoal(false)}
         />
       )}
+      {historyDiff && (
+        <DiffDialog
+          prev={historyDiff.prev}
+          next={graph}
+          label={historyDiff.label}
+          onClose={() => setHistoryDiff(null)}
+        />
+      )}
       {signIn && (
         <SignInModal
           mode={signIn.mode}
@@ -627,7 +1083,7 @@ function CanvasInner() {
             const list = await loadStorages();
             if (mode === "push") {
               if (list.length === 0) {
-                setPushResult({ created: 0, updated: 0, failed: 0, relationshipsCreated: 0, relationshipsFailed: 0, errors: ["Couldn't load your OWOX storages — please try Push again."] });
+                setPushResult({ created: 0, updated: 0, failed: 0, blocked: 0, recreated: 0, relationshipsCreated: 0, relationshipsFailed: 0, relationshipsWithoutKeys: 0, published: 0, calculatedFailed: 0, incomplete: 0, errors: ["Couldn't load your OWOX storages — please try Push again."] });
                 return;
               }
               await runPush(list);
@@ -638,14 +1094,15 @@ function CanvasInner() {
       )}
 
       <div className="flex flex-1 min-h-0 relative">
-        {/* Left tool dock */}
-        <Dock activeTool={tool} onToolChange={handleToolChange} viewMode={viewMode} onToggleView={handleToggleView} onClear={() => setShowClear(true)} clearDisabled={graph.nodes.length === 0} />
-
         {/* React Flow canvas */}
         <div
           className={`flex-1 relative ${canvasClass}`}
           onDoubleClick={handleWrapperDoubleClick}
         >
+          {/* Tool dock — anchored to the canvas (not the outer row) so it sits
+              just inside the canvas edge and slides over as the rail opens. */}
+          <ModelTitleBlock name={modelName.trim() || DEFAULT_MODEL_NAME} onOpen={() => { panel.open("model"); setVisualRailId(null); }} />
+          <Dock activeTool={tool} onToolChange={handleToolChange} viewMode={viewMode} onToggleView={handleToggleView} onClear={() => setShowClear(true)} clearDisabled={graph.nodes.length === 0} relLabelMode={relLabelMode} onRelLabelModeChange={handleRelLabelModeChange} objHidden={objHidden} onObjHiddenChange={handleObjHiddenChange} />
           <ReactFlow
             nodes={rfNodes}
             edges={rfEdges}
@@ -721,56 +1178,96 @@ function CanvasInner() {
           )}
         </div>
 
-        {/* Right inspector drawer */}
-        <Inspector
-          selection={selection}
-          nodes={graph.nodes}
-          edges={graph.edges}
-          onUpdateNode={store.updateNode}
-          onUpdateEdge={store.updateEdge}
-          onClose={() => setSelection(null)}
-          goal={goal}
-          questionsEnabled={questionsEnabled}
-          onEditGoal={() => setShowGoal(true)}
-        />
+        {/* Right region: a unified Sheet hosting the active panel + the always-on icon rail */}
+        <ModelSheet
+          active={panel.active}
+          modal={panel.active !== "inspect"}
+          title={SHEET_TITLES[panel.active ?? "inspect"]}
+          onClose={() => { const wasInspect = panel.active === "inspect"; if (panel.active === "model" && !modelName.trim()) setModelName(DEFAULT_MODEL_NAME); panel.close(); if (wasInspect) setSelection(null); setVisualRailId(null); }}
+        >
+          {panel.active === "model" && (
+            <ModelPanel
+              name={modelName} onNameChange={setModelName}
+              description={graph.description ?? ""} onDescriptionChange={t => store.setDescription(t)}
+              martCount={graph.nodes.length} relCount={graph.edges.length}
+            />
+          )}
+          {panel.active === "inspect" && (
+            <Inspector
+              selection={selection}
+              nodes={graph.nodes}
+              edges={graph.edges}
+              onUpdateNode={store.updateNode}
+              onUpdateEdge={store.updateEdge}
+              onClose={() => { setSelection(null); panel.close(); }}
+              goal={goal}
+              questionsEnabled={questionsEnabled}
+              onEditGoal={() => setShowGoal(true)}
+              embedded
+            />
+          )}
+          {panel.active === "enable" && (
+            <EnablePanel
+              onGoogle={() => void signInWithGoogle()}
+              onGitHub={() => void signInWithGitHub()}
+              onEmail={(email) => signInWithEmail(email)}
+            />
+          )}
+          {panel.active === "account" && account && (
+            <AccountPanel
+              email={account.email ?? ""}
+              onMyModels={() => panel.open("models")}
+              onSignOut={() => { void accountSignOut(); setSavedModelId(null); panel.close(); }}
+            />
+          )}
+          {panel.active === "models" && account && (
+            <MyModelsPanel
+              models={savedModels}
+              currentModelId={savedModelId}
+              onOpen={id => void handleOpenModelById(id)}
+              onNew={() => { handleNewModel(); panel.close(); }}
+              onRename={(id, name) => void handleRenameModel(id, name)}
+              onDelete={id => void handleDeleteModel(id)}
+            />
+          )}
+          {panel.active === "history" && account && (
+            <HistoryPanel
+              versions={versions}
+              onCompare={id => void handleCompare(id)}
+              onRestore={id => void handleRestoreById(id)}
+              signedIn={!!account}
+            />
+          )}
+          {panel.active === "share" && (
+            <SharePanel
+              shareUrl={buildShareUrl(store.get(), modelName)}
+              onCopy={() => void handleShare()}
+              onExportImage={setPendingFormat}
+            />
+          )}
+        </ModelSheet>
+        <RightRail active={panel.active} onOpen={handleRailOpen} signedIn={!!account} highlightId={visualRailId} onSave={supabaseEnabled ? handleSave : undefined} saving={saving} saveState={saveState} />
       </div>
-    </div>
-  );
-}
-
-// ── Push result toast (sticky — dismissed by the user, not on a timer) ─────────
-function PushToast({ result, onClose }: { result: PushResult; onClose: () => void }) {
-  const hasFailures = result.failed > 0 || result.relationshipsFailed > 0;
-  const summary = `${result.created} mart${result.created === 1 ? "" : "s"} created`
-    + (result.relationshipsCreated ? `, ${result.relationshipsCreated} link${result.relationshipsCreated === 1 ? "" : "s"} created` : "")
-    + (hasFailures ? `, ${result.failed + result.relationshipsFailed} failed` : "");
-  return (
-    <div className={`fixed bottom-4 right-4 z-50 w-[420px] max-h-[60vh] overflow-y-auto rounded-xl shadow-2xl border text-[13px] ${hasFailures ? "bg-white border-red-300" : "bg-white border-emerald-300"}`}>
-      <div className="flex items-start gap-2 px-4 py-3 border-b border-slate-100">
-        <span className={`mt-[2px] h-2 w-2 rounded-full flex-shrink-0 ${hasFailures ? "bg-red-500" : "bg-emerald-500"}`} />
-        <div className="flex-1 font-semibold text-slate-800">
-          {hasFailures ? "Push completed with errors" : "Push complete"}
-          <div className="font-normal text-slate-500 text-[12px] mt-0.5">{summary}</div>
-        </div>
-        <button onClick={onClose} className="text-slate-400 hover:text-slate-700" title="Dismiss"><X size={16} /></button>
-      </div>
-      {result.errors.length > 0 && (
-        <ul className="px-4 py-2 flex flex-col gap-1.5">
-          {result.errors.map((err, i) => (
-            <li key={i} className="text-[12px] text-red-600 leading-snug break-words font-mono">{err}</li>
-          ))}
-        </ul>
-      )}
     </div>
   );
 }
 
 // ── Share confirmation toast (auto-dismisses) ─────────────────────────────────
-function ShareToast({ message, onClose }: { message: string; onClose: () => void }) {
+function ShareToast({ message, sticky, onClose }: { message: string; sticky?: boolean; onClose: () => void }) {
   useEffect(() => {
+    if (sticky) return;
     const t = setTimeout(onClose, 3500);
     return () => clearTimeout(t);
-  }, [onClose]);
+  }, [onClose, sticky]);
+  if (sticky) {
+    return (
+      <div role="status" className="fixed bottom-4 right-4 z-50 flex max-w-[420px] items-start gap-2 rounded-xl border border-amber-300 bg-white px-4 py-3 text-[13px] shadow-2xl">
+        <span className="mt-[5px] h-2 w-2 rounded-full bg-amber-500 flex-shrink-0" />
+        <span className="text-slate-800">{message}</span>
+        <button onClick={onClose} aria-label="Dismiss warning" className="ml-1 text-slate-400 hover:text-slate-700 leading-none cursor-pointer">✕</button>
+      </div>
+    );
+  }
   return (
     <div className="fixed bottom-4 right-4 z-50 flex items-center gap-2 rounded-xl border border-emerald-300 bg-white px-4 py-3 text-[13px] shadow-2xl">
       <span className="h-2 w-2 rounded-full bg-emerald-500 flex-shrink-0" />

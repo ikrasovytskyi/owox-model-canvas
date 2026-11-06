@@ -1,8 +1,9 @@
 interface PushConfirmDialogProps {
   projectTitle?: string;
   storage?: { title: string; type: string } | null;
-  counts: { marts: number; relationships: number };
+  counts: { marts: number; relationships: number; alreadyPushed: number; calculatedFields?: number; published?: number };
   onConfirm: () => void;        // proceed with the push
+  onForcePush: () => void;      // push again, re-creating marts already in OWOX
   onChangeProject: () => void;  // sign out (detaches from OWOX) + open sign-in
   onClose: () => void;          // cancel
 }
@@ -10,7 +11,12 @@ interface PushConfirmDialogProps {
 // Confirmation before pushing: shows exactly which project + storage the marts
 // will land in (the user kept pushing to the wrong storage), plus how many marts
 // and relationships will be sent. "Change project" detaches and re-signs-in.
-export function PushConfirmDialog({ projectTitle, storage, counts, onConfirm, onChangeProject, onClose }: PushConfirmDialogProps) {
+export function PushConfirmDialog({ projectTitle, storage, counts, onConfirm, onForcePush, onChangeProject, onClose }: PushConfirmDialogProps) {
+  // Marts already created in this project are skipped, which makes a plain push a
+  // no-op — misleading unless we say so. The escape hatch lives inside the warning
+  // (the button row is already full) and needs no second confirmation: this block
+  // IS the confirmation.
+  const nothingToPush = counts.marts === 0 && counts.relationships === 0;
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/40"
@@ -37,8 +43,34 @@ export function PushConfirmDialog({ projectTitle, storage, counts, onConfirm, on
         </div>
 
         <p className="text-[13px] font-medium text-slate-700">
-          {counts.marts} {counts.marts === 1 ? "mart" : "marts"} and {counts.relationships} {counts.relationships === 1 ? "relationship" : "relationships"} will be pushed.
+          {counts.marts} {counts.marts === 1 ? "mart" : "marts"}{(counts.calculatedFields ?? 0) > 0 ? "," : " and"} {counts.relationships} {counts.relationships === 1 ? "relationship" : "relationships"}
+          {(counts.calculatedFields ?? 0) > 0 && (
+            <> and {counts.calculatedFields} calculated {counts.calculatedFields === 1 ? "field" : "fields"}</>
+          )} will be pushed
+          {(counts.published ?? 0) > 0 && (
+            <>; {counts.published} {counts.published === 1 ? "mart" : "marts"} with an input source will be published</>
+          )}.
         </p>
+
+        {counts.alreadyPushed > 0 && (
+          <div className="flex flex-col gap-2.5 rounded-lg border border-[#f0c88a] bg-[#fdf6e7] px-4 py-3">
+            <p className="text-[13px] leading-[1.45] text-[#8a5a00]">
+              <span className="font-semibold">
+                {counts.alreadyPushed} {counts.alreadyPushed === 1 ? "mart is" : "marts are"} already created in this project
+              </span>
+              , so {counts.alreadyPushed === 1 ? "it is" : "they are"} skipped — unless {counts.alreadyPushed === 1 ? "it was" : "they were"} deleted
+              in OWOX, which Push checks for and repairs by {counts.alreadyPushed === 1 ? "re-creating it" : "re-creating them"}. Want{" "}
+              {counts.alreadyPushed === 1 ? "a mart that is still there" : "marts that are still there"} created again anyway? Force-push — anything
+              still present in OWOX is named and left alone, so this can't produce duplicates.
+            </p>
+            <button
+              onClick={onForcePush}
+              className="self-end text-[13px] font-[550] border border-[#e0a94a] bg-white text-[#8a5a00] rounded-lg px-3 py-[7px] cursor-pointer hover:bg-[#fbeed3]"
+            >
+              Force push to OWOX again
+            </button>
+          </div>
+        )}
 
         <div className="flex items-center justify-between gap-2">
           <button
@@ -56,7 +88,8 @@ export function PushConfirmDialog({ projectTitle, storage, counts, onConfirm, on
             </button>
             <button
               onClick={onConfirm}
-              className="text-[13px] font-[550] bg-[#1e88e5] text-white border border-[#1e88e5] rounded-lg px-4 py-[7px] cursor-pointer hover:bg-[#1976d2]"
+              disabled={nothingToPush}
+              className="text-[13px] font-[550] bg-[#1e88e5] text-white border border-[#1e88e5] rounded-lg px-4 py-[7px] cursor-pointer hover:bg-[#1976d2] disabled:opacity-45 disabled:cursor-not-allowed disabled:hover:bg-[#1e88e5]"
             >
               Push
             </button>

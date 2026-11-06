@@ -60,7 +60,7 @@ tags: ["owox", "sql"]
 The user pastes the whole thing into **Import**.
 
 ### B — ZIP bundle
-A folder with an `index.md` plus one `<slug>.md` per mart, zipped. This is exactly what **Export OKF** downloads, so anything the canvas exports round-trips back in.
+A folder with an `index.md` plus one `<slug>.md` per mart, zipped. The `description` in the frontmatter of `index.md` is the model description (edited in the Model sheet on the canvas); the stock text "Index of exported OWOX data marts." is ignored on import. This is exactly what **Export OKF** downloads, so anything the canvas exports round-trips back in.
 
 ---
 
@@ -110,11 +110,44 @@ SELECT id, customer_id, order_date, total FROM `project.dataset.orders`
 - Leave `**ID:**` and `**Storage:**` as `—` — the canvas fills them.
 
 ### `# Schema` (the mart's output fields)
-A 3-column table: **Column** (name in backticks), **Type**, **Description**.
+A 3-column table: **Column** (name in backticks), **Type**, **Description** — plus an optional **Alias** column (see below).
 - **Primary key:** start the Description with `PK.` — e.g. `PK. Unique id`. Mark exactly one PK per mart.
 - **Foreign key:** write `FK to [Target Title](./target-slug.md)` in the Description. (Helps relationships and documentation.)
-- **Allowed types only** (cross-storage set — do NOT use others like DATETIME):
-  `STRING` `INTEGER` `FLOAT` `NUMERIC` `BOOLEAN` `DATE` `TIME` `TIMESTAMP` `BYTES` `GEOGRAPHY` `VARIANT`
+- **Alias (optional):** add a 4th **Alias** column for a business-friendly field label — `| Column | Type | Alias | Description |`. Leave the cell empty for fields that don't need one. The canvas shows the alias instead of the raw column name on the node, and pushes it to OWOX. Export OKF only emits this column when at least one field has an alias.
+  ```
+  | Column | Type | Alias | Description |
+  |--------|------|-------|-------------|
+  | `id` | STRING | | PK. Unique order identifier |
+  | `total` | FLOAT | Order Total | Order total, gross |
+  ```
+- **Preferred types** (the set OWOX accepts, verified against its schema validation):
+  `STRING` `INTEGER` `FLOAT` `NUMERIC` `BOOLEAN` `DATE` `TIME` `DATETIME` `TIMESTAMP` `BYTES` `GEOGRAPHY` `JSON`
+  Other spellings are normalised on import — `int64`, `bool`, `text`, `decimal(10,2)`,
+  `timestamptz`, `ARRAY<STRING>` and Snowflake's `VARIANT` all land on the right type
+  (anything unrecognised becomes `STRING`), so a bundle never loses its schema to one odd cell.
+
+### `## Calculated fields` (optional) — formulas, as in OWOX Data Marts
+Place it after `# Schema` and before `## Definition` / `## Joins`. A calculated field has no warehouse column: OWOX computes it in the report query.
+- One `` ### `name` · TYPE · Metric|Column `` heading per field, then an optional `- **Alias:** Business name` line, an optional description, and ONE ```` ```sql ```` block with the formula.
+- Write plain warehouse SQL. Own fields by name; a joined mart's field as `alias.field`, where `alias` is the join alias from `## Joins`.
+- **Metric** = the formula aggregates (`SUM`, `COUNT`, `AVG`, …). **Column** = row-level. Never mix: `SUM(clicks) + impressions` is refused. The level in the heading is informational; the canvas re-derives it from the formula.
+- A joined field may only appear inside an aggregate, and one aggregate reads one mart.
+- Guard divisions: `SUM(a) / NULLIF(SUM(b), 0)`.
+- Calculated fields are never PK and never join keys — keep them out of the `# Schema` table.
+
+````
+## Calculated fields
+
+### `customer_countries` · INTEGER · Metric
+
+- **Alias:** Customer countries
+
+Distinct billing countries per order set.
+
+```sql
+COUNT(DISTINCT customers.country)
+```
+````
 
 ### `## Definition` (optional)
 A fenced code block; its meaning follows the Definition type:
@@ -126,7 +159,9 @@ A fenced code block; its meaning follows the Definition type:
 ### `## Joins` (relationships) — put on the SOURCE mart
 - One bullet per relationship: `- [Target Title](./target-slug.md) — ` + backticked key(s).
 - **Multiple keys:** comma-separate the backticked pairs — `` `a = a2`, `b = b2` ``.
+- **Alias (optional):** `` - [Customers](./customers.md) as `customers` — `customer_id = id` [N:1] ``. The alias is a SQL identifier (letters, digits, `_`, no leading digit) that formulas use as `customers.field`. Default = the target title in snake_case (`Order Items` → `order_items`).
 - **Cardinality (optional):** append `[1:1]`, `[1:N]`, `[N:1]` or `[N:N]` after the keys, oriented source → target — e.g. `` — `order_id = id` [N:1] ``. Visual only; ignored by OWOX.
+- **Description (optional):** an indented sub-bullet directly under the join line, on the source mart only: `` - Description: Each order belongs to one customer `` (two leading spaces, one line). It is the business meaning of the join, shared with AI assistants in OWOX.
 - **Bidirectional:** add a matching Joins line in the OTHER document with the key sides swapped. Renders as a double-headed arrow.
 
 ---
@@ -138,6 +173,8 @@ A fenced code block; its meaning follows the Definition type:
 - [ ] Join fields exist in **both** marts' `# Schema`.
 - [ ] Exactly **one** `PK.` field per mart; only **allowed types** used.
 - [ ] `ID` and `Storage` left as `—`.
+- [ ] Calculated fields live in `## Calculated fields`, **not** in the `# Schema` table.
+- [ ] Each formula is all-aggregate or all row-level; joined fields only inside aggregates; divisions use `NULLIF(…, 0)`.
 
 ---
 
@@ -211,13 +248,24 @@ tags: ["owox", "sql"]
 | `order_date` | DATE | Date the order was placed |
 | `total` | NUMERIC | Order total, gross |
 
+## Calculated fields
+
+### `aov` · NUMERIC · Metric
+
+Average order value.
+
+```sql
+SUM(total) / NULLIF(COUNT(DISTINCT id), 0)
+```
+
 ## Definition
 ```sql
 SELECT id, customer_id, order_date, total FROM `project.dataset.orders`
 ```
 
 ## Joins
-- [Customers](./customers.md) — `customer_id = id` [N:1]
+- [Customers](./customers.md) as `customers` — `customer_id = id` [N:1]
+  - Description: Each order belongs to one customer
 
 <!-- shop/order-items.md -->
 ---

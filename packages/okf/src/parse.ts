@@ -1,5 +1,6 @@
 import type { ModelGraph, ModelNode, ModelEdge, InputSource, Cardinality, SchemaField } from "./types";
 import { parseFrontmatter } from "./slug";
+import { normalizeFieldType } from "./fieldType";
 
 const FLIP_CARDINALITY: Record<Cardinality, Cardinality> = { "1:1": "1:1", "N:N": "N:N", "1:N": "N:1", "N:1": "1:N" };
 
@@ -9,9 +10,17 @@ function basename(path: string): string {
   return path.split(/[\\/]/).pop()!.replace(/\.md$/i, "");
 }
 
-export function parseBundle(files: Record<string, string>): ModelGraph {
+/** True only for the bundle's own index file (`index.md`, any folder, any case).
+ *  A suffix check would also swallow marts like `initiate-index.md`. */
+export function isBundleIndex(path: string): boolean {
+  return /\.md$/i.test(path) && basename(path).toLowerCase() === "index";
+}
+
+export function parseBundle(rawFiles: Record<string, string>): ModelGraph {
+  // Normalize CRLF/CR once so every regex below sees LF (`.` does not match `\r`).
+  const files = Object.fromEntries(Object.entries(rawFiles).map(([p, t]) => [p, t.replace(/\r\n?/g, "\n")]));
   const docs = Object.entries(files)
-    .filter(([p]) => p.endsWith(".md") && !p.endsWith("index.md"))
+    .filter(([p]) => p.endsWith(".md") && !isBundleIndex(p))
     .filter(([, text]) => isMartDoc(text));
   const nodes: ModelNode[] = []; const slugToKey = new Map<string, string>();
   const pkByKey = new Map<string, string | undefined>();
@@ -23,7 +32,7 @@ export function parseBundle(files: Record<string, string>): ModelGraph {
     const fileSlug = path.split("/").pop()!.replace(/\.md$/, "");
     const key = owox.key || fileSlug;
     slugToKey.set(fileSlug, key);
-    const schema = parseSchema(body);
+    const schema = [...parseSchema(body), ...parseCalculated(body)];
     pkByKey.set(key, schema.find(f => f.pk)?.name);
     const inputSource = (owox.inputSource || ov.definitionType || inferSource(data.tags) || sourceFromType(data.type) || "SQL") as InputSource;
     const owoxId = owox.id ?? (ov.id && ov.id !== "—" ? ov.id : null);
@@ -35,17 +44,24 @@ export function parseBundle(files: Record<string, string>): ModelGraph {
     });
   }
 
-  const raw: { from: string; to: string; keys: { left: string; right: string }[]; cardinality?: Cardinality }[] = [];
+  const raw: { from: string; to: string; keys: { left: string; right: string }[]; cardinality?: Cardinality; alias?: string; description?: string }[] = [];
   for (const [path, text] of docs) {
     const { data, body } = parseFrontmatter(text);
     const fromSlug = path.split("/").pop()!.replace(/\.md$/, "");
     const fromKey = (data.owox && data.owox.key) || fromSlug;
     const fromSchema = parseSchema(body);
+    let lastJoin: (typeof raw)[number] | null = null;
     for (const ln of body.split("\n")) {
+      const dm = ln.match(/^\s{2,}- Description:\s*(.+)$/);
+      if (dm) { if (lastJoin && !lastJoin.description) lastJoin.description = dm[1].trim(); continue; }
+      lastJoin = null;
       const m = ln.match(/^- \[.*?\]\(\.\/(.+?)\.md\)\s*(?:—|--)?\s*(.*)$/);
       if (!m) continue;
+      const am = m[2].match(/^as\s+`([^`]+)`\s*(?:—|--)?\s*/);
+      const alias = am ? am[1].trim() : undefined;
+      const rest = am ? m[2].slice(am[0].length) : m[2];
       const toKey = slugToKey.get(basename(m[1])); if (!toKey) continue;
-      let keys = [...m[2].matchAll(/`([^`]+?)\s*=\s*([^`]+?)`/g)].map(g => ({ left: g[1].trim(), right: g[2].trim() }));
+      let keys = [...rest.matchAll(/`([^`]+?)\s*=\s*([^`]+?)`/g)].map(g => ({ left: g[1].trim(), right: g[2].trim() }));
       if (keys.length === 0) {
         // Faithful-OWOX join: recover from a `FK to [Target]` note + target PK.
         const targetTitle = nodes.find(n => n.key === toKey)?.title ?? "";
@@ -53,9 +69,10 @@ export function parseBundle(files: Record<string, string>): ModelGraph {
         const rightPk = pkByKey.get(toKey);
         if (fkCol && rightPk) keys = [{ left: fkCol.name, right: rightPk }];
       }
-      const cm = m[2].match(/\[(1:1|1:N|N:1|N:N)\]/);
+      const cm = rest.match(/\[(1:1|1:N|N:1|N:N)\]/);
       const cardinality = cm ? (cm[1] as Cardinality) : undefined;
-      raw.push({ from: fromKey, to: toKey, keys, cardinality });
+      lastJoin = { from: fromKey, to: toKey, keys, cardinality, alias };
+      raw.push(lastJoin);
     }
   }
 
@@ -104,6 +121,8 @@ export function parseBundle(files: Record<string, string>): ModelGraph {
     const ex = seen.get(pairKey);
     if (ex) {
       ex.bidirectional = true;
+      if (ex.from !== r.from && r.alias) ex.reverseAlias = r.alias;
+      if (!ex.description && r.description) ex.description = r.description;
       if (!ex.cardinality && r.cardinality) {
         ex.cardinality = ex.from === r.from ? r.cardinality : FLIP_CARDINALITY[r.cardinality];
       }
@@ -111,6 +130,8 @@ export function parseBundle(files: Record<string, string>): ModelGraph {
     }
     const e: ModelEdge = { id: `e${edges.length + 1}`, from: r.from, to: r.to, keys: r.keys, bidirectional: false };
     if (r.cardinality) e.cardinality = r.cardinality;
+    if (r.alias) e.alias = r.alias;
+    if (r.description) e.description = r.description;
     seen.set(pairKey, e); edges.push(e);
   }
   const storageId = (docs[0] && (parseFrontmatter(docs[0][1]).data.owox || {}).storageId) || null;
@@ -149,34 +170,109 @@ function parseOverview(body: string): { id?: string; status?: string; definition
   return out;
 }
 
-function parseSchema(body: string): import("./types").SchemaField[] {
-  const out: import("./types").SchemaField[] = [];
-  const lines = body.split("\n"); let inSchema = false; let legacy = false;
+// Schema-table header labels. Producers pick their own wording and column count
+// — our own export writes `Column | Type | Description`, Google's regenerated
+// v0.2 bundles write `Field Name | Type | Mode | Description` — so every column
+// is located by label instead of assuming a fixed arity.
+const H_NAME = /^(column|column name|field|field name|name)$/i;
+const H_TYPE = /^(type|data type)$/i;
+const H_DESC = /^(description|desc|notes?|comment|comments)$/i;
+const H_PK = /^(pk|primary key)$/i;
+const H_ALIAS = /^alias$/i;
+
+// Cell text without the code ticks or the bold/italic markers a generator may
+// wrap it in (`**gross_amount**`, `*event_params.key*`).
+function cellText(s: string): string {
+  return s.replace(/`/g, "").trim().replace(/^\*{1,3}/, "").replace(/\*{1,3}$/, "").trim();
+}
+
+// A field name carries no prose, so every emphasis marker in it is markup —
+// including runs in the middle, which Google's nested-RECORD rows produce by
+// butting an italic parent against a bold leaf (`*inputs.***index**`). Stripped
+// only from the name cell: a description may legitimately contain an asterisk.
+// Underscores are always left alone, being valid in names (`events_`).
+function fieldName(s: string): string {
+  return s.replace(/\*/g, "").trim();
+}
+
+// `## Calculated fields`: one `### \`name\` · TYPE · Level` block per field, an
+// optional `- **Alias:**` line, description paragraphs, then one fenced SQL block.
+// The level is informational — it is re-derived from the formula.
+function parseCalculated(body: string): SchemaField[] {
+  const out: SchemaField[] = [];
+  let inSection = false;
+  let cur: SchemaField | null = null;
+  let desc: string[] = [];
+  let fence: string[] | null = null;
+  const flush = () => {
+    if (cur) { const d = desc.join("\n").trim(); if (d) cur.description = d; out.push(cur); }
+    cur = null; desc = []; fence = null;
+  };
+  for (const ln of body.split("\n")) {
+    if (fence) {
+      if (/^```\s*$/.test(ln)) { cur!.formula = fence.join("\n").trim(); fence = null; }
+      else fence.push(ln);
+      continue;
+    }
+    if (/^##\s+Calculated fields\s*$/i.test(ln)) { inSection = true; continue; }
+    if (!inSection) continue;
+    if (/^#{1,2}\s/.test(ln)) { flush(); inSection = false; continue; }
+    const h = ln.match(/^###\s+`([^`]+)`(?:\s*·\s*([^·]+?))?(?:\s*·\s*\w+)?\s*$/);
+    if (h) { flush(); cur = { name: h[1].trim(), type: normalizeFieldType(h[2] ?? "NUMERIC"), pk: false, formula: "" }; continue; }
+    if (!cur || cur.formula) continue;                 // text after the fence is ignored
+    if (/^```/.test(ln)) { fence = []; continue; }
+    const a = ln.match(/^- \*\*Alias:\*\*\s*(.+)$/);
+    if (a) { cur.alias = a[1].trim(); continue; }
+    desc.push(/^\\+(#|- \*\*Alias:\*\*)/.test(ln) ? ln.slice(1) : ln);   // undo the serializer's escape
+  }
+  flush();
+  return out;
+}
+
+function parseSchema(body: string): SchemaField[] {
+  const out: SchemaField[] = [];
+  const lines = body.split("\n"); let inSchema = false; let headerSeen = false;
+  // Column positions come from the header row, so the canonical
+  // `| Column | Type | Description |` form, the optional-Alias form, the legacy
+  // `| Column | Type | PK | Alias | Description |` form and Google's
+  // `| Field Name | Type | Mode | Description |` all parse without guessing at
+  // the arity. Name/type/description fall back to the first three columns for
+  // tables written without a header.
+  let idxName = 0, idxType = 1, idxDesc = 2, idxPk = -1, idxAlias = -1;
   for (const ln of lines) {
     if (/^##?\s+Schema/i.test(ln)) { inSchema = true; continue; }
     if (!inSchema) continue;
     if (/^##?\s+/.test(ln)) break;
     if (!/^\s*\|/.test(ln)) continue;
-    const cells = ln.split("|").slice(1, -1).map(c => c.trim());
+    const cells = ln.split("|").slice(1, -1).map(cellText);
     if (cells.length < 2) continue;
-    const name = cells[0].replace(/`/g, "").trim();
-    if (!name || name === "Column") {
-      legacy = cells.some(c => /^pk$/i.test(c) || /^alias$/i.test(c)); // header row
+    if (/^:?-+:?$/.test(cells[0])) continue; // separator
+    const labels = [H_NAME, H_TYPE, H_DESC, H_PK, H_ALIAS].map(re => cells.findIndex(c => re.test(c)));
+    const [hName, hType, hDesc, hPk, hAlias] = labels;
+    // Two recognized labels mark a header row. One is not enough — a real field
+    // can be called `name` or `type`, and by the time such a row is reached the
+    // table's own header has already been consumed.
+    if (!headerSeen && (!cells[0] || labels.filter(i => i >= 0).length >= 2)) {
+      headerSeen = true;
+      if (hName >= 0) idxName = hName;
+      if (hType >= 0) idxType = hType;
+      idxPk = hPk; idxAlias = hAlias;
+      idxDesc = hDesc >= 0 ? hDesc : (hPk === 2 || hAlias === 2 ? -1 : 2);
       continue;
     }
-    if (/^:?-+:?$/.test(name)) continue; // separator
-    const type = (cells[1] || "STRING").replace(/`/g, "").trim() || "STRING";
-    const field: import("./types").SchemaField = { name, type, pk: false };
-    if (legacy) {
-      field.pk = /^(✓|x|X)$/.test((cells[2] || "").trim());
-      const alias = (cells[3] || "").trim(); const desc = (cells[4] || "").trim();
-      if (alias) field.alias = alias;
-      if (desc) field.description = desc;
-    } else {
-      let desc = (cells[2] || "").trim();
-      if (/^PK\.\s*/.test(desc)) { field.pk = true; desc = desc.replace(/^PK\.\s*/, "").trim(); }
-      if (desc) field.description = desc;
-    }
+    const at = (i: number) => (i >= 0 ? cells[i] ?? "" : "");
+    const name = fieldName(at(idxName));
+    if (!name) continue;
+    // The type cell is free text in hand-written / LLM-generated bundles, so it
+    // is normalised rather than trusted: OWOX's schema enum is case-sensitive and
+    // rejects the whole mart schema over one `bool` or `decimal(10,2)`.
+    const field: SchemaField = { name, type: normalizeFieldType(at(idxType)), pk: false };
+    if (idxPk >= 0) field.pk = /^(✓|x|X)$/.test(at(idxPk));
+    let desc = at(idxDesc);
+    if (/^PK\.\s*/.test(desc)) { field.pk = true; desc = desc.replace(/^PK\.\s*/, "").trim(); }
+    const alias = at(idxAlias);
+    if (alias) field.alias = alias;
+    if (desc) field.description = desc;
     out.push(field);
   }
   if (out.length === 0) return parseSchemaBullets(body);
@@ -226,7 +322,9 @@ function parseFieldRest(name: string, rest: string): SchemaField {
     const colon = tail.indexOf(":");
     description = colon >= 0 ? tail.slice(colon + 1).trim() : "";
   }
-  const field: SchemaField = { name, type, pk: false };
+  // TYPE_WORDS deliberately accepts dialect spellings (INT64, BOOL, STRUCT …);
+  // normalisation maps them onto the canonical names OWOX actually accepts.
+  const field: SchemaField = { name, type: normalizeFieldType(type), pk: false };
   if (description) field.description = description;
   return field;
 }

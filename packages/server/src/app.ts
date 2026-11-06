@@ -1,4 +1,5 @@
-import Fastify from "fastify";
+import { isIP } from "node:net";
+import Fastify, { type FastifyRequest } from "fastify";
 import cookie from "@fastify/cookie";
 import helmet from "@fastify/helmet";
 import rateLimit from "@fastify/rate-limit";
@@ -7,11 +8,21 @@ import { dataMartRoutes } from "./routes/datamarts";
 import { metaRoutes } from "./routes/meta";
 import { questionsRoutes } from "./routes/questions";
 
+// The client IP for rate limiting. Render sits behind Cloudflare, which sets
+// CF-Connecting-IP to the real client and overwrites any value the client
+// sends. X-Forwarded-For is client-controlled: with trustProxy, req.ip is its
+// left-most entry, so keying on it lets anyone get a fresh bucket per request.
+// req.ip stays as the fallback (local runs, or if the header ever goes missing).
+export function clientIp(req: Pick<FastifyRequest, "headers" | "ip">): string {
+  const cf = req.headers["cf-connecting-ip"];
+  const v = typeof cf === "string" ? cf.trim() : "";
+  return v && isIP(v) ? v : req.ip;
+}
+
 export function buildApp() {
   // trustProxy: Render terminates TLS and forwards via its load balancer, so
-  // req.ip must be derived from X-Forwarded-For. Without this every client
-  // looks like the proxy IP and the per-IP rate limiter throttles everyone
-  // together.
+  // req.ip is derived from X-Forwarded-For. It is spoofable, so rate limits key
+  // on clientIp() instead; req.ip is only its fallback.
   const app = Fastify({ logger: false, trustProxy: true });
   app.register(cookie);
 
@@ -24,16 +35,49 @@ export function buildApp() {
   // inline style attributes; without it the canvas breaks. worker-src allows
   // blob: because PostHog session replay runs its recorder in a web worker.
   const POSTHOG_PROXY = "https://mrph.owox.com";
+
+  // Supabase ("sign up to save"): the browser talks to ONE project's Auth + REST
+  // API directly. Pin connect-src to that exact project origin — deliberately NOT
+  // a `*.supabase.co` wildcard — so an injected script can't exfiltrate the OWOX
+  // key / Supabase session to an attacker-controlled Supabase project. Read from
+  // the same env that configures the web build; unset → omitted (feature off, so
+  // the CSP stays as tight as possible). wss covers the (currently unused)
+  // realtime channel on that same origin.
+  const supabaseOrigin = (() => {
+    try { return new URL(process.env.VITE_SUPABASE_URL ?? "").origin; } catch { return null; }
+  })();
+  const supabaseConnect = supabaseOrigin
+    ? [supabaseOrigin, supabaseOrigin.replace(/^https:/, "wss:")]
+    : [];
+
   app.register(helmet, {
     contentSecurityPolicy: {
       directives: {
         defaultSrc: ["'self'"],
         baseUri: ["'self'"],
         scriptSrc: ["'self'", POSTHOG_PROXY],
-        styleSrc: ["'self'", "'unsafe-inline'"],
-        imgSrc: ["'self'", "data:", "blob:"],
-        fontSrc: ["'self'", "data:"],
-        connectSrc: ["'self'", POSTHOG_PROXY],
+        // fonts.googleapis.com serves the JetBrains Mono stylesheet linked from
+        // index.html; fonts.gstatic.com serves the font files it points to.
+        styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+        // Verified-bundle index images are raw <img> tags pointing at
+        // github.com/user-attachments/..., which 302-redirect to a short-lived
+        // signed asset URL on GitHub's S3 bucket. img-src is enforced on the
+        // redirect target too, so both hosts must be listed: github.com for the
+        // initial request and *.s3.amazonaws.com for the redirect. img-src can't
+        // execute code, so the S3 wildcard is a low-risk image-only allowance.
+        imgSrc: ["'self'", "data:", "blob:", "https://github.com", "https://*.s3.amazonaws.com"],
+        fontSrc: ["'self'", "data:", "https://fonts.gstatic.com"],
+        // raw.githubusercontent.com: client-side OKF-bundle import fetches the
+        // markdown files directly; api.github.com: fallback folder listing when a
+        // bundle has no index.md. Both are static/public read endpoints — no SSRF
+        // surface (the fetch is client-side to fixed hosts).
+        connectSrc: [
+          "'self'",
+          POSTHOG_PROXY,
+          ...supabaseConnect,
+          "https://raw.githubusercontent.com",
+          "https://api.github.com",
+        ],
         workerSrc: ["'self'", "blob:"],
         objectSrc: ["'none'"],
         frameAncestors: ["'none'"],
@@ -51,6 +95,7 @@ export function buildApp() {
     global: true,
     max: Number(process.env.RATE_LIMIT_MAX) || 1000,
     timeWindow: process.env.RATE_LIMIT_WINDOW || "1 minute",
+    keyGenerator: clientIp,
   });
 
   app.register(authRoutes);
@@ -61,7 +106,16 @@ export function buildApp() {
   // body) instead of Fastify's generic "Internal Server Error". Preserve any
   // explicit statusCode (e.g. the rate limiter's 429); default to 502 for
   // upstream OWOX failures, which carry no statusCode.
-  app.setErrorHandler((err: Error & { statusCode?: number }, _req, reply) => {
+  app.setErrorHandler((err: Error & { statusCode?: number; owoxStatus?: number }, _req, reply) => {
+    // An OWOX access token lives 15 minutes, our session up to 12 hours, so a
+    // long modelling session pushes with a dead token and every call comes back
+    // 401 "Authentication failed". Pass that through as a 401 tagged owox_auth
+    // (same tag as a missing session) — the browser re-connects with the stored
+    // key and retries, instead of showing one red line per mart. Other upstream
+    // failures stay 502: re-connecting would not fix them.
+    if (err.owoxStatus === 401) {
+      return reply.code(401).send({ error: err.message, code: "owox_auth" });
+    }
     const code = err.statusCode && err.statusCode >= 400 ? err.statusCode : 502;
     reply.code(code).send({ error: err.message || "Upstream error" });
   });

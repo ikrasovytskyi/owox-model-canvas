@@ -1,5 +1,6 @@
 import type { ModelGraph, ModelNode, Cardinality } from "./types";
 import { slugify, renderFrontmatter } from "./slug";
+import { isCalculated, formulaLevel } from "./formula";
 
 const FLIP_CARDINALITY: Record<Cardinality, Cardinality> = { "1:1": "1:1", "N:N": "N:N", "1:N": "N:1", "N:1": "1:N" };
 
@@ -21,7 +22,7 @@ export function serializeBundle(graph: ModelGraph, projectTitle = "Data Marts"):
   const rows = graph.nodes.map(n =>
     `| [${n.title}](./${slugByKey.get(n.key)}.md) | ${n.inputSource} | ${graph.storageId ?? "—"} |`).join("\n");
   files[`${folder}/index.md`] =
-    `---\n${renderFrontmatter({ type: "index", title: projectTitle, description: "Index of exported OWOX data marts.", tags: ["owox", "index"] })}\n---\n\n# ${projectTitle}\n\n| Data Mart | Type | Storage |\n|-----------|------|---------|\n${rows}\n`;
+    `---\n${renderFrontmatter({ type: "index", title: projectTitle, description: graph.description?.trim() ? graph.description : "Index of exported OWOX data marts.", tags: ["owox", "index"] })}\n---\n\n# ${projectTitle}\n\n| Data Mart | Type | Storage |\n|-----------|------|---------|\n${rows}\n`;
   return { files };
 }
 
@@ -56,16 +57,42 @@ function renderNode(n: ModelNode, g: ModelGraph, slugByKey: Map<string, string>)
   ].join("\n");
 
   const fk = fkColumns(n, g, slugByKey);
-  const schema = n.schema.length
-    ? "# Schema\n\n| Column | Type | Description |\n|--------|------|-------------|\n" +
-      n.schema.map(f => {
+  // The Alias column is emitted only when some field has one, so marts without
+  // aliases keep the leaner 3-column table.
+  const columns = n.schema.filter(f => !isCalculated(f));
+  const withAlias = columns.some(f => f.alias);
+  const header = withAlias
+    ? "| Column | Type | Alias | Description |\n|--------|------|-------|-------------|\n"
+    : "| Column | Type | Description |\n|--------|------|-------------|\n";
+  const schema = columns.length
+    ? "# Schema\n\n" + header +
+      columns.map(f => {
         const parts: string[] = [];
         if (f.pk) parts.push("PK.");
         if (f.description) parts.push(f.description);
         const ref = fk.get(f.name);
         if (ref) parts.push(`FK to [${ref.title}](./${ref.slug}.md)`);
-        return `| \`${f.name}\` | ${f.type} | ${parts.join(" ").trim()} |`;
+        const cells = withAlias
+          ? [`\`${f.name}\``, f.type, f.alias ?? "", parts.join(" ").trim()]
+          : [`\`${f.name}\``, f.type, parts.join(" ").trim()];
+        return `| ${cells.join(" | ")} |`;
       }).join("\n") + "\n\n"
+    : "";
+
+  // A line opening with three-plus backticks would close the fence early. A leading
+  // space keeps it inert (same rule as ODM's own OKF export of definitions).
+  const fenceSafe = (s: string) => s.replace(/^( {0,3})(`{3,})/gm, " $1$2");
+  const calc = n.schema.filter(isCalculated);
+  const calculated = calc.length
+    ? "## Calculated fields\n\n" + calc.map(f => {
+        const level = formulaLevel(f.formula!) === "metric" ? "Metric" : "Column";
+        const alias = f.alias ? `- **Alias:** ${f.alias}\n\n` : "";
+        // A description line that reads as a heading or the alias line would end the
+        // section or be taken as the alias on parse; a leading backslash keeps it inert.
+        const escapeLine = (l: string) => /^\\*(#|- \*\*Alias:\*\*)/.test(l) ? `\\${l}` : l;
+        const desc = f.description ? `${fenceSafe(f.description.trim()).split("\n").map(escapeLine).join("\n")}\n\n` : "";
+        return `### \`${f.name}\` · ${f.type} · ${level}\n\n${alias}${desc}\`\`\`sql\n${fenceSafe(f.formula!.trim())}\n\`\`\`\n`;
+      }).join("\n") + "\n"
     : "";
 
   const definition = n.definition && n.definition.trim()
@@ -82,9 +109,12 @@ function renderNode(n: ModelNode, g: ModelGraph, slugByKey: Map<string, string>)
         const cond = keys.map(k => `\`${k.left} = ${k.right}\``).join(", ");
         const card = e.cardinality ? (forward ? e.cardinality : FLIP_CARDINALITY[e.cardinality]) : undefined;
         const suffix = card ? ` [${card}]` : "";
-        return `- [${other.title}](./${slugByKey.get(otherKey)}.md) — ${cond}${suffix}`;
+        const alias = forward ? e.alias : e.reverseAlias;
+        const as = alias ? ` as \`${alias}\`` : "";
+        const desc = forward && e.description?.trim() ? `\n  - Description: ${e.description.replace(/\s*\n\s*/g, " ").trim()}` : "";
+        return `- [${other.title}](./${slugByKey.get(otherKey)}.md)${as} — ${cond}${suffix}${desc}`;
       }).join("\n") + "\n"
     : "";
 
-  return `---\n${fm}\n---\n\n# ${n.title}\n${n.description ? "\n" + n.description + "\n" : ""}\n${overview}${schema}${definition}${joins}`;
+  return `---\n${fm}\n---\n\n# ${n.title}\n${n.description ? "\n" + n.description + "\n" : ""}\n${overview}${schema}${calculated}${definition}${joins}`;
 }

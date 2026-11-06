@@ -1,0 +1,42 @@
+---
+title: "Reviews"
+description: |
+  One row per review left after a fulfilled [order](./orders.md) — the marketplace's trust signal. Only a
+  minority of completed orders are ever reviewed, since reviewing is voluntary, and ratings
+  follow the familiar J-shape: mostly five stars, a hard bump at one star, little in between.
+  The reviewer role separates the buyer's rating of the seller from the seller's rating of
+  the buyer, and the complaint flag — concentrated in the low ratings — marks where trust is
+  breaking down.
+tags: ["owox"]
+type: "OWOX Data Mart"
+timestamp: 2026-10-20T15:40:03.000Z
+---
+
+# Schema
+
+| Column | Type | Alias | Description |
+|--------|------|-------|-------------|
+| `review_id` | STRING | Review ID | PK. Unique review identifier. |
+| `order_id` | STRING | Order ID | Order the review relates to (always a fulfilled order). FK to [Orders](./orders.md) |
+| `reviewer_role` | STRING | Reviewer Role | Side that left the review: buyer or seller. |
+| `rating` | INTEGER | Rating | Star rating 1–5 for the order. |
+| `created_at` | TIMESTAMP | Created At | When the review was submitted. |
+| `has_complaint` | BOOLEAN | Has Complaint | Whether the review flags a complaint (concentrated in 1–2 star ratings). |
+
+# Example Questions
+
+- What is our review coverage of fulfilled `orders`, and does the rating distribution look healthy or is a `category` dragging the average down?
+- Which `sellers` or `categories` attract the most complaints relative to their `order` volume?
+- Do low ratings and complaints cluster around the same `sellers` that later go dormant?
+
+## Joins
+
+- [Orders](./orders.md) — `order_id = order_id` [N:1] — The fulfilled order being reviewed.
+  - [Orders Buyer](./buyer.md) — The buyer who left the review.
+  - [Orders Category](./category.md) — The category of the reviewed order.
+  - [Orders Listings](./listings.md) — The listing that was reviewed.
+    - [Listing Category](./category.md) — The category the reviewed listing is filed under.
+    - [Listing Seller](./seller.md) — The seller who owns the reviewed listing.
+      - [Listing Seller Category](./category.md) — The primary category of that listing's seller.
+  - [Orders Seller](./seller.md) — The seller being reviewed.
+    - [Seller Category](./category.md) — The primary category of the reviewed seller.

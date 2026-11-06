@@ -21,6 +21,16 @@ describe("selectMartIds", () => {
     expect(selectMartIds(base, "with-relationships")).toEqual(new Set(["a", "b"])));
 });
 
+describe("payloadToGraph description", () => {
+  it("takes the first relationship's description, falling back to the reverse one", () => {
+    const rel = (s: string, t: string, description?: string) => ({ sourceId: s, targetId: t, joinConditions: [{ sourceFieldName: "x", targetFieldName: "y" }], ...(description ? { description } : {}) });
+    const p = (rels: ImportPayload["relationships"]): ImportPayload => ({ ...base, relationships: rels });
+    expect(payloadToGraph(p([rel("a", "b", "first"), rel("b", "a", "second")]), "all").edges[0].description).toBe("first");
+    expect(payloadToGraph(p([rel("a", "b"), rel("b", "a", "second")]), "all").edges[0].description).toBe("second");
+    expect(payloadToGraph(p([rel("a", "b")]), "all").edges[0].description).toBeUndefined();
+  });
+});
+
 describe("payloadToGraph", () => {
   it("marts become created nodes with owoxId + owoxStorageId", () => {
     const g = payloadToGraph(base, "all");
@@ -112,5 +122,72 @@ describe("mergeGraphs", () => {
     const newEdge = graph.edges.find(e => e.id !== "e1")!;
     expect(newEdge.id).toBe("e2");
     expect([newEdge.from, newEdge.to].sort()).toEqual(["n1", c.key].sort());
+  });
+});
+
+describe("payloadToGraph formulas and aliases", () => {
+  it("keeps formulas and maps aliases, incl. the reverse alias of a collapsed pair", () => {
+    const payload = {
+      storageId: "st", total: 2, truncated: false,
+      marts: [
+        { id: "a", title: "Orders", inputSource: "TABLE" as const, definition: null,
+          schema: [{ name: "id", type: "INTEGER", pk: true }, { name: "aov", type: "NUMERIC", pk: false, formula: "SUM(x)" }] },
+        { id: "b", title: "Customers", inputSource: "TABLE" as const, definition: null, schema: [{ name: "id", type: "INTEGER", pk: true }] },
+      ],
+      relationships: [
+        { sourceId: "a", targetId: "b", targetAlias: "cust", joinConditions: [{ sourceFieldName: "id", targetFieldName: "id" }] },
+        { sourceId: "b", targetId: "a", targetAlias: "ord", joinConditions: [{ sourceFieldName: "id", targetFieldName: "id" }] },
+      ],
+    };
+    const g = payloadToGraph(payload, "all");
+    expect(g.nodes[0].schema[1]).toEqual({ name: "aov", type: "NUMERIC", pk: false, formula: "SUM(x)" });
+    expect(g.edges).toHaveLength(1);
+    expect(g.edges[0]).toMatchObject({ bidirectional: true, alias: "cust", reverseAlias: "ord" });
+  });
+});
+
+describe("mergeGraphs description", () => {
+  it("fills a missing description on a paired existing edge, never overwrites one", () => {
+    const n = (key: string, id: string) => ({ key, title: id, inputSource: "SQL" as const, schema: [], position: { x: 0, y: 0 }, status: "created" as const, owoxId: id });
+    const mk = (description?: string): ModelGraph => ({ storageId: "st_1", nodes: [n("n1", "a"), n("n2", "b")],
+      edges: [{ id: "e1", from: "n1", to: "n2", keys: [{ left: "x", right: "y" }], bidirectional: false, ...(description ? { description } : {}) }] });
+    const incoming = payloadToGraph({ ...base, relationships: [{ sourceId: "a", targetId: "b", description: "new", joinConditions: [{ sourceFieldName: "x", targetFieldName: "y" }] }] }, "all");
+    expect(mergeGraphs(mk(), incoming).graph.edges[0].description).toBe("new");
+    expect(mergeGraphs(mk("mine"), incoming).graph.edges[0].description).toBe("mine");
+  });
+});
+
+describe("mergeGraphs model description", () => {
+  it("keeps the current model description", () => {
+    const cur: ModelGraph = { storageId: "s", nodes: [], edges: [], description: "mine" };
+    const inc: ModelGraph = { storageId: "s", nodes: [], edges: [], description: "theirs" };
+    expect(mergeGraphs(cur, inc).graph.description).toBe("mine");
+  });
+});
+
+describe("mergeGraphs aliases", () => {
+  const n = (key: string, id: string) => ({ key, title: id, inputSource: "SQL" as const, schema: [], position: { x: 0, y: 0 }, status: "created" as const, owoxId: id });
+  const keys = [{ left: "x", right: "y" }];
+  const rel = (sourceId: string, targetId: string, targetAlias?: string) => ({ sourceId, targetId, ...(targetAlias ? { targetAlias } : {}), joinConditions: [{ sourceFieldName: "x", targetFieldName: "y" }] });
+
+  it("refreshes the aliases of an edge already on the canvas from OWOX", () => {
+    const cur: ModelGraph = { storageId: "st_1", nodes: [n("n1", "a"), n("n2", "b")],
+      edges: [{ id: "e1", from: "n1", to: "n2", keys, bidirectional: true, alias: "old_b", reverseAlias: "old_a" }] };
+    const inc = payloadToGraph({ ...base, relationships: [rel("a", "b", "new_b"), rel("b", "a", "new_a")] }, "all");
+    expect(mergeGraphs(cur, inc).graph.edges[0]).toMatchObject({ from: "n1", to: "n2", alias: "new_b", reverseAlias: "new_a" });
+  });
+
+  it("maps the aliases onto an edge drawn in the opposite direction", () => {
+    const cur: ModelGraph = { storageId: "st_1", nodes: [n("n1", "a"), n("n2", "b")],
+      edges: [{ id: "e1", from: "n2", to: "n1", keys, bidirectional: true, alias: "old_a", reverseAlias: "old_b" }] };
+    const inc = payloadToGraph({ ...base, relationships: [rel("a", "b", "new_b"), rel("b", "a", "new_a")] }, "all");
+    expect(mergeGraphs(cur, inc).graph.edges[0]).toMatchObject({ from: "n2", to: "n1", alias: "new_a", reverseAlias: "new_b" });
+  });
+
+  it("keeps the current alias when OWOX sends none", () => {
+    const cur: ModelGraph = { storageId: "st_1", nodes: [n("n1", "a"), n("n2", "b")],
+      edges: [{ id: "e1", from: "n1", to: "n2", keys, bidirectional: false, alias: "mine" }] };
+    const inc = payloadToGraph({ ...base, relationships: [rel("a", "b")] }, "all");
+    expect(mergeGraphs(cur, inc).graph.edges[0].alias).toBe("mine");
   });
 });

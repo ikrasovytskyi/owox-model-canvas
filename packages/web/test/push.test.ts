@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from "vitest";
 import { pushModel, pushPreview } from "../src/sync/push";
 import { createModelStore } from "../src/state/model";
-import type { ModelGraph } from "@mc/okf";
+import type { ModelGraph, ModelEdge } from "@mc/okf";
 
 describe("pushPreview", () => {
   const mk = (over: Partial<ModelGraph>): ModelGraph => ({ storageId: "st_1", nodes: [], edges: [], ...over });
@@ -36,6 +36,48 @@ describe("pushPreview", () => {
       edges: [{ id: "e1", from: "n1", to: "n2", keys: [], bidirectional: false, existing: true }],
     });
     expect(pushPreview(staleEnd, "st_1").relationships).toBe(1);
+  });
+  it("reports how many marts are already live here, so the dialog can explain the skip", () => {
+    const live = { inputSource: "SQL" as const, schema: [], position: { x: 0, y: 0 }, status: "created" as const };
+    const g = mk({ nodes: [
+      { key: "n1", title: "A", ...live, owoxId: "a", owoxStorageId: "st_1" },
+      { key: "n2", title: "B", ...live, owoxId: "b", owoxStorageId: "st_1" },
+      { key: "n3", title: "C", ...live, owoxId: "c", owoxStorageId: "OLD" }, // other storage → not "already pushed here"
+      { key: "n4", title: "D", inputSource: "SQL", schema: [], position: { x: 0, y: 0 }, status: "pending" },
+    ] });
+    expect(pushPreview(g, "st_1").alreadyPushed).toBe(2);
+    expect(pushPreview(g, "st_1").marts).toBe(2); // n3 + n4
+  });
+
+  it("counts calculated fields of marts that will be pushed", () => {
+    const g = mk({ nodes: [
+      { key: "n1", title: "A", inputSource: "SQL", position: { x: 0, y: 0 }, status: "pending",
+        schema: [{ name: "a", type: "STRING", pk: false }, { name: "m", type: "NUMERIC", pk: false, formula: "SUM(a)" }] },
+      { key: "n2", title: "B", inputSource: "SQL", position: { x: 0, y: 0 }, status: "created", owoxId: "b", owoxStorageId: "st_1",
+        schema: [{ name: "m", type: "NUMERIC", pk: false, formula: "SUM(a)" }] },
+    ] });
+    expect(pushPreview(g, "st_1").calculatedFields).toBe(1);
+  });
+
+  it("counts marts that will be published (those with an input source to send)", () => {
+    const g = mk({ nodes: [
+      { key: "n1", title: "A", inputSource: "VIEW", definition: "p.d.v", position: { x: 0, y: 0 }, status: "pending", schema: [] },
+      { key: "n2", title: "B", inputSource: "SQL", position: { x: 0, y: 0 }, status: "pending", schema: [] },
+      { key: "n3", title: "C", inputSource: "VIEW", definition: "p.d.w", position: { x: 0, y: 0 }, status: "created", owoxId: "c", owoxStorageId: "st_1", schema: [] },
+    ] });
+    expect(pushPreview(g, "st_1").published).toBe(1);
+  });
+
+  it("does not count calculated fields with a blank name or formula", () => {
+    const g = mk({ nodes: [
+      { key: "n1", title: "A", inputSource: "SQL", position: { x: 0, y: 0 }, status: "pending",
+        schema: [
+          { name: "ok", type: "NUMERIC", pk: false, formula: "SUM(a)" },
+          { name: "", type: "NUMERIC", pk: false, formula: "SUM(a)" },
+          { name: "blank", type: "NUMERIC", pk: false, formula: "  " },
+        ] },
+    ] });
+    expect(pushPreview(g, "st_1").calculatedFields).toBe(1);
   });
 });
 
@@ -92,6 +134,26 @@ describe("pushModel", () => {
     await pushModel(s, apiMock as any, "GOOGLE_BIGQUERY");
     const field = bodies["/api/data-marts/owox_a/schema"].schema.fields[0];
     expect(field).toMatchObject({ name: "id", alias: "user_id", description: "Unique id", isPrimaryKey: true });
+  });
+
+  it("derives the schema discriminator by storage engine, stripping LEGACY_/GOOGLE_/AWS_ prefixes", async () => {
+    const cases: Array<[string, string]> = [
+      ["GOOGLE_BIGQUERY", "bigquery-data-mart-schema"],
+      ["LEGACY_GOOGLE_BIGQUERY", "bigquery-data-mart-schema"],
+      ["AWS_ATHENA", "athena-data-mart-schema"],
+    ];
+    for (const [storageType, expected] of cases) {
+      const s = createModelStore({ storageId: "stor_1" });
+      const n = s.addNode({ x: 0, y: 0 });
+      s.updateNode(n.key, { schema: [{ name: "id", type: "STRING", pk: true }] });
+      const bodies: Record<string, any> = {};
+      const apiMock = vi.fn(async (path: string, init?: any) => {
+        if (init?.body) bodies[path] = JSON.parse(init.body);
+        return { id: "owox_a" };
+      });
+      await pushModel(s, apiMock as any, storageType);
+      expect(bodies["/api/data-marts/owox_a/schema"].schema.type).toBe(expected);
+    }
   });
 
   it("marks a node error on failure and counts it", async () => {
@@ -187,6 +249,155 @@ describe("pushModel", () => {
     expect(res.relationshipsCreated).toBeGreaterThan(0);
   });
 
+  // A forced push checks what is actually in OWOX first (GET /api/data-marts),
+  // so it can refuse to duplicate a mart the user did not in fact delete.
+  const forceApi = (liveMarts: Array<{ id: string; title: string; status?: string }>, calls: string[] = []) =>
+    vi.fn(async (path: string, init?: any) => {
+      const method = init?.method ?? "GET";
+      calls.push(`${method} ${path}`);
+      if (path === "/api/data-marts" && method === "GET") return liveMarts;
+      return { id: "fresh_id" };
+    });
+
+  it("force re-creates a mart that is gone from OWOX", async () => {
+    const s = createModelStore({ storageId: "stor_1" });
+    s.set({
+      storageId: "stor_1",
+      nodes: [
+        { key: "n1", title: "Orders", inputSource: "SQL", schema: [], position: { x: 0, y: 0 }, status: "created", owoxId: "gone_id", owoxStorageId: "stor_1" },
+      ],
+      edges: [],
+    });
+    const calls: string[] = [];
+    const res = await pushModel(s, forceApi([{ id: "other_id", title: "Sessions" }], calls) as any, undefined, { force: true });
+    expect(calls).toContain("POST /api/data-marts");
+    expect(res.created).toBe(1);
+    expect(res.blocked).toBe(0);
+    expect(s.get().nodes[0].owoxId).toBe("fresh_id"); // the old id pointed at a deleted mart
+    expect(s.get().nodes[0].status).toBe("created");
+  });
+
+  it("force refuses to duplicate a mart that still exists in OWOX, naming its status", async () => {
+    const s = createModelStore({ storageId: "stor_1" });
+    s.set({
+      storageId: "stor_1",
+      nodes: [
+        { key: "n1", title: "Orders", inputSource: "SQL", schema: [], position: { x: 0, y: 0 }, status: "created", owoxId: "still_there", owoxStorageId: "stor_1" },
+      ],
+      edges: [],
+    });
+    const calls: string[] = [];
+    const res = await pushModel(s, forceApi([{ id: "still_there", title: "Orders", status: "DRAFT" }], calls) as any, undefined, { force: true });
+    expect(calls).not.toContain("POST /api/data-marts"); // no duplicate created
+    expect(res.created).toBe(0);
+    expect(res.blocked).toBe(1);
+    expect(res.failed).toBe(0); // nothing broke — we deliberately held back
+    expect(res.errors[0]).toMatch(/Orders.*still exists in OWOX.*DRAFT/i);
+    expect(s.get().nodes[0].status).toBe("created"); // it IS in OWOX, so the green dot is honest
+    expect(s.get().nodes[0].owoxId).toBe("still_there");
+  });
+
+  it("force holds back the blocked marts but pushes the deleted ones", async () => {
+    const s = createModelStore({ storageId: "stor_1" });
+    s.set({
+      storageId: "stor_1",
+      nodes: [
+        { key: "n1", title: "Orders", inputSource: "SQL", schema: [], position: { x: 0, y: 0 }, status: "created", owoxId: "still_there", owoxStorageId: "stor_1" },
+        { key: "n2", title: "Customers", inputSource: "SQL", schema: [], position: { x: 100, y: 0 }, status: "created", owoxId: "gone", owoxStorageId: "stor_1" },
+      ],
+      edges: [],
+    });
+    const bodies: string[] = [];
+    const apiMock = vi.fn(async (path: string, init?: any) => {
+      if (path === "/api/data-marts" && (init?.method ?? "GET") === "GET") return [{ id: "still_there", title: "Orders", status: "PUBLISHED" }];
+      if (path === "/api/data-marts") bodies.push(String(init?.body));
+      return { id: "fresh_id" };
+    });
+    const res = await pushModel(s, apiMock as any, undefined, { force: true });
+    expect(res.created).toBe(1);
+    expect(res.blocked).toBe(1);
+    expect(bodies).toHaveLength(1);
+    expect(bodies[0]).toContain("Customers"); // only the deleted one was recreated
+  });
+
+  it("force does not re-push a relationship between two blocked marts", async () => {
+    const s = createModelStore({ storageId: "stor_1" });
+    s.set({
+      storageId: "stor_1",
+      nodes: [
+        { key: "n1", title: "Orders", inputSource: "SQL", schema: [{ name: "customer_id", type: "STRING", pk: false }], position: { x: 0, y: 0 }, status: "created", owoxId: "live_a", owoxStorageId: "stor_1" },
+        { key: "n2", title: "Customers", inputSource: "SQL", schema: [{ name: "id", type: "STRING", pk: true }], position: { x: 100, y: 0 }, status: "created", owoxId: "live_b", owoxStorageId: "stor_1" },
+      ],
+      edges: [
+        { id: "e1", from: "n1", to: "n2", keys: [{ left: "customer_id", right: "id" }], bidirectional: false, existing: true },
+      ],
+    });
+    const calls: string[] = [];
+    const res = await pushModel(
+      s,
+      forceApi([{ id: "live_a", title: "Orders", status: "DRAFT" }, { id: "live_b", title: "Customers", status: "DRAFT" }], calls) as any,
+      undefined,
+      { force: true },
+    );
+    expect(calls.filter(c => c.includes("/relationships"))).toHaveLength(0);
+    expect(res.blocked).toBe(2);
+    expect(res.relationshipsCreated).toBe(0);
+  });
+
+  it("force pushes an existing edge once both endpoints were re-created", async () => {
+    const s = createModelStore({ storageId: "stor_1" });
+    s.set({
+      storageId: "stor_1",
+      nodes: [
+        { key: "n1", title: "Orders", inputSource: "SQL", schema: [{ name: "customer_id", type: "STRING", pk: false }], position: { x: 0, y: 0 }, status: "created", owoxId: "old_a", owoxStorageId: "stor_1" },
+        { key: "n2", title: "Customers", inputSource: "SQL", schema: [{ name: "id", type: "STRING", pk: true }], position: { x: 100, y: 0 }, status: "created", owoxId: "old_b", owoxStorageId: "stor_1" },
+      ],
+      edges: [
+        { id: "e1", from: "n1", to: "n2", keys: [{ left: "customer_id", right: "id" }], bidirectional: false, existing: true },
+      ],
+    });
+    const calls: string[] = [];
+    const res = await pushModel(s, forceApi([], calls) as any, undefined, { force: true }); // OWOX is empty — both were deleted
+    expect(calls.filter(c => c.includes("/relationships"))).toHaveLength(1);
+    expect(res.relationshipsCreated).toBe(1);
+  });
+
+  it("force aborts without pushing anything when it cannot check what is in OWOX", async () => {
+    const s = createModelStore({ storageId: "stor_1" });
+    s.set({
+      storageId: "stor_1",
+      nodes: [
+        { key: "n1", title: "Orders", inputSource: "SQL", schema: [], position: { x: 0, y: 0 }, status: "created", owoxId: "a", owoxStorageId: "stor_1" },
+      ],
+      edges: [],
+    });
+    const calls: string[] = [];
+    const apiMock = vi.fn(async (path: string, init?: any) => {
+      calls.push(`${init?.method ?? "GET"} ${path}`);
+      if (path === "/api/data-marts" && (init?.method ?? "GET") === "GET") throw new Error("HTTP 500");
+      return { id: "fresh_id" };
+    });
+    const res = await pushModel(s, apiMock as any, undefined, { force: true });
+    expect(calls).not.toContain("POST /api/data-marts"); // duplicates are unrecoverable, so don't guess
+    expect(res.created).toBe(0);
+    expect(res.errors[0]).toMatch(/could not check|HTTP 500/i);
+  });
+
+  // A normal push now lists the project's marts too: the local "already created"
+  // flag is not evidence that the mart still exists (it can be deleted in OWOX).
+  it("lists OWOX marts on a normal push to verify the ids it holds", async () => {
+    const s = createModelStore({ storageId: "stor_1" });
+    s.addNode({ x: 0, y: 0 });
+    const calls: string[] = [];
+    const apiMock = vi.fn(async (path: string, init?: any) => {
+      calls.push(`${init?.method ?? "GET"} ${path}`);
+      if (path === "/api/data-marts" && (init?.method ?? "GET") === "GET") return [];
+      return { id: "owox_a" };
+    });
+    await pushModel(s, apiMock as any);
+    expect(calls).toContain("GET /api/data-marts");
+  });
+
   it("uses an underscore identifier (not a hyphenated slug) for targetAlias", async () => {
     const s = createModelStore({ storageId: "stor_1" });
     s.set({
@@ -238,5 +449,552 @@ describe("pushModel", () => {
     const apiMock = vi.fn(async () => ({ id: "owox_rel" }));
     await pushModel(s, apiMock as any);
     expect(s.get().nodes.find(n => n.key === "newobj")!.schema.find(f => f.name === "id")!.type).toBe("INTEGER");
+  });
+
+  // A link drawn on the canvas starts with no join keys. OWOX accepts a
+  // relationship with joinConditions: [] (confirmed live: 201) and shows it as
+  // "Join not configured", so the link is pushed instead of reported as an error.
+  it("pushes a keyless edge as an unconfigured join instead of failing it", async () => {
+    const s = createModelStore({ storageId: "stor_1" });
+    s.set({
+      storageId: "stor_1",
+      nodes: [
+        { key: "n1", title: "Session", inputSource: "SQL", schema: [{ name: "id", type: "STRING", pk: true }], position: { x: 0, y: 0 }, status: "created", owoxId: "owox_a", owoxStorageId: "stor_1" },
+        { key: "n2", title: "Room", inputSource: "SQL", schema: [{ name: "id", type: "STRING", pk: true }], position: { x: 100, y: 0 }, status: "created", owoxId: "owox_b", owoxStorageId: "stor_1" },
+      ],
+      edges: [{ id: "e1", from: "n1", to: "n2", keys: [{ left: "", right: "" }], bidirectional: false }],
+    });
+    const bodies: any[] = [];
+    const apiMock = vi.fn(async (path: string, init?: any) => {
+      if (path.includes("/relationships") && init?.body) bodies.push(JSON.parse(init.body));
+      return { id: "owox_rel" };
+    });
+    const res = await pushModel(s, apiMock as any);
+    expect(bodies).toHaveLength(1);
+    // The field must be present and an array — OWOX 400s when it is omitted.
+    expect(bodies[0].joinConditions).toEqual([]);
+    expect(bodies[0].targetAlias).toBe("room");
+    expect(res.relationshipsCreated).toBe(1);
+    expect(res.relationshipsWithoutKeys).toBe(1);
+    expect(res.relationshipsFailed).toBe(0);
+    expect(res.errors).toEqual([]);
+  });
+
+  it("still fails a link whose mart was never created", async () => {
+    const s = createModelStore({ storageId: "stor_1" });
+    s.set({
+      storageId: "stor_1",
+      nodes: [
+        { key: "n1", title: "Session", inputSource: "SQL", schema: [], position: { x: 0, y: 0 }, status: "created", owoxId: "owox_a", owoxStorageId: "stor_1" },
+        { key: "n2", title: "Room", inputSource: "SQL", schema: [], position: { x: 100, y: 0 }, status: "pending", owoxId: null },
+      ],
+      edges: [{ id: "e1", from: "n1", to: "n2", keys: [], bidirectional: false }],
+    });
+    const apiMock = vi.fn(async (path: string) => {
+      if (path === "/api/data-marts") throw new Error("boom"); // n2 never gets an id
+      return { id: "owox_rel" };
+    });
+    const res = await pushModel(s, apiMock as any);
+    expect(res.relationshipsCreated).toBe(0);
+    expect(res.relationshipsFailed).toBe(1);
+    expect(res.errors.some(e => /both marts must be created first/.test(e))).toBe(true);
+  });
+
+  // ── ghosts: marts we think we created, but OWOX no longer has ────────────────
+  // Reported case: a model imported from OWOX (or pushed earlier), then deleted in
+  // OWOX. The canvas kept the stale owoxId, the skip fired on local state alone,
+  // and the relationship POST 404'd against a mart that no longer existed.
+  describe("a mart deleted in OWOX", () => {
+    // live: what GET /api/data-marts returns; every other call returns a fresh id.
+    const apiWith = (live: Array<{ id: string; title?: string; status?: string }>, calls: string[] = [], bodies: any[] = []) =>
+      vi.fn(async (path: string, init?: any) => {
+        const method = init?.method ?? "GET";
+        calls.push(`${method} ${path}`);
+        if (path === "/api/data-marts" && method === "GET") return live;
+        if (init?.body) bodies.push({ path, body: JSON.parse(init.body) });
+        return { id: "fresh_id" };
+      });
+
+    const twoMarts = (edge: Partial<ModelEdge> = {}) => {
+      const s = createModelStore({ storageId: "stor_1" });
+      s.set({
+        storageId: "stor_1",
+        nodes: [
+          { key: "n1", title: "A", inputSource: "SQL", schema: [{ name: "b_id", type: "STRING", pk: false }], position: { x: 0, y: 0 }, status: "created", owoxId: "ghost_a", owoxStorageId: "stor_1" },
+          { key: "n2", title: "B", inputSource: "SQL", schema: [{ name: "id", type: "STRING", pk: true }], position: { x: 100, y: 0 }, status: "created", owoxId: "ghost_b", owoxStorageId: "stor_1" },
+        ],
+        edges: [{ id: "e1", from: "n1", to: "n2", keys: [{ left: "b_id", right: "id" }], bidirectional: false, ...edge }],
+      });
+      return s;
+    };
+
+    it("re-creates it instead of skipping, and reports the repair", async () => {
+      const s = twoMarts();
+      const res = await pushModel(s, apiWith([]) as any); // OWOX has neither mart
+      expect(res.created).toBe(2);
+      expect(res.recreated).toBe(2);
+      expect(res.failed).toBe(0);
+      expect(s.get().nodes.map(n => n.owoxId)).toEqual(["fresh_id", "fresh_id"]);
+    });
+
+    it("points the relationship at the NEW id — the reported 404", async () => {
+      const s = twoMarts();
+      const calls: string[] = [];
+      const res = await pushModel(s, apiWith([], calls) as any);
+      expect(calls).toContain("POST /api/data-marts/fresh_id/relationships");
+      expect(calls).not.toContain("POST /api/data-marts/ghost_a/relationships");
+      expect(res.relationshipsCreated).toBe(1);
+      expect(res.errors).toEqual([]);
+    });
+
+    it("pushes an imported edge too, instead of reporting a silent success", async () => {
+      // Both endpoints gone: the old skip made this push a no-op that still said
+      // "Push complete" — nothing in OWOX, no error, nothing to act on.
+      const s = twoMarts({ existing: true });
+      const res = await pushModel(s, apiWith([]) as any);
+      expect(res.created).toBe(2);
+      expect(res.relationshipsCreated).toBe(1);
+    });
+
+    it("leaves a mart that is still there alone", async () => {
+      const s = twoMarts();
+      const calls: string[] = [];
+      const bodies: any[] = [];
+      const res = await pushModel(s, apiWith([{ id: "ghost_a", title: "A" }], calls, bodies) as any);
+      expect(res.created).toBe(1);          // only B was missing
+      expect(res.recreated).toBe(1);
+      expect(bodies.filter(b => b.path === "/api/data-marts").map(b => b.body.title)).toEqual(["B"]);
+      expect(s.get().nodes[0].owoxId).toBe("ghost_a"); // A keeps its id
+    });
+
+    it("keeps skipping when the listing can't be read — a guess would duplicate", async () => {
+      const s = twoMarts();
+      const calls: string[] = [];
+      const apiMock = vi.fn(async (path: string, init?: any) => {
+        const method = init?.method ?? "GET";
+        calls.push(`${method} ${path}`);
+        if (path === "/api/data-marts" && method === "GET") throw new Error("HTTP 500");
+        return { id: "fresh_id" };
+      });
+      const res = await pushModel(s, apiMock as any);
+      expect(calls).not.toContain("POST /api/data-marts");
+      expect(res.created).toBe(0);
+      expect(res.recreated).toBe(0);
+    });
+  });
+
+  // Defence in depth for models saved before types were normalised on import:
+  // OWOX's schema enum is case-sensitive and rejects the whole mart schema over
+  // one bad field.
+  it("normalises field types in the schema body", async () => {
+    const s = createModelStore({ storageId: "stor_1" });
+    const n = s.addNode({ x: 0, y: 0 });
+    s.updateNode(n.key, { schema: [
+      { name: "id", type: "int64", pk: true },
+      { name: "starts_at", type: "Datetime", pk: false },
+      { name: "price", type: "DECIMAL(10,2)", pk: false },
+      { name: "is_paid", type: "bool", pk: false },
+    ] });
+    const bodies: Record<string, any> = {};
+    const apiMock = vi.fn(async (path: string, init?: any) => {
+      if (init?.body) bodies[path] = JSON.parse(init.body);
+      return { id: "owox_a" };
+    });
+    await pushModel(s, apiMock as any, "GOOGLE_BIGQUERY");
+    expect(bodies["/api/data-marts/owox_a/schema"].schema.fields.map((f: any) => f.type))
+      .toEqual(["INTEGER", "DATETIME", "NUMERIC", "BOOLEAN"]);
+  });
+});
+
+// An expired session fails EVERY call the same way. Grinding through 21 marts
+// and 30 links to print 51 identical "401 Authentication failed" lines tells the
+// user nothing and burns a minute — stop at the first one and say what to do.
+describe("pushModel with an expired session", () => {
+  const authError = () => Object.assign(new Error("OWOX POST /api/data-marts -> 401 Authentication failed"), { status: 401 });
+
+  it("stops on the opening listing without touching a single mart", async () => {
+    const s = createModelStore({ storageId: "stor_1" });
+    s.addNode({ x: 0, y: 0 }); s.addNode({ x: 1, y: 0 }); s.addNode({ x: 2, y: 0 });
+    const apiMock = vi.fn(async () => { throw authError(); });
+    const res = await pushModel(s, apiMock as any);
+    expect(res.authExpired).toBe(true);
+    expect(apiMock).toHaveBeenCalledTimes(1); // the reconciliation GET, nothing after it
+    expect(res.failed).toBe(0);               // nothing was attempted, so nothing failed
+    expect(res.errors).toHaveLength(1);
+    expect(res.errors[0]).toMatch(/session/i);
+  });
+
+  it("stops at the first mart when the session dies mid-push", async () => {
+    const s = createModelStore({ storageId: "stor_1" });
+    s.addNode({ x: 0, y: 0 }); s.addNode({ x: 1, y: 0 }); s.addNode({ x: 2, y: 0 });
+    // The reconciliation listing is a plain GET; only the creates carry a method,
+    // so this mock lets the push start and then kills it on the first POST.
+    const apiMock = vi.fn(async (_path: string, init?: any) => {
+      if (init?.method === "POST") throw authError();
+      return [];
+    });
+    const res = await pushModel(s, apiMock as any);
+    expect(res.authExpired).toBe(true);
+    expect(res.failed).toBe(1);           // the one that hit the wall, not all three
+    expect(res.errors).toHaveLength(1);
+    expect(res.errors[0]).toMatch(/session/i);
+  });
+
+  it("keeps reporting ordinary failures per mart", async () => {
+    const s = createModelStore({ storageId: "stor_1" });
+    s.addNode({ x: 0, y: 0 }); s.addNode({ x: 1, y: 0 });
+    const apiMock = vi.fn(async () => { throw Object.assign(new Error("OWOX POST /api/data-marts -> 400 bad title"), { status: 502 }); });
+    const res = await pushModel(s, apiMock as any);
+    expect(res.authExpired).toBeFalsy();
+    expect(res.failed).toBe(2);
+  });
+});
+
+describe("pushModel calculated fields", () => {
+  const calls = () => {
+    const log: { path: string; body: any }[] = [];
+    const api = vi.fn(async (path: string, init?: any) => {
+      log.push({ path, body: init?.body ? JSON.parse(init.body) : undefined });
+      if (path === "/api/data-marts" && !init) return [];
+      if (path === "/api/data-marts") return { id: `owox_${log.filter(c => c.path === "/api/data-marts" && c.body).length}` };
+      if (path.endsWith("/actualize-schema")) return { success: true };
+      return {};
+    });
+    return { api, log };
+  };
+  const storeWith = (schema: any[], withDef = true) => {
+    const s = createModelStore({ storageId: "st_1" });
+    const a = s.addNode({ x: 0, y: 0 }); s.updateNode(a.key, { title: "Orders", schema, ...(withDef ? { inputSource: "VIEW", definition: "p.d.v" } : {}) });
+    return s;
+  };
+  const joinedStore = (patch: Partial<ModelEdge>) => {
+    const s = createModelStore({ storageId: "st_1" });
+    const a = s.addNode({ x: 0, y: 0 }); s.updateNode(a.key, { title: "Orders", schema: [{ name: "customer_id", type: "INTEGER", pk: false }] });
+    const b = s.addNode({ x: 300, y: 0 }); s.updateNode(b.key, { title: "Customers", schema: [{ name: "id", type: "INTEGER", pk: true }] });
+    const e = s.addEdge(a.key, b.key)!;
+    s.updateEdge(e.id, { keys: [{ left: "customer_id", right: "id" }], ...patch });
+    return s;
+  };
+  const aliasesSent = (log: { path: string; body: any }[]) =>
+    log.filter(c => c.path.endsWith("/relationships")).map(c => c.body.targetAlias);
+  const schemaPuts = (log: { path: string; body: any }[]) => log.filter(c => c.path.endsWith("/schema"));
+
+  it("sends the base schema without calculated fields, then a second PUT with them", async () => {
+    const s = storeWith([
+      { name: "clicks", type: "INTEGER", pk: false },
+      { name: "ctr", type: "NUMERIC", pk: false, formula: "SUM(clicks)" },
+    ]);
+    const { api, log } = calls();
+    const res = await pushModel(s, api as any, "GOOGLE_BIGQUERY");
+    const [base, full] = schemaPuts(log);
+    expect(base.body.schema.fields.map((f: any) => f.name)).toEqual(["clicks"]);
+    expect(full.body.schema.fields.find((f: any) => f.name === "ctr")).toMatchObject({ calculated: { formula: 'SUM({{ref field="clicks"}})' }, isPrimaryKey: false });
+    expect(full.body.schema.fields.find((f: any) => f.name === "ctr").calculated.level).toBeUndefined();
+    expect(res.calculatedFailed).toBe(0);
+  });
+
+  it("does not send a final PUT for a mart with a definition but only calculated fields", async () => {
+    const s = storeWith([{ name: "total", type: "NUMERIC", pk: false, formula: "SUM(x)" }]);
+    const { api, log } = calls();
+    const res = await pushModel(s, api as any, "GOOGLE_BIGQUERY");
+    expect(schemaPuts(log)).toHaveLength(0);
+    expect(res.errors).toContain('Calculated fields of "Orders" weren\'t pushed: the mart has no regular fields on the canvas to compute them from. Add its columns, delete "Orders" in OWOX, then use Force push.');
+    expect(res.incomplete).toBe(1);
+  });
+
+  it("keeps the base schema and reports a failed calculated step", async () => {
+    const s = storeWith([{ name: "c", type: "INTEGER", pk: false }, { name: "m", type: "NUMERIC", pk: false, formula: "SUM(c) + c" }]);
+    let puts = 0;
+    const api = vi.fn(async (path: string, init?: any) => {
+      if (path === "/api/data-marts" && !init) return [];
+      if (path === "/api/data-marts") return { id: "owox_1" };
+      if (path.endsWith("/actualize-schema")) return { success: true };
+      if (path.endsWith("/schema") && ++puts === 2) throw new Error("Level mixing in m");
+      return {};
+    });
+    const res = await pushModel(s, api as any, "GOOGLE_BIGQUERY");
+    expect(res.calculatedFailed).toBe(1);
+    expect(res.errors).toContain('Calculated fields for "Orders": Level mixing in m');
+    expect(s.get().nodes[0].status).toBe("created");
+  });
+
+  it("stops on an expired session in the calculated step", async () => {
+    let schemaCalls = 0;
+    const s = storeWith([{ name: "x", type: "INTEGER", pk: false }, { name: "m", type: "NUMERIC", pk: false, formula: "SUM(x)" }]);
+    const api = vi.fn(async (path: string, init?: any) => {
+      if (path === "/api/data-marts" && !init) return [];
+      if (path === "/api/data-marts") return { id: "owox_1" };
+      if (path.endsWith("/actualize-schema")) return { success: true };
+      if (path.endsWith("/schema") && ++schemaCalls === 2) throw Object.assign(new Error("401"), { status: 401 });
+      return {};
+    });
+    const res = await pushModel(s, api as any, "GOOGLE_BIGQUERY");
+    expect(res.authExpired).toBe(true);
+    expect(res.calculatedFailed).toBe(0);
+    expect(res.errors).toContain("Your OWOX session expired and could not be renewed — nothing else was pushed. Connect to OWOX again, then push.");
+  });
+
+  it("skips an unfilled calculated field with an error line, still pushing its valid sibling", async () => {
+    const s = storeWith([
+      { name: "clicks", type: "INTEGER", pk: false },
+      { name: "draft", type: "NUMERIC", pk: false, formula: "  " },
+      { name: "", type: "NUMERIC", pk: false, formula: "" },
+      { name: "ctr", type: "NUMERIC", pk: false, formula: "SUM(clicks)" },
+    ]);
+    const { api, log } = calls();
+    const res = await pushModel(s, api as any, "GOOGLE_BIGQUERY");
+    const [, full] = schemaPuts(log);
+    expect(full.body.schema.fields.map((f: any) => f.name)).toEqual(["clicks", "ctr"]);
+    expect(res.errors).toContain('Calculated field "draft" in "Orders" has no formula — skipped.');
+    expect(res.errors).toContain('Calculated field "(unnamed)" in "Orders" has no formula — skipped.');
+    expect(res.calculatedFailed).toBe(0);
+  });
+
+  it("sends no second PUT for a mart without input source when every calculated field is unpushable", async () => {
+    const s = storeWith([{ name: "clicks", type: "INTEGER", pk: false }, { name: "draft", type: "NUMERIC", pk: false, formula: "" }], false);
+    const { api, log } = calls();
+    await pushModel(s, api as any, "GOOGLE_BIGQUERY");
+    expect(schemaPuts(log)).toHaveLength(1);
+    expect(log.some(c => c.path.endsWith("/actualize-schema") || c.path.endsWith("/publish"))).toBe(false);
+  });
+
+  it("restores the canvas field list after actualize even without calculated fields", async () => {
+    const s = storeWith([{ name: "clicks", type: "INTEGER", pk: false }]);
+    const { api, log } = calls();
+    const res = await pushModel(s, api as any, "GOOGLE_BIGQUERY");
+    expect(schemaPuts(log)).toHaveLength(2);
+    expect(schemaPuts(log)[1].body.schema.fields.map((f: any) => f.name)).toEqual(["clicks"]);
+    expect(res.published).toBe(1);
+  });
+
+  it("sends formulas in OWOX's stored {{ref}} form", async () => {
+    const s = joinedStore({});
+    const a = s.get().nodes.find(n => n.title === "Orders")!;
+    s.updateNode(a.key, {
+      inputSource: "VIEW", definition: "p.d.o",
+      schema: [...a.schema, { name: "total", type: "NUMERIC", pk: false, formula: "SUM(customer_id) / COUNT(customers.id)" }],
+    });
+    const { api, log } = calls();
+    await pushModel(s, api as any, "GOOGLE_BIGQUERY");
+    const final = schemaPuts(log).at(-1)!;
+    expect(final.body.schema.fields.find((f: any) => f.name === "total").calculated.formula)
+      .toBe('SUM({{ref field="customer_id"}}) / COUNT({{ref path="customers" field="id"}})');
+  });
+
+  it("skips calculated fields of a mart without input source, with a clear message", async () => {
+    const s = storeWith([{ name: "clicks", type: "INTEGER", pk: false }, { name: "ctr", type: "NUMERIC", pk: false, formula: "SUM(clicks)" }], false);
+    const { api, log } = calls();
+    const res = await pushModel(s, api as any, "GOOGLE_BIGQUERY");
+    expect(res.errors).toContain('Calculated fields of "Orders" need an input source (table, view or SQL) — its 1 calculated fields weren\'t pushed. Set the input source, delete "Orders" in OWOX, then use Force push.');
+    expect(res.incomplete).toBe(1);
+    expect(log.some(c => c.path.endsWith("/actualize-schema") || c.path.endsWith("/publish"))).toBe(false);
+    expect(schemaPuts(log)).toHaveLength(1);
+    expect(res.published).toBe(0);
+    expect(res.calculatedFailed).toBe(0);
+  });
+
+  it("on an actualize failure: error line, no publish, no final schema", async () => {
+    const s = storeWith([{ name: "clicks", type: "INTEGER", pk: false }, { name: "ctr", type: "NUMERIC", pk: false, formula: "SUM(clicks)" }]);
+    const { api: inner, log } = calls();
+    const api = vi.fn(async (path: string, init?: any) => {
+      if (path.endsWith("/actualize-schema")) { log.push({ path, body: undefined }); return { success: false, error: "Table not found" }; }
+      return inner(path, init);
+    });
+    const res = await pushModel(s, api as any, "GOOGLE_BIGQUERY");
+    expect(res.errors).toContain('Couldn\'t read "Orders" from the warehouse: Table not found — it stays a draft; its 1 calculated fields weren\'t pushed. Fix the source, delete "Orders" in OWOX, then use Force push.');
+    expect(res.incomplete).toBe(1);
+    expect(log.some(c => c.path.endsWith("/publish"))).toBe(false);
+    expect(schemaPuts(log)).toHaveLength(1);
+    expect(res.published).toBe(0);
+  });
+
+  it("on a publish failure: error line, final schema still runs", async () => {
+    const s = storeWith([{ name: "clicks", type: "INTEGER", pk: false }, { name: "ctr", type: "NUMERIC", pk: false, formula: "SUM(clicks)" }]);
+    const { api: inner, log } = calls();
+    const api = vi.fn(async (path: string, init?: any) => {
+      if (path.endsWith("/publish")) throw new Error("no definition");
+      return inner(path, init);
+    });
+    const res = await pushModel(s, api as any, "GOOGLE_BIGQUERY");
+    expect(res.errors).toContain('Couldn\'t publish "Orders": no definition');
+    expect(res.published).toBe(0);
+    expect(schemaPuts(log)).toHaveLength(2);
+  });
+
+  it("when the final PUT fails with calculated fields: counts it and re-PUTs the base fields", async () => {
+    const s = storeWith([{ name: "c", type: "INTEGER", pk: false }, { name: "m", type: "NUMERIC", pk: false, formula: "SUM(c)" }]);
+    const { api: inner, log } = calls();
+    let puts = 0;
+    const api = vi.fn(async (path: string, init?: any) => {
+      if (path.endsWith("/schema") && ++puts === 2) throw new Error("FORMULA_UNKNOWN_REFERENCE");
+      return inner(path, init);
+    });
+    const res = await pushModel(s, api as any, "GOOGLE_BIGQUERY");
+    expect(res.calculatedFailed).toBe(1);
+    expect(res.errors).toContain('Calculated fields for "Orders": FORMULA_UNKNOWN_REFERENCE');
+    const puts3 = schemaPuts(log);
+    expect(puts).toBe(3);   // base, refused final, base-only retry
+    expect(puts3).toHaveLength(2);   // the refused PUT never reached the mock's log
+    expect(puts3[1].body.schema.fields.map((f: any) => f.name)).toEqual(["c"]);
+  });
+
+  it("sends no final PUT when the mart has no fields to send", async () => {
+    const s = storeWith([]);
+    const { api, log } = calls();
+    await pushModel(s, api as any, "GOOGLE_BIGQUERY");
+    expect(schemaPuts(log)).toHaveLength(0);
+    expect(log.some(c => c.path.endsWith("/publish"))).toBe(true);
+  });
+
+  it("does not retry an identical payload when a mart without calculated fields fails its final PUT", async () => {
+    const s = storeWith([{ name: "c", type: "INTEGER", pk: false }]);
+    const { api: inner, log } = calls();
+    let puts = 0;
+    const api = vi.fn(async (path: string, init?: any) => {
+      if (path.endsWith("/schema") && ++puts === 2) throw new Error("nope");
+      return inner(path, init);
+    });
+    const res = await pushModel(s, api as any, "GOOGLE_BIGQUERY");
+    expect(puts).toBe(2);
+    expect(res.calculatedFailed).toBe(0);
+    expect(res.errors).toContain('Schema for "Orders": nope');
+  });
+
+  it.each(["/actualize-schema", "/publish"])("stops the push on a 401 from %s", async (suffix) => {
+    const s = storeWith([{ name: "c", type: "INTEGER", pk: false }]);
+    const { api: inner } = calls();
+    const api = vi.fn(async (path: string, init?: any) => {
+      if (path.endsWith(suffix)) throw Object.assign(new Error("401"), { status: 401 });
+      return inner(path, init);
+    });
+    const res = await pushModel(s, api as any, "GOOGLE_BIGQUERY");
+    expect(res.authExpired).toBe(true);
+    expect(res.errors).toContain("Your OWOX session expired and could not be renewed — nothing else was pushed. Connect to OWOX again, then push.");
+    expect(api.mock.calls.some(c => String(c[0]).endsWith("/relationships"))).toBe(false);
+  });
+
+  it("orders calls: actualize → publish → relationships → final schema", async () => {
+    const s = createModelStore({ storageId: "st_1" });
+    const a = s.addNode({ x: 0, y: 0 }); s.updateNode(a.key, { title: "Orders", inputSource: "VIEW", definition: "p.d.o", schema: [{ name: "customer_id", type: "INTEGER", pk: false }, { name: "m", type: "NUMERIC", pk: false, formula: "SUM(customer_id)" }] });
+    const b = s.addNode({ x: 300, y: 0 }); s.updateNode(b.key, { title: "Customers", inputSource: "VIEW", definition: "p.d.c", schema: [{ name: "id", type: "INTEGER", pk: true }] });
+    const e = s.addEdge(a.key, b.key)!;
+    s.updateEdge(e.id, { keys: [{ left: "customer_id", right: "id" }] });
+    const { api, log } = calls();
+    const res = await pushModel(s, api as any, "GOOGLE_BIGQUERY");
+    const at = (suffix: string) => log.map((c, i) => (c.path.endsWith(suffix) ? i : -1)).filter(i => i >= 0);
+    const firstActualize = at("/actualize-schema")[0];
+    const lastPublish = at("/publish").at(-1)!;
+    const firstRel = at("/relationships")[0];
+    const finals = at("/schema").filter(i => i > firstRel);
+    expect(firstActualize).toBeLessThan(at("/publish")[0]);
+    expect(lastPublish).toBeLessThan(firstRel);
+    expect(finals).toHaveLength(2);   // one final PUT per actualized mart, after the links
+    expect(res.published).toBe(2);
+  });
+
+  it("skips the calculated step for a mart whose base schema PUT failed", async () => {
+    const s = storeWith([{ name: "c", type: "INTEGER", pk: false }, { name: "m", type: "NUMERIC", pk: false, formula: "SUM(c)" }]);
+    let puts = 0;
+    const api = vi.fn(async (path: string, init?: any) => {
+      if (path === "/api/data-marts" && !init) return [];
+      if (path === "/api/data-marts") return { id: "owox_1" };
+      if (path.endsWith("/actualize-schema")) return { success: true };
+      if (path.endsWith("/schema")) { puts++; throw new Error("bad base column"); }
+      return {};
+    });
+    const res = await pushModel(s, api as any, "GOOGLE_BIGQUERY");
+    expect(puts).toBe(1);
+    expect(res.calculatedFailed).toBe(0);
+    expect(res.errors).toEqual(['Schema for "Orders": bad base column', 'Its 1 calculated fields weren\'t pushed. Delete "Orders" in OWOX, then use Force push.']);
+  });
+
+  it("never retypes a calculated field used as a join key", async () => {
+    const s = createModelStore({ storageId: "st_1" });
+    const a = s.addNode({ x: 0, y: 0 }); s.updateNode(a.key, { title: "Orders", schema: [{ name: "total", type: "NUMERIC", pk: false, formula: "SUM(x)" }] });
+    const b = s.addNode({ x: 300, y: 0 }); s.updateNode(b.key, { title: "Customers", schema: [{ name: "id", type: "INTEGER", pk: true }] });
+    const e = s.addEdge(a.key, b.key)!;
+    s.updateEdge(e.id, { keys: [{ left: "total", right: "id" }] });
+    const { api } = calls();
+    await pushModel(s, api as any, "GOOGLE_BIGQUERY");
+    expect(s.get().nodes.find(n => n.title === "Orders")!.schema[0].type).toBe("NUMERIC");
+  });
+
+  it("uses the edge alias and reverse alias as targetAlias", async () => {
+    const s = joinedStore({ bidirectional: true, alias: "cust", reverseAlias: "ord" });
+    const { api, log } = calls();
+    await pushModel(s, api as any, "GOOGLE_BIGQUERY");
+    expect(aliasesSent(log)).toEqual(["cust", "ord"]);
+  });
+
+  it("falls back to the title-derived alias for graphs saved before aliases existed", async () => {
+    const s = joinedStore({ bidirectional: true });
+    const { api, log } = calls();
+    await pushModel(s, api as any, "GOOGLE_BIGQUERY");
+    expect(aliasesSent(log)).toEqual(["customers", "orders"]);
+  });
+});
+
+describe("pushModel incomplete marts", () => {
+  const mkStore = (schema: any[], withDef = true, title = "Orders") => {
+    const s = createModelStore({ storageId: "st_1" });
+    const a = s.addNode({ x: 0, y: 0 });
+    s.updateNode(a.key, { title, schema, ...(withDef ? { inputSource: "VIEW", definition: "p.d.v" } : {}) });
+    return s;
+  };
+  const schema = [{ name: "c", type: "INTEGER", pk: false }, { name: "m", type: "NUMERIC", pk: false, formula: "SUM(c)" }];
+  const apiWith = (over: (path: string, init?: any) => any) => vi.fn(async (path: string, init?: any) => {
+    const o = over(path, init);
+    if (o !== undefined) return o;
+    if (path === "/api/data-marts" && !init) return [];
+    if (path === "/api/data-marts") return { id: "owox_1" };
+    if (path.endsWith("/actualize-schema")) return { success: true };
+    return {};
+  });
+
+  it("actualize failure: says what was left undone and counts the mart once", async () => {
+    const res = await pushModel(mkStore(schema), apiWith(p => p.endsWith("/actualize-schema") ? { success: false, error: "Table not found" } : undefined) as any, "GOOGLE_BIGQUERY");
+    expect(res.errors).toContain('Couldn\'t read "Orders" from the warehouse: Table not found — it stays a draft; its 1 calculated fields weren\'t pushed. Fix the source, delete "Orders" in OWOX, then use Force push.');
+    expect(res.incomplete).toBe(1);
+  });
+
+  it("actualize failure thrown: same line", async () => {
+    const res = await pushModel(mkStore(schema), apiWith(p => { if (p.endsWith("/actualize-schema")) throw new Error("boom"); }) as any, "GOOGLE_BIGQUERY");
+    expect(res.errors).toContain('Couldn\'t read "Orders" from the warehouse: boom — it stays a draft; its 1 calculated fields weren\'t pushed. Fix the source, delete "Orders" in OWOX, then use Force push.');
+    expect(res.incomplete).toBe(1);
+  });
+
+  it("omits the calculated-fields clause when there are none", async () => {
+    const res = await pushModel(mkStore([{ name: "c", type: "INTEGER", pk: false }]), apiWith(p => p.endsWith("/actualize-schema") ? { success: false, error: "gone" } : undefined) as any, "GOOGLE_BIGQUERY");
+    expect(res.errors).toContain('Couldn\'t read "Orders" from the warehouse: gone — it stays a draft. Fix the source, delete "Orders" in OWOX, then use Force push.');
+    expect(res.incomplete).toBe(1);
+  });
+
+  it("base schema PUT failure with calculated fields: extra recovery line", async () => {
+    const res = await pushModel(mkStore(schema), apiWith(p => { if (p.endsWith("/schema")) throw new Error("bad type"); }) as any, "GOOGLE_BIGQUERY");
+    expect(res.errors).toContain('Schema for "Orders": bad type');
+    expect(res.errors).toContain('Its 1 calculated fields weren\'t pushed. Delete "Orders" in OWOX, then use Force push.');
+    expect(res.incomplete).toBe(1);
+  });
+
+  it("base schema PUT failure without calculated fields is not incomplete", async () => {
+    const res = await pushModel(mkStore([{ name: "c", type: "INTEGER", pk: false }]), apiWith(p => { if (p.endsWith("/schema")) throw new Error("bad type"); }) as any, "GOOGLE_BIGQUERY");
+    expect(res.incomplete).toBe(0);
+    expect(res.errors.some(e => e.startsWith("Its "))).toBe(false);
+  });
+
+  it("no input source: new wording, incomplete", async () => {
+    const res = await pushModel(mkStore(schema, false), apiWith(() => undefined) as any, "GOOGLE_BIGQUERY");
+    expect(res.errors).toContain('Calculated fields of "Orders" need an input source (table, view or SQL) — its 1 calculated fields weren\'t pushed. Set the input source, delete "Orders" in OWOX, then use Force push.');
+    expect(res.incomplete).toBe(1);
+  });
+
+  it("a mart hitting two cases counts once (base PUT failed and no input source)", async () => {
+    const res = await pushModel(mkStore(schema, false), apiWith(p => { if (p.endsWith("/schema")) throw new Error("bad type"); }) as any, "GOOGLE_BIGQUERY");
+    expect(res.incomplete).toBe(1);
+  });
+
+  it("a clean push has incomplete 0", async () => {
+    const res = await pushModel(mkStore(schema), apiWith(() => undefined) as any, "GOOGLE_BIGQUERY");
+    expect(res.incomplete).toBe(0);
   });
 });

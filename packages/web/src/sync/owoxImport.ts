@@ -4,11 +4,11 @@ export type ImportFilter = "all" | "published" | "with-relationships";
 
 export interface ImportMart {
   id: string; title: string; status?: string; description?: string;
-  schema: { name: string; type: string; pk: boolean; alias?: string; description?: string }[];
+  schema: { name: string; type: string; pk: boolean; alias?: string; description?: string; formula?: string }[];
   inputSource: InputSource; definition: string | null;
 }
 export interface ImportRelationship {
-  sourceId: string; targetId: string;
+  sourceId: string; targetId: string; targetAlias?: string; description?: string;
   joinConditions: { sourceFieldName: string; targetFieldName: string }[];
 }
 export interface ImportPayload {
@@ -47,7 +47,7 @@ export function payloadToGraph(payload: ImportPayload, filter: ImportFilter): Mo
   const nodes: ModelNode[] = marts.map((m, i) => ({
     key: `n${i + 1}`, title: m.title, inputSource: m.inputSource, definition: m.definition,
     ...(m.description ? { description: m.description } : {}),
-    schema: m.schema.map(f => ({ name: f.name, type: f.type, pk: f.pk, ...(f.alias ? { alias: f.alias } : {}), ...(f.description ? { description: f.description } : {}) })),
+    schema: m.schema.map(f => ({ name: f.name, type: f.type, pk: f.pk, ...(f.alias ? { alias: f.alias } : {}), ...(f.description ? { description: f.description } : {}), ...(f.formula !== undefined ? { formula: f.formula } : {}) })),
     // Tag the storage this owoxId belongs to — push compares it to the active
     // storage so the mart isn't treated as "already created" in another project.
     position: { x: 0, y: 0 }, status: "created", owoxId: m.id, owoxStorageId: payload.storageId, createdAt: null,
@@ -61,9 +61,14 @@ export function payloadToGraph(payload: ImportPayload, filter: ImportFilter): Mo
     if (!from || !to) continue;                       // dangling → drop
     const pair = [from, to].sort().join("|");
     const existing = seen.get(pair);
-    if (existing) { existing.bidirectional = true; continue; }
+    if (existing) {
+      existing.bidirectional = true;
+      if (r.targetAlias && existing.from !== from) existing.reverseAlias = r.targetAlias;
+      if (r.description && !existing.description) existing.description = r.description;
+      continue;
+    }
     const keys = r.joinConditions.map(j => ({ left: j.sourceFieldName, right: j.targetFieldName }));
-    const e: ModelEdge = { id: `e${edges.length + 1}`, from, to, keys: keys.length ? keys : [{ left: "", right: "" }], bidirectional: false, existing: true };
+    const e: ModelEdge = { id: `e${edges.length + 1}`, from, to, keys: keys.length ? keys : [{ left: "", right: "" }], bidirectional: false, existing: true, ...(r.targetAlias ? { alias: r.targetAlias } : {}), ...(r.description ? { description: r.description } : {}) };
     edges.push(e); seen.set(pair, e);
   }
   return { storageId: payload.storageId, nodes, edges };
@@ -71,8 +76,8 @@ export function payloadToGraph(payload: ImportPayload, filter: ImportFilter): Mo
 
 // Merge incoming into current: marts with a matching owoxId are updated in place
 // (keeping the current key + position); brand-new marts are appended. Edges are
-// merged with de-dup by node pair. Returns the keys of newly added nodes so the
-// caller can lay out only those.
+// merged with de-dup by node pair; a paired edge takes OWOX's aliases. Returns
+// the keys of newly added nodes so the caller can lay out only those.
 export function mergeGraphs(current: ModelGraph, incoming: ModelGraph): { graph: ModelGraph; newKeys: Set<string> } {
   const byOwox = new Map(current.nodes.filter(n => n.owoxId).map(n => [n.owoxId!, n]));
   const keyRemap = new Map<string, string>(); // incoming key → final key
@@ -100,10 +105,26 @@ export function mergeGraphs(current: ModelGraph, incoming: ModelGraph): { graph:
   for (const inc of incoming.edges) {
     const from = keyRemap.get(inc.from)!, to = keyRemap.get(inc.to)!;
     const pair = [from, to].sort().join("|");
-    if (pairs.has(pair)) continue;
+    if (pairs.has(pair)) {
+      const i = edges.findIndex(x => [x.from, x.to].sort().join("|") === pair);
+      if (i >= 0) {
+        // OWOX is the source of truth for aliases of a relationship it already
+        // has; map them onto the canvas edge's own direction.
+        const x = edges[i], same = x.from === from;
+        const alias = same ? inc.alias : inc.reverseAlias;
+        const reverseAlias = same ? inc.reverseAlias : inc.alias;
+        edges[i] = {
+          ...x,
+          ...(alias ? { alias } : {}),
+          ...(reverseAlias ? { reverseAlias } : {}),
+          ...(inc.description && !x.description ? { description: inc.description } : {}),
+        };
+      }
+      continue;
+    }
     pairs.add(pair);
     edges.push({ ...inc, id: `e${++ec}`, from, to });
   }
 
-  return { graph: { storageId: current.storageId ?? incoming.storageId, nodes, edges }, newKeys };
+  return { graph: { storageId: current.storageId ?? incoming.storageId, nodes, edges, ...(current.description ? { description: current.description } : {}) }, newKeys };
 }

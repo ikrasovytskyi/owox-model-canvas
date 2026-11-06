@@ -5,6 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <title>OWOX Model Canvas — build a data model with AI</title>
+<meta name="description" content="Generate a data model with Claude, ChatGPT or Gemini: copy a short brief, get an Open Knowledge Format (OKF) bundle back, and import it into the free OWOX Model Canvas.">
+<link rel="canonical" href="https://model.owox.com/ai-instructions.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="OWOX Model Canvas">
+<meta property="og:url" content="https://model.owox.com/ai-instructions.html">
+<meta property="og:title" content="OWOX Model Canvas — build a data model with AI">
+<meta property="og:description" content="Generate a data model with Claude, ChatGPT or Gemini and import it into the free OWOX Model Canvas.">
+<meta property="og:image" content="https://model.owox.com/og-card.png">
+<meta name="twitter:card" content="summary_large_image">
 <style>
   :root { --ink:#0f172a; --muted:#64748b; --line:#e2e8f0; --accent:#1e88e5; --bg:#f7f8fa; --code-bg:#0f172a; }
   * { box-sizing:border-box; }
@@ -99,7 +108,7 @@
   </div>
 
   <h2>1. What is OKF</h2>
-  <p><b>Open Knowledge Format (OKF)</b> represents metadata as a folder of Markdown files with YAML frontmatter. Reference: <a href="https://github.com/GoogleCloudPlatform/knowledge-catalog" target="_blank" rel="noopener">GoogleCloudPlatform/knowledge-catalog</a> (the <code>okf/</code> spec) and OWOX's own bundles at <a href="https://github.com/OWOX/models" target="_blank" rel="noopener">github.com/OWOX/models</a>. This canvas reads and writes that bundle format: one document per Data Mart, a <code>## Overview</code> block, a <code># Schema</code> table, and a <code>## Joins</code> section. <b>Export OKF on the canvas produces exactly this format</b>, so anything you generate here round-trips.</p>
+  <p><b>Open Knowledge Format (OKF)</b> represents metadata as a folder of Markdown files with YAML frontmatter. Reference: <a href="https://github.com/GoogleCloudPlatform/knowledge-catalog" target="_blank" rel="noopener">GoogleCloudPlatform/knowledge-catalog</a> (the <code>okf/</code> spec) and OWOX's own bundles at <a href="https://github.com/OWOX/models" target="_blank" rel="noopener">github.com/OWOX/models</a>. This canvas reads and writes that bundle format: one document per Data Mart, a <code>## Overview</code> block, a <code># Schema</code> table, an optional <code>## Calculated fields</code> section, and a <code>## Joins</code> section. <b>Export OKF on the canvas produces exactly this format</b>, so anything you generate here round-trips.</p>
 
   <h2>2. Two ways to provide a model</h2>
   <p>Both use the <b>same per-document format</b> (section 3) and differ only in packaging:</p>
@@ -182,8 +191,38 @@ SELECT id, customer_id, order_date, total FROM `project.dataset.orders`
       </ul>
     </li>
   </ul>
-  <p><b>Allowed types</b> (cross-storage canonical set — do not use others like <code>DATETIME</code>):</p>
-  <p><span class="chip">STRING</span><span class="chip">INTEGER</span><span class="chip">FLOAT</span><span class="chip">NUMERIC</span><span class="chip">BOOLEAN</span><span class="chip">DATE</span><span class="chip">TIME</span><span class="chip">TIMESTAMP</span><span class="chip">BYTES</span><span class="chip">GEOGRAPHY</span><span class="chip">VARIANT</span></p>
+  <p>Optionally add a 4th <code>Alias</code> column — a business-friendly label for the field. Put it between <code>Type</code> and <code>Description</code> and leave the cell empty for fields that don't need one. The canvas shows the alias instead of the raw column name on the node and pushes it to OWOX; <b>Export OKF</b> emits this column only when at least one field has an alias.</p>
+<pre><code># Schema
+
+| Column | Type | Alias | Description |
+|--------|------|-------|-------------|
+| `id` | STRING | | PK. Unique order identifier |
+| `total` | FLOAT | Order Total | Order total, gross |</code></pre>
+  <p><b>Preferred types</b> (the set OWOX accepts, verified against its schema validation):</p>
+  <p><span class="chip">STRING</span><span class="chip">INTEGER</span><span class="chip">FLOAT</span><span class="chip">NUMERIC</span><span class="chip">BOOLEAN</span><span class="chip">DATE</span><span class="chip">TIME</span><span class="chip">DATETIME</span><span class="chip">TIMESTAMP</span><span class="chip">BYTES</span><span class="chip">GEOGRAPHY</span><span class="chip">JSON</span></p>
+  <p>Other spellings are normalised on import — <code>int64</code>, <code>bool</code>, <code>text</code>, <code>decimal(10,2)</code>, <code>timestamptz</code>, <code>ARRAY&lt;STRING&gt;</code> and Snowflake's <code>VARIANT</code> all land on the right type, and anything unrecognised becomes <code>STRING</code>. So an odd cell costs you one field, never the whole schema.</p>
+
+  <h2>4b. Calculated fields (optional)</h2>
+  <p>A calculated field has no warehouse column: OWOX computes it in the report query. Add a <code>## Calculated fields</code> section after <code># Schema</code> and before <code>## Definition</code> / <code>## Joins</code>.</p>
+  <ul>
+    <li>One <code>### `name` · TYPE · Metric|Column</code> heading per field, then an optional <code>- **Alias:** Business name</code> line, an optional description, and <b>one</b> <code>```sql</code> block with the formula.</li>
+    <li>Write plain warehouse SQL. Use own fields by name. Use a joined mart's field as <code>alias.field</code>, where <code>alias</code> is the join alias from <code>## Joins</code>.</li>
+    <li><b>Metric</b> = the formula aggregates (<code>SUM</code>, <code>COUNT</code>, <code>AVG</code>, …). <b>Column</b> = row-level. Never mix them: <code>SUM(clicks) + impressions</code> is refused. The level in the heading is informational; the canvas re-derives it from the formula.</li>
+    <li>A joined field may only appear inside an aggregate, and one aggregate reads one mart.</li>
+    <li>Guard divisions: <code>SUM(a) / NULLIF(SUM(b), 0)</code>.</li>
+    <li>Calculated fields are never PK and never join keys. Keep them out of the <code># Schema</code> table.</li>
+  </ul>
+<pre><code>## Calculated fields
+
+### `aov` · NUMERIC · Metric
+
+- **Alias:** Average order value
+
+Average order value.
+
+```sql
+SUM(total) / NULLIF(COUNT(DISTINCT id), 0)
+```</code></pre>
 
   <h2>5. Definition (optional)</h2>
   <p>Optionally include a <code>## Definition</code> fenced code block. Its meaning depends on the <b>Definition type</b> in Overview:</p>
@@ -204,6 +243,7 @@ SELECT id, customer_id, order_date, total FROM `project.dataset.orders`
     <li>Format: <code>- [Target Title](./target-slug.md) — `leftField = rightField`</code>. Multiple keys: comma-separate the backticked pairs.</li>
     <li>The filename slug is the target title lowercased with spaces → hyphens (e.g. <code>Order Items</code> → <code>order-items.md</code>).</li>
     <li>Join fields should exist in both marts' <code># Schema</code>. It also helps to mark the source field with <code>FK to [Target](./target-slug.md)</code> in its Description.</li>
+    <li><b>Join alias</b> (optional): add <code>as `alias`</code> after the link — <code>- [Customers](./customers.md) as `customers` — `customer_id = id` [N:1]</code>. The alias is a SQL identifier (letters, digits, <code>_</code>, no leading digit). Formulas in <code>## Calculated fields</code> use it as <code>customers.field</code>. Default = the target title in snake_case (<code>Order Items</code> → <code>order_items</code>).</li>
     <li><b>Bidirectional</b> relationship: add a matching Joins line in <i>both</i> documents (with the key sides swapped). The canvas renders it as a double-headed arrow.</li>
     <li><b>Cardinality</b> (optional): append a classic ER cardinality after the keys — <code>- [Target](./target-slug.md) — `leftField = rightField` [1:N]</code>. Allowed: <code>1:1</code>, <code>1:N</code>, <code>N:1</code>, <code>N:N</code>, oriented source → target. It is for modeling/visualization only (shown as a pill on the canvas); it is ignored by OWOX (its SQL aggregates) and does not affect Push.</li>
   </ul>
@@ -258,6 +298,16 @@ tags: ["owox", "view"]
   <div class="note">
     <b>Rules of thumb.</b> Keep titles distinct (the slug wires relationships). Use only the allowed schema types. Mark one <code>PK.</code> per mart and reference real fields in joins. Leave <b>ID</b>/<b>Storage</b> as <code>—</code> — the canvas fills them.
   </div>
+  </section>
+
+  <section class="guide">
+  <h2>Apache Ossie</h2>
+  <p>The canvas also imports and exports <b>Apache Ossie</b> — a vendor-neutral YAML/JSON semantic model standard (datasets, fields, relationships, metrics) from the Apache Software Foundation, formerly Open Semantic Interchange. Pick the format by the job:</p>
+  <ul>
+    <li><b>OKF</b> — authoring with AI, and the lossless canvas format. <b>The AI brief above stays OKF</b>: ask the assistant for OKF.</li>
+    <li><b>Apache Ossie</b> — exchange with other tools such as dbt, Snowflake, Power BI or Lightdash. In <b>Import model</b>, upload a <code>.yaml</code> / <code>.json</code> file. In the Export menu, choose <b>Apache Ossie (.yaml)</b>.</li>
+  </ul>
+  <p>Full mapping, what is not imported, and a worked example: <a href="/ossie-format.md">/ossie-format.md</a>.</p>
   </section>
 
   <footer>OWOX Model Canvas · a free, anonymous canvas for designing <a href="https://www.owox.com" target="_blank" rel="noopener">OWOX Data Marts</a>. Built on the Open Knowledge Format.</footer>

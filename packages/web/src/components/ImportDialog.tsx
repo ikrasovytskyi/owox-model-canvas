@@ -1,20 +1,50 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Copy, Check } from "lucide-react";
-import { filesToGraph, parsePastedMarkdown, zipToFiles } from "../okf/io";
+import { loadModelFiles, loadModelText, zipToFiles, MAX_MODEL_BYTES, TOO_LARGE, type LoadedModel } from "../okf/io";
+import { fetchModelFromUrl, isAllowedGithubHost } from "../okf/github";
+import { buildOkfDeeplink, buildOssieDeeplink } from "../share/okfLink";
 import type { ModelGraph } from "@mc/okf";
 
+type TabId = "upload" | "paste" | "github";
+const TABS: { id: TabId; label: string }[] = [
+  { id: "upload", label: "Upload files" },
+  { id: "paste", label: "Paste" },
+  { id: "github", label: "From GitHub" },
+];
+
 interface ImportDialogProps {
-  onConfirm: (graph: ModelGraph, mode: "replace" | "merge") => void;
+  onConfirm: (graph: ModelGraph, mode: "replace" | "merge", name: string | null) => void;
   onClose: () => void;
+  /** When set (from a `?okf=` deeplink), open the GitHub tab, prefill the URL,
+   *  and auto-fetch on mount so the preview is ready. */
+  initialUrl?: string;
+  /** Whether the canvas already holds a model. When false (e.g. a first-time
+   *  visitor via deeplink), the Replace/Merge choice is meaningless and hidden;
+   *  the import just populates the empty canvas. */
+  hasExistingModel?: boolean;
+  /** The selected OWOX storage's Ossie dialect: picked from multi-dialect expressions. */
+  ossieDialect?: string;
 }
 
-export function ImportDialog({ onConfirm, onClose }: ImportDialogProps) {
+export function ImportDialog({ onConfirm, onClose, initialUrl, hasExistingModel = false, ossieDialect }: ImportDialogProps) {
+  const [activeTab, setActiveTab] = useState<TabId>(initialUrl ? "github" : "upload");
   const [pasteText, setPasteText] = useState("");
   const [error, setError] = useState<string | null>(null);
-  const [preview, setPreview] = useState<ModelGraph | null>(null);
+  const [loaded, setLoaded] = useState<LoadedModel | null>(null);
+  const preview = loaded?.graph ?? null;
+  const modelName = loaded?.name ?? null;
   const [mode, setMode] = useState<"replace" | "merge">("replace");
   const [copied, setCopied] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const urlInputRef = useRef<HTMLInputElement>(null);
+  const [url, setUrl] = useState(initialUrl ?? "");
+  const [fetching, setFetching] = useState(false);
+  const [fetchedFiles, setFetchedFiles] = useState<Record<string, string> | null>(null);
+  const [deeplinkCopied, setDeeplinkCopied] = useState(false);
+  // Last URL that fetched successfully — so a blur/paste re-trigger for the same
+  // already-loaded link is a no-op (but a failed URL can still be retried).
+  const lastFetchedRef = useRef<string | null>(null);
+  const refreshSeq = useRef(0);
 
   // Copy the AI authoring guide to the clipboard so the user can paste it into
   // Claude/ChatGPT to generate an importable OKF model. Falls back to opening
@@ -30,34 +60,145 @@ export function ImportDialog({ onConfirm, onClose }: ImportDialogProps) {
     }
   }
 
-  // Parse the current inputs into a ModelGraph (pending nodes — OKF carries no
-  // OWOX identity). Throws on empty/invalid input.
-  async function buildGraph(paste: string): Promise<ModelGraph> {
-    let files: Record<string, string> = {};
-    const uploaded = fileInputRef.current?.files;
-    if (uploaded && uploaded.length > 0) {
-      for (const file of Array.from(uploaded)) {
-        if (file.name.endsWith(".zip")) {
-          Object.assign(files, zipToFiles(new Uint8Array(await file.arrayBuffer())));
-        } else {
-          files[file.name] = await file.text();
+  // Load one tab's source into a LoadedModel (pending nodes, no OWOX identity),
+  // or null when the tab has no input. Each tab is autonomous — never a merge.
+  async function loadForTab(tab: TabId, paste: string, fetched: Record<string, string> | null): Promise<LoadedModel | null> {
+    let model: LoadedModel;
+    if (tab === "paste") {
+      if (!paste.trim()) return null;
+      model = await loadModelText(paste.trim(), { ossieDialect });
+    } else {
+      let files: Record<string, string> = {};
+      if (tab === "upload") {
+        const uploaded = fileInputRef.current?.files;
+        if (uploaded && uploaded.length > 0) {
+          for (const file of Array.from(uploaded)) {
+            if (file.size > MAX_MODEL_BYTES) throw new Error(TOO_LARGE);
+            if (file.name.endsWith(".zip")) {
+              Object.assign(files, zipToFiles(new Uint8Array(await file.arrayBuffer())));
+            } else {
+              files[file.name] = await file.text();
+            }
+          }
         }
+      } else {
+        files = fetched ?? {};
       }
+      if (Object.keys(files).length === 0) return null;
+      model = await loadModelFiles(files, { ossieDialect });
     }
-    if (paste.trim()) files = { ...files, ...parsePastedMarkdown(paste.trim()) };
-    if (Object.keys(files).length === 0) throw new Error("Provide a file or paste markdown content.");
-    const graph = filesToGraph(files);
-    return { ...graph, nodes: graph.nodes.map(n => ({ ...n, status: "pending" as const, owoxId: null })) };
+    const graph = { ...model.graph, nodes: model.graph.nodes.map(n => ({ ...n, status: "pending" as const, owoxId: null })) };
+    return { ...model, graph };
   }
 
-  // Re-parse to drive the live preview/count. Empty input clears both; a parse
-  // error is shown (and clears the preview) so the count never lies.
-  async function refresh(paste: string) {
-    const hasInput = (fileInputRef.current?.files?.length ?? 0) > 0 || paste.trim().length > 0;
-    if (!hasInput) { setPreview(null); setError(null); return; }
-    try { setPreview(await buildGraph(paste)); setError(null); }
-    catch (e) { setPreview(null); setError((e as Error).message ?? "Failed to parse OKF bundle."); }
+  // Re-parse the ACTIVE tab's source to drive the live preview/count. Empty
+  // input clears it; a parse error is shown (and clears the preview) so the
+  // count never lies. Only the active tab ever shows a preview + enabled Import.
+  async function refresh(tab: TabId, opts?: { paste?: string; fetched?: Record<string, string> | null }) {
+    const paste = opts?.paste ?? pasteText;
+    const fetched = opts?.fetched ?? fetchedFiles;
+    // Loading can await (file reads, the lazily loaded Ossie reader), so an
+    // older refresh may finish after a newer one: only the latest may apply.
+    const seq = ++refreshSeq.current;
+    try {
+      const model = await loadForTab(tab, paste, fetched);
+      if (seq !== refreshSeq.current) return;
+      if (!model) { setLoaded(null); return; }
+      // Content provided but no marts parsed out (e.g. a folder whose index.md
+      // lists sub-bundles). Nothing to import.
+      if (model.graph.nodes.length === 0) {
+        setLoaded(null);
+        setError("No data marts found — check that this is an OKF bundle or an Ossie model.");
+        return;
+      }
+      setLoaded(model);
+      setError(null);
+    } catch (e) {
+      if (seq !== refreshSeq.current) return;
+      setLoaded(null);
+      setError((e as Error).message ?? "Failed to parse the model.");
+    }
   }
+
+  // Switch tabs: each tab is autonomous, so clear any transient error and
+  // recompute the preview from the newly-active tab's own input.
+  function selectTab(tab: TabId) {
+    setActiveTab(tab);
+    setError(null);
+    void refresh(tab);
+  }
+
+  // Fetch a public OKF bundle or Ossie file from a GitHub URL into the GitHub tab's preview.
+  // Auto-triggered on paste / blur / Enter / deeplink — there is no Fetch button.
+  // Skips re-fetching a URL that already loaded; a failed URL can be retried.
+  async function fetchFromUrl(target: string) {
+    const trimmed = target.trim();
+    if (!trimmed || fetching) return;
+    if (trimmed === lastFetchedRef.current && preview) return;
+    setFetching(true); setError(null);
+    try {
+      const files = await fetchModelFromUrl(trimmed);
+      lastFetchedRef.current = trimmed;
+      setFetchedFiles(files);
+      await refresh("github", { fetched: files });
+    } catch (e) {
+      lastFetchedRef.current = null;
+      setFetchedFiles(null);
+      setLoaded(null);
+      setError((e as Error).message ?? "Failed to fetch the model.");
+    } finally {
+      setFetching(false);
+    }
+  }
+
+  // Deeplink entry: prefill + auto-fetch once on mount (GitHub tab is active).
+  useEffect(() => {
+    if (initialUrl) void fetchFromUrl(initialUrl);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Copy a shareable deeplink for the current GitHub URL to the clipboard — lets
+  // users and marketing generate valid ?okf= links without hand-crafting them.
+  async function copyDeeplink() {
+    try {
+      await navigator.clipboard.writeText((loaded?.format === "ossie" ? buildOssieDeeplink : buildOkfDeeplink)(url.trim()));
+      setDeeplinkCopied(true);
+      setTimeout(() => setDeeplinkCopied(false), 2500);
+    } catch {
+      /* clipboard blocked — no-op */
+    }
+  }
+
+  // Reveal the END of the URL (where the bundle/model name is) whenever it's set
+  // programmatically — deeplink prefill or paste — without disturbing active
+  // typing (a focused input already scrolls to the caret).
+  useEffect(() => {
+    const el = urlInputRef.current;
+    if (el && document.activeElement !== el) el.scrollLeft = el.scrollWidth;
+  }, [url]);
+
+  // "No model yet? Generate one with AI" — shown on the upload & paste tabs.
+  const aiBlock = (
+    <div className="flex flex-col gap-1.5 rounded-lg border border-[#e6e9f0] bg-[#f7f8fa] px-3 py-2.5">
+      <span className="text-[12.5px] text-slate-600">No model yet? Generate one with AI:</span>
+      <div className="flex flex-wrap items-center gap-3">
+        <button
+          onClick={copyInstructions}
+          className="flex items-center gap-[6px] rounded-lg bg-[#1e88e5] px-3 py-[6px] text-[12.5px] font-[550] text-white hover:bg-[#1976d2]"
+        >
+          {copied ? <><Check size={14} /> Copied — paste into Claude</> : <><Copy size={14} /> Copy AI instructions</>}
+        </button>
+        <a
+          href="/ai-instructions.html"
+          target="_blank"
+          rel="noopener"
+          className="text-[12.5px] text-[#1e88e5] hover:text-[#1976d2] underline underline-offset-2"
+        >
+          View guide ↗
+        </a>
+      </div>
+    </div>
+  );
 
   return (
     /* Backdrop */
@@ -67,7 +208,7 @@ export function ImportDialog({ onConfirm, onClose }: ImportDialogProps) {
     >
       <div className="bg-white rounded-xl shadow-xl w-[480px] max-w-[95vw] p-6 flex flex-col gap-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-[15px] font-semibold text-slate-900">Import OKF bundle</h2>
+          <h2 className="text-[15px] font-semibold text-slate-900">Import model</h2>
           <button
             onClick={onClose}
             className="text-slate-400 hover:text-slate-700 text-xl leading-none px-1"
@@ -76,57 +217,103 @@ export function ImportDialog({ onConfirm, onClose }: ImportDialogProps) {
           </button>
         </div>
 
-        {/* Generate a model with AI: copy the authoring guide → paste into
-            Claude/ChatGPT. The raw guide also lives at /okf-format.md so an
-            assistant can fetch it directly. */}
-        <div className="-mt-1 flex flex-col gap-1.5 rounded-lg border border-[#e6e9f0] bg-[#f7f8fa] px-3 py-2.5">
-          <span className="text-[12.5px] text-slate-600">No model yet? Generate one with AI:</span>
-          <div className="flex flex-wrap items-center gap-3">
+        <p className="-mt-2 text-[12.5px] text-slate-500">OKF bundle (.zip / .md) or Apache Ossie (.yaml / .json)</p>
+
+        {/* Source tabs — segmented control (upload / paste / GitHub). */}
+        <div className="flex gap-1 rounded-lg bg-[#f1f3f7] p-1">
+          {TABS.map(t => (
             <button
-              onClick={copyInstructions}
-              className="flex items-center gap-[6px] rounded-lg bg-[#1e88e5] px-3 py-[6px] text-[12.5px] font-[550] text-white hover:bg-[#1976d2]"
+              key={t.id}
+              onClick={() => selectTab(t.id)}
+              className={
+                "flex-1 rounded-md px-3 py-[6px] text-[12.5px] font-[550] transition " +
+                (activeTab === t.id
+                  ? "bg-white text-slate-900 shadow-sm"
+                  : "text-slate-500 hover:text-slate-700")
+              }
             >
-              {copied ? <><Check size={14} /> Copied — paste into Claude</> : <><Copy size={14} /> Copy AI instructions</>}
+              {t.label}
             </button>
-            <a
-              href="/ai-instructions.html"
-              target="_blank"
-              rel="noopener"
-              className="text-[12.5px] text-[#1e88e5] hover:text-[#1976d2] underline underline-offset-2"
-            >
-              View guide ↗
-            </a>
+          ))}
+        </div>
+
+        {/* Upload tab */}
+        {activeTab === "upload" && (
+          <div className="flex flex-col gap-4">
+            {aiBlock}
+            <div>
+              <label className="block text-[13px] font-medium text-slate-700 mb-1">
+                Upload .zip / .md / .yaml / .json files
+              </label>
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept=".md,.txt,.zip,.yaml,.yml,.json"
+                multiple
+                onChange={() => void refresh("upload")}
+                className="block w-full text-[13px] text-slate-600 file:mr-3 file:py-1 file:px-3 file:rounded-md file:border file:border-[#d8dee8] file:bg-white file:text-[13px] file:font-medium file:cursor-pointer hover:file:bg-[#f1f3f7]"
+              />
+            </div>
           </div>
-        </div>
+        )}
 
-        {/* File upload */}
-        <div>
-          <label className="block text-[13px] font-medium text-slate-700 mb-1">
-            Upload .md / .txt / .zip files
-          </label>
-          <input
-            ref={fileInputRef}
-            type="file"
-            accept=".md,.txt,.zip"
-            multiple
-            onChange={() => void refresh(pasteText)}
-            className="block w-full text-[13px] text-slate-600 file:mr-3 file:py-1 file:px-3 file:rounded-md file:border file:border-[#d8dee8] file:bg-white file:text-[13px] file:font-medium file:cursor-pointer hover:file:bg-[#f1f3f7]"
-          />
-        </div>
+        {/* Paste tab */}
+        {activeTab === "paste" && (
+          <div className="flex flex-col gap-4">
+            {aiBlock}
+            <div>
+              <label className="block text-[13px] font-medium text-slate-700 mb-1">
+                Paste OKF markdown or an Ossie model
+              </label>
+              <textarea
+                value={pasteText}
+                onChange={(e) => { setPasteText(e.target.value); void refresh("paste", { paste: e.target.value }); }}
+                placeholder={"<!-- path/to/file.md -->\n...content..."}
+                rows={6}
+                className="w-full text-[13px] font-mono border border-[#d8dee8] rounded-lg px-3 py-2 resize-none focus:outline-none focus:ring-2 focus:ring-[#1e88e5]"
+              />
+            </div>
+          </div>
+        )}
 
-        {/* Paste area */}
-        <div>
-          <label className="block text-[13px] font-medium text-slate-700 mb-1">
-            Or paste markdown content
-          </label>
-          <textarea
-            value={pasteText}
-            onChange={(e) => { setPasteText(e.target.value); void refresh(e.target.value); }}
-            placeholder={"<!-- path/to/file.md -->\n...content..."}
-            rows={6}
-            className="w-full text-[13px] font-mono border border-[#d8dee8] rounded-lg px-3 py-2 resize-none focus:outline-none focus:ring-2 focus:ring-[#1e88e5]"
-          />
-        </div>
+        {/* GitHub tab — fetches the bundle client-side from raw.githubusercontent.com. */}
+        {activeTab === "github" && (
+          <div>
+            <div className="flex items-center justify-between mb-1">
+              <label className="text-[13px] font-medium text-slate-700">
+                Import from a public GitHub URL
+              </label>
+              {isAllowedGithubHost(url.trim()) && (
+                <button
+                  type="button"
+                  onClick={copyDeeplink}
+                  title="Copy a shareable deeplink to this model"
+                  className="flex items-center gap-1 text-[12px] text-slate-400 hover:text-slate-600"
+                >
+                  {deeplinkCopied
+                    ? <><Check size={12} /> Deeplink copied</>
+                    : <><Copy size={12} /> Share</>}
+                </button>
+              )}
+            </div>
+            <input
+              ref={urlInputRef}
+              type="url"
+              value={url}
+              onChange={(e) => { setUrl(e.target.value); setDeeplinkCopied(false); }}
+              onPaste={(e) => { const el = e.currentTarget; setTimeout(() => { setUrl(el.value); void fetchFromUrl(el.value); }, 0); }}
+              onBlur={() => { if (url.trim()) void fetchFromUrl(url); }}
+              onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); void fetchFromUrl(url); } }}
+              placeholder="https://github.com/OWOX/models/tree/main/bundles/demo-project"
+              className="w-full text-[13px] border border-[#d8dee8] rounded-lg px-3 py-[7px] focus:outline-none focus:ring-2 focus:ring-[#1e88e5]"
+            />
+            <p className="mt-1 text-[12px] text-slate-500">
+              {fetching
+                ? "Fetching model…"
+                : "Paste a link to an OKF bundle folder or an Ossie .yaml / .json file — it loads automatically."}
+            </p>
+          </div>
+        )}
 
         {error && (
           <p className="text-[13px] text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2">
@@ -134,16 +321,57 @@ export function ImportDialog({ onConfirm, onClose }: ImportDialogProps) {
           </p>
         )}
 
-        {/* Apply mode + count — mirrors the OWOX-import dialog */}
+        {/* Preview: model name + object list + apply mode + count. */}
         {preview && (
-          <div className="flex flex-col gap-1.5 border-t border-slate-100 pt-3">
-            <span className="text-[12px] font-medium text-slate-500">When applying to the canvas</span>
-            {(["replace", "merge"] as const).map(m => (
-              <label key={m} className="flex items-center gap-2 text-[13px] text-slate-800 cursor-pointer">
-                <input type="radio" name="okf-mode" checked={mode === m} onChange={() => setMode(m)} />
-                {m === "replace" ? "Replace the canvas" : "Merge into the canvas"}
-              </label>
-            ))}
+          <div className="flex flex-col gap-2 border-t border-slate-100 pt-3">
+            <div className="flex items-center gap-2">
+              <span data-testid="import-format" className="rounded-md bg-[#eef4fd] px-1.5 py-[2px] text-[11px] font-[550] text-[#1565c0]">
+                {loaded!.format === "ossie" ? "Apache Ossie" : "OKF"}
+              </span>
+              {modelName && (
+                <span className="text-[13px] font-semibold text-slate-900">{modelName}</span>
+              )}
+            </div>
+            {preview.nodes.length > 0 && (
+              <div className="max-h-40 overflow-y-auto rounded-lg border border-slate-100 divide-y divide-slate-50">
+                {preview.nodes.map(n => (
+                  <div key={n.key} className="flex items-center justify-between gap-2 px-2.5 py-1.5">
+                    <span className="truncate text-[12.5px] text-slate-800">{n.title}</span>
+                    <span className="shrink-0 text-[11px] text-slate-400">{n.schema.length} fields</span>
+                  </div>
+                ))}
+              </div>
+            )}
+            {/* The Replace/Merge choice only makes sense when there's already a
+                model on the canvas — a first-time visitor lands on an empty
+                canvas, so the import simply populates it. */}
+            {hasExistingModel && (
+              <>
+                <span className="text-[12px] font-medium text-slate-500 mt-1">When applying to the canvas</span>
+                {(["replace", "merge"] as const).map(m => (
+                  <label key={m} className="flex items-center gap-2 text-[13px] text-slate-800 cursor-pointer">
+                    <input type="radio" name="okf-mode" checked={mode === m} onChange={() => setMode(m)} />
+                    {m === "replace" ? "Replace the canvas" : "Merge into the canvas"}
+                  </label>
+                ))}
+              </>
+            )}
+            {loaded!.notImported.length > 0 && (
+              <details className="text-[12px] text-slate-500">
+                <summary className="cursor-pointer">Not imported ({loaded!.notImported.length})</summary>
+                <ul className="mt-1 max-h-28 list-disc overflow-y-auto pl-5">
+                  {loaded!.notImported.map((t, i) => <li key={"n" + i}>{t}</li>)}
+                </ul>
+              </details>
+            )}
+            {loaded!.warnings.length > 0 && (
+              <details className="text-[12px] text-amber-800">
+                <summary className="cursor-pointer">Warnings ({loaded!.warnings.length})</summary>
+                <ul className="mt-1 max-h-28 list-none overflow-y-auto pl-1">
+                  {loaded!.warnings.map((t, i) => <li key={"w" + i}><span aria-hidden="true">⚠ </span>{t}</li>)}
+                </ul>
+              </details>
+            )}
             <p className="text-[12px] text-slate-500">
               Will import {preview.nodes.length} marts, {preview.edges.length} relationships.
             </p>
@@ -158,7 +386,7 @@ export function ImportDialog({ onConfirm, onClose }: ImportDialogProps) {
             Cancel
           </button>
           <button
-            onClick={() => preview && onConfirm(preview, mode)}
+            onClick={() => preview && onConfirm(preview, mode, modelName)}
             disabled={!preview}
             className="text-[13px] font-[550] bg-[#1e88e5] text-white border border-[#1e88e5] rounded-lg px-4 py-[7px] cursor-pointer hover:bg-[#1976d2] disabled:opacity-50"
           >

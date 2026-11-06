@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { serializeBundle, parseBundle } from "../src/index";
+import { serializeBundle, parseBundle, isBundleIndex } from "../src/index";
 import type { ModelGraph } from "../src/types";
 
 const graph: ModelGraph = {
@@ -25,7 +25,7 @@ describe("okf round-trip", () => {
     expect(back.edges).toHaveLength(1);
     expect(back.edges[0]).toMatchObject({ from: "facebook-ads", to: "campaigns", keys: [{ left: "campaign_id", right: "id" }] });
   });
-  it("round-trips per-field description (alias is not preserved in the superset format), and reads the legacy 3-column form", () => {
+  it("round-trips per-field description and alias, and reads the legacy 3-column form", () => {
     const g: ModelGraph = {
       storageId: null,
       nodes: [{
@@ -37,16 +37,42 @@ describe("okf round-trip", () => {
       }],
       edges: [],
     };
-    const back = parseBundle(serializeBundle(g, "P").files);
+    const files = serializeBundle(g, "P").files;
+    expect(files["p/users.md"]).toContain("| Column | Type | Alias | Description |");
+    const back = parseBundle(files);
     expect(back.nodes[0].schema).toEqual([
-      { name: "id", type: "STRING", pk: true, description: "Unique id" },
+      { name: "id", type: "STRING", pk: true, alias: "user_id", description: "Unique id" },
       { name: "email", type: "STRING", pk: false },
     ]);
+    // No aliases anywhere → the leaner 3-column table.
+    const plain = serializeBundle(
+      { ...g, nodes: [{ ...g.nodes[0], schema: [{ name: "id", type: "STRING", pk: true }] }] },
+      "P",
+    ).files;
+    expect(plain["p/users.md"]).toContain("| Column | Type | Description |");
     // Legacy 3-column table still imports.
     const legacy = parseBundle({
       "p/a.md": frontless("a", "A") + "\n## Schema\n\n| Column | Type | PK |\n|--|--|--|\n| `x` | INTEGER | ✓ |\n",
     });
     expect(legacy.nodes[0].schema).toEqual([{ name: "x", type: "INTEGER", pk: true }]);
+    // Legacy 5-column table keeps its own PK/Alias columns.
+    const legacy5 = parseBundle({
+      "p/b.md": frontless("b", "B") +
+        "\n## Schema\n\n| Column | Type | PK | Alias | Description |\n|--|--|--|--|--|\n| `x` | INTEGER | ✓ | X id | The id |\n",
+    });
+    expect(legacy5.nodes[0].schema).toEqual([
+      { name: "x", type: "INTEGER", pk: true, alias: "X id", description: "The id" },
+    ]);
+    // Hand-authored 4-column form: Alias plus the `PK.` description marker.
+    const authored = parseBundle({
+      "p/c.md": frontless("c", "C") +
+        "\n# Schema\n\n| Column | Type | Alias | Description |\n|--|--|--|--|\n" +
+        "| `id` | STRING | Order ID | PK. Unique order id |\n| `total` | FLOAT | | Gross total |\n",
+    });
+    expect(authored.nodes[0].schema).toEqual([
+      { name: "id", type: "STRING", pk: true, alias: "Order ID", description: "Unique order id" },
+      { name: "total", type: "FLOAT", pk: false, description: "Gross total" },
+    ]);
   });
 
   it("collapses mutual Joins lines into one bidirectional edge", () => {
@@ -101,7 +127,7 @@ describe("serialize → parse round-trip (superset)", () => {
     };
 
     const { files } = serializeBundle(collidingGraph, "Demo");
-    const martFiles = Object.keys(files).filter(f => !f.endsWith("index.md"));
+    const martFiles = Object.keys(files).filter(f => !isBundleIndex(f));
     expect(martFiles).toHaveLength(2);
 
     const back = parseBundle(files);
@@ -142,4 +168,37 @@ descRt("cardinality round-trip", () => {
       expRt(back.edges[0].bidirectional).toBe(true);
     });
   }
+});
+
+describe("okf join description", () => {
+  const g = (bidirectional: boolean): ModelGraph => ({
+    ...graph,
+    edges: [{ id: "e1", from: "fb", to: "camp", keys: [{ left: "campaign_id", right: "id" }], bidirectional, cardinality: "N:1",
+      description: "Each ad belongs to\none campaign" }],
+  });
+  it("round-trips a description on the forward line only", () => {
+    const files = serializeBundle(g(true), "Demo").files;
+    expect(files["demo/facebook-ads.md"]).toContain("\n  - Description: Each ad belongs to one campaign\n");
+    expect(files["demo/campaigns.md"]).not.toContain("Description:");
+    const back = parseBundle(files);
+    expect(back.edges).toHaveLength(1);
+    expect(back.edges[0].description).toBe("Each ad belongs to one campaign");
+    expect(back.edges[0].bidirectional).toBe(true);
+  });
+  it("takes the first non-empty description when the reverse line has one too", () => {
+    const files = { ...serializeBundle(g(true), "Demo").files };
+    files["demo/campaigns.md"] = files["demo/campaigns.md"].replace(/(- \[Facebook Ads\].*)/, "$1\n  - Description: from reverse");
+    expect(parseBundle(files).edges[0].description).toBe("Each ad belongs to one campaign");
+    const f2 = { ...serializeBundle({ ...g(true), edges: [{ ...g(true).edges[0], description: undefined }] }, "Demo").files };
+    f2["demo/campaigns.md"] = f2["demo/campaigns.md"].replace(/(- \[Facebook Ads\].*)/, "$1\n  - Description: from reverse");
+    expect(parseBundle(f2).edges[0].description).toBe("from reverse");
+  });
+  it("parses an old bundle without sub-bullets unchanged and ignores stray Description lines", () => {
+    const files = { ...serializeBundle(g(false), "Demo").files };
+    const plain = serializeBundle({ ...g(false), edges: [{ ...g(false).edges[0], description: undefined }] }, "Demo").files;
+    expect(parseBundle(plain).edges[0].description).toBeUndefined();
+    plain["demo/facebook-ads.md"] += "\n## Notes\n\n  - Description: stray\n";
+    expect(parseBundle(plain).edges[0].description).toBeUndefined();
+    expect(parseBundle(files).edges[0].description).toBeDefined();
+  });
 });

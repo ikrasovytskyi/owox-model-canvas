@@ -1,5 +1,6 @@
 import { gzipSync, gunzipSync, strToU8, strFromU8 } from "fflate";
 import type { ModelGraph, ModelNode, ModelEdge } from "@mc/okf";
+import { migrateModelName } from "../state/modelName";
 
 // Shareable model links. The whole model is gzip-compressed and packed into the
 // URL hash (#m=…) — no backend, fully anonymous, and the hash never leaves the
@@ -8,12 +9,14 @@ import type { ModelGraph, ModelNode, ModelEdge } from "@mc/okf";
 // growth loop for a free tool.
 
 const HASH_KEY = "m";
+const NAME_KEY = "n";
 
 // OWOX-specific fields (owoxId, status, createdBy, …) are dropped: a shared model
 // is a clean draft, and we never leak another project's ids into a public URL.
 function sanitize(g: ModelGraph): ModelGraph {
   return {
     storageId: null,
+    ...(typeof g.description === "string" && g.description ? { description: g.description } : {}),
     nodes: g.nodes.map((n): ModelNode => ({
       key: n.key,
       title: n.title,
@@ -31,6 +34,9 @@ function sanitize(g: ModelGraph): ModelGraph {
       keys: e.keys,
       bidirectional: e.bidirectional,
       cardinality: e.cardinality,
+      ...(typeof e.alias === "string" ? { alias: e.alias } : {}),
+      ...(typeof e.reverseAlias === "string" ? { reverseAlias: e.reverseAlias } : {}),
+      ...(typeof e.description === "string" && e.description ? { description: e.description } : {}),
     })),
   };
 }
@@ -68,14 +74,24 @@ export function decodeModel(payload: string): ModelGraph | null {
 }
 
 /** Full shareable URL for the current page that reopens `graph`. */
-export function buildShareUrl(graph: ModelGraph): string {
-  return `${location.origin}${location.pathname}#${HASH_KEY}=${encodeModel(graph)}`;
+export function buildShareUrl(graph: ModelGraph, name?: string): string {
+  // The model name isn't part of the graph, so carry it alongside the payload as
+  // a separate hash param — the recipient opens the model under the sender's name.
+  const namePart = name && name.trim() ? `&${NAME_KEY}=${encodeURIComponent(name.trim())}` : "";
+  return `${location.origin}${location.pathname}#${HASH_KEY}=${encodeModel(graph)}${namePart}`;
 }
 
 /** If the current URL carries a shared model, decode it; otherwise null. */
 export function readSharedModel(): ModelGraph | null {
   const match = new RegExp(`[#&]${HASH_KEY}=([^&]+)`).exec(location.hash);
   return match ? decodeModel(match[1]) : null;
+}
+
+/** The model name carried in a shared link, if any. */
+export function readSharedName(): string | null {
+  const match = new RegExp(`[#&]${NAME_KEY}=([^&]+)`).exec(location.hash);
+  if (!match) return null;
+  try { return migrateModelName(decodeURIComponent(match[1])); } catch { return null; }
 }
 
 /** Strip the shared-model payload from the address bar (after we've loaded it),

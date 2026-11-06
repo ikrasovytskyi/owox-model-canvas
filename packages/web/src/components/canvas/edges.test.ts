@@ -53,6 +53,16 @@ describe("buildRfEdges", () => {
     expect(out[0].targetHandle).toBe("left");
   });
 
+  it("erd: a calculated field is never a handle, the edge anchors to the card", () => {
+    const calcNodes = [
+      { ...node("a", ["id"]), schema: [field("id"), { name: "total", type: "NUMERIC", pk: false, formula: "SUM(x)" }] },
+      node("b", ["a_id"]),
+    ];
+    const out = buildRfEdges([edge([{ left: "total", right: "a_id" }])], calcNodes, "erd");
+    expect(out[0].sourceHandle).toBe("right");
+    expect(out[0].targetHandle).toBe("fl:a_id");
+  });
+
   it("erd: an edge with no usable keys yields a single node-level fallback edge", () => {
     const out = buildRfEdges([edge([{ left: "", right: "" }])], nodes, "erd");
     expect(out).toHaveLength(1);
@@ -112,6 +122,24 @@ describe("buildRfEdges cardinality passthrough", () => {
   it("includes cardinality in ERD edge data", () => {
     const rf = buildRfEdges(edges, nodes, "erd");
     expect((rf[0].data as any).cardinality).toBe("N:1");
+  });
+
+  it("threads the relLabelMode into edge data (compact)", () => {
+    const out = buildRfEdges([edge([{ left: "id", right: "a_id" }])], nodes, "compact", "defined");
+    expect((out[0].data as { relLabelMode?: string }).relLabelMode).toBe("defined");
+  });
+
+  it("threads the relLabelMode into every ERD per-key edge", () => {
+    const out = buildRfEdges(
+      [edge([{ left: "id", right: "a_id" }, { left: "x", right: "y" }])],
+      nodes, "erd", "undefined",
+    );
+    expect(out.every(e => (e.data as { relLabelMode?: string }).relLabelMode === "undefined")).toBe(true);
+  });
+
+  it("defaults the mode to 'all' when the arg is omitted", () => {
+    const out = buildRfEdges([edge([{ left: "id", right: "a_id" }])], nodes, "compact");
+    expect((out[0].data as { relLabelMode?: string }).relLabelMode).toBe("all");
   });
 });
 

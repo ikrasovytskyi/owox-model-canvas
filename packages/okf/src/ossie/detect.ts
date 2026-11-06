@@ -1,0 +1,26 @@
+export type ModelFormat = "okf" | "ossie";
+
+const OSSIE_EXT = /\.(ya?ml|json)$/i;
+const OKF_EXT = /\.(zip|md|txt)$/i;
+const OSSIE_KEY = /^(version|name|datasets|semantic_model)\s*:/;
+
+/** Decide whether a model is an OKF bundle or an Apache Ossie document. The
+ *  file extension wins; without one, sniff the first meaningful line of text. */
+export function detectModelFormat(input: { fileName?: string; text: string }): ModelFormat {
+  const { fileName, text } = input;
+  if (fileName) {
+    if (OSSIE_EXT.test(fileName)) return "ossie";
+    if (OKF_EXT.test(fileName)) return "okf";
+  }
+  const lines = text.replace(/^﻿/, "").replace(/\r\n?/g, "\n").split("\n");
+  let i = 0;
+  while (i < lines.length && (lines[i].trim() === "" || lines[i].trimStart().startsWith("#"))) i++;
+  if (i < lines.length && lines[i].trim() === "---") i++;
+  const first = (lines[i] ?? "").trimStart();
+  const looksOssie = first.startsWith("{") || OSSIE_KEY.test(first);
+  // Frontmatter in OKF docs can also start with `name:` / `version:`, so also
+  // require a top-level Ossie key. Ontology and mapping documents count too:
+  // the Ossie reader explains that they aren't semantic models.
+  const hasModelKey = /^(datasets|semantic_model|ontology|concept_mappings)\s*:/m.test(lines.join("\n")) || /"(datasets|semantic_model|ontology|concept_mappings)"\s*:/.test(text);
+  return looksOssie && hasModelKey ? "ossie" : "okf";
+}
