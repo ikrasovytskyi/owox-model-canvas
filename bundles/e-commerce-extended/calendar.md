@@ -1,9 +1,9 @@
 ---
 title: "Calendar"
 description: |
-  One row per day, 2024 to 2027 — the date every other mart is read by. Orders, sessions, ad
+  One row per day, 2024 to 2027 — the date every other Data Mart is read by. Orders, sessions, ad
   spend, payments, refunds, operating costs and every plan land on the same day here, so actuals
-  and plans can be set side by side by day, week, month, quarter or year without each mart
+  and plans can be set side by side by day, week, month, quarter or year without each Data Mart
   rolling up its own dates.
 tags: ["owox"]
 type: "OWOX Data Mart"
@@ -15,7 +15,7 @@ timestamp: 2026-11-06T12:00:00.000Z
 | Column | Type | Alias | Description |
 |--------|------|-------|-------------|
 | `date` | DATE | Date | PK. The calendar day |
-| `date_text` | STRING | Date (Text) | The same day as text in YYYY-MM-DD form; the key the plan marts join on, because their dates are text |
+| `date_text` | STRING | Date (Text) | The same day as text in YYYY-MM-DD form; the key the plan Data Marts join on, because their dates are text |
 | `week_start` | DATE | Week Start | Monday of the ISO week the day falls in |
 | `month` | STRING | Month | The month as YYYY-MM |
 | `quarter` | STRING | Quarter | The quarter as YYYY-Qn |

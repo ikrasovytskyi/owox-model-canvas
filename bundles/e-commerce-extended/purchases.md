@@ -4,7 +4,7 @@ description: |
   The order lines behind every order — one row per product bought, with quantity, the price
   actually paid, the cost of goods, and the resulting revenue and profit. Revenue is
   recognised only for completed orders, so gross booked value and settled value never get
-  confused. This is the mart that answers what the business actually earned. A line carries no
+  confused. This is the Data Mart that answers what the business actually earned. A line carries no
   date of its own: its [Orders](./orders.md) row says when it was placed and in what state it ended.
 tags: ["owox"]
 type: "OWOX Data Mart"

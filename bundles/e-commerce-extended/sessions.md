@@ -54,7 +54,7 @@ COUNT(DISTINCT orders_e_commerce.order_id)
 
 - **Alias:** Conversion Rate
 
-Orders per session — right at every cut. Inlined rather than composed over `orders_count`, because that formula reads a joined mart (Orders) and a formula may not read another formula that itself reads a join.
+Orders per session — right at every cut. Inlined rather than composed over `orders_count`, because that formula reads a joined Data Mart (Orders) and a formula may not read another formula that itself reads a join.
 
 ```sql
 SAFE_DIVIDE(COUNT(DISTINCT orders_e_commerce.order_id), sessions_count)

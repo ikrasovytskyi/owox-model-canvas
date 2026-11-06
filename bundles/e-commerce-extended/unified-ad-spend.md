@@ -9,12 +9,12 @@ description: |
   produced instead of being read on its own — Ad Performance does exactly
   that, campaign by campaign.
 
-  Unlike every other mart in this model, this one is defined by **SQL inside the data mart
+  Unlike every other Data Mart in this model, this one is defined by **SQL inside the Data Mart
   itself** rather than by a database view — on purpose. Each advertising platform is
-  collected by its own connector-based data mart, each with a different schema and naming,
-  and this query is how those separate marts are unified: seven `SELECT`s over the tables the
+  collected by its own connector-based Data Mart, each with a different schema and naming,
+  and this query is how those separate Data Marts are unified: seven `SELECT`s over the tables the
   connectors land in, normalised to one grain and `UNION ALL`ed together. Open Data Setup to
-  read it — every block is commented with the connector data mart it draws from and links
+  read it — every block is commented with the connector Data Mart it draws from and links
   straight to it, which is the shortest demonstration of how connector data becomes
   reportable with plain SQL.
 tags: ["owox"]
