@@ -46,6 +46,10 @@ timestamp: 2026-10-20T20:04:21Z
 | [Orders](./orders.md) | 5 |
 | [Pages](./pages.md) | 4 |
 | [Pageviews](./pageviews.md) | 6 |
+| [[Plan] Advertising](./plan-advertising.md) | 4 |
+| [[Plan] Marketing](./plan-marketing.md) | 5 |
+| [[Plan] Product](./plan-product.md) | 4 |
+| [[Plan] Sales](./plan-sales.md) | 4 |
 | [Product Category](./product-category.md) | 5 |
 | [Products](./products.md) | 8 |
 | [Purchases](./purchases.md) | 12 |
