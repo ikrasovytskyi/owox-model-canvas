@@ -94,3 +94,4 @@ CASE WHEN medium = 'cpc' THEN 'Paid' WHEN medium = 'organic' THEN 'Organic' WHEN
 - [Unified Ad Spend](./unified-ad-spend.md) — `date = date`, `source = source`, `medium = medium` [N:N] — Spend on the same day and channel — a cohort match, not this session's cost.
   - [Ad Spend Traffic Source](./traffic-sources.md) — The channel behind the matched spend.
 - [Visitors](./visitors.md) — `visitor_id = visitor_id` [N:1] — The visitor who browsed.
+- [Calendar](./calendar.md) — `date = date` [N:1] — The day of the visit.

@@ -18,3 +18,7 @@ timestamp: 2026-10-26T16:15:11.000Z
 | `ad_spend` | FLOAT | Planned Ad Spend | Ad budget planned for that day across all ad platforms, in US dollars. Sum the days for a period's plan. |
 | `clicks` | INTEGER | Planned Clicks | Paid clicks the day's budget should buy: planned ad spend divided by planned cost per click. |
 | `cost_per_click` | FLOAT | Planned Cost per Click | Cost per click expected on that day, in US dollars. A rate fixed for that date, not a volume: never sum it. For a period, divide summed Planned Ad Spend by summed Planned Clicks. |
+
+## Joins
+
+- [Calendar](./calendar.md) — `date = date_text` [1:1] — The day this plan row is for; set it against the actuals that land on the same day.

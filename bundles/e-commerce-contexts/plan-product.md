@@ -18,3 +18,7 @@ timestamp: 2026-10-24T09:54:57.000Z
 | `sessions` | INTEGER | Planned Sessions | Storefront visits expected that day, from every channel. |
 | `orders` | INTEGER | Planned Orders | Orders the day's visits should produce: planned sessions times planned conversion rate. |
 | `conversion_rate` | FLOAT | Planned Conversion Rate | Share of visits expected to end in an order on that day, on a 0–1 scale (0.028 means 2.8%). A rate fixed for that date, not a volume: never sum it. For a period, divide summed Planned Orders by summed Planned Sessions. |
+
+## Joins
+
+- [Calendar](./calendar.md) — `date = date_text` [1:1] — The day this plan row is for; set it against the actuals that land on the same day.

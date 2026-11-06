@@ -18,3 +18,7 @@ timestamp: 2026-10-26T16:14:57.000Z
 | `orders` | INTEGER | Planned Orders | Orders expected that day; the same figure as Planned Orders in [Plan] Product. |
 | `average_order_value` | FLOAT | Planned Average Order Value | Settled revenue expected per order, in US dollars; set per month, so every day of a month carries the same value. For a period, divide summed Planned Settled Revenue by summed Planned Orders. |
 | `settled_revenue` | FLOAT | Planned Settled Revenue | Revenue the store expects to keep from that day's orders after cancellations and returns, in US dollars: planned orders times planned average order value. |
+
+## Joins
+
+- [Calendar](./calendar.md) — `date = date_text` [1:1] — The day this plan row is for; set it against the actuals that land on the same day.

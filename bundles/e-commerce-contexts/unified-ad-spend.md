@@ -68,3 +68,4 @@ SAFE_DIVIDE(SUM(IF(platform_conversions IS NOT NULL, spend, NULL)), SUM(platform
 ## Joins
 
 - [Traffic Sources](./traffic-sources.md) — `source = source`, `medium = medium`, `campaign = campaign` [N:1] — The channel this spend was bought on.
+- [Calendar](./calendar.md) — `date = date` [N:1] — The day the spend ran.

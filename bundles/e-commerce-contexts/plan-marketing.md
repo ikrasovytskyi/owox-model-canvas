@@ -19,3 +19,7 @@ timestamp: 2026-10-26T16:15:05.000Z
 | `paid_revenue` | FLOAT | Planned Paid Revenue | Settled revenue expected that day from orders placed in paid visits, in US dollars: planned ad spend times planned ROAS. |
 | `roas` | FLOAT | Planned ROAS | Settled revenue expected for every $1 of ad spend on that day (4.0 means $4 back per $1). A rate fixed for that date, not a volume: never sum it. For a period, divide summed Planned Paid Revenue by summed Planned Ad Spend. |
 | `ad_spend` | FLOAT | Planned Ad Spend | Ad budget planned for that day across all ad platforms, in US dollars; the same figure as in [Plan] Advertising, kept here so the return can be read from this mart alone. |
+
+## Joins
+
+- [Calendar](./calendar.md) — `date = date_text` [1:1] — The day this plan row is for; set it against the actuals that land on the same day.

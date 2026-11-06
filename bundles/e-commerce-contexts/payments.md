@@ -65,3 +65,4 @@ SAFE_DIVIDE(COUNTIF(status = 'Failed'), COUNT(DISTINCT payment_id))
 - [Orders](./orders.md) — `order_id = order_id` [N:1] — The order this payment settles.
   - [Customers](./customers.md) — The customer who paid.
   - [Purchases](./purchases.md) — The lines the payment covers.
+- [Calendar](./calendar.md) — `payment_date = date` [N:1] — The day the payment was captured.

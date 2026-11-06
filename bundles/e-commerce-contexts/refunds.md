@@ -53,3 +53,4 @@ COUNT(DISTINCT order_id)
   - [Customers](./customers.md) — The customer who was refunded.
   - [Purchases](./purchases.md) — The lines of the refunded order.
     - [Refunded Product](./products.md) — The products on those lines.
+- [Calendar](./calendar.md) — `refund_date = date` [N:1] — The day the refund was sent.

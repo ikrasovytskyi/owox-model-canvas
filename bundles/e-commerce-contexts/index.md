@@ -42,6 +42,7 @@ timestamp: 2026-10-20T20:04:21Z
 
 | Data Mart | Fields |
 |-----------|--------|
+| [Calendar](./calendar.md) | 6 |
 | [Countries](./countries.md) | 4 |
 | [Customers](./customers.md) | 5 |
 | [Operating Costs](./operating-costs.md) | 3 |
@@ -78,14 +79,14 @@ One click opens this model in a free OWOX canvas you can poke around in — no a
 
 ## Contexts
 
-The business runs on four contexts. Each one answers to its own leader, and they share one model: a Data Mart listed under more than one context is shared, so Marketing's customers, Sales' orders and Finance's refunds are the same rows.
+The business runs on four contexts. Each one answers to its own leader, and they share one model: a Data Mart listed under more than one context is shared — Calendar under all four — so Marketing's customers, Sales' orders and Finance's refunds are the same rows.
 
 | Context | What it answers | Data Marts |
 |---------|-----------------|------------|
-| Marketing | Which channels bring shoppers who buy, at a return on ad spend the store can carry? | [Sessions](./sessions.md), [Visitors](./visitors.md), [Traffic Sources](./traffic-sources.md), [Unified Ad Spend](./unified-ad-spend.md), [Customers](./customers.md), [Countries](./countries.md), [Pages](./pages.md), [Pageviews](./pageviews.md), [[Plan] Marketing](./plan-marketing.md), [[Plan] Advertising](./plan-advertising.md) |
-| Sales | Is settled revenue growing year on year, across categories and markets? | [Orders](./orders.md), [Purchases](./purchases.md), [Customers](./customers.md), [Products](./products.md), [Product Category](./product-category.md), [Countries](./countries.md), [[Plan] Sales](./plan-sales.md) |
-| Product | Do storefront visits turn into orders, and which products carry them? | [Products](./products.md), [Product Category](./product-category.md), [Pages](./pages.md), [Pageviews](./pageviews.md), [Sessions](./sessions.md), [Orders](./orders.md), [[Plan] Product](./plan-product.md) |
-| Finance | How much of booked revenue does the store keep after refunds, fees and every cost? | [Payments](./payments.md), [Refunds](./refunds.md), [Operating Costs](./operating-costs.md), [Orders](./orders.md), [Purchases](./purchases.md), [Unified Ad Spend](./unified-ad-spend.md), [Customers](./customers.md) |
+| Marketing | Which channels bring shoppers who buy, at a return on ad spend the store can carry? | [Sessions](./sessions.md), [Visitors](./visitors.md), [Traffic Sources](./traffic-sources.md), [Unified Ad Spend](./unified-ad-spend.md), [Customers](./customers.md), [Countries](./countries.md), [Pages](./pages.md), [Pageviews](./pageviews.md), [[Plan] Marketing](./plan-marketing.md), [[Plan] Advertising](./plan-advertising.md), [Calendar](./calendar.md) |
+| Sales | Is settled revenue growing year on year, across categories and markets? | [Orders](./orders.md), [Purchases](./purchases.md), [Customers](./customers.md), [Products](./products.md), [Product Category](./product-category.md), [Countries](./countries.md), [[Plan] Sales](./plan-sales.md), [Calendar](./calendar.md) |
+| Product | Do storefront visits turn into orders, and which products carry them? | [Products](./products.md), [Product Category](./product-category.md), [Pages](./pages.md), [Pageviews](./pageviews.md), [Sessions](./sessions.md), [Orders](./orders.md), [[Plan] Product](./plan-product.md), [Calendar](./calendar.md) |
+| Finance | How much of booked revenue does the store keep after refunds, fees and every cost? | [Payments](./payments.md), [Refunds](./refunds.md), [Operating Costs](./operating-costs.md), [Orders](./orders.md), [Purchases](./purchases.md), [Unified Ad Spend](./unified-ad-spend.md), [Customers](./customers.md), [Calendar](./calendar.md) |
 
 ## Model preview
 

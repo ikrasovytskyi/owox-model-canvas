@@ -35,3 +35,7 @@ SUM(amount)
 - What does it cost to run the store each month, before cost of goods and ad spend?
 - Which cost category is growing faster than revenue?
 - What is profit after cost of goods, ad spend, processing fees and operating costs?
+
+## Joins
+
+- [Calendar](./calendar.md) — `date = date` [N:1] — The day the cost was booked.

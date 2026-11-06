@@ -86,3 +86,4 @@ COUNT(DISTINCT purchases_e_commerce.products_e_commerce.product_id)
   - [Session Ad Spend](./unified-ad-spend.md) — Spend on that day and channel — a cohort match, not this order's cost.
     - [Ad Spend Traffic Source](./traffic-sources.md) — The channel behind that spend.
   - [Session Visitor](./visitors.md) — The visitor behind the ordering session.
+- [Calendar](./calendar.md) — `order_date = date` [N:1] — The day the order was placed.
