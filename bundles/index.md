@@ -10,7 +10,7 @@ timestamp: 2026-10-20T20:05:44Z
 
 Generated 2026-10-20T20:05:44Z.
 
-- [E-Commerce](./e-commerce/index.md) — 12 concept(s)
+- [E-Commerce](./e-commerce/index.md) — 19 concept(s)
 - [E-commerce Subscription Store](./ecommerce-subscription-store/index.md) — 15 concept(s)
 - [OWOX Data Marts — Facebook Ads connector source](./facebook-ads/index.md) — 15 concept(s)
 - [Finance](./finance/index.md) — 8 concept(s)
