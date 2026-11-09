@@ -30,4 +30,5 @@ Generated 2026-10-20T20:05:44Z.
 - [Salesforce](./salesforce/index.md) — 16 concept(s)
 - [Stripe](./stripe/index.md) — 14 concept(s)
 - [Trading](./trading/index.md) — 8 concept(s)
+- [YouTube](./youtube/index.md) — 12 concept(s)
 
