@@ -10,10 +10,11 @@ pnpm okf:source google-ads --owox-com ../owox.com --data-marts ../owox-data-mart
 pnpm okf:source quickbooks --owox-com ../owox.com --manifest quickbooks-manifest.json         # a custom connector: keys from its manifest
 ```
 
-The `Explore on canvas` link in each `index.md` opens the bundle's raw `index.md` on this repo's `main`
-(`https://model.owox.com/?okf=https://raw.githubusercontent.com/ikrasovytskyi/owox-model-canvas/main/bundles/sources/<key>/index.md`).
-`--explore-base <url>` changes where it points: a `raw.githubusercontent.com` base gets `/<key>/index.md`
-appended, a `github.com/.../tree/...` base gets `/<key>` (the folder).
+The `Explore on canvas` link in each `index.md` opens the bundle's folder on this repo's `main`
+(`https://model.owox.com/?okf=https://github.com/ikrasovytskyi/owox-model-canvas/tree/main/bundles/sources/<key>`).
+`--explore-base <url>` changes where it points: a `github.com/.../tree/...` base gets `/<key>` (the folder), a
+`raw.githubusercontent.com` base gets `/<key>/index.md`. The raw form did not open on model.owox.com on 2026-11-09
+("No data marts found"), the tree form does, so the tree form is the default.
 
 `--data-marts` must be a git checkout at the commit the Data Source item pins (`repoCommitSha`); the
 generator refuses any other (`--allow-unpinned` overrides), because every source link in the bundle

@@ -20,9 +20,10 @@
 //        --allow-unpinned  accept a --data-marts checkout that is not at the commit the Data Source item pins
 //        --out <dir> bundles root (default: bundles/sources in this repo)
 //        --explore-base <url>  where the "Explore on canvas" link points: the GitHub tree URL of the folder that
-//                     holds the bundles (default: this repo's raw files on the fork's main,
-//                     https://raw.githubusercontent.com/ikrasovytskyi/owox-model-canvas/main/bundles/sources). A raw base links
-//                     <base>/<key>/index.md, a github.com tree base links the folder <base>/<key>.
+//                     holds the bundles (default: this repo's folder on the fork's main,
+//                     https://github.com/ikrasovytskyi/owox-model-canvas/tree/main/bundles/sources). A github.com tree base links
+//                     the folder <base>/<key>; a raw.githubusercontent.com base links <base>/<key>/index.md, which model.owox.com
+//                     did not open when this was written (2026-11-09: "No data marts found"), so it is not the default.
 import { spawnSync } from 'node:child_process'
 import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { dirname, join, relative, resolve } from 'node:path'
@@ -62,7 +63,7 @@ const dataMarts = manifestPath ? undefined : (opts['--data-marts'] ?? process.en
 if (manifestPath && opts['--data-marts']) usage('Pass --data-marts or --manifest, not both: a source is read from one of them.')
 const check = opts['--check'] === true
 const allowUnpinned = opts['--allow-unpinned'] === true
-const exploreBase = (opts['--explore-base'] ?? 'https://raw.githubusercontent.com/ikrasovytskyi/owox-model-canvas/main/bundles/sources').replace(/\/+$/, '')
+const exploreBase = (opts['--explore-base'] ?? 'https://github.com/ikrasovytskyi/owox-model-canvas/tree/main/bundles/sources').replace(/\/+$/, '')
 const exploreTarget = (k) => (/^https:\/\/raw\.githubusercontent\.com\//.test(exploreBase) ? `${exploreBase}/${k}/index.md` : `${exploreBase}/${k}`)
 const outRoot = resolve(opts['--out'] ?? join(REPO, 'bundles/sources'))
 

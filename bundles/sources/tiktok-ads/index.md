@@ -34,7 +34,7 @@ sources:
 
 # Explore this model
 
-**[▶ Explore on canvas](https://model.owox.com/?okf=https://raw.githubusercontent.com/ikrasovytskyi/owox-model-canvas/main/bundles/sources/tiktok-ads/index.md)**
+**[▶ Explore on canvas](https://model.owox.com/?okf=https://github.com/ikrasovytskyi/owox-model-canvas/tree/main/bundles/sources/tiktok-ads)**
 
 One click opens this model in a free OWOX canvas you can poke around in — no account needed.
 
