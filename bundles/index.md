@@ -11,6 +11,7 @@ timestamp: 2026-10-20T20:05:44Z
 Generated 2026-10-20T20:05:44Z.
 
 - [E-Commerce](./e-commerce/index.md) — 12 concept(s)
+- [E-Commerce Extended](./e-commerce-extended/index.md) — 20 concept(s)
 - [E-commerce Subscription Store](./ecommerce-subscription-store/index.md) — 15 concept(s)
 - [OWOX Data Marts — Facebook Ads connector source](./facebook-ads/index.md) — 15 concept(s)
 - [Finance](./finance/index.md) — 8 concept(s)
@@ -19,11 +20,16 @@ Generated 2026-10-20T20:05:44Z.
 - [Healthcare](./healthcare/index.md) — 8 concept(s)
 - [Healthcare Clinic Attribution](./healthcare-clinic-attribution/index.md) — 14 concept(s)
 - [Healthcare Clinic Network](./healthcare-clinic-network/index.md) — 10 concept(s)
+- [HubSpot](./hubspot/index.md) — 20 concept(s)
 - [Marketing Leadgen](./marketing-leadgen/index.md) — 9 concept(s)
 - [Marketplace](./marketplace/index.md) — 8 concept(s)
 - [MeasureCamp](./measurecamp/index.md) — 11 concept(s)
+- [PayPal](./paypal/index.md) — 7 concept(s)
 - [Retail Chain](./retail-chain/index.md) — 10 concept(s)
 - [SaaS](./saas/index.md) — 10 concept(s)
 - [SEO](./seo/index.md) — 18 concept(s)
+- [Salesforce](./salesforce/index.md) — 16 concept(s)
+- [Stripe](./stripe/index.md) — 14 concept(s)
 - [Trading](./trading/index.md) — 8 concept(s)
+- [YouTube](./youtube/index.md) — 12 concept(s)
 
