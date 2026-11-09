@@ -32,7 +32,7 @@ sources:
 | `currency_name` | STRING | Currency name that goes with currency_id, for example United States Dollar. |
 | `exchange_rate` | FLOAT | Rate that converts the document currency to the company's home currency; 1 or empty when the document is in the home currency. |
 | `private_note` | STRING | Internal memo entered on the document; not shown to the customer or vendor. |
-| `amount` | FLOAT | Amount transferred between the two accounts, in the home currency. |
+| `amount` | FLOAT | Amount moved from the source account to the destination account. |
 | `from_account_id` | STRING | Id of the account the money is moved from; joins to account.id. |
 | `from_account_name` | STRING | Name of the account that from_account_id points to. |
 | `to_account_id` | STRING | Id of the account the money is moved to; joins to account.id. |
