@@ -20,7 +20,9 @@
 //        --allow-unpinned  accept a --data-marts checkout that is not at the commit the Data Source item pins
 //        --out <dir> bundles root (default: bundles/sources in this repo)
 //        --explore-base <url>  where the "Explore on canvas" link points: the GitHub tree URL of the folder that
-//                     holds the bundles (default https://github.com/OWOX/models/tree/main/bundles/sources)
+//                     holds the bundles (default: this repo's raw files on the fork's main,
+//                     https://raw.githubusercontent.com/ikrasovytskyi/owox-model-canvas/main/bundles/sources). A raw base links
+//                     <base>/<key>/index.md, a github.com tree base links the folder <base>/<key>.
 import { spawnSync } from 'node:child_process'
 import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { dirname, join, relative, resolve } from 'node:path'
@@ -60,7 +62,8 @@ const dataMarts = manifestPath ? undefined : (opts['--data-marts'] ?? process.en
 if (manifestPath && opts['--data-marts']) usage('Pass --data-marts or --manifest, not both: a source is read from one of them.')
 const check = opts['--check'] === true
 const allowUnpinned = opts['--allow-unpinned'] === true
-const exploreBase = (opts['--explore-base'] ?? 'https://github.com/OWOX/models/tree/main/bundles/sources').replace(/\/+$/, '')
+const exploreBase = (opts['--explore-base'] ?? 'https://raw.githubusercontent.com/ikrasovytskyi/owox-model-canvas/main/bundles/sources').replace(/\/+$/, '')
+const exploreTarget = (k) => (/^https:\/\/raw\.githubusercontent\.com\//.test(exploreBase) ? `${exploreBase}/${k}/index.md` : `${exploreBase}/${k}`)
 const outRoot = resolve(opts['--out'] ?? join(REPO, 'bundles/sources'))
 
 if (!owoxCom || (!dataMarts && !manifestPath)) usage('--owox-com and one of --data-marts or --manifest are needed (OWOX_COM_DIR and OWOX_DATA_MARTS_DIR work in place of the first two).')
@@ -176,7 +179,7 @@ try {
   const model = buildModel({ source, endpoints, authored })
   files = renderBundle(model, {
     svgPath: `../../res/screens/sources/${key}.svg`,
-    exploreUrl: `https://model.owox.com/?okf=${exploreBase}/${key}`,
+    exploreUrl: `https://model.owox.com/?okf=${exploreTarget(key)}`,
   })
 } catch (e) {
   fail(e.message)

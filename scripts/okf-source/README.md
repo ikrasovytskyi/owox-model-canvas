@@ -10,6 +10,11 @@ pnpm okf:source google-ads --owox-com ../owox.com --data-marts ../owox-data-mart
 pnpm okf:source quickbooks --owox-com ../owox.com --manifest quickbooks-manifest.json         # a custom connector: keys from its manifest
 ```
 
+The `Explore on canvas` link in each `index.md` opens the bundle's raw `index.md` on this repo's `main`
+(`https://model.owox.com/?okf=https://raw.githubusercontent.com/ikrasovytskyi/owox-model-canvas/main/bundles/sources/<key>/index.md`).
+`--explore-base <url>` changes where it points: a `raw.githubusercontent.com` base gets `/<key>/index.md`
+appended, a `github.com/.../tree/...` base gets `/<key>` (the folder).
+
 `--data-marts` must be a git checkout at the commit the Data Source item pins (`repoCommitSha`); the
 generator refuses any other (`--allow-unpinned` overrides), because every source link in the bundle
 says that commit. A folder that is not a git checkout is accepted with a warning.
@@ -48,7 +53,7 @@ by `scripts/model-svg/generate.mjs` in OWOX/owox.com from the bundle's GitHub UR
 produced after the bundle is pushed:
 
 ```bash
-node scripts/model-svg/generate.mjs https://github.com/OWOX/models/tree/main/bundles/sources/google-ads --out <dir> --name google-ads
+node scripts/model-svg/generate.mjs https://github.com/ikrasovytskyi/owox-model-canvas/tree/main/bundles/sources/google-ads --out <dir> --name google-ads
 ```
 
 ## Checks
