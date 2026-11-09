@@ -24,28 +24,28 @@ sources:
 | `id` | STRING | PK. QuickBooks entity Id (string). Primary key together with realm_id. |
 | `realm_id` | STRING | PK. Company (realm) id, stamped from the RealmId parameter. |
 | `sync_token` | STRING | Version counter; changes on every edit. |
-| `create_time` | TIMESTAMP |  |
+| `create_time` | TIMESTAMP | When the record was created in QuickBooks (UTC timestamp). |
 | `last_updated_time` | TIMESTAMP | Incremental cursor. |
-| `name` | STRING |  |
-| `fully_qualified_name` | STRING |  |
-| `sku` | STRING |  |
+| `name` | STRING | Name of the product or service as shown on sales forms. |
+| `fully_qualified_name` | STRING | Full path of the item including its parents, separated by colons (Parent:Child). |
+| `sku` | STRING | Stock keeping unit code of the item. |
 | `type` | STRING | Inventory, NonInventory, Service, Category, Group… |
-| `description` | STRING |  |
-| `unit_price` | FLOAT |  |
-| `purchase_cost` | FLOAT |  |
-| `qty_on_hand` | FLOAT |  |
-| `taxable` | BOOLEAN |  |
-| `track_qty_on_hand` | BOOLEAN |  |
-| `income_account_id` | STRING |  |
-| `income_account_name` | STRING |  |
-| `expense_account_id` | STRING |  |
-| `expense_account_name` | STRING |  |
-| `asset_account_id` | STRING |  |
-| `asset_account_name` | STRING |  |
-| `sub_item` | BOOLEAN |  |
-| `parent_id` | STRING |  |
-| `parent_name` | STRING |  |
-| `active` | BOOLEAN |  |
+| `description` | STRING | Description of the item shown on sales forms. |
+| `unit_price` | FLOAT | Default selling price per unit, in the home currency. |
+| `purchase_cost` | FLOAT | Default cost per unit when buying the item, in the home currency. |
+| `qty_on_hand` | FLOAT | Current stock quantity of an inventory item. |
+| `taxable` | BOOLEAN | True when the record is subject to sales tax. |
+| `track_qty_on_hand` | BOOLEAN | True when the item is an inventory item with tracked stock quantity. |
+| `income_account_id` | STRING | Id of the income account that sales of the item are posted to; joins to account.id. |
+| `income_account_name` | STRING | Name of the account that income_account_id points to. |
+| `expense_account_id` | STRING | Id of the expense or cost of goods sold account that purchases of the item are posted to; joins to account.id. |
+| `expense_account_name` | STRING | Name of the account that expense_account_id points to. |
+| `asset_account_id` | STRING | Id of the inventory asset account that holds the item's stock value; joins to account.id. |
+| `asset_account_name` | STRING | Name of the account that asset_account_id points to. |
+| `sub_item` | BOOLEAN | True when the item is a sub-item of another item (see parent_id). |
+| `parent_id` | STRING | Id of the parent record in the same table (the parent account, customer or item); empty for top-level records. |
+| `parent_name` | STRING | Name of the parent record that parent_id points to. |
+| `active` | BOOLEAN | True when the record is active; false when it has been made inactive (QuickBooks never hard-deletes lists). |
 
 # Example Questions
 

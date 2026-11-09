@@ -21,14 +21,14 @@ sources:
 
 | Column | Type | Description |
 |--------|------|-------------|
-| `realm_id` | STRING | PK. |
-| `report_name` | STRING | PK. |
+| `realm_id` | STRING | PK. Company (realm) id, stamped from the RealmId parameter. |
+| `report_name` | STRING | PK. Name of the QuickBooks report, for example ProfitAndLoss. |
 | `report_time` | TIMESTAMP | When QuickBooks produced the snapshot. |
 | `report_basis` | STRING | Cash or Accrual (absent on aging reports). |
-| `start_period` | DATE | PK. |
-| `end_period` | DATE | PK. |
-| `summarize_columns_by` | STRING |  |
-| `currency` | STRING |  |
+| `start_period` | DATE | PK. First day of the reporting period. |
+| `end_period` | DATE | PK. Last day of the reporting period. |
+| `summarize_columns_by` | STRING | How the report columns are split, for example Total, Month or Customers. |
+| `currency` | STRING | Currency code the report amounts are in. |
 | `header_options` | JSON | Name/Value pairs; NoReportData=true means an empty report. |
 | `accounting_method_param` | STRING | PK. AccountingMethod parameter used for the request (ReportBasis echoes it). |
 | `report_rows` | JSON | Nested Section/Data rows as JSON. Flatten in SQL; ColData.id is the Account/Customer/Vendor Id. |

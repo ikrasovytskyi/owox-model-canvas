@@ -24,17 +24,17 @@ sources:
 | `id` | STRING | QuickBooks entity Id (string). Primary key together with realm_id. |
 | `realm_id` | STRING | PK. Company (realm) id, stamped from the RealmId parameter. |
 | `sync_token` | STRING | Version counter; changes on every edit. |
-| `create_time` | TIMESTAMP |  |
+| `create_time` | TIMESTAMP | When the record was created in QuickBooks (UTC timestamp). |
 | `last_updated_time` | TIMESTAMP | Incremental cursor. |
-| `company_name` | STRING |  |
-| `legal_name` | STRING |  |
-| `country` | STRING |  |
-| `company_start_date` | DATE |  |
-| `fiscal_year_start_month` | STRING |  |
-| `email` | STRING |  |
-| `company_addr_country` | STRING |  |
-| `company_addr` | JSON |  |
-| `supported_languages` | STRING |  |
+| `company_name` | STRING | Name the company uses for business, as shown on forms. |
+| `legal_name` | STRING | Legal name of the company. |
+| `country` | STRING | Country of the company. |
+| `company_start_date` | DATE | Date the company started, as set in QuickBooks. |
+| `fiscal_year_start_month` | STRING | Month the fiscal year starts, as a month name such as January. |
+| `email` | STRING | Company email address. |
+| `company_addr_country` | STRING | Country of the company address. |
+| `company_addr` | JSON | Company address as JSON: lines, city, country subdivision, postal code and country. |
+| `supported_languages` | STRING | Languages the company file supports, as a comma-separated list of language codes. |
 | `name_value` | JSON | Extra settings as Name/Value pairs (industry type, subscription status…). |
 
 # Example Questions

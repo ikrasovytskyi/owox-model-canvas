@@ -21,14 +21,14 @@ sources:
 
 | Column | Type | Description |
 |--------|------|-------------|
-| `id` | STRING | PK. |
-| `realm_id` | STRING | PK. |
+| `id` | STRING | PK. QuickBooks invoice Id; with realm_id it identifies the invoice that changed. |
+| `realm_id` | STRING | PK. Company (realm) id, stamped from the RealmId parameter. |
 | `entity` | STRING | Entity name, constant per node. |
 | `status` | STRING | "Deleted" for hard-deleted objects; absent for live ones. Live rows carry the full payload. |
-| `last_updated_time` | TIMESTAMP | PK. |
-| `sync_token` | STRING |  |
-| `txn_date` | DATE |  |
-| `total_amt` | FLOAT |  |
+| `last_updated_time` | TIMESTAMP | PK. When the invoice was last changed in QuickBooks (UTC), as returned by the change data capture feed. |
+| `sync_token` | STRING | Version counter; changes on every edit. |
+| `txn_date` | DATE | Date of the invoice. |
+| `total_amt` | FLOAT | Total amount of the document including tax, in the document currency. |
 | `payload` | JSON | Whole object as JSON (CDC returns the full payload, so the main node's columns can be re-derived). |
 
 # Example Questions

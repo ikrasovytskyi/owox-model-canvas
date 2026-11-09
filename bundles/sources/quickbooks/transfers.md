@@ -24,19 +24,19 @@ sources:
 | `id` | STRING | PK. QuickBooks entity Id (string). Primary key together with realm_id. |
 | `realm_id` | STRING | PK. Company (realm) id, stamped from the RealmId parameter. |
 | `sync_token` | STRING | Version counter; changes on every edit. |
-| `create_time` | TIMESTAMP |  |
+| `create_time` | TIMESTAMP | When the record was created in QuickBooks (UTC timestamp). |
 | `last_updated_time` | TIMESTAMP | Incremental cursor. |
 | `txn_date` | DATE | Business date of the transaction (not the edit date). |
-| `total_amt` | FLOAT |  |
-| `currency_id` | STRING |  |
-| `currency_name` | STRING |  |
-| `exchange_rate` | FLOAT |  |
-| `private_note` | STRING |  |
-| `amount` | FLOAT |  |
-| `from_account_id` | STRING |  |
-| `from_account_name` | STRING |  |
-| `to_account_id` | STRING |  |
-| `to_account_name` | STRING |  |
+| `total_amt` | FLOAT | Total amount of the document including tax, in the document currency. |
+| `currency_id` | STRING | Currency code of the document, for example USD; empty when multicurrency is off. |
+| `currency_name` | STRING | Currency name that goes with currency_id, for example United States Dollar. |
+| `exchange_rate` | FLOAT | Rate that converts the document currency to the company's home currency; 1 or empty when the document is in the home currency. |
+| `private_note` | STRING | Internal memo entered on the document; not shown to the customer or vendor. |
+| `amount` | FLOAT | Amount transferred between the two accounts, in the home currency. |
+| `from_account_id` | STRING | Id of the account the money is moved from; joins to account.id. |
+| `from_account_name` | STRING | Name of the account that from_account_id points to. |
+| `to_account_id` | STRING | Id of the account the money is moved to; joins to account.id. |
+| `to_account_name` | STRING | Name of the account that to_account_id points to. |
 
 # Example Questions
 
