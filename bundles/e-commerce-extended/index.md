@@ -38,7 +38,7 @@ timestamp: 2026-10-20T20:04:21Z
 
 <!-- OWOX:GENERATED:START — regenerated on export, do not edit inside this block -->
 
-**Authors:** [Vlad Flaks](https://github.com/vladflaks), [Rus Obolonsky](https://github.com/Obolrus)
+**Authors:** [Ievgen Krasovytskyi](https://github.com/ikrasovytskyi)
 
 | Data Mart | Fields |
 |-----------|--------|
