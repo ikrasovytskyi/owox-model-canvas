@@ -8,7 +8,7 @@ tags: ["owox", "connector", "reddit-ads"]
 type: "OWOX Data Mart"
 sources:
   - id: "owox-connector"
-    resource: "https://github.com/OWOX/owox-data-marts/blob/de49dceb6665a1c4a568fe9861aa437410d4a9e5/packages/connectors/src/Sources/RedditAds/RedditAdsAPIReference/FieldsSchema.js"
+    resource: "https://github.com/OWOX/owox-data-marts/blob/a3766e5bc1053780a65b259d9515bedec3c9d782/packages/connectors/src/Sources/RedditAds/RedditAdsAPIReference/FieldsSchema.js"
     title: "OWOX Data Marts Reddit Ads connector — Ads endpoint (`ads`)"
   - id: "vendor-reference"
     resource: "https://ads-api.reddit.com/docs/v3/operations/List%20Ads"
@@ -32,6 +32,7 @@ sources:
 | `campaign_id` | STRING | Campaign ID | The ID of the campaign that this ad belongs to. |
 | `campaign_objective_type` | STRING | Campaign Objective Type | The objective type of a campaign. |
 | `click_url` | STRING | Click URL | The website URL to direct users who click on the ad. |
+| `click_url_parsed` | STRING | Click URL Parsed | click_url resolved to its landing page when it is a short link; otherwise the same value. Requires click_url and Process Short Links. |
 | `configured_status` | STRING | Configured Status | The status that you have configured for this ad. |
 | `created_at` | STRING | Created at | The time that this entity was created, represented in ISO 8601. |
 | `effective_status` | STRING | Effective Status | The effective status for the ad. |

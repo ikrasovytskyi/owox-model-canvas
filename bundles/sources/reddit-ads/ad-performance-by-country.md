@@ -8,7 +8,7 @@ tags: ["owox", "connector", "reddit-ads"]
 type: "OWOX Data Mart"
 sources:
   - id: "owox-connector"
-    resource: "https://github.com/OWOX/owox-data-marts/blob/de49dceb6665a1c4a568fe9861aa437410d4a9e5/packages/connectors/src/Sources/RedditAds/RedditAdsAPIReference/FieldsSchema.js"
+    resource: "https://github.com/OWOX/owox-data-marts/blob/a3766e5bc1053780a65b259d9515bedec3c9d782/packages/connectors/src/Sources/RedditAds/RedditAdsAPIReference/FieldsSchema.js"
     title: "OWOX Data Marts Reddit Ads connector — Ad Performance by Country endpoint (`report-by-COUNTRY`)"
   - id: "vendor-reference"
     resource: "https://ads-api.reddit.com/docs/v3/operations/List%20Ad%20Metrics"

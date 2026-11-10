@@ -10,11 +10,11 @@ tags: ["owox", "index", "connector", "reddit-ads"]
 type: "index"
 sources:
   - id: "owox-connector"
-    resource: "https://github.com/OWOX/owox-data-marts/tree/de49dceb6665a1c4a568fe9861aa437410d4a9e5/packages/connectors/src/Sources/RedditAds"
+    resource: "https://github.com/OWOX/owox-data-marts/tree/a3766e5bc1053780a65b259d9515bedec3c9d782/packages/connectors/src/Sources/RedditAds"
     title: "OWOX Data Marts — Reddit Ads connector source"
 ---
 
-18 tables, 675 fields, 20 joins.
+18 tables, 676 fields, 20 joins.
 
 | Data Mart | Fields | Description |
 |-----------|--------|-------------|
@@ -31,7 +31,7 @@ sources:
 | [Ad Performance by Interest](./ad-performance-by-interest.md) | 56 | Daily ad performance broken down by user interest targeting. |
 | [Ad Performance by Keyword](./ad-performance-by-keyword.md) | 56 | Daily ad performance broken down by keyword. |
 | [Ad Performance by Placement](./ad-performance-by-placement.md) | 56 | Daily ad performance broken down by ad placement. |
-| [Ads](./ads.md) | 23 | Individual ads — type, status, and links to their campaigns and posts. |
+| [Ads](./ads.md) | 24 | Individual ads — type, status, and links to their campaigns and posts. |
 | [Campaigns](./campaigns.md) | 15 | Your campaigns — objective, status, spend cap, and account association. |
 | [Custom Audiences](./custom-audiences.md) | 9 | Custom audiences built from your user lists — type, status, and size estimates. |
 | [Funding Instruments](./funding-instruments.md) | 9 | Payment methods linked to your campaigns — credit limits and current outstanding balance. |
