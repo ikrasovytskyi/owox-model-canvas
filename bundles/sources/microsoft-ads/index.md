@@ -10,16 +10,16 @@ tags: ["owox", "index", "connector", "microsoft-ads"]
 type: "index"
 sources:
   - id: "owox-connector"
-    resource: "https://github.com/OWOX/owox-data-marts/tree/9375f07a09a2be2007a8a3a3d620acea174c7c3c/packages/connectors/src/Sources/MicrosoftAds"
+    resource: "https://github.com/OWOX/owox-data-marts/tree/8ac4b37c386647fabc621066a7db9a3daeb839f1/packages/connectors/src/Sources/MicrosoftAds"
     title: "OWOX Data Marts — Microsoft Ads connector source"
 ---
 
-3 tables, 225 fields, 2 joins.
+3 tables, 230 fields, 2 joins.
 
 | Data Mart | Fields | Description |
 |-----------|--------|-------------|
-| [Ad Performance Report](./ad-performance-report.md) | 92 | Daily ad performance — impressions, clicks, spend, and conversions segmented by device, network, and match type. |
-| [Campaigns](./campaigns.md) | 52 | Your campaign and ad group structure — type, status, bid strategy, budget, and keyword settings. |
+| [Ad Performance Report](./ad-performance-report.md) | 95 | Daily ad performance — impressions, clicks, spend, and conversions segmented by device, network, and match type. |
+| [Campaigns](./campaigns.md) | 54 | Your campaign and ad group structure — type, status, bid strategy, budget, and keyword settings. |
 | [User Location Performance Report](./user-location-performance-report.md) | 81 | Daily performance by user physical location — impressions, clicks, spend, and conversions broken down by country, state, and city. |
 
 # Example Questions

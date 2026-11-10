@@ -8,7 +8,7 @@ tags: ["owox", "connector", "microsoft-ads"]
 type: "OWOX Data Mart"
 sources:
   - id: "owox-connector"
-    resource: "https://github.com/OWOX/owox-data-marts/blob/9375f07a09a2be2007a8a3a3d620acea174c7c3c/packages/connectors/src/Sources/MicrosoftAds/MicrosoftAdsAPIReference/MicrosoftAdsFieldsSchema.js"
+    resource: "https://github.com/OWOX/owox-data-marts/blob/8ac4b37c386647fabc621066a7db9a3daeb839f1/packages/connectors/src/Sources/MicrosoftAds/MicrosoftAdsAPIReference/MicrosoftAdsFieldsSchema.js"
     title: "OWOX Data Marts Microsoft Ads connector — Ad Performance Report endpoint (`ad_performance_report`)"
   - id: "vendor-reference"
     resource: "https://learn.microsoft.com/en-us/advertising/reporting-service/adperformancereportrequest"
@@ -51,6 +51,7 @@ sources:
 | `ConversionRate` | NUMERIC | ConversionRate | The conversion rate as a percentage. |
 | `CostPerConversion` | NUMERIC | CostPerConversion | The cost per conversion. |
 | `DestinationUrl` | STRING | DestinationUrl | The destination URL attribute of the ad. |
+| `DestinationUrlParsed` | STRING | DestinationUrlParsed | DestinationUrl resolved to its landing page when it is a short link; otherwise the same value. Requires DestinationUrl and Process Short Links. |
 | `DeviceType` | STRING | DeviceType | PK. The type of device which showed ads. |
 | `Language` | STRING | Language | PK. The language of the publisher where the ad was shown. |
 | `DisplayUrl` | STRING | DisplayUrl | The ad display URL. |
@@ -69,7 +70,9 @@ sources:
 | `TrackingTemplate` | STRING | TrackingTemplate | The current tracking template of the ad. |
 | `CustomParameters` | STRING | CustomParameters | The current custom parameters set of the ad. |
 | `FinalUrl` | STRING | FinalUrl | The Final URL of the ad. |
+| `FinalUrlParsed` | STRING | FinalUrlParsed | FinalUrl resolved to its landing page when it is a short link; otherwise the same value. Requires FinalUrl and Process Short Links. |
 | `FinalMobileUrl` | STRING | FinalMobileUrl | The Final Mobile URL of the ad. |
+| `FinalMobileUrlParsed` | STRING | FinalMobileUrlParsed | FinalMobileUrl resolved to its landing page when it is a short link; otherwise the same value. Requires FinalMobileUrl and Process Short Links. |
 | `FinalAppUrl` | STRING | FinalAppUrl | Reserved for future use. |
 | `AccountStatus` | STRING | AccountStatus | The account status. |
 | `CampaignStatus` | STRING | CampaignStatus | The campaign status. |

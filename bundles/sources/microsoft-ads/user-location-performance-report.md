@@ -8,7 +8,7 @@ tags: ["owox", "connector", "microsoft-ads"]
 type: "OWOX Data Mart"
 sources:
   - id: "owox-connector"
-    resource: "https://github.com/OWOX/owox-data-marts/blob/9375f07a09a2be2007a8a3a3d620acea174c7c3c/packages/connectors/src/Sources/MicrosoftAds/MicrosoftAdsAPIReference/MicrosoftAdsFieldsSchema.js"
+    resource: "https://github.com/OWOX/owox-data-marts/blob/8ac4b37c386647fabc621066a7db9a3daeb839f1/packages/connectors/src/Sources/MicrosoftAds/MicrosoftAdsAPIReference/MicrosoftAdsFieldsSchema.js"
     title: "OWOX Data Marts Microsoft Ads connector — User Location Performance Report endpoint (`user_location_performance_report`)"
   - id: "vendor-reference"
     resource: "https://learn.microsoft.com/en-us/advertising/reporting-service/userlocationperformancereportrequest"

@@ -8,7 +8,7 @@ tags: ["owox", "connector", "microsoft-ads"]
 type: "OWOX Data Mart"
 sources:
   - id: "owox-connector"
-    resource: "https://github.com/OWOX/owox-data-marts/blob/9375f07a09a2be2007a8a3a3d620acea174c7c3c/packages/connectors/src/Sources/MicrosoftAds/MicrosoftAdsAPIReference/MicrosoftAdsFieldsSchema.js"
+    resource: "https://github.com/OWOX/owox-data-marts/blob/8ac4b37c386647fabc621066a7db9a3daeb839f1/packages/connectors/src/Sources/MicrosoftAds/MicrosoftAdsAPIReference/MicrosoftAdsFieldsSchema.js"
     title: "OWOX Data Marts Microsoft Ads connector — Campaigns endpoint (`campaigns`)"
   - id: "vendor-reference"
     resource: "https://learn.microsoft.com/en-us/advertising/bulk-service/bulk-service-reference"
@@ -67,7 +67,9 @@ sources:
 | `TrackingTemplate` | STRING | TrackingTemplate | URL tracking template for this entity |
 | `FinalUrlSuffix` | STRING | FinalUrlSuffix | Suffix appended to the final URL for tracking |
 | `FinalUrl` | STRING | FinalUrl | The actual landing page URL |
+| `FinalUrlParsed` | STRING | FinalUrlParsed | FinalUrl resolved to its landing page when it is a short link; otherwise the same value. Requires FinalUrl and Process Short Links. |
 | `MobileFinalUrl` | STRING | MobileFinalUrl | Mobile-specific landing page URL |
+| `MobileFinalUrlParsed` | STRING | MobileFinalUrlParsed | MobileFinalUrl resolved to its landing page when it is a short link; otherwise the same value. Requires MobileFinalUrl and Process Short Links. |
 | `DisplayUrl` | STRING | DisplayUrl | Display URL shown in the ad |
 | `Domain` | STRING | Domain | Domain of the landing page |
 | `Promotion` | STRING | Promotion | Promotion details (if any) |
