@@ -8,7 +8,7 @@ tags: ["owox", "connector", "shopify"]
 type: "OWOX Data Mart"
 sources:
   - id: "owox-connector"
-    resource: "https://github.com/OWOX/owox-data-marts/blob/d5df95935e329451cbb627615bd723508ab3e339/packages/connectors/src/Sources/Shopify/ShopifyAPIReference/FieldsSchema.js"
+    resource: "https://github.com/OWOX/owox-data-marts/blob/a3766e5bc1053780a65b259d9515bedec3c9d782/packages/connectors/src/Sources/Shopify/ShopifyAPIReference/FieldsSchema.js"
     title: "OWOX Data Marts Shopify connector — Order Metafields endpoint (`metafield-orders`)"
   - id: "vendor-reference"
     resource: "https://shopify.dev/docs/api/admin-graphql/2026-07/objects/Metafield"

@@ -8,7 +8,7 @@ tags: ["owox", "connector", "shopify"]
 type: "OWOX Data Mart"
 sources:
   - id: "owox-connector"
-    resource: "https://github.com/OWOX/owox-data-marts/blob/d5df95935e329451cbb627615bd723508ab3e339/packages/connectors/src/Sources/Shopify/ShopifyAPIReference/FieldsSchema.js"
+    resource: "https://github.com/OWOX/owox-data-marts/blob/a3766e5bc1053780a65b259d9515bedec3c9d782/packages/connectors/src/Sources/Shopify/ShopifyAPIReference/FieldsSchema.js"
     title: "OWOX Data Marts Shopify connector — Orders endpoint (`orders`)"
   - id: "vendor-reference"
     resource: "https://shopify.dev/docs/api/admin-graphql/2026-07/objects/Order"
@@ -43,7 +43,7 @@ sources:
 | `totalShippingPrice` | NUMERIC | The total shipping price. |
 | `totalDiscounts` | NUMERIC | The total discounts applied. |
 | `discountCodes` | STRING | Discount codes applied to the order as JSON array (code, amount, type). |
-| `discountApplications` | STRING | All discount applications (codes, automatic, manual) as JSON array. |
+| `discountApplications` | STRING | All discount applications (codes, automatic, manual, script) as JSON array, ordered by index. Shipping discounts allocate to shipping lines, not to lineItems discountAllocations. |
 | `totalRefunded` | NUMERIC | The total amount refunded. |
 | `totalOutstanding` | NUMERIC | The total amount not yet transacted for the order. |
 | `totalWeight` | NUMERIC | The total weight of the order. |
@@ -63,6 +63,8 @@ sources:
 | `tags` | STRING | A comma-separated list of tags. |
 | `note` | STRING | The note attached to the order. |
 | `sourceName` | STRING | The source of the order. |
+| `checkoutToken` | STRING | Token of the checkout that created the order. Useful for correlating the order with Web Pixel checkout events. NULL when no checkout is associated. |
+| `cartToken` | STRING | Token of the cart that was used to create the order. NULL when no cart is associated. |
 | `processedAt` | TIMESTAMP | The date and time when the order was processed. |
 | `closedAt` | TIMESTAMP | The date and time when the order was closed. |
 | `createdAt` | TIMESTAMP | The date and time when the order was created. |
@@ -70,7 +72,54 @@ sources:
 | `customer` | STRING | Full customer object as JSON (id, email, phone, defaultAddress). |
 | `currentTotalDiscounts` | NUMERIC | The current total discounts (after edits). |
 | `currentTotalTax` | NUMERIC | The current total tax (after edits). |
-| `lineItems` | STRING | The line items in the order as JSON array. |
+| `number` | INTEGER | The order number used to generate the order name (with the shop's order number prefix/suffix). Not guaranteed to be unique. |
+| `confirmationNumber` | STRING | A customer-facing order identifier, shown in some surfaces instead of the sequential order name. Not guaranteed to be unique. |
+| `legacyResourceId` | STRING | The ID of the corresponding resource in the REST Admin API. |
+| `test` | BOOLEAN | Whether the order was placed in test mode. |
+| `edited` | BOOLEAN | Whether the order has had any edits applied after creation. |
+| `originalTotalPrice` | NUMERIC | The total price of the order at the time it was created. |
+| `currentTotalPrice` | NUMERIC | The total price of the order, after returns. |
+| `netPayment` | NUMERIC | The net payment for the order (total received minus total refunded). |
+| `totalReceived` | NUMERIC | The total amount received from the customer before returns. |
+| `totalCapturable` | NUMERIC | The authorized amount that hasn't been captured yet. |
+| `totalTipReceived` | NUMERIC | The sum of all tip amounts for the order. |
+| `currentSubtotalPrice` | NUMERIC | The subtotal price of the order, after returns and refunds. |
+| `cartDiscountAmount` | NUMERIC | The total order-level (cart) discount amount applied at the time the order was created. Does not include line-level discounts. |
+| `currentCartDiscountAmount` | NUMERIC | The current order-level (cart) discount amount after returns, refunds, order edits and cancellations. Does not include line-level discounts. |
+| `currentShippingPrice` | NUMERIC | The current shipping price, after refunds and discounts. |
+| `totalRefundedShipping` | NUMERIC | The total amount of shipping that was refunded. |
+| `currentTotalDuties` | NUMERIC | The current total import duties for the order, after returns or modifications. |
+| `originalTotalDuties` | NUMERIC | The total import duties calculated when the order was created. |
+| `currentTotalAdditionalFees` | NUMERIC | The current total of all additional fees for the order. |
+| `originalTotalAdditionalFees` | NUMERIC | The total of all additional fees calculated when the order was created. |
+| `refundDiscrepancy` | NUMERIC | The difference between the suggested and the actual refunded amount. Positive values favor the merchant, negative values favor the customer. |
+| `presentmentCurrencyCode` | STRING | The currency the customer used when placing the order. Amount fields in this table are in the shop currency (currencyCode). |
+| `unpaid` | BOOLEAN | Whether no payments have been made for the order. |
+| `refundable` | BOOLEAN | Whether the order can be refunded based on its payment transactions. |
+| `capturable` | BOOLEAN | Whether an authorized payment on the order can be captured. |
+| `canMarkAsPaid` | BOOLEAN | Whether the order can be manually marked as paid. |
+| `paymentGatewayNames` | STRING | The names of all payment gateways used for the order, comma-separated. |
+| `estimatedTaxes` | BOOLEAN | Whether taxes on the order are estimated. |
+| `fulfillable` | BOOLEAN | Whether the order has any line items that can be fulfilled. |
+| `requiresShipping` | BOOLEAN | Whether the order requires physical shipping. |
+| `subtotalLineItemsQuantity` | INTEGER | The sum of quantities for all line items contributing to the subtotal. |
+| `currentSubtotalLineItemsQuantity` | INTEGER | The current sum of quantities for all line items contributing to the subtotal, after returns. |
+| `currentTotalWeight` | NUMERIC | The total weight of the order in grams, after returns and refunds. |
+| `restockable` | BOOLEAN | Whether any line items on the order can be restocked into inventory. |
+| `canNotifyCustomer` | BOOLEAN | Whether order notifications can be sent to the customer. |
+| `statusPageUrl` | STRING | The URL where the customer can check the order's current status. |
+| `hasTimelineComment` | BOOLEAN | Whether the merchant added a timeline comment to the order. |
+| `merchantEditable` | BOOLEAN | Whether the order can be edited by the merchant. |
+| `merchantEditableErrors` | STRING | Reasons why the order can't be edited, comma-separated. Empty when the order is editable. |
+| `dutiesIncluded` | BOOLEAN | Whether duties are included in the subtotal price of the order. |
+| `poNumber` | STRING | The purchase order number associated with the order. |
+| `sourceIdentifier` | STRING | A unique POS or third-party order identifier. |
+| `registeredSourceUrl` | STRING | The URL of the source the order originated from. |
+| `productNetwork` | BOOLEAN | Whether the customer purchased items from other stores in the same network. |
+| `customerAcceptsMarketing` | BOOLEAN | Whether the customer agreed to receive marketing emails at the time of purchase. |
+| `customerLocale` | STRING | The customer's language and region preference at the time of purchase. |
+| `billingAddressMatchesShippingAddress` | BOOLEAN | Whether the billing address matches the shipping address. False when either address is missing. |
+| `lineItems` | STRING | The line items in the order as JSON array, with discount amounts and per-discount allocations (discountAllocations; join to discountApplications by index). See the connector guide for how the amounts differ. |
 | `shippingLines` | STRING | Shipping lines as JSON array. |
 | `refunds` | STRING | Refunds as JSON array. |
 

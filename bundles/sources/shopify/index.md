@@ -10,11 +10,11 @@ tags: ["owox", "index", "connector", "shopify"]
 type: "index"
 sources:
   - id: "owox-connector"
-    resource: "https://github.com/OWOX/owox-data-marts/tree/d5df95935e329451cbb627615bd723508ab3e339/packages/connectors/src/Sources/Shopify"
+    resource: "https://github.com/OWOX/owox-data-marts/tree/a3766e5bc1053780a65b259d9515bedec3c9d782/packages/connectors/src/Sources/Shopify"
     title: "OWOX Data Marts — Shopify connector source"
 ---
 
-25 tables, 337 fields, 18 joins.
+25 tables, 386 fields, 18 joins.
 
 | Data Mart | Fields | Description |
 |-----------|--------|-------------|
@@ -33,7 +33,7 @@ sources:
 | [Location Metafields](./location-metafields.md) | 9 | Custom metadata attached to locations — namespace, key, value, and type. |
 | [Locations](./locations.md) | 19 | Physical and virtual store locations — activity status, fulfillment capabilities, and address. |
 | [Order Metafields](./order-metafields.md) | 9 | Custom metadata attached to orders — namespace, key, value, and type. |
-| [Orders](./orders.md) | 47 | Orders placed in the store — financial and fulfillment status, customer info, totals, and timestamps. |
+| [Orders](./orders.md) | 96 | Orders placed in the store — financial and fulfillment status, customer info, totals, and timestamps. |
 | [Page Metafields](./page-metafields.md) | 9 | Custom metadata attached to pages — namespace, key, value, and type. |
 | [Pages](./pages.md) | 10 | Static store pages — title, handle, publication status, and timestamps. |
 | [Product Metafields](./product-metafields.md) | 9 | Custom metadata attached to products — namespace, key, value, and type. |
