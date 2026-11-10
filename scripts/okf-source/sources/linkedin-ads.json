@@ -1,6 +1,6 @@
 {
   "vendorName": "LinkedIn Marketing API",
-  "description": "What the OWOX Data Marts LinkedIn Ads connector loads, and how the pieces fit together. A LinkedIn ad account holds campaign groups, campaign groups hold campaigns, and campaigns hold creatives. The connector loads the settings of the account, its campaign groups, campaigns and creatives as current-state tables, one row per entity, and the daily performance as one time-series table, [Ad Analytics](./ad-analytics.md).\n\nLinkedIn refers to its entities by URN, not by the plain ID in each table's own `id` column. [Campaigns](./campaigns.md) hold their account in `account` and their group in `campaignGroup`, and [Creatives](./creatives.md) hold their campaign in `campaign`, each as a URN such as `urn:li:sponsoredAccount:{id}`. [Ad Analytics](./ad-analytics.md) goes one step further: it has no campaign or creative column at all, only `pivotValues`, an array of the URNs the row is grouped by. Because a URN is not the same string as an `id`, this bundle draws no joins between the tables; to link them, extract the identifier from the URN first.\n\nTwo caution notes apply. Budget and unit cost fields in Campaigns and Campaign Groups are JSON objects, and the amounts in them are strings. In Ad Analytics the `viral` fields count the same metric on viral impressions, those that come from users sharing sponsored content with their own network, and viral impressions are not counted as regular impressions.",
+  "description": "What the OWOX Data Marts LinkedIn Ads connector loads, and how the pieces fit together. A LinkedIn ad account holds campaign groups, campaign groups hold campaigns, and campaigns hold creatives. The connector loads the settings of the account, its campaign groups, campaigns and creatives as current-state tables, one row per entity, and the daily performance as time-series tables: [Ad Analytics](./ad-analytics.md) by creative, campaign, campaign group and account, and [Ad Analytics by Country](./ad-analytics-by-country.md), [Ad Analytics by Region](./ad-analytics-by-region.md) and [Ad Analytics by County](./ad-analytics-by-county.md) by the location of the members who saw the ads.\n\nLinkedIn refers to its entities by URN, not by the plain ID in each table's own `id` column. [Campaigns](./campaigns.md) hold their account in `account` and their group in `campaignGroup`, and [Creatives](./creatives.md) hold their campaign in `campaign`, each as a URN such as `urn:li:sponsoredAccount:{id}`. [Ad Analytics](./ad-analytics.md) goes one step further: it has no campaign or creative column at all, only `pivotValues`, an array of the URNs the row is grouped by. Because a URN is not the same string as an `id`, this bundle draws no joins between the tables; to link them, extract the identifier from the URN first. The three location tables carry `account` and `campaign` as URNs too.\n\nTwo caution notes apply. Budget and unit cost fields in Campaigns and Campaign Groups are JSON objects, and the amounts in them are strings. In Ad Analytics the `viral` fields count the same metric on viral impressions, those that come from users sharing sponsored content with their own network, and viral impressions are not counted as regular impressions.",
   "questions": [
     "Which campaigns are active, and which objective type does each pursue?",
     "How do impressions, clicks and cost in local currency move day by day across the account?",
@@ -45,6 +45,30 @@
         "What did the account spend in local currency, and how many impressions and clicks did it get, per day?",
         "On which days did external website conversions peak, and what was the cost on those days?",
         "How do paid clicks compare with viral clicks per day?"
+      ]
+    },
+    "Ad Analytics by Country": {
+      "description": "Daily performance of each campaign by the country of the members who saw the ads: impressions, clicks, cost in local currency and in USD, engagements, conversions and lead metrics. One row per `dateRangeStart`, `dateRangeEnd`, `campaign` and `country` combination. `country` is LinkedIn's URN for the location (for example `urn:li:geo:{id}`) and `countryName` its English name; `campaign` is the campaign URN, and its `{id}` is the `id` in [Campaigns](./campaigns.md).\n\nLinkedIn reports location one campaign at a time, so the connector makes more requests than for [Ad Analytics](./ad-analytics.md). LinkedIn drops a location with fewer than 3 events, so totals can be lower than in Ad Analytics, and location data arrives 12 to 24 hours late. LinkedIn does not break down reach, audience penetration, conversion value or the carousel card metrics by location, so this table has none of those columns.",
+      "questions": [
+        "How much did each campaign spend in each country last month?",
+        "Which countries produced the most external website conversions, and at what cost?",
+        "How do impressions and clicks per country compare day by day for one campaign?"
+      ]
+    },
+    "Ad Analytics by Region": {
+      "description": "Daily performance of each campaign by the region of the members who saw the ads: impressions, clicks, cost in local currency and in USD, engagements, conversions and lead metrics. One row per `dateRangeStart`, `dateRangeEnd`, `campaign` and `region` combination. `region` is LinkedIn's URN for the location (for example `urn:li:geo:{id}`) and `regionName` its English name; `campaign` is the campaign URN, and its `{id}` is the `id` in [Campaigns](./campaigns.md).\n\nLinkedIn reports location one campaign at a time, so the connector makes more requests than for [Ad Analytics](./ad-analytics.md). LinkedIn drops a location with fewer than 3 events, so totals can be lower than in Ad Analytics, and location data arrives 12 to 24 hours late. LinkedIn does not break down reach, audience penetration, conversion value or the carousel card metrics by location, so this table has none of those columns.",
+      "questions": [
+        "Which regions got the most impressions for a campaign, and what did they cost?",
+        "How does spend per region change from week to week?",
+        "Which regions produced one-click leads, and how many?"
+      ]
+    },
+    "Ad Analytics by County": {
+      "description": "Daily performance of each campaign by the county of the members who saw the ads: impressions, clicks, cost in local currency and in USD, engagements, conversions and lead metrics. One row per `dateRangeStart`, `dateRangeEnd`, `campaign` and `county` combination. `county` is LinkedIn's URN for the location (for example `urn:li:geo:{id}`) and `countyName` its English name; `campaign` is the campaign URN, and its `{id}` is the `id` in [Campaigns](./campaigns.md).\n\nLinkedIn reports location one campaign at a time, so the connector makes more requests than for [Ad Analytics](./ad-analytics.md). LinkedIn drops a location with fewer than 3 events, so totals can be lower than in Ad Analytics, and location data arrives 12 to 24 hours late. LinkedIn does not break down reach, audience penetration, conversion value or the carousel card metrics by location, so this table has none of those columns.",
+      "questions": [
+        "Which counties did a campaign spend the most in?",
+        "How many landing page clicks did each county produce per day?",
+        "Which counties show engagements but no external website conversions?"
       ]
     }
   },
