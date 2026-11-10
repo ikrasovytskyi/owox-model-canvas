@@ -8,7 +8,7 @@ tags: ["owox", "connector", "tiktok-ads"]
 type: "OWOX Data Mart"
 sources:
   - id: "owox-connector"
-    resource: "https://github.com/OWOX/owox-data-marts/blob/9e0434a7274ad704f6f26e07d88aca7d83298450/packages/connectors/src/Sources/TikTokAds/TikTokAdsAPIReference/TikTokAdsFieldsSchema.js"
+    resource: "https://github.com/OWOX/owox-data-marts/blob/a3766e5bc1053780a65b259d9515bedec3c9d782/packages/connectors/src/Sources/TikTokAds/TikTokAdsAPIReference/TikTokAdsFieldsSchema.js"
     title: "OWOX Data Marts TikTok Ads connector — Custom Audiences endpoint (`audiences`)"
   - id: "vendor-reference"
     resource: "https://ads.tiktok.com/marketing_api/docs?id=1739314536665090"

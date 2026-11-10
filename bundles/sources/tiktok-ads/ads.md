@@ -8,7 +8,7 @@ tags: ["owox", "connector", "tiktok-ads"]
 type: "OWOX Data Mart"
 sources:
   - id: "owox-connector"
-    resource: "https://github.com/OWOX/owox-data-marts/blob/9e0434a7274ad704f6f26e07d88aca7d83298450/packages/connectors/src/Sources/TikTokAds/TikTokAdsAPIReference/TikTokAdsFieldsSchema.js"
+    resource: "https://github.com/OWOX/owox-data-marts/blob/a3766e5bc1053780a65b259d9515bedec3c9d782/packages/connectors/src/Sources/TikTokAds/TikTokAdsAPIReference/TikTokAdsFieldsSchema.js"
     title: "OWOX Data Marts TikTok Ads connector — Ads endpoint (`ads`)"
   - id: "vendor-reference"
     resource: "https://ads.tiktok.com/marketing_api/docs?id=1735735588640770"
@@ -47,7 +47,9 @@ sources:
 | `creative_type` | STRING | Type of Creative (video, image, etc.) |
 | `ad_format` | STRING | Format of the Ad |
 | `landing_page_url` | STRING | Landing Page URL |
+| `landing_page_url_parsed` | STRING | landing_page_url resolved to its landing page when it is a short link; otherwise the same value. Requires landing_page_url and Process Short Links. |
 | `landing_page_urls` | JSON | Multiple Landing Page URLs |
+| `landing_page_urls_parsed` | JSON | landing_page_urls with each short link resolved to its landing page; other URLs stay unchanged. Requires landing_page_urls and Process Short Links. |
 | `deeplink` | STRING | Deep Link URL |
 | `deeplink_type` | STRING | Type of Deep Link |
 | `tracking_pixel_id` | STRING | Pixel ID for Tracking |

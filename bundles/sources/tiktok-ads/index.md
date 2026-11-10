@@ -10,18 +10,18 @@ tags: ["owox", "index", "connector", "tiktok-ads"]
 type: "index"
 sources:
   - id: "owox-connector"
-    resource: "https://github.com/OWOX/owox-data-marts/tree/9e0434a7274ad704f6f26e07d88aca7d83298450/packages/connectors/src/Sources/TikTokAds"
+    resource: "https://github.com/OWOX/owox-data-marts/tree/a3766e5bc1053780a65b259d9515bedec3c9d782/packages/connectors/src/Sources/TikTokAds"
     title: "OWOX Data Marts — TikTok Ads connector source"
 ---
 
-7 tables, 217 fields, 6 joins.
+7 tables, 219 fields, 6 joins.
 
 | Data Mart | Fields | Description |
 |-----------|--------|-------------|
 | [Ad Groups](./ad-groups.md) | 45 | Ad groups within your campaigns — bid strategy, optimization goal, placement, and targeting schedule. |
 | [Ad Performance](./ad-performance.md) | 39 | Daily ad performance — impressions, clicks, spend, conversions, video views, and engagement. |
 | [Ad Performance by Country](./ad-performance-by-country.md) | 40 | Daily ad performance broken down by country — impressions, clicks, spend, conversions, and video views. |
-| [Ads](./ads.md) | 46 | Individual ads — creative type, format, call to action, status, and links to their campaigns and ad groups. |
+| [Ads](./ads.md) | 48 | Individual ads — creative type, format, call to action, status, and links to their campaigns and ad groups. |
 | [Advertiser Account](./advertiser-account.md) | 4 | Advertiser account — name, company, and currency. |
 | [Campaigns](./campaigns.md) | 34 | Your campaigns — objective, type, status, budget, and schedule. |
 | [Custom Audiences](./custom-audiences.md) | 9 | Custom audiences — type, size, validity status, and expiration. |
