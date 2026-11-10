@@ -8,7 +8,7 @@ tags: ["owox", "connector", "x-ads"]
 type: "OWOX Data Mart"
 sources:
   - id: "owox-connector"
-    resource: "https://github.com/OWOX/owox-data-marts/blob/8aff3513fdade6760a74baad9aa985167cf542ba/packages/connectors/src/Sources/XAds/XAdsAPIReference/XAdsFieldsSchema.js"
+    resource: "https://github.com/OWOX/owox-data-marts/blob/a3766e5bc1053780a65b259d9515bedec3c9d782/packages/connectors/src/Sources/XAds/XAdsAPIReference/XAdsFieldsSchema.js"
     title: "OWOX Data Marts X Ads connector — All Cards endpoint (`cards_all`)"
   - id: "vendor-reference"
     resource: "https://developer.twitter.com/en/docs/twitter-ads-api/cards"
@@ -42,7 +42,9 @@ sources:
 | `app_cta` | STRING | App Cta | Call-to-action used on the app card (e.g. INSTALL, OPEN) |
 | `title` | STRING | Title | Title shown on the card |
 | `website_url` | STRING | Website URL | Canonical website URL |
+| `website_url_parsed` | STRING | Website URL Parsed | website_url resolved to its landing page when it is a short link; otherwise the same value. Requires website_url and Process Short Links. |
 | `website_dest_url` | STRING | Website Dest URL | Destination URL used for clicks |
+| `website_dest_url_parsed` | STRING | Website Dest URL Parsed | website_dest_url resolved to its landing page when it is a short link; otherwise the same value. Requires website_dest_url and Process Short Links. |
 | `website_display_url` | STRING | Website Display URL | Display URL shown on the card |
 | `website_shortened_url` | STRING | Website Shortened URL | Shortened (t.co) URL placed in the card |
 | `video_url` | STRING | Video URL | URL of the video file or VMAP |

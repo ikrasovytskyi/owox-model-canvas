@@ -8,7 +8,7 @@ tags: ["owox", "connector", "x-ads"]
 type: "OWOX Data Mart"
 sources:
   - id: "owox-connector"
-    resource: "https://github.com/OWOX/owox-data-marts/blob/8aff3513fdade6760a74baad9aa985167cf542ba/packages/connectors/src/Sources/XAds/XAdsAPIReference/XAdsFieldsSchema.js"
+    resource: "https://github.com/OWOX/owox-data-marts/blob/a3766e5bc1053780a65b259d9515bedec3c9d782/packages/connectors/src/Sources/XAds/XAdsAPIReference/XAdsFieldsSchema.js"
     title: "OWOX Data Marts X Ads connector — Line Items endpoint (`line_items`)"
   - id: "vendor-reference"
     resource: "https://developer.twitter.com/en/docs/twitter-ads-api/line-items"

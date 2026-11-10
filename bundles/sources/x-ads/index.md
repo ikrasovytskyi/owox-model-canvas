@@ -10,18 +10,18 @@ tags: ["owox", "index", "connector", "x-ads"]
 type: "index"
 sources:
   - id: "owox-connector"
-    resource: "https://github.com/OWOX/owox-data-marts/tree/8aff3513fdade6760a74baad9aa985167cf542ba/packages/connectors/src/Sources/XAds"
+    resource: "https://github.com/OWOX/owox-data-marts/tree/a3766e5bc1053780a65b259d9515bedec3c9d782/packages/connectors/src/Sources/XAds"
     title: "OWOX Data Marts — X Ads connector source"
 ---
 
-10 tables, 187 fields, 9 joins.
+10 tables, 189 fields, 9 joins.
 
 | Data Mart | Fields | Description |
 |-----------|--------|-------------|
 | [Accounts](./accounts.md) | 12 | Advertising accounts — name, business, country, timezone, and approval status. |
 | [Ad Performance](./ad-performance.md) | 20 | Daily ad performance by placement — impressions, clicks, spend, engagements, and social actions. |
 | [Ad Performance by Country](./ad-performance-by-country.md) | 21 | Daily ad performance broken down by country — impressions, clicks, spend, engagements, and social actions. |
-| [All Cards](./all-cards.md) | 28 | All card types with full creative details — type, title, destination URL, call to action, and media. |
+| [All Cards](./all-cards.md) | 30 | All card types with full creative details — type, title, destination URL, call to action, and media. |
 | [Campaigns](./campaigns.md) | 19 | Your campaigns — status, budget optimization, daily and total budget, and currency. |
 | [Cards](./cards.md) | 8 | Website and app cards — type, URI, and components. |
 | [Line Items](./line-items.md) | 33 | Line items within campaigns — bid strategy, goal, product type, budget, and schedule. |
