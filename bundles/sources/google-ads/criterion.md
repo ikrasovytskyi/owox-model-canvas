@@ -8,7 +8,7 @@ tags: ["owox", "connector", "google-ads"]
 type: "OWOX Data Mart"
 sources:
   - id: "owox-connector"
-    resource: "https://github.com/OWOX/owox-data-marts/blob/de49dceb6665a1c4a568fe9861aa437410d4a9e5/packages/connectors/src/Sources/GoogleAds/GoogleAdsAPIReference/GoogleAdsFieldsSchema.js"
+    resource: "https://github.com/OWOX/owox-data-marts/blob/a3766e5bc1053780a65b259d9515bedec3c9d782/packages/connectors/src/Sources/GoogleAds/GoogleAdsAPIReference/GoogleAdsFieldsSchema.js"
     title: "OWOX Data Marts Google Ads connector — Criterion endpoint (`criterion`)"
   - id: "vendor-reference"
     resource: "https://developers.google.com/google-ads/api/fields/v25/ad_group_criterion"
@@ -35,6 +35,7 @@ sources:
 | `campaign_id` | STRING | PK. Campaign ID |
 | `quality_score` | NUMERIC | Quality Score |
 | `final_urls` | JSON | Final URLs |
+| `final_urls_parsed` | JSON | final_urls with each short link resolved to its landing page; other URLs stay unchanged. Requires final_urls and Process Short Links. |
 | `negative` | BOOLEAN | Whether to target (false) or exclude (true) the criterion |
 | `cpc_bid_micros` | NUMERIC | CPC Bid in Micros |
 | `effective_cpc_bid_micros` | NUMERIC | Effective CPC Bid in Micros (includes bid modifiers) |

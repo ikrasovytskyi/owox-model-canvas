@@ -8,7 +8,7 @@ tags: ["owox", "connector", "google-ads"]
 type: "OWOX Data Mart"
 sources:
   - id: "owox-connector"
-    resource: "https://github.com/OWOX/owox-data-marts/blob/de49dceb6665a1c4a568fe9861aa437410d4a9e5/packages/connectors/src/Sources/GoogleAds/GoogleAdsAPIReference/GoogleAdsFieldsSchema.js"
+    resource: "https://github.com/OWOX/owox-data-marts/blob/a3766e5bc1053780a65b259d9515bedec3c9d782/packages/connectors/src/Sources/GoogleAds/GoogleAdsAPIReference/GoogleAdsFieldsSchema.js"
     title: "OWOX Data Marts Google Ads connector — Campaigns Stats endpoint (`campaigns_stats`)"
   - id: "vendor-reference"
     resource: "https://developers.google.com/google-ads/api/fields/v25/campaign"

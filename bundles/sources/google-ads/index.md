@@ -10,20 +10,20 @@ tags: ["owox", "index", "connector", "google-ads"]
 type: "index"
 sources:
   - id: "owox-connector"
-    resource: "https://github.com/OWOX/owox-data-marts/tree/de49dceb6665a1c4a568fe9861aa437410d4a9e5/packages/connectors/src/Sources/GoogleAds"
+    resource: "https://github.com/OWOX/owox-data-marts/tree/a3766e5bc1053780a65b259d9515bedec3c9d782/packages/connectors/src/Sources/GoogleAds"
     title: "OWOX Data Marts — Google Ads connector source"
 ---
 
-9 tables, 166 fields, 9 joins.
+9 tables, 168 fields, 9 joins.
 
 | Data Mart | Fields | Description |
 |-----------|--------|-------------|
-| [Ad Group Ads Stats](./ad-group-ads-stats.md) | 26 | Daily performance for individual ads — impressions, clicks, cost, and conversions. |
+| [Ad Group Ads Stats](./ad-group-ads-stats.md) | 27 | Daily performance for individual ads — impressions, clicks, cost, and conversions. |
 | [Ad Groups](./ad-groups.md) | 9 | Your ad group settings — type, status, and bid configuration within each campaign. |
 | [Ad Groups Stats](./ad-groups-stats.md) | 24 | Daily ad group performance — impressions, clicks, cost, and conversions. |
 | [Campaigns](./campaigns.md) | 11 | Your campaign settings — channel type, bidding strategy, budget, and scheduling. |
 | [Campaigns Stats](./campaigns-stats.md) | 28 | Daily campaign performance — impressions, clicks, cost, and conversions. |
-| [Criterion](./criterion.md) | 17 | Ad group targeting criteria — keywords, placements, and negative exclusions with bid settings. |
+| [Criterion](./criterion.md) | 18 | Ad group targeting criteria — keywords, placements, and negative exclusions with bid settings. |
 | [Geo Stats](./geo-stats.md) | 18 | Daily performance by country and targeting type — impressions, clicks, cost, and conversions. |
 | [Geo Target Constants](./geo-target-constants.md) | 7 | Reference table of geographic targets — join with geo_stats on country_criterion_id to resolve country names. |
 | [Keywords Stats](./keywords-stats.md) | 26 | Daily keyword performance — impressions, clicks, cost, conversions, and quality score. |

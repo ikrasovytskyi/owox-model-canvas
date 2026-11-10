@@ -8,7 +8,7 @@ tags: ["owox", "connector", "google-ads"]
 type: "OWOX Data Mart"
 sources:
   - id: "owox-connector"
-    resource: "https://github.com/OWOX/owox-data-marts/blob/de49dceb6665a1c4a568fe9861aa437410d4a9e5/packages/connectors/src/Sources/GoogleAds/GoogleAdsAPIReference/GoogleAdsFieldsSchema.js"
+    resource: "https://github.com/OWOX/owox-data-marts/blob/a3766e5bc1053780a65b259d9515bedec3c9d782/packages/connectors/src/Sources/GoogleAds/GoogleAdsAPIReference/GoogleAdsFieldsSchema.js"
     title: "OWOX Data Marts Google Ads connector — Ad Group Ads Stats endpoint (`ad_group_ads_stats`)"
   - id: "vendor-reference"
     resource: "https://developers.google.com/google-ads/api/fields/v25/ad_group_ad"
@@ -29,6 +29,7 @@ sources:
 | `ad_id` | STRING | PK. Ad ID |
 | `ad_status` | STRING | Ad Status (ENABLED, PAUSED, REMOVED) |
 | `ad_final_urls` | JSON | Final URLs for the Ad |
+| `ad_final_urls_parsed` | JSON | ad_final_urls with each short link resolved to its landing page; other URLs stay unchanged. Requires ad_final_urls and Process Short Links. |
 | `ad_group_id` | STRING | Ad Group ID |
 | `campaign_id` | STRING | Campaign ID |
 | `date` | STRING | PK. Date for time series data |
