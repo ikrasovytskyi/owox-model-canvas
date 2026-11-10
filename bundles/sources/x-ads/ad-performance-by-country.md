@@ -3,7 +3,7 @@ title: "Ad Performance by Country"
 description: |
   Daily performance of promoted tweets split by country: the same impressions, clicks, URL clicks, engagements, billed charge and social actions as Ad Performance, with `country` added to the key. One row per promoted tweet (`id`), `date`, `placement` and `country`.
 
-  The connector loads it with the X Ads asynchronous stats jobs, one job per set of promoted tweets and placement, segmented by location. `country` holds a location ID, a hex string, not a name or a country code. Join `id` to Promoted Tweets for the promoted tweet. The connector's Targeting Locations table is described as the lookup of names for these IDs, but no join is drawn here because the X Ads docs do not state that the segment value is a targeting value.
+  The connector loads it with the X Ads asynchronous stats jobs, one job per set of promoted tweets and placement, segmented by location. `country` holds a location ID, a hex string, not a name or a country code. Join `id` to Promoted Tweets for the promoted tweet. Join `country` to `targeting_value` in [Targeting Locations](./targeting-locations.md) for the name. The connector describes that table as the lookup for these IDs; the current X Ads docs no longer list the location segmentation as enabled, so check that the table has rows.
 tags: ["owox", "connector", "x-ads"]
 type: "OWOX Data Mart"
 sources:
@@ -24,29 +24,29 @@ sources:
 
 # Schema
 
-| Column | Type | Description |
-|--------|------|-------------|
-| `id` | STRING | PK. The unique identifier for the stats record. |
-| `date` | STRING | PK. The date for which the statistics were collected. |
-| `placement` | STRING | PK. The placement type (ALL_ON_TWITTER or PUBLISHER_NETWORK). |
-| `country` | STRING | PK. Location ID from X Ads (hex string, e.g. 96683cc9126741d1). Join with the targeting_locations node to get the human-readable name and country code. |
-| `impressions` | INTEGER | Number of impressions. |
-| `tweets_send` | INTEGER | Number of tweets sent. |
-| `billed_charge_local_micro` | INTEGER | Billed amount in micros. |
-| `qualified_impressions` | INTEGER | Number of qualified impressions. |
-| `follows` | INTEGER | Number of follows. |
-| `app_clicks` | INTEGER | Number of app clicks. |
-| `retweets` | INTEGER | Number of retweets. |
-| `unfollows` | INTEGER | Number of unfollows. |
-| `likes` | INTEGER | Number of likes. |
-| `engagements` | INTEGER | Number of engagements. |
-| `clicks` | INTEGER | Number of clicks. |
-| `card_engagements` | INTEGER | Number of card engagements. |
-| `poll_card_vote` | INTEGER | Number of poll card votes. |
-| `replies` | INTEGER | Number of replies. |
-| `url_clicks` | INTEGER | Number of URL clicks. |
-| `billed_engagements` | INTEGER | Number of billed engagements. |
-| `carousel_swipes` | INTEGER | Number of carousel swipes. |
+| Column | Type | Alias | Description |
+|--------|------|-------|-------------|
+| `id` | STRING | ID | PK. The unique identifier for the stats record. |
+| `date` | STRING | Date | PK. The date for which the statistics were collected. |
+| `placement` | STRING | Placement | PK. The placement type (ALL_ON_TWITTER or PUBLISHER_NETWORK). |
+| `country` | STRING | Country | PK. Location ID from X Ads (hex string, e.g. 96683cc9126741d1). Join with the targeting_locations node to get the human-readable name and country code. |
+| `impressions` | INTEGER | Impressions | Number of impressions. |
+| `tweets_send` | INTEGER | Tweets Send | Number of tweets sent. |
+| `billed_charge_local_micro` | INTEGER | Billed Charge Local Micro | Billed amount in micros. |
+| `qualified_impressions` | INTEGER | Qualified Impressions | Number of qualified impressions. |
+| `follows` | INTEGER | Follows | Number of follows. |
+| `app_clicks` | INTEGER | App Clicks | Number of app clicks. |
+| `retweets` | INTEGER | Retweets | Number of retweets. |
+| `unfollows` | INTEGER | Unfollows | Number of unfollows. |
+| `likes` | INTEGER | Likes | Number of likes. |
+| `engagements` | INTEGER | Engagements | Number of engagements. |
+| `clicks` | INTEGER | Clicks | Number of clicks. |
+| `card_engagements` | INTEGER | Card Engagements | Number of card engagements. |
+| `poll_card_vote` | INTEGER | Poll Card Vote | Number of poll card votes. |
+| `replies` | INTEGER | Replies | Number of replies. |
+| `url_clicks` | INTEGER | URL Clicks | Number of URL clicks. |
+| `billed_engagements` | INTEGER | Billed Engagements | Number of billed engagements. |
+| `carousel_swipes` | INTEGER | Carousel Swipes | Number of carousel swipes. |
 
 # Example Questions
 
@@ -58,3 +58,5 @@ sources:
 
 - [Promoted Tweets](./promoted-tweets.md) — `id = id` [N:1] — The promoted tweet the country row reports on.
   - Description: The promoted tweet the country row reports on.
+- [Targeting Locations](./targeting-locations.md) — `country = targeting_value` [N:1] — The location the row is split by: country holds a location ID, not a name. The current X docs no longer list the LOCATIONS segmentation as enabled, so rows may be missing.
+  - Description: The location the row is split by: country holds a location ID, not a name. The current X docs no longer list the LOCATIONS segmentation as enabled, so rows may be missing.

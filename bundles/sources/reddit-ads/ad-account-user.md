@@ -3,7 +3,7 @@ title: "Ad Account User"
 description: |
   The Reddit Ads user the connector authenticates as: the member ID, first and last name, email, phone, and the linked Reddit user ID and username. The connector loads it from the Get Me operation, so it holds the authenticated user, not every member of the account.
 
-  It joins to no other table here: the Ad Account table carries a `primary_contact_member_id`, but the API reference does not state that it refers to the authenticated user, so the two stay unjoined.
+  [Ad Account](./ad-account.md) joins here on `primary_contact_member_id`, which the API reference describes as the primary contact member's ID. This table holds only the authenticated member, so most accounts' contacts will not find a row.
 tags: ["owox", "connector", "reddit-ads"]
 type: "OWOX Data Mart"
 sources:
@@ -24,15 +24,15 @@ sources:
 
 # Schema
 
-| Column | Type | Description |
-|--------|------|-------------|
-| `email` | STRING | Email address of the member. |
-| `firstname` | STRING | The first name of the member. |
-| `id` | STRING | PK. The unique identifier of the member. |
-| `lastname` | STRING | The last name of the member. |
-| `phone` | STRING | The phone number of the member. |
-| `reddit_user_id` | STRING | ID that maps to the Reddit user. |
-| `reddit_username` | STRING | The Reddit username of the member. |
+| Column | Type | Alias | Description |
+|--------|------|-------|-------------|
+| `email` | STRING | Email | Email address of the member. |
+| `firstname` | STRING | Firstname | The first name of the member. |
+| `id` | STRING | ID | PK. The unique identifier of the member. |
+| `lastname` | STRING | Lastname | The last name of the member. |
+| `phone` | STRING | Phone | The phone number of the member. |
+| `reddit_user_id` | STRING | Reddit User ID | ID that maps to the Reddit user. |
+| `reddit_username` | STRING | Reddit Username | The Reddit username of the member. |
 
 # Example Questions
 
