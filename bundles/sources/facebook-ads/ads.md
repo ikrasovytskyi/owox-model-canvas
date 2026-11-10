@@ -8,7 +8,7 @@ tags: ["owox", "connector", "facebook-ads"]
 type: "OWOX Data Mart"
 sources:
   - id: "owox-connector"
-    resource: "https://github.com/OWOX/owox-data-marts/blob/8aff3513fdade6760a74baad9aa985167cf542ba/packages/connectors/src/Sources/FacebookMarketing/MarketingAPIReference/FieldsSchema.js"
+    resource: "https://github.com/OWOX/owox-data-marts/blob/a3766e5bc1053780a65b259d9515bedec3c9d782/packages/connectors/src/Sources/FacebookMarketing/MarketingAPIReference/FieldsSchema.js"
     title: "OWOX Data Marts Facebook Ads connector — Ads endpoint (`ad-account/ads`)"
   - id: "vendor-reference"
     resource: "https://developers.facebook.com/docs/marketing-api/reference/ad-account/ads"

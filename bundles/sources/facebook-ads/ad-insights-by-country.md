@@ -8,7 +8,7 @@ tags: ["owox", "connector", "facebook-ads"]
 type: "OWOX Data Mart"
 sources:
   - id: "owox-connector"
-    resource: "https://github.com/OWOX/owox-data-marts/blob/8aff3513fdade6760a74baad9aa985167cf542ba/packages/connectors/src/Sources/FacebookMarketing/MarketingAPIReference/FieldsSchema.js"
+    resource: "https://github.com/OWOX/owox-data-marts/blob/a3766e5bc1053780a65b259d9515bedec3c9d782/packages/connectors/src/Sources/FacebookMarketing/MarketingAPIReference/FieldsSchema.js"
     title: "OWOX Data Marts Facebook Ads connector — Ad Insights by Country endpoint (`ad-account/insights-by-country`)"
   - id: "vendor-reference"
     resource: "https://developers.facebook.com/docs/marketing-api/reference/ad-account/insights"
@@ -20,7 +20,7 @@ sources:
 - **Endpoint:** Facebook Ads · `ad-account/insights-by-country`
 - **Default destination table:** `facebook_ads_ad_account_insights_by_country`
 - **Unique keys:** `ad_id`, `date_start`, `date_stop`, `country`
-- **Last updated:** 2026-05-29 — last change to this endpoint's fields in the connector ([353810d2b](https://github.com/OWOX/owox-data-marts/commit/353810d2bc085efba2a026bc9840d95dc1a360f4))
+- **Last updated:** 2026-09-16 — last change to this endpoint's fields in the connector ([3f005422b](https://github.com/OWOX/owox-data-marts/commit/3f005422b6226dd020a5c7ac74278023c33595dc))
 - **Time series:** yes, one row per key per `date`
 
 # Schema
@@ -54,8 +54,8 @@ sources:
 | `catalog_segment_value_website_purchase_roas` | JSON | Catalog Segment Value Website Purchase ROAS | The total return on ad spend (ROAS) from website purchases for your catalog segment. |
 | `clicks` | NUMERIC | Clicks | The number of clicks on your ads. |
 | `country` | STRING | Country | PK. The country where the people you've reached are located. This is based on information, such as a person's hometown, their current city, and the geographical location where they tend to be when they visit Meta. |
-| `conversion_values` | JSON | Conversion Values | conversion_values |
-| `conversions` | JSON | Conversions | conversions |
+| `conversion_values` | JSON | Conversion Values | The total value of the conversions attributed to your ads, counting conversion events only. Unlike action_values, it excludes engagement and clicks. |
+| `conversions` | JSON | Conversions | The total number of conversions attributed to your ads. Counts conversion events only, unlike actions, which also counts engagement and clicks. |
 | `converted_product_quantity` | JSON | Converted Product Quantity | The number of products purchased which are recorded by your merchant partner's pixel or app SDK for a given product ID and driven by your ads. Has to be used together with converted product ID breakdown. |
 | `converted_product_value` | JSON | Converted Product Value | The value of purchases recorded by your merchant partner's pixel or app SDK for a given product ID and driven by your ads. Has to be used together with converted product ID breakdown. |
 | `cost_per_15_sec_video_view` | JSON | Cost per 15 Sec Video View | cost_per_15_sec_video_view |

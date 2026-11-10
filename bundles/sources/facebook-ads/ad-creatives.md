@@ -8,7 +8,7 @@ tags: ["owox", "connector", "facebook-ads"]
 type: "OWOX Data Mart"
 sources:
   - id: "owox-connector"
-    resource: "https://github.com/OWOX/owox-data-marts/blob/8aff3513fdade6760a74baad9aa985167cf542ba/packages/connectors/src/Sources/FacebookMarketing/MarketingAPIReference/FieldsSchema.js"
+    resource: "https://github.com/OWOX/owox-data-marts/blob/a3766e5bc1053780a65b259d9515bedec3c9d782/packages/connectors/src/Sources/FacebookMarketing/MarketingAPIReference/FieldsSchema.js"
     title: "OWOX Data Marts Facebook Ads connector — Ad Creatives endpoint (`ad-account/adcreatives`)"
   - id: "vendor-reference"
     resource: "https://developers.facebook.com/docs/marketing-api/reference/ad-account/adcreatives"
@@ -20,7 +20,7 @@ sources:
 - **Endpoint:** Facebook Ads · `ad-account/adcreatives`
 - **Default destination table:** `facebook_ads_ad_account_adcreatives`
 - **Unique keys:** `id`
-- **Last updated:** 2026-05-18 — last change to this endpoint's fields in the connector ([8a33aca18](https://github.com/OWOX/owox-data-marts/commit/8a33aca183b6dbff95532a723e27803026ba94d9))
+- **Last updated:** 2026-09-28 — last change to this endpoint's fields in the connector ([3de731ea8](https://github.com/OWOX/owox-data-marts/commit/3de731ea89fa5701d5f45624a3fa5789e2df3e53))
 - **Time series:** no, one current row per key
 
 # Schema
@@ -63,6 +63,7 @@ sources:
 | `link_destination_display_url` | STRING | Link Destination Display URL | Overwrites the display URL for link ads when object_url is set to a click tag |
 | `link_og_id` | STRING | Link OG ID | The Open Graph (OG) ID for the link in this creative if the landing page has OG tags |
 | `link_url` | STRING | Link URL | Identify a specific landing tab on your Facebook page by the Page tab's URL. See connection objects for retrieving Page tab URLs. You can add app_data parameters to the URL to pass data to a Page's tab. |
+| `link_url_parsed` | STRING | Link URL Parsed | link_url resolved to its landing page when it is a short link; otherwise the same value. Requires link_url and Process Short Links. |
 | `messenger_sponsored_message` | STRING | Messenger Sponsored Message | Used for Messenger sponsored message. JSON string with message for this ad creative. See Messenger Platform, Send API Reference. |
 | `name` | STRING | Name | Name of this ad creative as seen in the ad account's library. This field has a limit of 100 characters. |
 | `object_id` | STRING | Object ID | ID for Facebook object being promoted with ads or relevant to the ad or ad type. For example a page ID if you are running ads to generate Page Likes. See promoted_object. |
@@ -71,6 +72,7 @@ sources:
 | `object_story_spec` | STRING | Object Story Spec | Use if you want to create a new unpublished page post and turn the post into an ad. The Page ID and the content to create a new unpublished page post. Specify link_data, photo_data, video_data, text_data or template_data with the content. |
 | `object_type` | STRING | Object Type | The type of Facebook object you want to advertise. Allowed values are: |
 | `object_url` | STRING | Object URL | URL that opens if someone clicks your link on a link ad. This URL is not connected to a Facebook page. |
+| `object_url_parsed` | STRING | Object URL Parsed | object_url resolved to its landing page when it is a short link; otherwise the same value. Requires object_url and Process Short Links. |
 | `page_welcome_message` | STRING | Page Welcome Message | Page welcome message for CTM ads |
 | `photo_album_source_object_story_id` | STRING | Photo Album Source Object Story ID | photo_album_source_object_story_id |
 | `place_page_set_id` | STRING | Place Page Set ID | The ID of the page set for this creative. See theLocal Awareness guide |
