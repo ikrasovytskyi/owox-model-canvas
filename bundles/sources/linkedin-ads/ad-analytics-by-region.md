@@ -132,3 +132,10 @@ sources:
 - Which regions got the most impressions for a campaign, and what did they cost?
 - How does spend per region change from week to week?
 - Which regions produced one-click leads, and how many?
+
+## Joins
+
+- [Campaigns](./campaigns.md) — `campaign = id` [N:1] — The campaign the row reports on; the value is a URN such as urn:li:sponsoredCampaign:{id}. The column holds the URN, so it matches the id inside it, not the whole string.
+  - Description: The campaign the row reports on; the value is a URN such as urn:li:sponsoredCampaign:{id}. The column holds the URN, so it matches the id inside it, not the whole string.
+- [Ad Accounts](./ad-accounts.md) — `account = id` [N:1] — The ad account the row reports on; the value is a URN such as urn:li:sponsoredAccount:{id}. The column holds the URN, so it matches the id inside it, not the whole string.
+  - Description: The ad account the row reports on; the value is a URN such as urn:li:sponsoredAccount:{id}. The column holds the URN, so it matches the id inside it, not the whole string.

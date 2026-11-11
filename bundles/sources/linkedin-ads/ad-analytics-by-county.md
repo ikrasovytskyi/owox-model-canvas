@@ -132,3 +132,10 @@ sources:
 - Which counties did a campaign spend the most in?
 - How many landing page clicks did each county produce per day?
 - Which counties show engagements but no external website conversions?
+
+## Joins
+
+- [Campaigns](./campaigns.md) — `campaign = id` [N:1] — The campaign the row reports on; the value is a URN such as urn:li:sponsoredCampaign:{id}. The column holds the URN, so it matches the id inside it, not the whole string.
+  - Description: The campaign the row reports on; the value is a URN such as urn:li:sponsoredCampaign:{id}. The column holds the URN, so it matches the id inside it, not the whole string.
+- [Ad Accounts](./ad-accounts.md) — `account = id` [N:1] — The ad account the row reports on; the value is a URN such as urn:li:sponsoredAccount:{id}. The column holds the URN, so it matches the id inside it, not the whole string.
+  - Description: The ad account the row reports on; the value is a URN such as urn:li:sponsoredAccount:{id}. The column holds the URN, so it matches the id inside it, not the whole string.

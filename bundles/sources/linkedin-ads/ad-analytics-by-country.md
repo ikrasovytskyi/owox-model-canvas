@@ -132,3 +132,10 @@ sources:
 - How much did each campaign spend in each country last month?
 - Which countries produced the most external website conversions, and at what cost?
 - How do impressions and clicks per country compare day by day for one campaign?
+
+## Joins
+
+- [Campaigns](./campaigns.md) — `campaign = id` [N:1] — The campaign the row reports on; the value is a URN such as urn:li:sponsoredCampaign:{id}. The column holds the URN, so it matches the id inside it, not the whole string.
+  - Description: The campaign the row reports on; the value is a URN such as urn:li:sponsoredCampaign:{id}. The column holds the URN, so it matches the id inside it, not the whole string.
+- [Ad Accounts](./ad-accounts.md) — `account = id` [N:1] — The ad account the row reports on; the value is a URN such as urn:li:sponsoredAccount:{id}. The column holds the URN, so it matches the id inside it, not the whole string.
+  - Description: The ad account the row reports on; the value is a URN such as urn:li:sponsoredAccount:{id}. The column holds the URN, so it matches the id inside it, not the whole string.
