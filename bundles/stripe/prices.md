@@ -30,7 +30,7 @@ sources:
 | `product` | STRING | Product | FK to [Products](./products.md). Product id (prod_). Join to products. |
 | `active` | BOOLEAN | Active | Whether the price can be used on new subscriptions. |
 | `currency` | STRING | Currency | Three-letter ISO currency code, lowercase. |
-| `unit_amount` | INTEGER | Unit Amount | Price per unit in the smallest currency unit (cents for USD); null for tiered or metered prices. |
+| `unit_amount` | INTEGER | Unit Amount | Price per unit in the smallest currency unit (cents for USD); set only when billing_scheme is per_unit, null for tiered prices. |
 | `type` | STRING | Type | one_time or recurring. |
 | `billing_scheme` | STRING | Billing Scheme | per_unit or tiered. |
 | `recurring_interval` | STRING | Recurring Interval | month, year, week or day for recurring prices. |

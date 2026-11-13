@@ -30,8 +30,8 @@ sources:
 | `email` | STRING | Email | Customer email. |
 | `name` | STRING | Name | Customer or company name. |
 | `description` | STRING | Description | Free-text description. |
-| `currency` | STRING | Currency | Currency the customer is billed in, set after the first invoice. |
-| `delinquent` | BOOLEAN | Delinquent | true when the latest invoice is unpaid past its due date. |
+| `currency` | STRING | Currency | Three-letter ISO code of the currency the customer can be charged in for recurring billing; null when none is set. |
+| `delinquent` | BOOLEAN | Delinquent | True after an automatic payment failure or a passed due date on one of the customer's invoices; paying an invoice or marking it uncollectible sets it back to false, so it reflects the latest invoice change, not every open invoice. |
 | `balance` | INTEGER | Balance | Account balance in the smallest currency unit (cents for USD): negative means credit the next invoice applies, positive means owed. |
 | `default_payment_method` | STRING | Default Payment Method | Default payment method id for invoices. |
 | `default_source` | STRING | Default Source | Legacy default source id. |

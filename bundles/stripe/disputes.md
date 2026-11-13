@@ -37,7 +37,7 @@ sources:
 | `is_charge_refundable` | BOOLEAN | Is Charge Refundable | Whether the charge can still be refunded instead of fought. |
 | `evidence_due_by` | INTEGER | Evidence Due By | Deadline to submit evidence, as Unix time in seconds (UTC); use TIMESTAMP_SECONDS() in SQL. |
 | `evidence_has_evidence` | BOOLEAN | Evidence Has Evidence | Whether evidence has been submitted. |
-| `balance_transactions` | STRING | Balance Transactions | JSON list of the balance transactions (debit and, if won, credit) tied to the dispute. |
+| `balance_transactions` | STRING | Balance Transactions | JSON list of the balance transactions (debit and, if won, credit) tied to the dispute. Stored as a JSON string. |
 
 # Example Questions
 

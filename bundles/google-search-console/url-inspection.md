@@ -35,11 +35,11 @@ sources:
 | `crawled_as` | STRING | Crawled As | DESKTOP or MOBILE Googlebot. |
 | `google_canonical` | STRING | Google Canonical | The canonical URL Google chose. |
 | `user_canonical` | STRING | User Canonical | The canonical URL the page declares. Differs from google_canonical when Google overrode it. |
-| `referring_urls` | STRING | Referring Urls | URLs Google followed to find this page, as JSON. |
-| `sitemaps` | STRING | Sitemaps | Sitemaps that list the URL, as JSON. |
+| `referring_urls` | STRING | Referring URLs | URLs Google followed to find this page, as JSON. Stored as a JSON string. |
+| `sitemaps` | STRING | Sitemaps | Sitemaps that list the URL, as JSON. Stored as a JSON string. |
 | `mobile_usability_verdict` | STRING | Mobile Usability Verdict | PASS, FAIL or NEUTRAL for mobile usability. |
 | `rich_results_verdict` | STRING | Rich Results Verdict | PASS, FAIL or NEUTRAL for structured data detected on the page. |
-| `rich_results_detected_items` | STRING | Rich Results Detected Items | Structured-data item types found and their issues, as JSON. |
+| `rich_results_detected_items` | STRING | Rich Results Detected Items | Structured-data item types found and their issues, as JSON. Stored as a JSON string. |
 
 # Example Questions
 

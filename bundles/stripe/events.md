@@ -31,7 +31,7 @@ sources:
 | `type` | STRING | Type | Event type, e.g. invoice.paid, charge.succeeded, customer.subscription.deleted. |
 | `object_id` | STRING | Object ID | Id of the object the event concerns. |
 | `object_type` | STRING | Object Type | Type of that object: invoice, charge, subscription, … |
-| `api_version` | STRING | Api Version | API version the event payload is rendered in. |
+| `api_version` | STRING | API Version | API version the event payload is rendered in. |
 | `pending_webhooks` | INTEGER | Pending Webhooks | Webhooks still to be delivered for this event. |
 | `request_id` | STRING | Request ID | Id of the API request that caused the event; null for automatic events. |
 | `idempotency_key` | STRING | Idempotency Key | Idempotency key of that request. |

@@ -32,7 +32,7 @@ sources:
 | `sitemap_type` | STRING | Sitemap Type | sitemap, rssFeed, atomFeed, urlList, oceanNews, notSitemap or patternSitemap. |
 | `warnings` | INTEGER | Warnings | Number of warnings Google reported for the sitemap. |
 | `errors` | INTEGER | Errors | Number of errors Google reported for the sitemap. |
-| `contents` | STRING | Contents | Per content type (web, image, video, news): submitted and indexed URL counts, as JSON. |
+| `contents` | STRING | Contents | Per content type (web, image, video, news): submitted and indexed URL counts, as JSON. Stored as a JSON string. |
 
 # Example Questions
 
