@@ -26,14 +26,14 @@ sources:
 
 | Column | Type | Alias | Description |
 |--------|------|-------|-------------|
-| `id` | STRING | ID | PK. The unique identifier for the card. |
+| `id` | STRING | ID | PK. The unique identifier for the card. FK to [All Cards](./all-cards.md) |
 | `name` | STRING | Name | The name of the card. |
 | `card_type` | STRING | Card Type | Type of the card. |
-| `card_uri` | STRING | Card Uri | URI of the card. |
-| `created_at` | DATETIME | Created at | When the card was created. |
-| `updated_at` | DATETIME | Updated at | When the card was last updated. |
+| `card_uri` | STRING | Card URI | URI of the card. |
+| `created_at` | DATETIME | Created At | When the card was created. |
+| `updated_at` | DATETIME | Updated At | When the card was last updated. |
 | `deleted` | BOOLEAN | Deleted | Whether the card is deleted. |
-| `components` | JSON | Components | Card components including media and buttons. |
+| `components` | STRING | Components | Card components including media and buttons. Stored as a JSON string. |
 
 # Example Questions
 

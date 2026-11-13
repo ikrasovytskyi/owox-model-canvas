@@ -26,27 +26,27 @@ sources:
 
 | Column | Type | Alias | Description |
 |--------|------|-------|-------------|
-| `id` | STRING | ID | PK. The unique identifier for the stats record. |
+| `id` | STRING | ID | PK. The unique identifier for the stats record. FK to [Promoted Tweets](./promoted-tweets.md) |
 | `date` | STRING | Date | PK. The date for which the statistics were collected. |
 | `placement` | STRING | Placement | PK. The placement type (ALL_ON_TWITTER or PUBLISHER_NETWORK). |
-| `country` | STRING | Country | PK. Location ID from X Ads (hex string, e.g. 96683cc9126741d1). Join with the targeting_locations node to get the human-readable name and country code. |
-| `impressions` | INTEGER | Impressions | Number of impressions. |
+| `country` | STRING | Country | PK. Location ID from X Ads (hex string, e.g. 96683cc9126741d1). Join with the targeting_locations node to get the human-readable name and country code. FK to [Targeting Locations](./targeting-locations.md) |
+| `impressions` | INTEGER | Impressions | Times the promoted tweet was shown; X's engagement, click and follow rates divide by it. |
 | `tweets_send` | INTEGER | Tweets Send | Number of tweets sent. |
 | `billed_charge_local_micro` | INTEGER | Billed Charge Local Micro | Billed amount in micros. |
-| `qualified_impressions` | INTEGER | Qualified Impressions | Number of qualified impressions. |
-| `follows` | INTEGER | Follows | Number of follows. |
-| `app_clicks` | INTEGER | App Clicks | Number of app clicks. |
-| `retweets` | INTEGER | Retweets | Number of retweets. |
-| `unfollows` | INTEGER | Unfollows | Number of unfollows. |
-| `likes` | INTEGER | Likes | Number of likes. |
-| `engagements` | INTEGER | Engagements | Number of engagements. |
-| `clicks` | INTEGER | Clicks | Number of clicks. |
-| `card_engagements` | INTEGER | Card Engagements | Number of card engagements. |
+| `qualified_impressions` | INTEGER | Qualified Impressions | Qualified impressions of the promoted tweet; X's qualified impression rate is this divided by `impressions`. |
+| `follows` | INTEGER | Follows | Follows that came from the promoted tweet; X's cost per follow is `billed_charge_local_micro` divided by this. |
+| `app_clicks` | INTEGER | App Clicks | App install or app open attempts from the promoted tweet. |
+| `retweets` | INTEGER | Retweets | Reposts (retweets) of the promoted tweet. |
+| `unfollows` | INTEGER | Unfollows | Unfollows; the current X Ads metrics table no longer lists it, and X's example responses return it as null. |
+| `likes` | INTEGER | Likes | Likes on the promoted tweet. |
+| `engagements` | INTEGER | Engagements | Engagements with the promoted tweet as X sums them (clicks, replies, reposts, follows and more); X's engagement rate is this divided by `impressions`. |
+| `clicks` | INTEGER | Clicks | Clicks on the promoted tweet, including likes (favorites) and other engagements, per X; `url_clicks` counts only link clicks. |
+| `card_engagements` | INTEGER | Card Engagements | Engagements with the card attached to the promoted tweet. |
 | `poll_card_vote` | INTEGER | Poll Card Vote | Number of poll card votes. |
-| `replies` | INTEGER | Replies | Number of replies. |
-| `url_clicks` | INTEGER | URL Clicks | Number of URL clicks. |
-| `billed_engagements` | INTEGER | Billed Engagements | Number of billed engagements. |
-| `carousel_swipes` | INTEGER | Carousel Swipes | Number of carousel swipes. |
+| `replies` | INTEGER | Replies | Replies to the promoted tweet. |
+| `url_clicks` | INTEGER | URL Clicks | Clicks on the link or Website Card in the ad, including earned clicks. |
+| `billed_engagements` | INTEGER | Billed Engagements | Engagements X billed, from its BILLING metric group, as opposed to all `engagements`. |
+| `carousel_swipes` | INTEGER | Carousel Swipes | Swipes on carousel images or videos. |
 
 # Example Questions
 

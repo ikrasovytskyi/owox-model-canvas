@@ -20,47 +20,46 @@ sources:
 - **Endpoint:** X Ads · `tweets`
 - **Default destination table:** `x_ads_tweets`
 - **Unique keys:** `id`
-- **Also unique on its own:** `tweet_id`
 - **Time series:** no, one current row per key
 
 # Schema
 
 | Column | Type | Alias | Description |
 |--------|------|-------|-------------|
-| `coordinates` | JSON | Coordinates | The geographic coordinates (latitude/longitude) of the tweet, if available. |
+| `coordinates` | STRING | Coordinates | The geographic coordinates (latitude/longitude) of the tweet, if available. Stored as a JSON string. |
 | `retweeted` | BOOLEAN | Retweeted | Whether this tweet is a retweet of another tweet. |
 | `name` | STRING | Name | A custom name or label for the tweet. |
 | `conversation_settings` | STRING | Conversation Settings | Who can reply or interact with the tweet (e.g. EVERYONE). |
 | `source` | STRING | Source | HTML markup indicating the client or interface used to post the tweet. |
-| `entities` | JSON | Entities | Parsed entities in the tweet (mentions, hashtags, URLs, media, etc.). |
-| `display_text_range` | JSON | Display Text Range | Start/end indices for which portion of the tweet text to display. |
+| `entities` | STRING | Entities | Parsed entities in the tweet (mentions, hashtags, URLs, media, etc.). Stored as a JSON string. |
+| `display_text_range` | STRING | Display Text Range | Start/end indices for which portion of the tweet text to display. Stored as a JSON string. |
 | `favorite_count` | INTEGER | Favorite Count | Number of times the tweet has been liked. |
-| `in_reply_to_status_id_str` | STRING | In Reply to Status ID Str | ID (as string) of the tweet this one is replying to. |
-| `geo` | JSON | Geo | Deprecated geographic information, if present. |
-| `id_str` | STRING | ID Str | The tweet’s unique identifier, as a string. |
-| `scopes` | JSON | Scopes | Visibility scopes (e.g. { followers: false }). |
-| `in_reply_to_user_id` | INTEGER | In Reply to User ID | Numeric ID of the user this tweet is replying to. |
+| `in_reply_to_status_id_str` | STRING | In Reply To Status ID String | ID (as string) of the tweet this one is replying to. |
+| `geo` | STRING | Geo | Deprecated geographic information, if present. Stored as a JSON string. |
+| `id_str` | STRING | ID String | The tweet’s unique identifier, as a string. |
+| `scopes` | STRING | Scopes | Visibility scopes (e.g. { followers: false }). Stored as a JSON string. |
+| `in_reply_to_user_id` | INTEGER | In Reply To User ID | Numeric ID of the user this tweet is replying to. |
 | `truncated` | BOOLEAN | Truncated | Whether the tweet text has been truncated. |
 | `retweet_count` | INTEGER | Retweet Count | Number of times this tweet has been retweeted. |
 | `scheduled_status` | STRING | Scheduled Status | Scheduled status (e.g. pending scheduling), if any. |
 | `id` | INTEGER | ID | PK. The tweet’s unique identifier, as a number. |
-| `in_reply_to_status_id` | INTEGER | In Reply to Status ID | Numeric ID of the tweet this one is replying to. |
+| `in_reply_to_status_id` | INTEGER | In Reply To Status ID | Numeric ID of the tweet this one is replying to. |
 | `possibly_sensitive` | BOOLEAN | Possibly Sensitive | Whether the tweet may contain sensitive content. |
 | `nullcast` | BOOLEAN | Nullcast | Whether the tweet is nullcast (not shown on timeline). |
-| `created_at` | STRING | Created at | Creation timestamp of the tweet. |
-| `place` | JSON | Place | Place (location) associated with the tweet, if any. |
-| `scheduled_at` | STRING | Scheduled at | When the tweet was scheduled for posting. |
+| `created_at` | STRING | Created At | Creation timestamp of the tweet. |
+| `place` | STRING | Place | Place (location) associated with the tweet, if any. Stored as a JSON string. |
+| `scheduled_at` | STRING | Scheduled At | When the tweet was scheduled for posting. |
 | `tweet_type` | STRING | Tweet Type | Type of tweet (e.g. PUBLISHED). |
 | `favorited` | BOOLEAN | Favorited | Whether the authenticated user has liked the tweet. |
-| `card_uri` | STRING | Card Uri | URI of the associated Twitter Card. |
+| `card_uri` | STRING | Card URI | URI of the associated Twitter Card. FK to [All Cards](./all-cards.md) |
 | `full_text` | STRING | Full Text | The full text content of the tweet. |
 | `lang` | STRING | Lang | Language code of the tweet (e.g. en). |
-| `contributors` | JSON | Contributors | Array of contributors to the tweet, if any. |
-| `in_reply_to_screen_name` | STRING | In Reply to Screen Name | Screen name of the user this tweet is replying to. |
-| `in_reply_to_user_id_str` | STRING | In Reply to User ID Str | ID (as string) of the user this tweet is replying to. |
-| `user` | JSON | User | The user object of the author (contains id, id_str, etc.). |
+| `contributors` | STRING | Contributors | Array of contributors to the tweet, if any. Stored as a JSON string. |
+| `in_reply_to_screen_name` | STRING | In Reply To Screen Name | Screen name of the user this tweet is replying to. |
+| `in_reply_to_user_id_str` | STRING | In Reply To User ID String | ID (as string) of the user this tweet is replying to. |
+| `user` | STRING | User | The user object of the author (contains id, id_str, etc.). Stored as a JSON string. |
 | `tweet_id` | STRING | Tweet ID | Duplicate of id_str (the tweet’s ID as a string). |
-| `extended_entities` | JSON | Extended Entities | Extended media entities (e.g. video variants, additional media info). |
+| `extended_entities` | STRING | Extended Entities | Extended media entities (e.g. video variants, additional media info). Stored as a JSON string. |
 
 # Example Questions
 

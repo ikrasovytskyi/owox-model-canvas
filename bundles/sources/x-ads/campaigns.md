@@ -28,23 +28,23 @@ sources:
 |--------|------|-------|-------------|
 | `name` | STRING | Name | The name of the campaign |
 | `budget_optimization` | STRING | Budget Optimization | Budget optimization strategy (e.g. LINE_ITEM) |
-| `reasons_not_servable` | JSON | Reasons Not Servable | Reasons why the campaign is not servable |
+| `reasons_not_servable` | STRING | Reasons Not Servable | Reasons why the campaign is not servable. Stored as a JSON string. |
 | `servable` | BOOLEAN | Servable | Whether the campaign is servable |
-| `purchase_order_number` | STRING | Purchase Order Number | Purchase order number |
+| `purchase_order_number` | STRING | Purchase Order Number | The purchase order number set on the campaign; X's example responses show it as null. |
 | `effective_status` | STRING | Effective Status | Effective status of the campaign (e.g. PAUSED) |
 | `daily_budget_amount_local_micro` | INTEGER | Daily Budget Amount Local Micro | Daily budget amount in micros (nullable) |
 | `funding_instrument_id` | STRING | Funding Instrument ID | ID of the funding instrument |
-| `duration_in_days` | INTEGER | Duration in Days | Duration of the campaign in days (nullable) |
+| `duration_in_days` | INTEGER | Duration In Days | Duration of the campaign in days (nullable) |
 | `standard_delivery` | BOOLEAN | Standard Delivery | Whether standard delivery is enabled (nullable) |
 | `total_budget_amount_local_micro` | INTEGER | Total Budget Amount Local Micro | Total budget amount in micros (nullable) |
 | `id` | STRING | ID | PK. The unique identifier for the campaign |
 | `entity_status` | STRING | Entity Status | Entity status of the campaign |
 | `frequency_cap` | INTEGER | Frequency Cap | Frequency cap (nullable) |
 | `currency` | STRING | Currency | Currency code (e.g. USD) |
-| `created_at` | DATETIME | Created at | Timestamp when the campaign was created |
-| `updated_at` | DATETIME | Updated at | Timestamp when the campaign was last updated |
+| `created_at` | DATETIME | Created At | Timestamp when the campaign was created |
+| `updated_at` | DATETIME | Updated At | Timestamp when the campaign was last updated |
 | `deleted` | BOOLEAN | Deleted | Whether the campaign is deleted |
-| `account_id` | STRING | Account ID | ID of the account |
+| `account_id` | STRING | Account ID | ID of the account FK to [Accounts](./accounts.md) |
 
 # Example Questions
 
