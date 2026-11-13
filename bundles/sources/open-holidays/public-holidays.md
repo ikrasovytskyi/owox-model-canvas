@@ -1,7 +1,7 @@
 ---
 title: "Public Holidays"
 description: |
-  One row per holiday of one country: the holiday `id`, its `date`, its `name` in the configured language, its `type`, whether it applies nationwide, and its regional and temporal scope. This endpoint returns public holidays, whose `type` is Public or Optional (the API's type list also has Bank and the school types, which its separate school-holiday endpoint uses); the regional scope is National, Regional or Local and the temporal scope is FullDay or HalfDay. `name` is the name in the configured language, or `Unknown` when the API has none in that language.
+  One row per holiday of one country: the holiday `id`, its `date`, its `name` in the configured language, its `type`, whether it applies nationwide, and its regional and temporal scope. This endpoint returns public holidays; `type` takes its value from the API's type list (Public, Bank, Optional and the school types, which its separate school-holiday endpoint uses); the regional scope is National, Regional or Local and the temporal scope is FullDay or HalfDay. `name` is the name in the configured language, or `Unknown` when the API has none in that language.
 
   `date` is the holiday's start date. A holiday that lasts several days has one row, and its end date is not loaded. Join the table to a daily table on `date` to flag holidays.
 tags: ["owox", "connector", "open-holidays"]
@@ -24,15 +24,15 @@ sources:
 
 # Schema
 
-| Column | Type | Description |
-|--------|------|-------------|
-| `id` | STRING | PK. Unique identifier for the holiday |
-| `date` | DATE | Date of the holiday |
-| `name` | STRING | Name of the holiday in the specified language |
-| `type` | STRING | Type of holiday (public, school, etc.) |
-| `regionalScope` | STRING | Regional scope of the holiday |
-| `temporalScope` | STRING | Temporal scope of the holiday |
-| `nationwide` | BOOLEAN | Whether the holiday is nationwide |
+| Column | Type | Alias | Description |
+|--------|------|-------|-------------|
+| `id` | STRING | ID | PK. Unique identifier for the holiday |
+| `date` | DATE | Date | The holiday's start date; the API's end date is not loaded, so a holiday that lasts several days shows only its first day. |
+| `name` | STRING | Name | The holiday's name in the configured language, or `Unknown` when the API has no name in that language. |
+| `type` | STRING | Type | The holiday type from the OpenHolidays list (Public, Bank, Optional, School, BackToSchool, EndOfLessons); `Unknown` when the API returns none. |
+| `regionalScope` | STRING | Regional Scope | Where the holiday applies: National, Regional or Local; `Unknown` when the API returns none. |
+| `temporalScope` | STRING | Temporal Scope | How much of the day the holiday covers: FullDay or HalfDay; `Unknown` when the API returns none. |
+| `nationwide` | BOOLEAN | Nationwide | True when the holiday applies in the whole country; false when only some subdivisions observe it, and the connector does not load which ones. |
 
 # Example Questions
 
