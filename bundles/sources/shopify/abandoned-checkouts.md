@@ -1,7 +1,7 @@
 ---
 title: "Abandoned Checkouts"
 description: |
-  Checkouts that a customer started and did not complete: recovery URL, completion time, line item quantity, total price, billing and shipping location, and the customer's name and email. `totalPriceSet` is a JSON string with the amount and currency.
+  Checkouts that a customer started and did not complete: recovery URL, completion time, line item quantity, total price, billing and shipping location, and the customer's name and email. `totalPriceSet` is the amount in the store currency, without a currency code.
 
   Use it for recovery campaigns and for the gap between started and completed checkouts. `customerId` points to Customers and may be empty when the checkout came from a draft order or an app.
 tags: ["owox", "connector", "shopify"]
@@ -24,28 +24,28 @@ sources:
 
 # Schema
 
-| Column | Type | Description |
-|--------|------|-------------|
-| `id` | STRING | PK. A globally-unique ID for the abandoned checkout. |
-| `abandonedCheckoutUrl` | STRING | The URL for the buyer to recover their checkout. |
-| `completedAt` | TIMESTAMP | The date and time when the checkout was completed. |
-| `createdAt` | TIMESTAMP | The date and time when the checkout was created. |
-| `updatedAt` | TIMESTAMP | The date and time when the checkout was last updated. |
-| `defaultCursor` | STRING | A default cursor that returns the single next record, sorted ascending by ID. |
-| `lineItemsQuantity` | INTEGER | The total number of line items in the checkout. |
-| `totalPriceSet` | STRING | The total price of the checkout including taxes, discounts, and shipping (MoneyBag as JSON string). |
-| `billingAddressCity` | STRING | City from the billing address. |
-| `billingAddressCountry` | STRING | Country from the billing address. |
-| `billingAddressProvince` | STRING | Province or state from the billing address. |
-| `billingAddressZip` | STRING | Postal/ZIP code from the billing address. |
-| `shippingAddressCity` | STRING | City from the shipping address. |
-| `shippingAddressCountry` | STRING | Country from the shipping address. |
-| `shippingAddressProvince` | STRING | Province or state from the shipping address. |
-| `shippingAddressZip` | STRING | Postal/ZIP code from the shipping address. |
-| `customerId` | STRING | Customer globally-unique ID. |
-| `customerFirstName` | STRING | Customer first name. |
-| `customerLastName` | STRING | Customer last name. |
-| `customerEmail` | STRING | Customer email address. |
+| Column | Type | Alias | Description |
+|--------|------|-------|-------------|
+| `id` | STRING | ID | PK. A globally-unique ID for the abandoned checkout. |
+| `abandonedCheckoutUrl` | STRING | Abandoned Checkout URL | The URL for the buyer to recover their checkout. |
+| `completedAt` | TIMESTAMP | Completed At | The date and time when the checkout was completed. |
+| `createdAt` | TIMESTAMP | Created At | The date and time when the checkout was created. |
+| `updatedAt` | TIMESTAMP | Updated At | The date and time when the checkout was last updated. |
+| `defaultCursor` | STRING | Default Cursor | A default cursor that returns the single next record, sorted ascending by ID. |
+| `lineItemsQuantity` | INTEGER | Line Items Quantity | The total number of line items in the checkout. |
+| `totalPriceSet` | STRING | Total Price Set | Total price of the checkout, taxes, discounts and shipping included, in the store currency; the amount only, as the connector does not keep the currency code it requests. |
+| `billingAddressCity` | STRING | Billing Address City | City from the billing address. |
+| `billingAddressCountry` | STRING | Billing Address Country | Country from the billing address. |
+| `billingAddressProvince` | STRING | Billing Address Province | Province or state from the billing address. |
+| `billingAddressZip` | STRING | Billing Address Zip | Postal/ZIP code from the billing address. |
+| `shippingAddressCity` | STRING | Shipping Address City | City from the shipping address. |
+| `shippingAddressCountry` | STRING | Shipping Address Country | Country from the shipping address. |
+| `shippingAddressProvince` | STRING | Shipping Address Province | Province or state from the shipping address. |
+| `shippingAddressZip` | STRING | Shipping Address Zip | Postal/ZIP code from the shipping address. |
+| `customerId` | STRING | Customer ID | Customer globally-unique ID. FK to [Customers](./customers.md) |
+| `customerFirstName` | STRING | Customer First Name | First name of the customer who started the checkout; empty when the checkout has no customer. |
+| `customerLastName` | STRING | Customer Last Name | Last name of the customer who started the checkout; empty when the checkout has no customer. |
+| `customerEmail` | STRING | Customer Email | Customer email address. |
 
 # Example Questions
 

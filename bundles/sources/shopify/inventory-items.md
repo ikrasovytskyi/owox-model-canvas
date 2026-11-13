@@ -24,17 +24,17 @@ sources:
 
 # Schema
 
-| Column | Type | Description |
-|--------|------|-------------|
-| `id` | STRING | PK. A globally-unique ID. |
-| `sku` | STRING | The unique SKU (stock keeping unit) of the inventory item. |
-| `tracked` | BOOLEAN | Whether inventory levels are tracked for the item. |
-| `requiresShipping` | BOOLEAN | Whether the item requires shipping. |
-| `harmonizedSystemCode` | STRING | The harmonized system code of the item. |
-| `countryCodeOfOrigin` | STRING | The ISO 3166-1 alpha-2 country code of where the item originated from. |
-| `variantId` | STRING | The ID of the variant associated with this inventory item. |
-| `createdAt` | TIMESTAMP | The date and time when the inventory item was created. |
-| `updatedAt` | TIMESTAMP | The date and time when the inventory item was last updated. |
+| Column | Type | Alias | Description |
+|--------|------|-------|-------------|
+| `id` | STRING | ID | PK. A globally-unique ID. |
+| `sku` | STRING | SKU | The unique SKU (stock keeping unit) of the inventory item. |
+| `tracked` | BOOLEAN | Tracked | Whether inventory levels are tracked for the item. |
+| `requiresShipping` | BOOLEAN | Requires Shipping | Whether the item requires shipping. |
+| `harmonizedSystemCode` | STRING | Harmonized System Code | The harmonized system code of the item. |
+| `countryCodeOfOrigin` | STRING | Country Code Of Origin | The ISO 3166-1 alpha-2 country code of where the item originated from. |
+| `variantId` | STRING | Variant ID | The ID of the variant associated with this inventory item. |
+| `createdAt` | TIMESTAMP | Created At | The date and time when the inventory item was created. |
+| `updatedAt` | TIMESTAMP | Updated At | The date and time when the inventory item was last updated. |
 
 # Example Questions
 

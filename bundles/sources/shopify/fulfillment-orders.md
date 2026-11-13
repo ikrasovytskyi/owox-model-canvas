@@ -24,19 +24,19 @@ sources:
 
 # Schema
 
-| Column | Type | Description |
-|--------|------|-------------|
-| `id` | STRING | PK. A globally-unique ID. |
-| `status` | STRING | The status of the fulfillment order. |
-| `requestStatus` | STRING | The request status of the fulfillment order. |
-| `orderId` | STRING | The ID of the order associated with this fulfillment order. |
-| `orderName` | STRING | The name of the order. |
-| `assignedLocationId` | STRING | The ID of the location assigned to fulfill this order. |
-| `assignedLocationName` | STRING | The name of the assigned location. |
-| `fulfillAt` | TIMESTAMP | The date and time at which the fulfillment order will be ready to be fulfilled. |
-| `deliveryMethod` | STRING | The delivery method of the fulfillment order. |
-| `createdAt` | TIMESTAMP | The date and time when the fulfillment order was created. |
-| `updatedAt` | TIMESTAMP | The date and time when the fulfillment order was last updated. |
+| Column | Type | Alias | Description |
+|--------|------|-------|-------------|
+| `id` | STRING | ID | PK. A globally-unique ID. |
+| `status` | STRING | Status | The status of the fulfillment order. |
+| `requestStatus` | STRING | Request Status | The request status of the fulfillment order. |
+| `orderId` | STRING | Order ID | The ID of the order associated with this fulfillment order. FK to [Orders](./orders.md) |
+| `orderName` | STRING | Order Name | The name of the order. |
+| `assignedLocationId` | STRING | Assigned Location ID | The ID of the location assigned to fulfill this order. FK to [Locations](./locations.md) |
+| `assignedLocationName` | STRING | Assigned Location Name | The name of the assigned location. |
+| `fulfillAt` | TIMESTAMP | Fulfill At | The date and time at which the fulfillment order will be ready to be fulfilled. |
+| `deliveryMethod` | STRING | Delivery Method | The delivery method of the fulfillment order. |
+| `createdAt` | TIMESTAMP | Created At | The date and time when the fulfillment order was created. |
+| `updatedAt` | TIMESTAMP | Updated At | The date and time when the fulfillment order was last updated. |
 
 # Example Questions
 

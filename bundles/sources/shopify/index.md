@@ -5,7 +5,7 @@ description: |
 
   The store's content is Blogs, Articles and Pages. Ten metafield tables, one per owner type, hold the custom fields merchants and apps attach to blogs, articles, pages, products, variants, collections, customers, orders, locations and the shop; each points to its owner on `ownerId`.
 
-  Every id is a Shopify global ID, a string such as `gid://shopify/Order/…`. Order and customer detail without a column of its own (line items, shipping lines, refunds, discount codes) is kept as JSON text, to unnest in SQL.
+  Every id is a Shopify global ID, a string such as `gid://shopify/Order/…`. Order detail without a column of its own (line items, shipping lines, refunds, discount applications) is kept as JSON text, to unnest in SQL. The money columns of Orders and Abandoned Checkouts are in the store currency.
 tags: ["owox", "index", "connector", "shopify"]
 type: "index"
 sources:

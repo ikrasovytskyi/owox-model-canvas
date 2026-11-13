@@ -24,18 +24,18 @@ sources:
 
 # Schema
 
-| Column | Type | Description |
-|--------|------|-------------|
-| `id` | STRING | PK. A globally-unique ID. |
-| `title` | STRING | The title of the page. |
-| `handle` | STRING | A unique, human-friendly string for the page URL. |
-| `body` | STRING | The body content of the page. |
-| `bodySummary` | STRING | A summary of the body content. |
-| `isPublished` | BOOLEAN | Whether the page is published. |
-| `templateSuffix` | STRING | The name of the template the page is using. |
-| `publishedAt` | TIMESTAMP | The date and time when the page was published. |
-| `createdAt` | TIMESTAMP | The date and time when the page was created. |
-| `updatedAt` | TIMESTAMP | The date and time when the page was last updated. |
+| Column | Type | Alias | Description |
+|--------|------|-------|-------------|
+| `id` | STRING | ID | PK. A globally-unique ID. |
+| `title` | STRING | Title | The title of the page. |
+| `handle` | STRING | Handle | A unique, human-friendly string for the page URL. |
+| `body` | STRING | Body | The body content of the page. |
+| `bodySummary` | STRING | Body Summary | A summary of the body content. |
+| `isPublished` | BOOLEAN | Is Published | Whether the page is published. |
+| `templateSuffix` | STRING | Template Suffix | The name of the template the page is using. |
+| `publishedAt` | TIMESTAMP | Published At | The date and time when the page was published. |
+| `createdAt` | TIMESTAMP | Created At | The date and time when the page was created. |
+| `updatedAt` | TIMESTAMP | Updated At | The date and time when the page was last updated. |
 
 # Example Questions
 

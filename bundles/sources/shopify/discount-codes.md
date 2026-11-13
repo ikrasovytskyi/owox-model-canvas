@@ -1,9 +1,9 @@
 ---
 title: "Discount Codes"
 description: |
-  One row per discount code: the code, discount type, title, status, start and end time, usage limit, whether it applies once per customer and the number of uses counted asynchronously. The codes customers actually used on an order are kept as JSON text in Orders (`discountCodes`).
+  One row per discount code: the code, discount type, title, status, start and end time, usage limit, whether it applies once per customer and the number of uses counted asynchronously. The codes customers actually used on an order are listed in Orders as comma-separated text (`discountCodes`).
 
-  There is no key column to join this table to Orders; match on the `code` text inside the JSON.
+  There is no key column to join this table to Orders; match `code` against the codes in that text. A discount with several codes shows only its first one here.
 tags: ["owox", "connector", "shopify"]
 type: "OWOX Data Mart"
 sources:
@@ -24,20 +24,20 @@ sources:
 
 # Schema
 
-| Column | Type | Description |
-|--------|------|-------------|
-| `id` | STRING | PK. A globally-unique ID. |
-| `code` | STRING | The discount code string. |
-| `discountType` | STRING | The type of discount (DiscountCodeBasic, DiscountCodeBxgy, DiscountCodeFreeShipping). |
-| `title` | STRING | The title of the discount. |
-| `status` | STRING | The status of the discount. |
-| `startsAt` | TIMESTAMP | The date and time when the discount becomes active. |
-| `endsAt` | TIMESTAMP | The date and time when the discount expires. |
-| `usageLimit` | INTEGER | The maximum number of times the discount can be used. |
-| `appliesOncePerCustomer` | BOOLEAN | Whether the discount can only be used once per customer. |
-| `asyncUsageCount` | INTEGER | The number of times the discount has been used. |
-| `createdAt` | TIMESTAMP | The date and time when the discount was created. |
-| `updatedAt` | TIMESTAMP | The date and time when the discount was last updated. |
+| Column | Type | Alias | Description |
+|--------|------|-------|-------------|
+| `id` | STRING | ID | PK. A globally-unique ID. |
+| `code` | STRING | Code | The discount's first code; a discount that has several codes shows only one of them here. |
+| `discountType` | STRING | Discount Type | The type of discount (DiscountCodeBasic, DiscountCodeBxgy, DiscountCodeFreeShipping). |
+| `title` | STRING | Title | The title of the discount. |
+| `status` | STRING | Status | The status of the discount. |
+| `startsAt` | TIMESTAMP | Starts At | The date and time when the discount becomes active. |
+| `endsAt` | TIMESTAMP | Ends At | The date and time when the discount expires. |
+| `usageLimit` | INTEGER | Usage Limit | The maximum number of times the discount can be redeemed; empty when usage is unlimited. |
+| `appliesOncePerCustomer` | BOOLEAN | Applies Once Per Customer | True when each customer can use the discount only once; empty, not false, otherwise. |
+| `asyncUsageCount` | INTEGER | Async Usage Count | The number of times the discount has been used, updated asynchronously so it can lag behind; empty, not 0, for a discount never used. |
+| `createdAt` | TIMESTAMP | Created At | The date and time when the discount was created. |
+| `updatedAt` | TIMESTAMP | Updated At | The date and time when the discount was last updated. |
 
 # Example Questions
 

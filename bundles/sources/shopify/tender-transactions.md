@@ -24,15 +24,15 @@ sources:
 
 # Schema
 
-| Column | Type | Description |
-|--------|------|-------------|
-| `id` | STRING | PK. A globally-unique ID. |
-| `amount` | NUMERIC | The amount of the tender transaction. |
-| `currencyCode` | STRING | The currency code. |
-| `remoteReference` | STRING | The remote gateway reference. |
-| `test` | BOOLEAN | Whether the transaction is a test transaction. |
-| `orderId` | STRING | The ID of the order. |
-| `processedAt` | TIMESTAMP | The date and time when the transaction was processed. |
+| Column | Type | Alias | Description |
+|--------|------|-------|-------------|
+| `id` | STRING | ID | PK. A globally-unique ID. |
+| `amount` | FLOAT | Amount | The amount of the tender transaction. |
+| `currencyCode` | STRING | Currency Code | Three-letter code of the currency `amount` is in. |
+| `remoteReference` | STRING | Remote Reference | The remote gateway reference. |
+| `test` | BOOLEAN | Test | Whether the transaction is a test transaction. |
+| `orderId` | STRING | Order ID | The ID of the order. FK to [Orders](./orders.md) |
+| `processedAt` | TIMESTAMP | Processed At | The date and time when the transaction was processed. |
 
 # Example Questions
 

@@ -24,28 +24,28 @@ sources:
 
 # Schema
 
-| Column | Type | Description |
-|--------|------|-------------|
-| `id` | STRING | PK. A globally-unique ID. |
-| `name` | STRING | The name of the shop. |
-| `email` | STRING | The email address of the shop. |
-| `myshopifyDomain` | STRING | The myshopify.com domain of the shop. |
-| `primaryDomain` | STRING | The primary domain of the shop. |
-| `currencyCode` | STRING | The currency code of the shop. |
-| `timezoneAbbreviation` | STRING | The timezone abbreviation. |
-| `ianaTimezone` | STRING | The IANA timezone. |
-| `weightUnit` | STRING | The default weight unit. |
-| `billingAddressCity` | STRING | City from the billing address. |
-| `billingAddressCountry` | STRING | Country from the billing address. |
-| `billingAddressProvince` | STRING | Province from the billing address. |
-| `billingAddressZip` | STRING | Postal/ZIP code from the billing address. |
-| `plan` | STRING | The shop plan name. |
-| `contactEmail` | STRING | The contact email of the shop. |
-| `customerAccountsV2` | STRING | The customer accounts version. |
-| `taxesIncluded` | BOOLEAN | Whether taxes are included in prices. |
-| `taxShipping` | BOOLEAN | Whether shipping is taxed. |
-| `createdAt` | TIMESTAMP | The date and time when the shop was created. |
-| `updatedAt` | TIMESTAMP | The date and time when the shop was last updated. |
+| Column | Type | Alias | Description |
+|--------|------|-------|-------------|
+| `id` | STRING | ID | PK. A globally-unique ID. |
+| `name` | STRING | Name | The name of the shop. |
+| `email` | STRING | Email | The email address of the shop. |
+| `myshopifyDomain` | STRING | Myshopify Domain | The myshopify.com domain of the shop. |
+| `primaryDomain` | STRING | Primary Domain | The primary domain of the shop. |
+| `currencyCode` | STRING | Currency Code | Three-letter code of the currency the store sells in now; each order keeps the store currency of its own day in its `currencyCode`. |
+| `timezoneAbbreviation` | STRING | Timezone Abbreviation | Short abbreviation of the store's time zone; `ianaTimezone` holds its full IANA name. |
+| `ianaTimezone` | STRING | IANA Timezone | The store's time zone as an IANA name; use it to read timestamps as the store's local days. |
+| `weightUnit` | STRING | Weight Unit | The default weight unit. |
+| `billingAddressCity` | STRING | Billing Address City | City from the billing address. |
+| `billingAddressCountry` | STRING | Billing Address Country | Country from the billing address. |
+| `billingAddressProvince` | STRING | Billing Address Province | Province from the billing address. |
+| `billingAddressZip` | STRING | Billing Address Zip | Postal/ZIP code from the billing address. |
+| `plan` | STRING | Plan | The shop plan name. |
+| `contactEmail` | STRING | Contact Email | The contact email of the shop. |
+| `customerAccountsV2` | STRING | Login Required at Checkout | Whether customers must log in to their account before checkout (Shopify `customerAccountsV2.loginRequiredAtCheckout`), as `true` or `false` text; despite the name, it is not an accounts version. |
+| `taxesIncluded` | BOOLEAN | Taxes Included | Whether taxes are included in prices. |
+| `taxShipping` | BOOLEAN | Tax Shipping | Whether shipping is taxed. |
+| `createdAt` | TIMESTAMP | Created At | The date and time when the shop was created. |
+| `updatedAt` | TIMESTAMP | Updated At | The date and time when the shop was last updated. |
 
 # Example Questions
 

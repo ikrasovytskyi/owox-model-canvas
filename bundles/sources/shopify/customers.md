@@ -1,9 +1,9 @@
 ---
 title: "Customers"
 description: |
-  One row per customer account: name, email, phone, account state, locale, marketing consent for email and SMS, number of orders, lifetime spend, tags and default address. `amountSpent` is a JSON string holding the amount and its currency code.
+  One row per customer account: name, email, phone, account state, locale, marketing consent for email and SMS, number of orders, lifetime spend, tags and default address. `amountSpent` holds the amount only, without its currency code.
 
-  Orders and Abandoned Checkouts point here on `customerId`. A guest checkout can have an order without a customer row, so a join from Orders to Customers is a left join.
+  Orders and Abandoned Checkouts point here on `customerId`. An order can have no customer, so a join from Orders to Customers is a left join.
 tags: ["owox", "connector", "shopify"]
 type: "OWOX Data Mart"
 sources:
@@ -24,30 +24,30 @@ sources:
 
 # Schema
 
-| Column | Type | Description |
-|--------|------|-------------|
-| `id` | STRING | PK. A globally-unique ID. |
-| `firstName` | STRING | The customer first name. |
-| `lastName` | STRING | The customer last name. |
-| `displayName` | STRING | The full name of the customer. |
-| `email` | STRING | The customer email address. |
-| `phone` | STRING | The customer phone number. |
-| `state` | STRING | The state of the customer account. |
-| `locale` | STRING | The customer locale. |
-| `taxExempt` | BOOLEAN | Whether the customer is exempt from being charged taxes. |
-| `verifiedEmail` | BOOLEAN | Whether the customer has verified their email. |
-| `emailMarketingConsentState` | STRING | The current email marketing state for the customer. |
-| `smsMarketingConsentState` | STRING | The current SMS marketing state for the customer. |
-| `numberOfOrders` | INTEGER | The number of orders associated with this customer. |
-| `amountSpent` | STRING | The total amount spent by the customer (JSON string with amount and currencyCode). |
-| `tags` | STRING | A comma-separated list of tags associated with the customer. |
-| `note` | STRING | A note about the customer. |
-| `defaultAddressCity` | STRING | City from the default address. |
-| `defaultAddressCountry` | STRING | Country from the default address. |
-| `defaultAddressProvince` | STRING | Province from the default address. |
-| `defaultAddressZip` | STRING | Postal/ZIP code from the default address. |
-| `createdAt` | TIMESTAMP | The date and time when the customer was created. |
-| `updatedAt` | TIMESTAMP | The date and time when the customer was last updated. |
+| Column | Type | Alias | Description |
+|--------|------|-------|-------------|
+| `id` | STRING | ID | PK. A globally-unique ID. |
+| `firstName` | STRING | First Name | The customer first name. |
+| `lastName` | STRING | Last Name | The customer last name. |
+| `displayName` | STRING | Display Name | The full name of the customer. |
+| `email` | STRING | Email | The customer email address. |
+| `phone` | STRING | Phone | The customer phone number. |
+| `state` | STRING | State | The state of the customer account. |
+| `locale` | STRING | Locale | The customer locale. |
+| `taxExempt` | BOOLEAN | Tax Exempt | Whether the customer is exempt from being charged taxes. |
+| `verifiedEmail` | BOOLEAN | Verified Email | Whether the customer has verified their email. |
+| `emailMarketingConsentState` | STRING | Email Marketing Consent State | The current email marketing state for the customer. |
+| `smsMarketingConsentState` | STRING | SMS Marketing Consent State | The current SMS marketing state for the customer. |
+| `numberOfOrders` | INTEGER | Number Of Orders | The number of orders associated with this customer. |
+| `amountSpent` | STRING | Amount Spent | The total the customer has spent across their orders, as the amount only: the connector requests the currency code with it but does not keep it. |
+| `tags` | STRING | Tags | A comma-separated list of tags associated with the customer. |
+| `note` | STRING | Note | A note about the customer. |
+| `defaultAddressCity` | STRING | Default Address City | City from the default address. |
+| `defaultAddressCountry` | STRING | Default Address Country | Country from the default address. |
+| `defaultAddressProvince` | STRING | Default Address Province | Province from the default address. |
+| `defaultAddressZip` | STRING | Default Address Zip | Postal/ZIP code from the default address. |
+| `createdAt` | TIMESTAMP | Created At | The date and time when the customer was created. |
+| `updatedAt` | TIMESTAMP | Updated At | The date and time when the customer was last updated. |
 
 # Example Questions
 
