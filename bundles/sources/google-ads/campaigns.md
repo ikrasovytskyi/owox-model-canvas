@@ -24,19 +24,19 @@ sources:
 
 # Schema
 
-| Column | Type | Description |
-|--------|------|-------------|
-| `campaign_id` | STRING | PK. Campaign ID |
-| `campaign_name` | STRING | Campaign Name |
-| `campaign_status` | STRING | Campaign Status (ENABLED, PAUSED, REMOVED) |
-| `campaign_advertising_channel_type` | STRING | Advertising Channel Type (SEARCH, DISPLAY, VIDEO, etc.) |
-| `campaign_start_date` | STRING | Campaign Start Date |
-| `campaign_end_date` | STRING | Campaign End Date |
-| `campaign_bidding_strategy_type` | STRING | Bidding Strategy Type (MANUAL_CPC, TARGET_CPA, TARGET_ROAS, etc.) |
-| `campaign_budget_amount_micros` | NUMERIC | Campaign Budget Amount in Micros |
-| `campaign_target_cpa_micros` | NUMERIC | Target CPA in Micros (if using Target CPA bidding) |
-| `campaign_target_roas` | NUMERIC | Target ROAS (if using Target ROAS bidding) |
-| `campaign_advertising_channel_sub_type` | STRING | Advertising Channel Sub Type |
+| Column | Type | Alias | Description |
+|--------|------|-------|-------------|
+| `campaign_id` | STRING | Campaign ID | PK. The campaign's ID, the key of this table; every other table except Geo Target Constants carries it to point here. |
+| `campaign_name` | STRING | Campaign Name | Name of the campaign. |
+| `campaign_status` | STRING | Campaign Status | Campaign Status (ENABLED, PAUSED, REMOVED) |
+| `campaign_advertising_channel_type` | STRING | Campaign Advertising Channel Type | Advertising Channel Type (SEARCH, DISPLAY, VIDEO, etc.) |
+| `campaign_start_date` | STRING | Campaign Start Date | The day the campaign started serving, in the account's time zone. |
+| `campaign_end_date` | STRING | Campaign End Date | The last day the campaign serves, in the account's time zone. |
+| `campaign_bidding_strategy_type` | STRING | Campaign Bidding Strategy Type | Bidding Strategy Type (MANUAL_CPC, TARGET_CPA, TARGET_ROAS, etc.) |
+| `campaign_budget_amount_micros` | FLOAT | Campaign Budget Amount Micros | Campaign Budget Amount in Micros |
+| `campaign_target_cpa_micros` | FLOAT | Campaign Target CPA Micros | Target CPA in Micros (if using Target CPA bidding) |
+| `campaign_target_roas` | FLOAT | Campaign Target ROAS | Target ROAS (if using Target ROAS bidding) |
+| `campaign_advertising_channel_sub_type` | STRING | Campaign Advertising Channel Sub Type | Advertising Channel Sub Type |
 
 # Example Questions
 

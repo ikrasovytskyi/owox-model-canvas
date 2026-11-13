@@ -24,34 +24,34 @@ sources:
 
 # Schema
 
-| Column | Type | Description |
-|--------|------|-------------|
-| `keyword_id` | STRING | PK. Keyword Criterion ID |
-| `keyword_text` | STRING | Keyword Text |
-| `keyword_match_type` | STRING | Keyword Match Type (EXACT, PHRASE, BROAD) |
-| `keyword_status` | STRING | Criterion Status (ENABLED, PAUSED, REMOVED) |
-| `ad_group_id` | STRING | Ad Group ID |
-| `campaign_id` | STRING | Campaign ID |
-| `date` | STRING | PK. Date for time series data |
-| `impressions` | NUMERIC | Number of Impressions |
-| `clicks` | NUMERIC | Number of Clicks |
-| `cost_micros` | NUMERIC | Cost in Micros |
-| `conversions` | NUMERIC | Number of Conversions |
-| `ctr` | NUMERIC | Click-Through Rate |
-| `average_cpc` | NUMERIC | Average Cost Per Click |
-| `conversions_value` | NUMERIC | Total Conversion Value |
-| `cost_per_conversion` | NUMERIC | Cost Per Conversion |
-| `quality_score` | NUMERIC | Quality Score |
-| `conversion_rate` | NUMERIC | Conversion Rate |
-| `view_through_conversions` | NUMERIC | View-Through Conversions |
-| `all_conversions` | NUMERIC | All Conversions (including cross-device, store visits, etc.) |
-| `all_conversions_value` | NUMERIC | All Conversions Value |
-| `average_cost` | NUMERIC | Average Cost Per Interaction |
-| `average_cpm` | NUMERIC | Average CPM (Cost Per Thousand Impressions) |
-| `search_impression_share` | NUMERIC | Search Impression Share |
-| `search_rank_lost_impression_share` | NUMERIC | Search Rank Lost Impression Share |
-| `top_impression_percentage` | NUMERIC | Top Impression Percentage |
-| `absolute_top_impression_percentage` | NUMERIC | Absolute Top Impression Percentage |
+| Column | Type | Alias | Description |
+|--------|------|-------|-------------|
+| `keyword_id` | STRING | Keyword ID | PK. Keyword Criterion ID FK to [Criterion](./criterion.md) |
+| `keyword_text` | STRING | Keyword Text | The text of the keyword, at most 80 characters and 10 words. |
+| `keyword_match_type` | STRING | Keyword Match Type | Keyword Match Type (EXACT, PHRASE, BROAD) |
+| `keyword_status` | STRING | Keyword Status | Criterion Status (ENABLED, PAUSED, REMOVED) |
+| `ad_group_id` | STRING | Ad Group ID | ID of the ad group the row belongs to. FK to [Ad Groups](./ad-groups.md) |
+| `campaign_id` | STRING | Campaign ID | ID of the campaign the row belongs to. FK to [Criterion](./criterion.md) |
+| `date` | STRING | Date | PK. Date for time series data |
+| `impressions` | FLOAT | Impressions | Times the ad appeared on a search results page or a website on the Google Network. |
+| `clicks` | FLOAT | Clicks | Clicks on the ads; `ctr` is clicks divided by impressions. |
+| `cost_micros` | FLOAT | Cost Micros | Cost in Micros |
+| `conversions` | FLOAT | Conversions | Conversions from the actions counted in the Conversions column (include_in_conversions_metric on), the ones conversion-based bidding optimizes for; `all_conversions` adds the rest. |
+| `ctr` | FLOAT | CTR | Click-Through Rate |
+| `average_cpc` | FLOAT | Average CPC | Average Cost Per Click |
+| `conversions_value` | FLOAT | Conversions Value | Value of `conversions`: only the actions counted in the Conversions column (include_in_conversions_metric on); `all_conversions_value` adds the rest. |
+| `cost_per_conversion` | FLOAT | Cost Per Conversion | Cost of ad interactions divided by `conversions`, so it counts only the actions included in the Conversions column. |
+| `quality_score` | FLOAT | Quality Score | The keyword's quality score; empty when Google does not have enough information to compute it. |
+| `conversion_rate` | FLOAT | Conversion Rate | Conversions from interactions divided by `interactions` (Google Ads `conversions_from_interactions_rate`); counts only the actions included in `conversions`. |
+| `view_through_conversions` | FLOAT | View Through Conversions | Conversions by people who saw an image or rich media ad and later converted on the site without interacting with another ad. |
+| `all_conversions` | FLOAT | All Conversions | Conversions from every conversion action, including those not counted in `conversions` (include_in_conversions_metric off). |
+| `all_conversions_value` | FLOAT | All Conversions Value | Value of `all_conversions`: every conversion action, including those not counted in `conversions_value`. |
+| `average_cost` | FLOAT | Average Cost | Average Cost Per Interaction |
+| `average_cpm` | FLOAT | Average CPM | Average CPM (Cost Per Thousand Impressions) |
+| `search_impression_share` | FLOAT | Search Impression Share | Search impressions received divided by the estimated impressions the ads were eligible for, from 0.1 to 1; anything below 0.1 is reported as 0.0999. |
+| `search_rank_lost_impression_share` | FLOAT | Search Rank Lost Impression Share | Estimated share of the Search impressions the ads missed because of poor Ad Rank, from 0 to 0.9; anything above 0.9 is reported as 0.9001. |
+| `top_impression_percentage` | FLOAT | Top Impression Percentage | Percentage of the ad impressions shown next to the top organic search results. |
+| `absolute_top_impression_percentage` | FLOAT | Absolute Top Impression Percentage | Percentage of the Search ad impressions shown in the absolute top position of the Search results. |
 
 # Example Questions
 
