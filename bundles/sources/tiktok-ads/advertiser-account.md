@@ -24,12 +24,12 @@ sources:
 
 # Schema
 
-| Column | Type | Description |
-|--------|------|-------------|
-| `advertiser_id` | STRING | PK. Advertiser ID |
-| `advertiser_name` | STRING | Advertiser Name |
-| `company_name` | STRING | Company Name |
-| `currency` | STRING | Account Currency |
+| Column | Type | Alias | Description |
+|--------|------|-------|-------------|
+| `advertiser_id` | STRING | Advertiser ID | PK. ID of the advertiser account the row belongs to. |
+| `advertiser_name` | STRING | Advertiser Name | Name of the advertiser account. |
+| `company_name` | STRING | Company Name | Company name of the advertiser; TikTok's authorized ad accounts endpoint, which the connector reads, does not document this field. |
+| `currency` | STRING | Currency | Account Currency |
 
 # Example Questions
 

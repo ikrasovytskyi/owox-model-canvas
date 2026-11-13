@@ -24,48 +24,48 @@ sources:
 
 # Schema
 
-| Column | Type | Description |
-|--------|------|-------------|
-| `ad_id` | STRING | PK. Ad ID |
-| `advertiser_id` | STRING | PK. Advertiser ID |
-| `campaign_id` | STRING | Campaign ID |
-| `adgroup_id` | STRING | Ad Group ID |
-| `country_code` | STRING | PK. Two-letter ISO country code (geographic breakdown dimension) |
-| `stat_time_day` | DATE | PK. Statistics Date |
-| `date_start` | DATE | Start Date |
-| `date_end` | DATE | End Date |
-| `impressions` | INTEGER | Impressions |
-| `clicks` | INTEGER | Clicks |
-| `cost` | NUMERIC | Cost |
-| `ctr` | NUMERIC | Click-Through Rate |
-| `conversion` | INTEGER | Conversions |
-| `cost_per_conversion` | NUMERIC | Cost Per Conversion |
-| `conversion_rate` | NUMERIC | Conversion Rate |
-| `reach` | INTEGER | Reach |
-| `engagement` | INTEGER | Engagement |
-| `video_views` | INTEGER | Video Views |
-| `video_watched_2s` | INTEGER | 2s Video Views |
-| `video_watched_6s` | INTEGER | 6s Video Views |
-| `video_completion` | INTEGER | Video Completion |
-| `spend` | NUMERIC | Spend |
-| `cpc` | NUMERIC | Cost per click |
-| `cpm` | NUMERIC | Cost per thousand impressions |
-| `frequency` | NUMERIC | Frequency of occurrence |
-| `video_play_actions` | INTEGER | Number of video plays |
-| `video_views_p25` | INTEGER | Video views at 25% completion |
-| `video_views_p50` | INTEGER | Video views at 50% completion |
-| `video_views_p75` | INTEGER | Video views at 75% completion |
-| `video_views_p100` | INTEGER | Video views at 100% completion |
-| `profile_visits` | INTEGER | Profile visits |
-| `likes` | INTEGER | Likes count |
-| `comments` | INTEGER | Comments count |
-| `shares` | INTEGER | Shares count |
-| `follows` | INTEGER | Follows count |
-| `real_time_conversion` | INTEGER | Real-time conversions |
-| `real_time_cost_per_conversion` | NUMERIC | Cost per conversion in real-time |
-| `real_time_conversion_rate` | NUMERIC | Real-time conversion rate |
-| `result` | INTEGER | Number of results |
-| `cost_per_result` | NUMERIC | Cost per result |
+| Column | Type | Alias | Description |
+|--------|------|-------|-------------|
+| `ad_id` | STRING | Ad ID | PK. ID of the ad. FK to [Ads](./ads.md) |
+| `advertiser_id` | STRING | Advertiser ID | PK. ID of the advertiser account the row belongs to. |
+| `campaign_id` | STRING | Campaign ID | ID of the campaign. |
+| `adgroup_id` | STRING | Adgroup ID | ID of the ad group. |
+| `country_code` | STRING | Country Code | PK. Two-letter ISO country code (geographic breakdown dimension) |
+| `stat_time_day` | DATE | Stat Time Day | PK. Statistics Date |
+| `date_start` | DATE | Date Start | First day of the reporting range; the connector fills it from `stat_time_day` when TikTok does not return it. |
+| `date_end` | DATE | Date End | Last day of the reporting range. |
+| `impressions` | INTEGER | Impressions | Number of times the ads were shown. |
+| `clicks` | INTEGER | Clicks | Number of clicks. |
+| `cost` | FLOAT | Cost | Cost. The connector does not request this metric, so the column stays empty; use `spend` for the amount spent. |
+| `ctr` | FLOAT | CTR | Click-Through Rate |
+| `conversion` | INTEGER | Conversion | Number of conversions. |
+| `cost_per_conversion` | FLOAT | Cost Per Conversion | Spend divided by conversions, as TikTok reports it. |
+| `conversion_rate` | FLOAT | Conversion Rate | Conversions as a percentage of clicks, as TikTok reports it. |
+| `reach` | INTEGER | Reach | Number of unique users who saw the ads at least once. |
+| `engagement` | INTEGER | Engagement | Engagement. The connector does not request this metric, so the column stays empty. |
+| `video_views` | INTEGER | Video Views | Video views. The connector does not request this metric, so the column stays empty; use `video_play_actions` for video plays. |
+| `video_watched_2s` | INTEGER | Video Watched 2s | 2s Video Views |
+| `video_watched_6s` | INTEGER | Video Watched 6s | 6s Video Views |
+| `video_completion` | INTEGER | Video Completion | Video completions. The connector does not request this metric, so the column stays empty. Use `video_views_p100` for views to the end. |
+| `spend` | FLOAT | Spend | Amount spent, in the advertiser account's currency. |
+| `cpc` | FLOAT | CPC | Cost per click |
+| `cpm` | FLOAT | CPM | Cost per thousand impressions |
+| `frequency` | FLOAT | Frequency | Frequency of occurrence |
+| `video_play_actions` | INTEGER | Video Play Actions | Number of video plays |
+| `video_views_p25` | INTEGER | Video Views 25% | Video views at 25% completion |
+| `video_views_p50` | INTEGER | Video Views 50% | Video views at 50% completion |
+| `video_views_p75` | INTEGER | Video Views 75% | Video views at 75% completion |
+| `video_views_p100` | INTEGER | Video Views 100% | Video views at 100% completion |
+| `profile_visits` | INTEGER | Profile Visits | Visits to the advertiser's profile that came from the ads. |
+| `likes` | INTEGER | Likes | Number of likes. |
+| `comments` | INTEGER | Comments | Comments count |
+| `shares` | INTEGER | Shares | Shares count |
+| `follows` | INTEGER | Follows | Follows count |
+| `real_time_conversion` | INTEGER | Real Time Conversion | Real-time conversions |
+| `real_time_cost_per_conversion` | FLOAT | Real Time Cost Per Conversion | Cost per conversion in real-time |
+| `real_time_conversion_rate` | FLOAT | Real Time Conversion Rate | Conversion rate as TikTok counts it in real time. The connector does not request this metric, so the column stays empty. |
+| `result` | INTEGER | Result | Number of results |
+| `cost_per_result` | FLOAT | Cost Per Result | Cost per result. The connector does not request this metric, so the column stays empty. |
 
 # Example Questions
 
