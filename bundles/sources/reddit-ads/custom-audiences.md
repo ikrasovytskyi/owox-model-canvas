@@ -29,9 +29,9 @@ sources:
 | `name` | STRING | Name | The name of the custom audience. |
 | `id` | STRING | ID | PK. The ID of the custom audience. |
 | `status` | STRING | Status | The processing status of the custom audience. A custom audience is only VALID if size_range_upper is at or above 1,000 users, otherwise it will be in the NOT_ENOUGH_MATCHES_ERROR state. |
-| `ad_account_id` | STRING | Ad Account ID | The ID of the ad account that owns this custom audience. |
-| `created_at` | STRING | Created at | The time that this entity was created, represented in ISO 8601. |
-| `modified_at` | STRING | Modified at | The last time that this entity was modified, represented in ISO 8601. |
+| `ad_account_id` | STRING | Ad Account ID | The ID of the ad account that owns this custom audience. FK to [Ad Account](./ad-account.md) |
+| `created_at` | STRING | Created At | The time that this entity was created, represented in ISO 8601. |
+| `modified_at` | STRING | Modified At | The last time that this entity was modified, represented in ISO 8601. |
 | `size_range_upper` | INTEGER | Size Range Upper | High estimate of the number of matched users in the audience. |
 | `size_range_lower` | INTEGER | Size Range Lower | Low estimate of the number of matched users in the audience. |
 | `type` | STRING | Type | The type of the Custom Audience. |

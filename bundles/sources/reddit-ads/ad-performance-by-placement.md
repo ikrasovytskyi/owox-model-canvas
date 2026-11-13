@@ -26,62 +26,62 @@ sources:
 
 | Column | Type | Alias | Description |
 |--------|------|-------|-------------|
-| `ad_id` | STRING | Ad ID | PK. The ID of the ad. |
-| `date` | DATE | Date | PK. The date for this metric. |
+| `ad_id` | STRING | Ad ID | PK. The ID of the ad. FK to [Ad Performance](./ad-performance.md) |
+| `date` | DATE | Date | PK. The date for this metric. FK to [Ad Performance](./ad-performance.md) |
 | `clicks` | INTEGER | Clicks | The number of clicks detected for this report period. |
-| `conversion_add_to_cart_avg_value` | NUMERIC | Conversion Add to Cart Avg Value | Average value of the shopping cart. |
-| `conversion_add_to_cart_clicks` | INTEGER | Conversion Add to Cart Clicks | The click through conversions count. |
-| `conversion_add_to_cart_ecpa` | NUMERIC | Conversion Add to Cart Ecpa | The cost per add to cart conversion. |
-| `conversion_add_to_cart_total_items` | INTEGER | Conversion Add to Cart Total Items | Total size of the shopping cart. |
-| `conversion_add_to_cart_total_value` | INTEGER | Conversion Add to Cart Total Value | Total value of the shopping cart. |
-| `conversion_add_to_cart_views` | INTEGER | Conversion Add to Cart Views | The view through conversions count. |
-| `conversion_add_to_wishlist_avg_value` | NUMERIC | Conversion Add to Wishlist Avg Value | Average value of the wish list. |
-| `conversion_add_to_wishlist_clicks` | INTEGER | Conversion Add to Wishlist Clicks | The click through conversions count. |
-| `conversion_add_to_wishlist_ecpa` | NUMERIC | Conversion Add to Wishlist Ecpa | The cost per add to wishlist conversion. |
-| `conversion_add_to_wishlist_total_items` | INTEGER | Conversion Add to Wishlist Total Items | Total size of the wish list. |
-| `conversion_add_to_wishlist_total_value` | INTEGER | Conversion Add to Wishlist Total Value | Total value of the wish list. |
-| `conversion_add_to_wishlist_views` | INTEGER | Conversion Add to Wishlist Views | The view through conversions count. |
-| `conversion_lead_avg_value` | NUMERIC | Conversion Lead Avg Value | Avg value of lead. |
+| `conversion_add_to_cart_avg_value` | FLOAT | Conversion Add To Cart Average Value | Average value of the shopping cart. |
+| `conversion_add_to_cart_clicks` | INTEGER | Conversion Add To Cart Clicks | The click through conversions count. |
+| `conversion_add_to_cart_ecpa` | FLOAT | Conversion Add To Cart eCPA | The cost per add to cart conversion. |
+| `conversion_add_to_cart_total_items` | INTEGER | Conversion Add To Cart Total Items | Total size of the shopping cart. |
+| `conversion_add_to_cart_total_value` | INTEGER | Conversion Add To Cart Total Value | Total value of the shopping cart. |
+| `conversion_add_to_cart_views` | INTEGER | Conversion Add To Cart Views | The view through conversions count. |
+| `conversion_add_to_wishlist_avg_value` | FLOAT | Conversion Add To Wishlist Average Value | Average value of the wish list. |
+| `conversion_add_to_wishlist_clicks` | INTEGER | Conversion Add To Wishlist Clicks | The click through conversions count. |
+| `conversion_add_to_wishlist_ecpa` | FLOAT | Conversion Add To Wishlist eCPA | The cost per add to wishlist conversion. |
+| `conversion_add_to_wishlist_total_items` | INTEGER | Conversion Add To Wishlist Total Items | Total size of the wish list. |
+| `conversion_add_to_wishlist_total_value` | INTEGER | Conversion Add To Wishlist Total Value | Total value of the wish list. |
+| `conversion_add_to_wishlist_views` | INTEGER | Conversion Add To Wishlist Views | The view through conversions count. |
+| `conversion_lead_avg_value` | FLOAT | Conversion Lead Average Value | Avg value of lead. |
 | `conversion_lead_clicks` | INTEGER | Conversion Lead Clicks | The click through conversions count. |
-| `conversion_lead_ecpa` | NUMERIC | Conversion Lead Ecpa | The cost per lead conversion. |
+| `conversion_lead_ecpa` | FLOAT | Conversion Lead eCPA | The cost per lead conversion. |
 | `conversion_lead_total_value` | INTEGER | Conversion Lead Total Value | Total value of leads. |
 | `conversion_lead_views` | INTEGER | Conversion Lead Views | The view through conversions count. |
 | `conversion_page_visit_clicks` | INTEGER | Conversion Page Visit Clicks | The click through conversions count. |
-| `conversion_page_visit_ecpa` | NUMERIC | Conversion Page Visit Ecpa | The cost per page visit conversion. |
+| `conversion_page_visit_ecpa` | FLOAT | Conversion Page Visit eCPA | The cost per page visit conversion. |
 | `conversion_page_visit_views` | INTEGER | Conversion Page Visit Views | The view through conversions count. |
-| `conversion_purchase_avg_value` | NUMERIC | Conversion Purchase Avg Value | Average value of purchase. |
+| `conversion_purchase_avg_value` | FLOAT | Conversion Purchase Average Value | Average value of purchase. |
 | `conversion_purchase_clicks` | INTEGER | Conversion Purchase Clicks | The click through conversions count. |
-| `conversion_purchase_ecpa` | NUMERIC | Conversion Purchase Ecpa | The cost per purchase conversion. |
+| `conversion_purchase_ecpa` | FLOAT | Conversion Purchase eCPA | The cost per purchase conversion. |
 | `conversion_purchase_total_items` | INTEGER | Conversion Purchase Total Items | Total size of the purchase. |
 | `conversion_purchase_total_value` | INTEGER | Conversion Purchase Total Value | Total value of the purchase. |
 | `conversion_purchase_views` | INTEGER | Conversion Purchase Views | The view through conversions count. |
-| `conversion_roas` | NUMERIC | Conversion ROAS | Return on ad spend for purchases for this period. |
+| `conversion_roas` | FLOAT | Conversion ROAS | Return on ad spend for purchases for this period. |
 | `conversion_search_clicks` | INTEGER | Conversion Search Clicks | The click through conversions count. |
-| `conversion_search_ecpa` | NUMERIC | Conversion Search Ecpa | The cost per search conversion. |
+| `conversion_search_ecpa` | FLOAT | Conversion Search eCPA | The cost per search conversion. |
 | `conversion_search_views` | INTEGER | Conversion Search Views | The view through conversions count. |
 | `conversion_sign_up_clicks` | INTEGER | Conversion Sign Up Clicks | The click through conversions count. |
-| `conversion_sign_up_ecpa` | NUMERIC | Conversion Sign Up Ecpa | The cost per sign up conversion. |
+| `conversion_sign_up_ecpa` | FLOAT | Conversion Sign Up eCPA | The cost per sign up conversion. |
 | `conversion_sign_up_views` | INTEGER | Conversion Sign Up Views | The view through conversions count. |
-| `conversion_signup_avg_value` | NUMERIC | Conversion Signup Avg Value | Avg value of signup. |
+| `conversion_signup_avg_value` | FLOAT | Conversion Signup Average Value | Avg value of signup. |
 | `conversion_signup_total_value` | INTEGER | Conversion Signup Total Value | Total value of signups. |
 | `conversion_view_content_clicks` | INTEGER | Conversion View Content Clicks | The click through conversions count. |
-| `conversion_view_content_ecpa` | NUMERIC | Conversion View Content Ecpa | The cost per view content conversion. |
+| `conversion_view_content_ecpa` | FLOAT | Conversion View Content eCPA | The cost per view content conversion. |
 | `conversion_view_content_views` | INTEGER | Conversion View Content Views | The view through conversions count. |
-| `cpc` | NUMERIC | CPC | The cost-per-click for this period. |
-| `ctr` | NUMERIC | CTR | The click-through-rate for this period. |
-| `cpv` | NUMERIC | Cpv | \[Broken\] The cost-per-view for this period. |
-| `ecpm` | NUMERIC | Ecpm | The effective CPM for this period. |
+| `cpc` | FLOAT | CPC | The cost-per-click for this period. |
+| `ctr` | FLOAT | CTR | The click-through-rate for this period. |
+| `cpv` | FLOAT | CPV | [Broken] The cost-per-view for this period. |
+| `ecpm` | FLOAT | eCPM | The effective CPM for this period. |
 | `engaged_click` | INTEGER | Engaged Click | The number of engaged clicks such as RSVPs. |
 | `hour` | STRING | Hour | The hour for this metric in ISO-8601. |
 | `impressions` | INTEGER | Impressions | The number of impressions served for this report period. |
 | `post_id` | STRING | Post ID | The unique identifier of the post. |
 | `spend` | INTEGER | Spend | The amount (in microcurrency) spent for this report period. |
-| `key_conversion_ecpa` | NUMERIC | Key Conversion Ecpa | Key conversion effective cost per action. |
-| `key_conversion_total_count` | INTEGER | Key Conversion Total Count | Key conversion total count. |
+| `key_conversion_ecpa` | FLOAT | Key Conversion eCPA | Key conversion effective cost per action. |
+| `key_conversion_total_count` | INTEGER | Key Conversion Total Count | Total count of key conversions for the row; their cost per action is `key_conversion_ecpa`. |
 | `reach` | INTEGER | Reach | The number of unique users who saw the ad. |
-| `frequency` | NUMERIC | Frequency | The average number of times each user saw the ad. |
+| `frequency` | FLOAT | Frequency | The average number of times each user saw the ad. |
 | `currency` | STRING | Currency | The currency of the account. |
-| `placement` | STRING | Placement | PK. \[ONLY in PLACEMENT based report\] Enum representing the placement of a creative. |
+| `placement` | STRING | Placement | PK. [ONLY in PLACEMENT based report] Enum representing the placement of a creative. |
 
 # Example Questions
 

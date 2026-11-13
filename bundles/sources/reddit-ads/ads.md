@@ -28,17 +28,17 @@ sources:
 |--------|------|-------|-------------|
 | `type` | STRING | Type | The type of ad. |
 | `ad_account_id` | STRING | Ad Account ID | The ID of the ad account that owns this ad. |
-| `ad_group_id` | STRING | Ad Group ID | The ID of the ad group that this ad belongs to. |
+| `ad_group_id` | STRING | Ad Group ID | The ID of the ad group that this ad belongs to. FK to [Ad Groups](./ad-groups.md) |
 | `campaign_id` | STRING | Campaign ID | The ID of the campaign that this ad belongs to. |
 | `campaign_objective_type` | STRING | Campaign Objective Type | The objective type of a campaign. |
 | `click_url` | STRING | Click URL | The website URL to direct users who click on the ad. |
 | `click_url_parsed` | STRING | Click URL Parsed | click_url resolved to its landing page when it is a short link; otherwise the same value. Requires click_url and Process Short Links. |
 | `configured_status` | STRING | Configured Status | The status that you have configured for this ad. |
-| `created_at` | STRING | Created at | The time that this entity was created, represented in ISO 8601. |
+| `created_at` | STRING | Created At | The time that this entity was created, represented in ISO 8601. |
 | `effective_status` | STRING | Effective Status | The effective status for the ad. |
 | `event_trackers` | STRING | Event Trackers | URLs to be called on certain events. Only URLs from Reddit’s list of approved measurement providers are allowed. |
 | `id` | STRING | ID | PK. The ID of the ad. |
-| `modified_at` | STRING | Modified at | The last time that this entity was modified, represented in ISO 8601. |
+| `modified_at` | STRING | Modified At | The last time that this entity was modified, represented in ISO 8601. |
 | `name` | STRING | Name | The ad name to be labeled in the dashboard and reports. |
 | `preview_expiry` | STRING | Preview Expiry | An expiration time for the preview URL of this ad. This may be set to null to disable the preview URL. |
 | `preview_url` | STRING | Preview URL | A URL that may be used to preview the ad. This is only available when preview_expiry is set. |

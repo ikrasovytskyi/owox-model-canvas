@@ -31,16 +31,16 @@ sources:
 | `bid_strategy` | STRING | Bid Strategy | The bid strategy for the ad group. |
 | `bid_type` | STRING | Bid Type | The bidding strategy for the ad group. |
 | `bid_value` | INTEGER | Bid Value | The amount to pay in microcurrency per bidding event. |
-| `campaign_id` | STRING | Campaign ID | The ID of the campaign the ad group belongs to. |
+| `campaign_id` | STRING | Campaign ID | The ID of the campaign the ad group belongs to. FK to [Campaigns](./campaigns.md) |
 | `campaign_objective_type` | STRING | Campaign Objective Type | The objective type of a campaign. |
 | `configured_status` | STRING | Configured Status | The status of the ad group configured by the account owner. |
-| `created_at` | STRING | Created at | The time that this entity was created, represented in ISO 8601. |
+| `created_at` | STRING | Created At | The time that this entity was created, represented in ISO 8601. |
 | `effective_status` | STRING | Effective Status | The effective status of the ad group in the system. |
 | `end_time` | STRING | End Time | ISO 8601 timestamp when the ad group will stop delivering. |
 | `goal_type` | STRING | Goal Type | The type of goal for the ad group. |
 | `goal_value` | INTEGER | Goal Value | The value used to determine if the goal has been met. Measured in microcurrency for monetary goal types. |
 | `id` | STRING | ID | PK. The ID of the ad group. |
-| `modified_at` | STRING | Modified at | The last time that this entity was modified, represented in ISO 8601. |
+| `modified_at` | STRING | Modified At | The last time that this entity was modified, represented in ISO 8601. |
 | `name` | STRING | Name | The name of the ad group. |
 | `optimization_strategy_type` | STRING | Optimization Strategy Type | Deprecated - The type of optimization strategy. |
 | `optimization_goal` | STRING | Optimization Goal | The event you want to measure. Required for conversion and app install campaign objectives. |

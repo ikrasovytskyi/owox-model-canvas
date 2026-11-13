@@ -26,16 +26,16 @@ sources:
 
 | Column | Type | Alias | Description |
 |--------|------|-------|-------------|
-| `ad_account_id` | STRING | Ad Account ID | The ID of the ad account. |
+| `ad_account_id` | STRING | Ad Account ID | The ID of the ad account. FK to [Ad Account](./ad-account.md) |
 | `configured_status` | STRING | Configured Status | The status that the user has configured for this entity. Can differ from the effective status depending on the context such as pending billing information. |
-| `created_at` | STRING | Created at | The time that this entity was created, represented in ISO 8601. |
+| `created_at` | STRING | Created At | The time that this entity was created, represented in ISO 8601. |
 | `effective_status` | STRING | Effective Status | The calculated status determining the real status of this entity. |
-| `funding_instrument_id` | STRING | Funding Instrument ID | Campaign level funding instrument ID. |
+| `funding_instrument_id` | STRING | Funding Instrument ID | Campaign level funding instrument ID. FK to [Funding Instruments](./funding-instruments.md) |
 | `goal_type` | STRING | Goal Type | The campaign goal type. This cannot be changed after publishing the campaign. Only works for CBO campaigns. |
 | `goal_value` | INTEGER | Goal Value | Campaign level goal value in micros. Only works for CBO campaigns. |
 | `id` | STRING | ID | PK. The ID of the campaign. |
 | `app_id` | STRING | App ID | The App ID of the app in the mobile app store (iOS App Store, Google Play Store), and is required for use with App Installs objective campaigns. |
-| `modified_at` | STRING | Modified at | The last time that this entity was modified, represented in ISO 8601. |
+| `modified_at` | STRING | Modified At | The last time that this entity was modified, represented in ISO 8601. |
 | `name` | STRING | Name | The campaign name. Must be at least 3 characters. |
 | `objective` | STRING | Objective | The objective type of a campaign. |
 | `special_ad_categories` | STRING | Special Ad Categories | List of special ad categories related to the campaign. |

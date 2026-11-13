@@ -26,14 +26,14 @@ sources:
 
 | Column | Type | Alias | Description |
 |--------|------|-------|-------------|
-| `ad_account_id` | STRING | Ad Account ID | The ID of the ad account that the form belongs to. |
+| `ad_account_id` | STRING | Ad Account ID | The ID of the ad account that the form belongs to. FK to [Ad Account](./ad-account.md) |
 | `id` | STRING | ID | PK. The ID of the form. |
 | `name` | STRING | Name | The name of the form. |
 | `privacy_link` | STRING | Privacy Link | The URL of the privacy policy for the form. |
 | `prompt` | STRING | Prompt | The prompt that is displayed to the user when they are filling out the form. |
 | `questions` | STRING | Questions | A list of questions that are presented to the user to fill out. |
-| `created_at` | STRING | Created at | The time that this entity was created represented in ISO 8601. |
-| `modified_at` | STRING | Modified at | The last time that this entity was modified represented in ISO 8601. |
+| `created_at` | STRING | Created At | The time that this entity was created represented in ISO 8601. |
+| `modified_at` | STRING | Modified At | The last time that this entity was modified represented in ISO 8601. |
 
 # Example Questions
 

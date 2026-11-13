@@ -3,7 +3,7 @@ title: "Ad Account User"
 description: |
   The Reddit Ads user the connector authenticates as: the member ID, first and last name, email, phone, and the linked Reddit user ID and username. The connector loads it from the Get Me operation, so it holds the authenticated user, not every member of the account.
 
-  [Ad Account](./ad-account.md) joins here on `primary_contact_member_id`, which the API reference describes as the primary contact member's ID. This table holds only the authenticated member, so most accounts' contacts will not find a row.
+  [Ad Account](./ad-account.md) joins here on `primary_contact_member_id`, which the API reference describes as the primary contact member's ID. This table holds only the authenticated member, so a primary contact who is anyone else finds no row.
 tags: ["owox", "connector", "reddit-ads"]
 type: "OWOX Data Mart"
 sources:
