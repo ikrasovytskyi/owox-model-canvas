@@ -31,15 +31,15 @@ sources:
 | `indexing_state` | STRING | Indexing State | INDEXING_ALLOWED or the blocking reason (BLOCKED_BY_META_TAG, BLOCKED_BY_HTTP_HEADER, BLOCKED_BY_ROBOTS_TXT). |
 | `robots_txt_state` | STRING | Robots Txt State | ALLOWED or DISALLOWED by robots.txt. |
 | `page_fetch_state` | STRING | Page Fetch State | SUCCESSFUL, SOFT_404, NOT_FOUND, SERVER_ERROR, REDIRECT_ERROR and other fetch outcomes. |
-| `last_crawl_time` | TIMESTAMP | Last Crawl Time | When Googlebot last crawled the URL. |
+| `last_crawl_time` | DATETIME | Last Crawl Time | When Googlebot last crawled the URL. |
 | `crawled_as` | STRING | Crawled As | DESKTOP or MOBILE Googlebot. |
 | `google_canonical` | STRING | Google Canonical | The canonical URL Google chose. |
 | `user_canonical` | STRING | User Canonical | The canonical URL the page declares. Differs from google_canonical when Google overrode it. |
-| `referring_urls` | JSON | Referring Urls | URLs Google followed to find this page, as JSON. |
-| `sitemaps` | JSON | Sitemaps | Sitemaps that list the URL, as JSON. |
+| `referring_urls` | STRING | Referring Urls | URLs Google followed to find this page, as JSON. |
+| `sitemaps` | STRING | Sitemaps | Sitemaps that list the URL, as JSON. |
 | `mobile_usability_verdict` | STRING | Mobile Usability Verdict | PASS, FAIL or NEUTRAL for mobile usability. |
 | `rich_results_verdict` | STRING | Rich Results Verdict | PASS, FAIL or NEUTRAL for structured data detected on the page. |
-| `rich_results_detected_items` | JSON | Rich Results Detected Items | Structured-data item types found and their issues, as JSON. |
+| `rich_results_detected_items` | STRING | Rich Results Detected Items | Structured-data item types found and their issues, as JSON. |
 
 # Example Questions
 

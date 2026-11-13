@@ -25,14 +25,14 @@ sources:
 |--------|------|-------|-------------|
 | `site_url` | STRING | Site URL | PK. FK to [Properties](./properties.md). The property, stamped from the Search Console property parameter. Key together with path. |
 | `path` | STRING | Path | PK. Sitemap URL. Key together with site_url. |
-| `last_submitted` | TIMESTAMP | Last Submitted | When the sitemap was last submitted. |
-| `last_downloaded` | TIMESTAMP | Last Downloaded | When Google last downloaded it. |
+| `last_submitted` | DATETIME | Last Submitted | When the sitemap was last submitted. |
+| `last_downloaded` | DATETIME | Last Downloaded | When Google last downloaded it. |
 | `is_pending` | BOOLEAN | Is Pending | True while Google has not processed it yet. |
 | `is_sitemaps_index` | BOOLEAN | Is Sitemaps Index | True for a sitemap index file. |
 | `sitemap_type` | STRING | Sitemap Type | sitemap, rssFeed, atomFeed, urlList, oceanNews, notSitemap or patternSitemap. |
 | `warnings` | INTEGER | Warnings | Number of warnings Google reported for the sitemap. |
 | `errors` | INTEGER | Errors | Number of errors Google reported for the sitemap. |
-| `contents` | JSON | Contents | Per content type (web, image, video, news): submitted and indexed URL counts, as JSON. |
+| `contents` | STRING | Contents | Per content type (web, image, video, news): submitted and indexed URL counts, as JSON. |
 
 # Example Questions
 
