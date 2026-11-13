@@ -24,22 +24,22 @@ sources:
 
 # Schema
 
-| Column | Type | Description |
-|--------|------|-------------|
-| `currency` | STRING | The 3 character standard currency code such as USD for United States Dollar. Refer to the list of supported currencies for the full list. |
-| `id` | STRING | PK. Unique internal ID representing the account |
-| `name` | STRING | A label for the account |
-| `notifiedOnCampaignOptimization` | BOOLEAN | Indicates if the campaign contact is notified about campaign optimization opportunities |
-| `notifiedOnCreativeApproval` | BOOLEAN | Indicates if the creative contact is notified when a creative has been reviewed and approved |
-| `notifiedOnCreativeRejection` | BOOLEAN | Indicates if the creative contact is notified when a creative has been rejected due to content |
-| `notifiedOnEndOfCampaign` | BOOLEAN | Indicates if the campaign contact is notified when an associated campaign has been completed |
-| `notifiedOnNewFeaturesEnabled` | BOOLEAN | Indicates if the account owner is notified about new Campaign Manager features |
-| `reference` | STRING | The entity on whose behalf the account is advertised. Must either be in the format urn:li:person:{id} or urn:li:organization:{id} |
-| `referenceInfo` | JSON | Information about the entity associated with the reference. If the entity is an organization, an Organizationinfo object is returned. If the entity is a person, a Personinfo object is returned. For all other entity types an empty record will be returned. This is a read only field. Please refer to Additional Info Fields to learn how to access this field. |
-| `servingStatuses` | JSON | An array of enums with information about the account's system serving statuses. If an account is eligible for serving, then the array has a single element:RUNNABLE Otherwise, the array contains one or more reasons why the account is not servable: |
-| `status` | STRING | ACTIVE - Account is active; this is the default state |
-| `type` | STRING | BUSINESS – This is the only value allowed when creating accounts through the API. |
-| `test` | BOOLEAN | Flag showing whether this account is marked as a test account. An account can be marked as test only during creation. This is an immutable field. |
+| Column | Type | Alias | Description |
+|--------|------|-------|-------------|
+| `currency` | STRING | Currency | The 3 character standard currency code such as USD for United States Dollar. Refer to the list of supported currencies for the full list. |
+| `id` | STRING | ID | PK. Unique internal ID representing the account |
+| `name` | STRING | Name | A label for the account |
+| `notifiedOnCampaignOptimization` | BOOLEAN | Notified On Campaign Optimization | Indicates if the campaign contact is notified about campaign optimization opportunities |
+| `notifiedOnCreativeApproval` | BOOLEAN | Notified On Creative Approval | Indicates if the creative contact is notified when a creative has been reviewed and approved |
+| `notifiedOnCreativeRejection` | BOOLEAN | Notified On Creative Rejection | Indicates if the creative contact is notified when a creative has been rejected due to content |
+| `notifiedOnEndOfCampaign` | BOOLEAN | Notified On End Of Campaign | Indicates if the campaign contact is notified when an associated campaign has been completed |
+| `notifiedOnNewFeaturesEnabled` | BOOLEAN | Notified On New Features Enabled | Indicates if the account owner is notified about new Campaign Manager features |
+| `reference` | STRING | Reference | The entity on whose behalf the account is advertised. Must either be in the format urn:li:person:{id} or urn:li:organization:{id} |
+| `referenceInfo` | STRING | Reference Info | Information about the entity associated with the reference. If the entity is an organization, an Organizationinfo object is returned. If the entity is a person, a Personinfo object is returned. For all other entity types an empty record will be returned. This is a read only field. Please refer to Additional Info Fields to learn how to access this field. Stored as a JSON string. |
+| `servingStatuses` | STRING | Serving Statuses | An array of enums with the account's system serving statuses. If the account is eligible for serving, the array has a single element, `RUNNABLE`; otherwise it lists one or more reasons why the account cannot serve. Stored as a JSON string. |
+| `status` | STRING | Status | ACTIVE - Account is active; this is the default state |
+| `type` | STRING | Type | BUSINESS – This is the only value allowed when creating accounts through the API. |
+| `test` | BOOLEAN | Test | Flag showing whether this account is marked as a test account. An account can be marked as test only during creation. This is an immutable field. |
 
 # Example Questions
 
