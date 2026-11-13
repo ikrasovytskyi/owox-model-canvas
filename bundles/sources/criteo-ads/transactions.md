@@ -24,19 +24,19 @@ sources:
 
 # Schema
 
-| Column | Type | Description |
-|--------|------|-------------|
-| `transactionId` | STRING | PK. The unique identifier for the transaction. |
-| `transactionDate` | STRING | The date and time when the transaction occurred (MM/DD/YYYY HH:MM:SS). |
-| `advertiserId` | STRING | PK. The unique identifier for the advertiser. |
-| `advertiserName` | STRING | The name of the advertiser. |
-| `adsetName` | STRING | The name of the adset that drove the transaction. |
-| `eventType` | STRING | The type of event that triggered the attribution (click or display). |
-| `eventDate` | STRING | The date and time of the click or view event that drove the transaction (MM/DD/YYYY HH:MM:SS). |
-| `attributedTransaction` | STRING | Whether the transaction was attributed to a Criteo ad (returned as "True" / "False"). |
-| `currency` | STRING | The currency of the transaction amount. |
-| `amount` | NUMERIC | The transaction amount (order value). |
-| `crossDeviceTransaction` | STRING | Whether the transaction occurred on a different device from the one where the ad was viewed (returned as "Yes" / "No"). |
+| Column | Type | Alias | Description |
+|--------|------|-------|-------------|
+| `transactionId` | STRING | Transaction ID | PK. The unique identifier for the transaction. |
+| `transactionDate` | STRING | Transaction Date | The date and time when the transaction occurred (MM/DD/YYYY HH:MM:SS). |
+| `advertiserId` | STRING | Advertiser ID | PK. The unique identifier for the advertiser. |
+| `advertiserName` | STRING | Advertiser Name | The name of the advertiser. |
+| `adsetName` | STRING | Adset Name | The name of the adset that drove the transaction. |
+| `eventType` | STRING | Event Type | The type of event that triggered the attribution (click or display). |
+| `eventDate` | STRING | Event Date | The date and time of the click or view event that drove the transaction (MM/DD/YYYY HH:MM:SS). |
+| `attributedTransaction` | STRING | Attributed Transaction | Whether the transaction was attributed to a Criteo ad (returned as "True" / "False"). |
+| `currency` | STRING | Currency | The currency of the transaction amount. |
+| `amount` | FLOAT | Amount | The transaction amount (order value). |
+| `crossDeviceTransaction` | STRING | Cross Device Transaction | Whether the transaction occurred on a different device from the one where the ad was viewed (returned as "Yes" / "No"). |
 
 # Example Questions
 

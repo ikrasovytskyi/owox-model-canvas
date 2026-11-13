@@ -24,16 +24,16 @@ sources:
 
 # Schema
 
-| Column | Type | Description |
-|--------|------|-------------|
-| `advertiserId` | STRING | PK. The unique identifier for the advertiser. |
-| `categoryId` | STRING | PK. The unique identifier for the content category. |
-| `categoryName` | STRING | The IAB content category of the publisher page where the ad was served. |
-| `day` | DATE | PK. The day of the placement category data (YYYY-MM-DD format). |
-| `displays` | INTEGER | The number of ad impressions served in this category. |
-| `clicks` | INTEGER | The number of clicks in this category. |
-| `salesPc30d` | INTEGER | The number of transactions or conversions (30-day post-click). |
-| `salesPv1d` | INTEGER | The number of transactions or conversions (1-day post-view). |
+| Column | Type | Alias | Description |
+|--------|------|-------|-------------|
+| `advertiserId` | STRING | Advertiser ID | PK. The unique identifier for the advertiser. |
+| `categoryId` | STRING | Category ID | PK. The unique identifier for the content category. |
+| `categoryName` | STRING | Category Name | The IAB content category of the publisher page where the ad was served. |
+| `day` | DATE | Day | PK. The day of the placement category data (YYYY-MM-DD format). |
+| `displays` | INTEGER | Displays | The number of ad impressions served in this category. |
+| `clicks` | INTEGER | Clicks | The number of clicks in this category. |
+| `salesPc30d` | INTEGER | Sales Post-Click 30d | The number of transactions or conversions (30-day post-click). |
+| `salesPv1d` | INTEGER | Sales Post-View 1d | The number of transactions or conversions (1-day post-view). |
 
 # Example Questions
 
