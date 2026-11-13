@@ -19,28 +19,28 @@ sources:
 
 # Schema
 
-| Column | Type | Description |
-|--------|------|-------------|
-| `id` | STRING | PK. QuickBooks entity Id (string). Primary key together with realm_id. |
-| `realm_id` | STRING | PK. Company (realm) id, stamped from the RealmId parameter. |
-| `sync_token` | STRING | Version counter; changes on every edit. |
-| `create_time` | TIMESTAMP | When the record was created in QuickBooks (UTC timestamp). |
-| `last_updated_time` | TIMESTAMP | Incremental cursor. |
-| `name` | STRING | Name of the account in the chart of accounts. |
-| `fully_qualified_name` | STRING | Parent:Child path for sub-accounts. |
-| `account_type` | STRING | Bank, Accounts Receivable, Expense, Income, Credit Card… |
-| `account_sub_type` | STRING | QuickBooks account sub-type that refines the account type, for example Checking or Savings for bank accounts. |
-| `classification` | STRING | Asset, Liability, Equity, Revenue, Expense. |
-| `acct_num` | STRING | Account number in the chart of accounts; optional and can be empty. |
-| `current_balance` | FLOAT | Current balance of the account in the company's home currency. |
-| `current_balance_with_sub_accounts` | FLOAT | Current balance of the account plus all of its sub-accounts, in the home currency. |
-| `currency_id` | STRING | Currency code of the document, for example USD; empty when multicurrency is off. |
-| `currency_name` | STRING | Currency name that goes with currency_id, for example United States Dollar. |
-| `sub_account` | BOOLEAN | True when the account is a sub-account of another account (see parent_id). |
-| `parent_id` | STRING | Id of the parent record in the same table (the parent account, customer or item); empty for top-level records. |
-| `parent_name` | STRING | Name of the parent record that parent_id points to. |
-| `description` | STRING | Description of the account. |
-| `active` | BOOLEAN | True when the record is active; false when it has been made inactive (QuickBooks never hard-deletes lists). |
+| Column | Type | Alias | Description |
+|--------|------|-------|-------------|
+| `id` | STRING | ID | PK. QuickBooks entity Id (string). Primary key together with realm_id. |
+| `realm_id` | STRING | Realm ID | PK. Company (realm) id, stamped from the RealmId parameter. FK to [Company info](./company-info.md) |
+| `sync_token` | STRING | Sync Token | Version counter; changes on every edit. |
+| `create_time` | TIMESTAMP | Create Time | When the record was created in QuickBooks (UTC timestamp). |
+| `last_updated_time` | TIMESTAMP | Last Updated Time | When the record was last changed in QuickBooks (MetaData.LastUpdatedTime); the connector reads every record, whatever this time. |
+| `name` | STRING | Name | Name of the account in the chart of accounts. |
+| `fully_qualified_name` | STRING | Fully Qualified Name | Parent:Child path for sub-accounts. |
+| `account_type` | STRING | Account Type | Bank, Accounts Receivable, Expense, Income, Credit Card… |
+| `account_sub_type` | STRING | Account Sub Type | QuickBooks account sub-type that refines the account type, for example Checking or Savings for bank accounts. |
+| `classification` | STRING | Classification | Asset, Liability, Equity, Revenue, Expense. |
+| `acct_num` | STRING | Acct Num | Account number in the chart of accounts; optional and can be empty. |
+| `current_balance` | FLOAT | Current Balance | Balance of the account itself, without its sub-accounts; Intuit sets it for balance sheet accounts. |
+| `current_balance_with_sub_accounts` | FLOAT | Current Balance With Sub Accounts | Balance of the account plus all of its sub-accounts. |
+| `currency_id` | STRING | Currency ID | Currency code the account holds its amounts in, for example USD. |
+| `currency_name` | STRING | Currency Name | Currency name that goes with currency_id, for example United States Dollar. |
+| `sub_account` | BOOLEAN | Sub Account | True when the account is a sub-account of another account (see parent_id). |
+| `parent_id` | STRING | Parent ID | Id of the parent record in the same table (the parent account, customer or item); empty for top-level records. |
+| `parent_name` | STRING | Parent Name | Name of the parent record that parent_id points to. |
+| `description` | STRING | Description | Description of the account. |
+| `active` | BOOLEAN | Active | True when the record is active; false when it has been made inactive (QuickBooks never hard-deletes lists). |
 
 # Example Questions
 

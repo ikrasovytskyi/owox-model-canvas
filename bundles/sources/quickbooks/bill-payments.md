@@ -19,31 +19,31 @@ sources:
 
 # Schema
 
-| Column | Type | Description |
-|--------|------|-------------|
-| `id` | STRING | PK. QuickBooks entity Id (string). Primary key together with realm_id. |
-| `realm_id` | STRING | PK. Company (realm) id, stamped from the RealmId parameter. |
-| `sync_token` | STRING | Version counter; changes on every edit. |
-| `create_time` | TIMESTAMP | When the record was created in QuickBooks (UTC timestamp). |
-| `last_updated_time` | TIMESTAMP | Incremental cursor. |
-| `doc_number` | STRING | Document number shown on the form (for example the invoice or bill number); can be empty when the company does not use automatic numbering. |
-| `txn_date` | DATE | Business date of the transaction (not the edit date). |
-| `total_amt` | FLOAT | Total amount of the document including tax, in the document currency. |
-| `currency_id` | STRING | Currency code of the document, for example USD; empty when multicurrency is off. |
-| `currency_name` | STRING | Currency name that goes with currency_id, for example United States Dollar. |
-| `exchange_rate` | FLOAT | Rate that converts the document currency to the company's home currency; 1 or empty when the document is in the home currency. |
-| `private_note` | STRING | Internal memo entered on the document; not shown to the customer or vendor. |
-| `pay_type` | STRING | Check or CreditCard. |
-| `vendor_id` | STRING | Id of the vendor on the document; joins to vendor.id. |
-| `vendor_name` | STRING | Name of the vendor that vendor_id points to. |
-| `ap_account_id` | STRING | Id of the accounts payable account the document is posted to; joins to account.id. |
-| `ap_account_name` | STRING | Name of the account that ap_account_id points to. |
-| `check_bank_account_id` | STRING | Id of the bank account a check payment is drawn from; joins to account.id. |
-| `check_bank_account_name` | STRING | Name of the bank account that check_bank_account_id points to. |
-| `check_print_status` | STRING | Print state of the check: NotSet, NeedToPrint or PrintComplete. |
-| `credit_card_account_id` | STRING | Id of the credit card account the payment was made with; joins to account.id. |
-| `credit_card_account_name` | STRING | Name of the account that credit_card_account_id points to. |
-| `line` | JSON | Line\[\] as JSON; LinkedTxn\[\] {TxnId, TxnType=Bill} names the bills settled. |
+| Column | Type | Alias | Description |
+|--------|------|-------|-------------|
+| `id` | STRING | ID | PK. QuickBooks entity Id (string). Primary key together with realm_id. |
+| `realm_id` | STRING | Realm ID | PK. Company (realm) id, stamped from the RealmId parameter. FK to [Company info](./company-info.md) |
+| `sync_token` | STRING | Sync Token | Version counter; changes on every edit. |
+| `create_time` | TIMESTAMP | Create Time | When the record was created in QuickBooks (UTC timestamp). |
+| `last_updated_time` | TIMESTAMP | Last Updated Time | When the record was last changed in QuickBooks (MetaData.LastUpdatedTime); the connector reads only records changed after its Load changes since setting. |
+| `doc_number` | STRING | Doc Number | Document number shown on the form (for example the invoice or bill number); can be empty when the company does not use automatic numbering. |
+| `txn_date` | DATE | Transaction Date | Business date of the transaction (not the edit date). |
+| `total_amt` | FLOAT | Total Amount | Total amount paid, the sum of the payment's lines, in the document currency. |
+| `currency_id` | STRING | Currency ID | Currency code of the document, for example USD; empty when multicurrency is off. |
+| `currency_name` | STRING | Currency Name | Currency name that goes with currency_id, for example United States Dollar. |
+| `exchange_rate` | FLOAT | Exchange Rate | Rate that converts the document currency to the company's home currency; 1 or empty when the document is in the home currency. |
+| `private_note` | STRING | Private Note | Internal memo entered on the document; not shown to the customer or vendor. |
+| `pay_type` | STRING | Pay Type | Check or CreditCard. |
+| `vendor_id` | STRING | Vendor ID | Id of the vendor on the document; joins to vendor.id. FK to [Vendors](./vendors.md) |
+| `vendor_name` | STRING | Vendor Name | Name of the vendor that vendor_id points to. |
+| `ap_account_id` | STRING | AP Account ID | Id of the accounts payable account the document is posted to; joins to account.id. FK to [Accounts](./accounts.md) |
+| `ap_account_name` | STRING | AP Account Name | Name of the account that ap_account_id points to. |
+| `check_bank_account_id` | STRING | Check Bank Account ID | Id of the bank account a check payment is drawn from; joins to account.id. FK to [Accounts](./accounts.md) |
+| `check_bank_account_name` | STRING | Check Bank Account Name | Name of the bank account that check_bank_account_id points to. |
+| `check_print_status` | STRING | Check Print Status | Print state of the check: NotSet, NeedToPrint or PrintComplete. |
+| `credit_card_account_id` | STRING | Credit Card Account ID | Id of the credit card account the payment was made with; joins to account.id. FK to [Accounts](./accounts.md) |
+| `credit_card_account_name` | STRING | Credit Card Account Name | Name of the account that credit_card_account_id points to. |
+| `line` | JSON | Line | Line[] as JSON; LinkedTxn[] {TxnId, TxnType=Bill} names the bills settled. Stored as a JSON string. |
 
 # Example Questions
 
