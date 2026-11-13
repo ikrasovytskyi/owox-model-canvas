@@ -54,7 +54,7 @@ sources:
 | `attempted` | BOOLEAN | Attempted | Whether payment was attempted. |
 | `paid` | BOOLEAN | Paid | Whether the invoice is paid. |
 | `hosted_invoice_url` | STRING | Hosted Invoice URL | Link to the hosted invoice page. |
-| `metadata` | JSON | Metadata | Metadata object as a JSON string. |
+| `metadata` | STRING | Metadata | Metadata object as a JSON string. |
 
 # Example Questions
 

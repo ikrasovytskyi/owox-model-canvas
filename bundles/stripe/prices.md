@@ -39,7 +39,7 @@ sources:
 | `nickname` | STRING | Nickname | Price nickname (plan name). |
 | `lookup_key` | STRING | Lookup Key | Your own key for the price. |
 | `tax_behavior` | STRING | Tax Behavior | inclusive, exclusive or unspecified. |
-| `metadata` | JSON | Metadata | Metadata object as a JSON string. |
+| `metadata` | STRING | Metadata | Metadata object as a JSON string. |
 
 # Example Questions
 

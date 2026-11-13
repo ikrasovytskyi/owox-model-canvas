@@ -45,7 +45,7 @@ sources:
 | `days_until_due` | INTEGER | Days Until Due | Days until an invoice is due for send_invoice subscriptions. |
 | `cancellation_reason` | STRING | Cancellation Reason | Reason given at cancellation. |
 | `cancellation_feedback` | STRING | Cancellation Feedback | Customer feedback at cancellation. |
-| `metadata` | JSON | Metadata | Metadata object as a JSON string. |
+| `metadata` | STRING | Metadata | Metadata object as a JSON string. |
 
 # Example Questions
 

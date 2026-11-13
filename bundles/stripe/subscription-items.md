@@ -36,7 +36,7 @@ sources:
 | `recurring_interval` | STRING | Recurring Interval | month, year, week or day. |
 | `recurring_interval_count` | INTEGER | Recurring Interval Count | Number of intervals per billing cycle (3 with month = quarterly). |
 | `price_nickname` | STRING | Price Nickname | Price nickname (plan name) if set. |
-| `metadata` | JSON | Metadata | Metadata object as a JSON string. |
+| `metadata` | STRING | Metadata | Metadata object as a JSON string. |
 
 # Example Questions
 

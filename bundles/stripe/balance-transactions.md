@@ -39,7 +39,7 @@ sources:
 | `available_on` | INTEGER | Available On | When the funds became (or become) available for payout. The date to use for revenue that has reached the balance, as Unix time in seconds (UTC); use TIMESTAMP_SECONDS() in SQL. |
 | `exchange_rate` | FLOAT | Exchange Rate | Exchange rate applied when the charge currency differs from the balance currency; null otherwise. |
 | `description` | STRING | Description | Free-text description Stripe attaches to the transaction. |
-| `fee_details` | JSON | Fee Details | JSON list of the fees that make up fee: each with amount, currency, type (stripe_fee, application_fee, tax) and description. |
+| `fee_details` | STRING | Fee Details | JSON list of the fees that make up fee: each with amount, currency, type (stripe_fee, application_fee, tax) and description. |
 
 # Example Questions
 

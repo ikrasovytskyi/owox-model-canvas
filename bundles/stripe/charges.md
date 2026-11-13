@@ -56,7 +56,7 @@ sources:
 | `receipt_email` | STRING | Receipt Email | Email the receipt was sent to. |
 | `statement_descriptor` | STRING | Statement Descriptor | Text shown on the customer's card statement. |
 | `billing_country` | STRING | Billing Country | Two-letter country from the billing address. |
-| `metadata` | JSON | Metadata | Metadata object your systems attached (order ids, plan names) as a JSON string. |
+| `metadata` | STRING | Metadata | Metadata object your systems attached (order ids, plan names) as a JSON string. |
 
 # Example Questions
 

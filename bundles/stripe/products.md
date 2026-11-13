@@ -35,7 +35,7 @@ sources:
 | `unit_label` | STRING | Unit Label | Label for units (seat, GB) shown on invoices. |
 | `statement_descriptor` | STRING | Statement Descriptor | Statement descriptor override. |
 | `updated` | INTEGER | Updated | Last update time, as Unix time in seconds (UTC); use TIMESTAMP_SECONDS() in SQL. |
-| `metadata` | JSON | Metadata | Metadata object as a JSON string. |
+| `metadata` | STRING | Metadata | Metadata object as a JSON string. |
 
 # Example Questions
 

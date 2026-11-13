@@ -39,7 +39,7 @@ sources:
 | `address_city` | STRING | Address City | Billing city. |
 | `tax_exempt` | STRING | Tax Exempt | none, exempt or reverse. |
 | `invoice_prefix` | STRING | Invoice Prefix | Prefix Stripe uses for this customer's invoice numbers. |
-| `metadata` | JSON | Metadata | Metadata object your systems attached as a JSON string. |
+| `metadata` | STRING | Metadata | Metadata object your systems attached as a JSON string. |
 
 # Example Questions
 

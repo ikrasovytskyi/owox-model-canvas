@@ -37,7 +37,7 @@ sources:
 | `invoice` | STRING | Invoice | FK to [Invoices](./invoices.md). Invoice id (in_) when the intent pays an invoice. |
 | `latest_charge` | STRING | Latest Charge | FK to [Charges](./charges.md). Most recent charge id (ch_). Join to charges. |
 | `payment_method` | STRING | Payment Method | Payment method id (pm_). |
-| `payment_method_types` | JSON | Payment Method Types | JSON list of payment method types offered. |
+| `payment_method_types` | STRING | Payment Method Types | JSON list of payment method types offered. |
 | `capture_method` | STRING | Capture Method | automatic, automatic_async or manual. |
 | `canceled_at` | INTEGER | Canceled At | When the intent was canceled, as Unix time in seconds (UTC); use TIMESTAMP_SECONDS() in SQL. |
 | `cancellation_reason` | STRING | Cancellation Reason | duplicate, fraudulent, requested_by_customer, abandoned, failed_invoice, automatic, … |
@@ -45,7 +45,7 @@ sources:
 | `last_error_decline_code` | STRING | Last Error Decline Code | Card network decline code of the last error. |
 | `description` | STRING | Description | Description set at creation. |
 | `statement_descriptor` | STRING | Statement Descriptor | Statement descriptor. |
-| `metadata` | JSON | Metadata | Metadata object as a JSON string. |
+| `metadata` | STRING | Metadata | Metadata object as a JSON string. |
 
 # Example Questions
 
