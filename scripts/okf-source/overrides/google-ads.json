@@ -1,0 +1,651 @@
+{
+ "Ad Group Ads Stats": {
+  "columns": {
+   "ad_id": {
+    "alias": "Ad ID",
+    "description": "ID of the ad."
+   },
+   "ad_status": {
+    "alias": "Ad Status"
+   },
+   "ad_final_urls": {
+    "alias": "Ad Final URLs",
+    "description": "Final URLs for the Ad. Stored as a JSON string."
+   },
+   "ad_final_urls_parsed": {
+    "alias": "Ad Final URLs Parsed",
+    "description": "ad_final_urls with each short link resolved to its landing page; other URLs stay unchanged. Requires ad_final_urls and Process Short Links. Stored as a JSON string."
+   },
+   "ad_group_id": {
+    "alias": "Ad Group ID",
+    "description": "ID of the ad group the row belongs to. FK to [Ad Groups](./ad-groups.md)"
+   },
+   "campaign_id": {
+    "alias": "Campaign ID",
+    "description": "ID of the campaign the row belongs to."
+   },
+   "date": {
+    "alias": "Date"
+   },
+   "impressions": {
+    "alias": "Impressions",
+    "description": "Times the ad appeared on a search results page or a website on the Google Network."
+   },
+   "clicks": {
+    "alias": "Clicks",
+    "description": "Clicks on the ads; `ctr` is clicks divided by impressions."
+   },
+   "cost_micros": {
+    "alias": "Cost Micros"
+   },
+   "conversions": {
+    "alias": "Conversions",
+    "description": "Conversions from the actions counted in the Conversions column (include_in_conversions_metric on), the ones conversion-based bidding optimizes for; `all_conversions` adds the rest."
+   },
+   "ctr": {
+    "alias": "CTR"
+   },
+   "average_cpc": {
+    "alias": "Average CPC"
+   },
+   "conversions_value": {
+    "alias": "Conversions Value",
+    "description": "Value of `conversions`: only the actions counted in the Conversions column (include_in_conversions_metric on); `all_conversions_value` adds the rest."
+   },
+   "cost_per_conversion": {
+    "alias": "Cost Per Conversion",
+    "description": "Cost of ad interactions divided by `conversions`, so it counts only the actions included in the Conversions column."
+   },
+   "ad_type": {
+    "alias": "Ad Type"
+   },
+   "ad_name": {
+    "alias": "Ad Name",
+    "description": "Name of the ad."
+   },
+   "ad_group_name": {
+    "alias": "Ad Group Name",
+    "description": "Name of the ad group."
+   },
+   "campaign_name": {
+    "alias": "Campaign Name",
+    "description": "Name of the campaign."
+   },
+   "conversion_rate": {
+    "alias": "Conversion Rate",
+    "description": "Conversions from interactions divided by `interactions` (Google Ads `conversions_from_interactions_rate`); counts only the actions included in `conversions`."
+   },
+   "view_through_conversions": {
+    "alias": "View Through Conversions",
+    "description": "Conversions by people who saw an image or rich media ad and later converted on the site without interacting with another ad."
+   },
+   "all_conversions": {
+    "alias": "All Conversions",
+    "description": "Conversions from every conversion action, including those not counted in `conversions` (include_in_conversions_metric off)."
+   },
+   "all_conversions_value": {
+    "alias": "All Conversions Value",
+    "description": "Value of `all_conversions`: every conversion action, including those not counted in `conversions_value`."
+   },
+   "average_cost": {
+    "alias": "Average Cost",
+    "description": "Average amount paid per interaction: the total cost divided by `interactions`."
+   },
+   "average_cpm": {
+    "alias": "Average CPM",
+    "description": "Average cost per 1,000 impressions (Google Ads `metrics.average_cpm`)."
+   },
+   "interactions": {
+    "alias": "Interactions",
+    "description": "The main user action for the ad format: clicks for text and shopping ads, views for video ads, and so on."
+   },
+   "interaction_rate": {
+    "alias": "Interaction Rate",
+    "description": "Interactions divided by impressions."
+   }
+  }
+ },
+ "Ad Groups Stats": {
+  "columns": {
+   "ad_group_id": {
+    "alias": "Ad Group ID",
+    "description": "ID of the ad group the row belongs to. FK to [Ad Groups](./ad-groups.md)"
+   },
+   "ad_group_name": {
+    "alias": "Ad Group Name",
+    "description": "Name of the ad group."
+   },
+   "ad_group_status": {
+    "alias": "Ad Group Status"
+   },
+   "campaign_id": {
+    "alias": "Campaign ID",
+    "description": "ID of the campaign the row belongs to."
+   },
+   "date": {
+    "alias": "Date"
+   },
+   "impressions": {
+    "alias": "Impressions",
+    "description": "Times the ad appeared on a search results page or a website on the Google Network."
+   },
+   "clicks": {
+    "alias": "Clicks",
+    "description": "Clicks on the ads; `ctr` is clicks divided by impressions."
+   },
+   "cost_micros": {
+    "alias": "Cost Micros"
+   },
+   "conversions": {
+    "alias": "Conversions",
+    "description": "Conversions from the actions counted in the Conversions column (include_in_conversions_metric on), the ones conversion-based bidding optimizes for; `all_conversions` adds the rest."
+   },
+   "ctr": {
+    "alias": "CTR"
+   },
+   "average_cpc": {
+    "alias": "Average CPC"
+   },
+   "conversions_value": {
+    "alias": "Conversions Value",
+    "description": "Value of `conversions`: only the actions counted in the Conversions column (include_in_conversions_metric on); `all_conversions_value` adds the rest."
+   },
+   "cost_per_conversion": {
+    "alias": "Cost Per Conversion",
+    "description": "Cost of ad interactions divided by `conversions`, so it counts only the actions included in the Conversions column."
+   },
+   "conversion_rate": {
+    "alias": "Conversion Rate",
+    "description": "Conversions from interactions divided by `interactions` (Google Ads `conversions_from_interactions_rate`); counts only the actions included in `conversions`."
+   },
+   "view_through_conversions": {
+    "alias": "View Through Conversions",
+    "description": "Conversions by people who saw an image or rich media ad and later converted on the site without interacting with another ad."
+   },
+   "all_conversions": {
+    "alias": "All Conversions",
+    "description": "Conversions from every conversion action, including those not counted in `conversions` (include_in_conversions_metric off)."
+   },
+   "all_conversions_value": {
+    "alias": "All Conversions Value",
+    "description": "Value of `all_conversions`: every conversion action, including those not counted in `conversions_value`."
+   },
+   "cost_per_all_conversions": {
+    "alias": "Cost Per All Conversions",
+    "description": "Cost of ad interactions divided by `all_conversions`."
+   },
+   "average_cost": {
+    "alias": "Average Cost",
+    "description": "Average amount paid per interaction: the total cost divided by `interactions`."
+   },
+   "average_cpm": {
+    "alias": "Average CPM",
+    "description": "Average cost per 1,000 impressions (Google Ads `metrics.average_cpm`)."
+   },
+   "interactions": {
+    "alias": "Interactions",
+    "description": "The main user action for the ad format: clicks for text and shopping ads, views for video ads, and so on."
+   },
+   "interaction_rate": {
+    "alias": "Interaction Rate",
+    "description": "Interactions divided by impressions."
+   },
+   "engagement_rate": {
+    "alias": "Engagement Rate",
+    "description": "Engagements divided by impressions; Google counts an engagement when a viewer expands a Lightbox ad."
+   },
+   "engagements": {
+    "alias": "Engagements",
+    "description": "Times a viewer expanded a Lightbox ad, the one ad type Google counts engagements for."
+   }
+  }
+ },
+ "Ad Groups": {
+  "columns": {
+   "ad_group_id": {
+    "alias": "Ad Group ID",
+    "description": "The ad group's ID, the key of this table; Ad Groups Stats, Ad Group Ads Stats, Keywords Stats and Criterion carry it to point here."
+   },
+   "ad_group_name": {
+    "alias": "Ad Group Name",
+    "description": "Name of the ad group."
+   },
+   "ad_group_status": {
+    "alias": "Ad Group Status"
+   },
+   "ad_group_type": {
+    "alias": "Ad Group Type"
+   },
+   "campaign_id": {
+    "alias": "Campaign ID",
+    "description": "ID of the campaign the row belongs to. FK to [Campaigns](./campaigns.md)"
+   },
+   "campaign_name": {
+    "alias": "Campaign Name",
+    "description": "Name of the campaign."
+   },
+   "ad_group_cpc_bid_micros": {
+    "alias": "Ad Group CPC Bid Micros"
+   },
+   "ad_group_cpm_bid_micros": {
+    "alias": "Ad Group CPM Bid Micros"
+   },
+   "ad_group_target_cpa_micros": {
+    "alias": "Ad Group Target CPA Micros"
+   }
+  }
+ },
+ "Campaigns Stats": {
+  "columns": {
+   "campaign_id": {
+    "alias": "Campaign ID",
+    "description": "ID of the campaign the row belongs to. FK to [Campaigns](./campaigns.md)"
+   },
+   "campaign_name": {
+    "alias": "Campaign Name",
+    "description": "Name of the campaign."
+   },
+   "campaign_status": {
+    "alias": "Campaign Status"
+   },
+   "date": {
+    "alias": "Date"
+   },
+   "impressions": {
+    "alias": "Impressions",
+    "description": "Times the ad appeared on a search results page or a website on the Google Network."
+   },
+   "clicks": {
+    "alias": "Clicks",
+    "description": "Clicks on the ads; `ctr` is clicks divided by impressions."
+   },
+   "cost_micros": {
+    "alias": "Cost Micros"
+   },
+   "conversions": {
+    "alias": "Conversions",
+    "description": "Conversions from the actions counted in the Conversions column (include_in_conversions_metric on), the ones conversion-based bidding optimizes for; `all_conversions` adds the rest."
+   },
+   "ctr": {
+    "alias": "CTR"
+   },
+   "average_cpc": {
+    "alias": "Average CPC"
+   },
+   "conversions_value": {
+    "alias": "Conversions Value",
+    "description": "Value of `conversions`: only the actions counted in the Conversions column (include_in_conversions_metric on); `all_conversions_value` adds the rest."
+   },
+   "cost_per_conversion": {
+    "alias": "Cost Per Conversion",
+    "description": "Cost of ad interactions divided by `conversions`, so it counts only the actions included in the Conversions column."
+   },
+   "conversion_rate": {
+    "alias": "Conversion Rate",
+    "description": "Conversions from interactions divided by `interactions` (Google Ads `conversions_from_interactions_rate`); counts only the actions included in `conversions`."
+   },
+   "view_through_conversions": {
+    "alias": "View Through Conversions",
+    "description": "Conversions by people who saw an image or rich media ad and later converted on the site without interacting with another ad."
+   },
+   "all_conversions": {
+    "alias": "All Conversions",
+    "description": "Conversions from every conversion action, including those not counted in `conversions` (include_in_conversions_metric off)."
+   },
+   "all_conversions_value": {
+    "alias": "All Conversions Value",
+    "description": "Value of `all_conversions`: every conversion action, including those not counted in `conversions_value`."
+   },
+   "cost_per_all_conversions": {
+    "alias": "Cost Per All Conversions",
+    "description": "Cost of ad interactions divided by `all_conversions`."
+   },
+   "average_cost": {
+    "alias": "Average Cost",
+    "description": "Average amount paid per interaction: the total cost divided by `interactions`."
+   },
+   "average_cpm": {
+    "alias": "Average CPM",
+    "description": "Average cost per 1,000 impressions (Google Ads `metrics.average_cpm`)."
+   },
+   "engagement_rate": {
+    "alias": "Engagement Rate",
+    "description": "Engagements divided by impressions; Google counts an engagement when a viewer expands a Lightbox ad."
+   },
+   "engagements": {
+    "alias": "Engagements",
+    "description": "Times a viewer expanded a Lightbox ad, the one ad type Google counts engagements for."
+   },
+   "interactions": {
+    "alias": "Interactions",
+    "description": "The main user action for the ad format: clicks for text and shopping ads, views for video ads, and so on."
+   },
+   "interaction_rate": {
+    "alias": "Interaction Rate",
+    "description": "Interactions divided by impressions."
+   },
+   "search_impression_share": {
+    "alias": "Search Impression Share",
+    "description": "Search impressions received divided by the estimated impressions the ads were eligible for, from 0.1 to 1; anything below 0.1 is reported as 0.0999."
+   },
+   "search_budget_lost_impression_share": {
+    "alias": "Search Budget Lost Impression Share",
+    "description": "Estimated share of the Search impressions the ads missed because the budget was too low, from 0 to 0.9; anything above 0.9 is reported as 0.9001."
+   },
+   "search_rank_lost_impression_share": {
+    "alias": "Search Rank Lost Impression Share",
+    "description": "Estimated share of the Search impressions the ads missed because of poor Ad Rank, from 0 to 0.9; anything above 0.9 is reported as 0.9001."
+   },
+   "video_views": {
+    "alias": "Video Views"
+   },
+   "video_view_rate": {
+    "alias": "Video View Rate",
+    "description": "TrueView views divided by impressions, including thumbnail impressions for TrueView in-display ads (Google Ads `video_trueview_view_rate`)."
+   }
+  }
+ },
+ "Campaigns": {
+  "columns": {
+   "campaign_id": {
+    "alias": "Campaign ID",
+    "description": "The campaign's ID, the key of this table; every other table except Geo Target Constants carries it to point here."
+   },
+   "campaign_name": {
+    "alias": "Campaign Name",
+    "description": "Name of the campaign."
+   },
+   "campaign_status": {
+    "alias": "Campaign Status"
+   },
+   "campaign_advertising_channel_type": {
+    "alias": "Campaign Advertising Channel Type"
+   },
+   "campaign_start_date": {
+    "alias": "Campaign Start Date",
+    "description": "The day the campaign started serving, in the account's time zone."
+   },
+   "campaign_end_date": {
+    "alias": "Campaign End Date",
+    "description": "The last day the campaign serves, in the account's time zone."
+   },
+   "campaign_bidding_strategy_type": {
+    "alias": "Campaign Bidding Strategy Type"
+   },
+   "campaign_budget_amount_micros": {
+    "alias": "Campaign Budget Amount Micros"
+   },
+   "campaign_target_cpa_micros": {
+    "alias": "Campaign Target CPA Micros"
+   },
+   "campaign_target_roas": {
+    "alias": "Campaign Target ROAS"
+   },
+   "campaign_advertising_channel_sub_type": {
+    "alias": "Campaign Advertising Channel Sub Type"
+   }
+  }
+ },
+ "Criterion": {
+  "columns": {
+   "criterion_id": {
+    "alias": "Criterion ID",
+    "description": "ID of the criterion; unique only together with `ad_group_id` and `campaign_id`, which complete the key."
+   },
+   "criterion_type": {
+    "alias": "Criterion Type"
+   },
+   "criterion_status": {
+    "alias": "Criterion Status"
+   },
+   "keyword_text": {
+    "alias": "Keyword Text",
+    "description": "The text of the keyword, at most 80 characters and 10 words."
+   },
+   "keyword_match_type": {
+    "alias": "Keyword Match Type"
+   },
+   "ad_group_id": {
+    "alias": "Ad Group ID",
+    "description": "ID of the ad group the row belongs to. FK to [Ad Groups](./ad-groups.md)"
+   },
+   "campaign_id": {
+    "alias": "Campaign ID",
+    "description": "ID of the campaign the row belongs to."
+   },
+   "quality_score": {
+    "alias": "Quality Score",
+    "description": "The keyword's quality score; empty when Google does not have enough information to compute it."
+   },
+   "final_urls": {
+    "alias": "Final URLs",
+    "description": "The list of possible final URLs of the keyword after all cross-domain redirects. Stored as a JSON string."
+   },
+   "final_urls_parsed": {
+    "alias": "Final URLs Parsed",
+    "description": "final_urls with each short link resolved to its landing page; other URLs stay unchanged. Requires final_urls and Process Short Links. Stored as a JSON string."
+   },
+   "negative": {
+    "alias": "Negative Criterion"
+   },
+   "cpc_bid_micros": {
+    "alias": "CPC Bid Micros"
+   },
+   "effective_cpc_bid_micros": {
+    "alias": "Effective CPC Bid Micros"
+   },
+   "position_estimates_first_page_cpc_micros": {
+    "alias": "Position Estimates First Page CPC Micros"
+   },
+   "position_estimates_top_of_page_cpc_micros": {
+    "alias": "Position Estimates Top Of Page CPC Micros"
+   },
+   "position_estimates_first_position_cpc_micros": {
+    "alias": "Position Estimates First Position CPC Micros"
+   },
+   "ad_group_name": {
+    "alias": "Ad Group Name",
+    "description": "Name of the ad group."
+   },
+   "campaign_name": {
+    "alias": "Campaign Name",
+    "description": "Name of the campaign."
+   }
+  }
+ },
+ "Geo Stats": {
+  "columns": {
+   "country_criterion_id": {
+    "alias": "Country Criterion ID",
+    "description": "Criterion ID for the country (maps to geo_target_constant_id in geo_target_constants table) FK to [Geo Target Constants](./geo-target-constants.md)"
+   },
+   "location_type": {
+    "alias": "Location Type"
+   },
+   "date": {
+    "alias": "Date"
+   },
+   "campaign_id": {
+    "alias": "Campaign ID",
+    "description": "ID of the campaign the row belongs to. FK to [Campaigns](./campaigns.md)"
+   },
+   "campaign_name": {
+    "alias": "Campaign Name",
+    "description": "Name of the campaign."
+   },
+   "campaign_status": {
+    "alias": "Campaign Status"
+   },
+   "impressions": {
+    "alias": "Impressions",
+    "description": "Times the ad appeared on a search results page or a website on the Google Network."
+   },
+   "clicks": {
+    "alias": "Clicks",
+    "description": "Clicks on the ads; `ctr` is clicks divided by impressions."
+   },
+   "cost_micros": {
+    "alias": "Cost Micros"
+   },
+   "conversions": {
+    "alias": "Conversions",
+    "description": "Conversions from the actions counted in the Conversions column (include_in_conversions_metric on), the ones conversion-based bidding optimizes for; `all_conversions` adds the rest."
+   },
+   "conversions_value": {
+    "alias": "Conversions Value",
+    "description": "Value of `conversions`: only the actions counted in the Conversions column (include_in_conversions_metric on); `all_conversions_value` adds the rest."
+   },
+   "ctr": {
+    "alias": "CTR"
+   },
+   "average_cpc": {
+    "alias": "Average CPC"
+   },
+   "all_conversions": {
+    "alias": "All Conversions",
+    "description": "Conversions from every conversion action, including those not counted in `conversions` (include_in_conversions_metric off)."
+   },
+   "all_conversions_value": {
+    "alias": "All Conversions Value",
+    "description": "Value of `all_conversions`: every conversion action, including those not counted in `conversions_value`."
+   },
+   "view_through_conversions": {
+    "alias": "View Through Conversions",
+    "description": "Conversions by people who saw an image or rich media ad and later converted on the site without interacting with another ad."
+   },
+   "cost_per_conversion": {
+    "alias": "Cost Per Conversion",
+    "description": "Cost of ad interactions divided by `conversions`, so it counts only the actions included in the Conversions column."
+   },
+   "conversion_rate": {
+    "alias": "Conversion Rate",
+    "description": "Conversions from interactions divided by `interactions` (Google Ads `conversions_from_interactions_rate`); counts only the actions included in `conversions`."
+   }
+  }
+ },
+ "Geo Target Constants": {
+  "columns": {
+   "geo_target_constant_id": {
+    "alias": "Geo Target Constant ID"
+   },
+   "name": {
+    "alias": "Geo Target Name"
+   },
+   "country_code": {
+    "alias": "Country Code"
+   },
+   "target_type": {
+    "alias": "Geo Target Type"
+   },
+   "status": {
+    "alias": "Geo Target Status"
+   },
+   "canonical_name": {
+    "alias": "Canonical Name"
+   },
+   "parent_geo_target": {
+    "alias": "Parent Geo Target"
+   }
+  }
+ },
+ "Keywords Stats": {
+  "columns": {
+   "keyword_id": {
+    "alias": "Keyword ID",
+    "description": "Keyword Criterion ID FK to [Criterion](./criterion.md)"
+   },
+   "keyword_text": {
+    "alias": "Keyword Text",
+    "description": "The text of the keyword, at most 80 characters and 10 words."
+   },
+   "keyword_match_type": {
+    "alias": "Keyword Match Type"
+   },
+   "keyword_status": {
+    "alias": "Keyword Status"
+   },
+   "ad_group_id": {
+    "alias": "Ad Group ID",
+    "description": "ID of the ad group the row belongs to. FK to [Ad Groups](./ad-groups.md)"
+   },
+   "campaign_id": {
+    "alias": "Campaign ID",
+    "description": "ID of the campaign the row belongs to. FK to [Criterion](./criterion.md)"
+   },
+   "date": {
+    "alias": "Date"
+   },
+   "impressions": {
+    "alias": "Impressions",
+    "description": "Times the ad appeared on a search results page or a website on the Google Network."
+   },
+   "clicks": {
+    "alias": "Clicks",
+    "description": "Clicks on the ads; `ctr` is clicks divided by impressions."
+   },
+   "cost_micros": {
+    "alias": "Cost Micros"
+   },
+   "conversions": {
+    "alias": "Conversions",
+    "description": "Conversions from the actions counted in the Conversions column (include_in_conversions_metric on), the ones conversion-based bidding optimizes for; `all_conversions` adds the rest."
+   },
+   "ctr": {
+    "alias": "CTR"
+   },
+   "average_cpc": {
+    "alias": "Average CPC"
+   },
+   "conversions_value": {
+    "alias": "Conversions Value",
+    "description": "Value of `conversions`: only the actions counted in the Conversions column (include_in_conversions_metric on); `all_conversions_value` adds the rest."
+   },
+   "cost_per_conversion": {
+    "alias": "Cost Per Conversion",
+    "description": "Cost of ad interactions divided by `conversions`, so it counts only the actions included in the Conversions column."
+   },
+   "quality_score": {
+    "alias": "Quality Score",
+    "description": "The keyword's quality score; empty when Google does not have enough information to compute it."
+   },
+   "conversion_rate": {
+    "alias": "Conversion Rate",
+    "description": "Conversions from interactions divided by `interactions` (Google Ads `conversions_from_interactions_rate`); counts only the actions included in `conversions`."
+   },
+   "view_through_conversions": {
+    "alias": "View Through Conversions",
+    "description": "Conversions by people who saw an image or rich media ad and later converted on the site without interacting with another ad."
+   },
+   "all_conversions": {
+    "alias": "All Conversions",
+    "description": "Conversions from every conversion action, including those not counted in `conversions` (include_in_conversions_metric off)."
+   },
+   "all_conversions_value": {
+    "alias": "All Conversions Value",
+    "description": "Value of `all_conversions`: every conversion action, including those not counted in `conversions_value`."
+   },
+   "average_cost": {
+    "alias": "Average Cost"
+   },
+   "average_cpm": {
+    "alias": "Average CPM"
+   },
+   "search_impression_share": {
+    "alias": "Search Impression Share",
+    "description": "Search impressions received divided by the estimated impressions the ads were eligible for, from 0.1 to 1; anything below 0.1 is reported as 0.0999."
+   },
+   "search_rank_lost_impression_share": {
+    "alias": "Search Rank Lost Impression Share",
+    "description": "Estimated share of the Search impressions the ads missed because of poor Ad Rank, from 0 to 0.9; anything above 0.9 is reported as 0.9001."
+   },
+   "top_impression_percentage": {
+    "alias": "Top Impression Percentage",
+    "description": "Percentage of the ad impressions shown next to the top organic search results."
+   },
+   "absolute_top_impression_percentage": {
+    "alias": "Absolute Top Impression Percentage",
+    "description": "Percentage of the Search ad impressions shown in the absolute top position of the Search results."
+   }
+  }
+ }
+}

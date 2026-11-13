@@ -1,0 +1,786 @@
+{
+ "Ad Groups": {
+  "columns": {
+   "adgroup_id": {
+    "alias": "Adgroup ID",
+    "description": "ID of the ad group."
+   },
+   "adgroup_name": {
+    "alias": "Adgroup Name"
+   },
+   "advertiser_id": {
+    "alias": "Advertiser ID",
+    "description": "ID of the advertiser account the row belongs to."
+   },
+   "campaign_id": {
+    "alias": "Campaign ID",
+    "description": "ID of the campaign. FK to [Campaigns](./campaigns.md)"
+   },
+   "campaign_name": {
+    "alias": "Campaign Name",
+    "description": "Name of the campaign the row belongs to."
+   },
+   "operation_status": {
+    "alias": "Operation Status",
+    "description": "The on or off status the advertiser set; the delivery status is in `secondary_status`."
+   },
+   "budget": {
+    "alias": "Budget"
+   },
+   "budget_mode": {
+    "alias": "Budget Mode"
+   },
+   "bid_type": {
+    "alias": "Bid Type"
+   },
+   "bid_price": {
+    "alias": "Bid Price",
+    "description": "The ad group's bid price."
+   },
+   "optimization_goal": {
+    "alias": "Optimization Goal",
+    "description": "What the ad group optimizes delivery for, such as clicks, reach or conversions."
+   },
+   "optimization_event": {
+    "alias": "Optimization Event",
+    "description": "The conversion event the ad group optimizes for."
+   },
+   "app_id": {
+    "alias": "App ID"
+   },
+   "app_type": {
+    "alias": "App Type",
+    "description": "Type of the app the ad group promotes."
+   },
+   "audience_type": {
+    "alias": "Audience Type"
+   },
+   "audience_ids": {
+    "alias": "Audience IDs",
+    "description": "List of audience IDs. Stored as a JSON string."
+   },
+   "excluded_audience_ids": {
+    "alias": "Excluded Audience IDs",
+    "description": "List of excluded audience IDs. Stored as a JSON string."
+   },
+   "gender": {
+    "alias": "Gender"
+   },
+   "age_groups": {
+    "alias": "Age Groups",
+    "description": "Target age groups. Stored as a JSON string."
+   },
+   "languages": {
+    "alias": "Languages",
+    "description": "Target languages. Stored as a JSON string."
+   },
+   "location_ids": {
+    "alias": "Location IDs",
+    "description": "Target location IDs. Stored as a JSON string."
+   },
+   "interest_category_ids": {
+    "alias": "Interest Category IDs",
+    "description": "IDs of the interest categories the ad group targets. Stored as a JSON string."
+   },
+   "placements": {
+    "alias": "Placements",
+    "description": "Ad placements. Stored as a JSON string."
+   },
+   "placement_type": {
+    "alias": "Placement Type"
+   },
+   "schedule_start_time": {
+    "alias": "Schedule Start Time",
+    "description": "When the ad group's delivery schedule starts."
+   },
+   "schedule_end_time": {
+    "alias": "Schedule End Time",
+    "description": "When the ad group's delivery schedule ends."
+   },
+   "schedule_type": {
+    "alias": "Schedule Type"
+   },
+   "frequency": {
+    "alias": "Frequency"
+   },
+   "billing_event": {
+    "alias": "Billing Event"
+   },
+   "conversion_id": {
+    "alias": "Conversion ID",
+    "description": "ID of the conversion set on the ad group."
+   },
+   "conversion_bid_price": {
+    "alias": "Conversion Bid Price",
+    "description": "The bid per conversion set on the ad group."
+   },
+   "conversion_window": {
+    "alias": "Conversion Window",
+    "description": "The conversion window set on the ad group."
+   },
+   "click_attribution_window": {
+    "alias": "Click Attribution Window",
+    "description": "The ad group's click-through attribution window: how long after a click a conversion is credited to the ad."
+   },
+   "view_attribution_window": {
+    "alias": "View Attribution Window",
+    "description": "The ad group's view-through attribution window: how long after an ad view a conversion is credited to the ad."
+   },
+   "is_smart_performance_campaign": {
+    "alias": "Is Smart Performance Campaign"
+   },
+   "is_new_structure": {
+    "alias": "Is New Structure"
+   },
+   "auto_targeting_enabled": {
+    "alias": "Auto Targeting Enabled"
+   },
+   "targeting_expansion": {
+    "alias": "Targeting Expansion",
+    "description": "Targeting expansion settings. Stored as a JSON string."
+   },
+   "device_price_ranges": {
+    "alias": "Device Price Ranges",
+    "description": "Target device price ranges. Stored as a JSON string."
+   },
+   "device_model_ids": {
+    "alias": "Device Model IDs",
+    "description": "Target device model IDs. Stored as a JSON string."
+   },
+   "operating_systems": {
+    "alias": "Operating Systems",
+    "description": "Target operating systems. Stored as a JSON string."
+   },
+   "network_types": {
+    "alias": "Network Types",
+    "description": "Target network types. Stored as a JSON string."
+   },
+   "carrier_ids": {
+    "alias": "Carrier IDs",
+    "description": "Target carrier IDs. Stored as a JSON string."
+   },
+   "create_time": {
+    "alias": "Create Time"
+   },
+   "modify_time": {
+    "alias": "Modify Time"
+   }
+  }
+ },
+ "Ad Performance by Country": {
+  "columns": {
+   "ad_id": {
+    "alias": "Ad ID",
+    "description": "ID of the ad. FK to [Ads](./ads.md)"
+   },
+   "advertiser_id": {
+    "alias": "Advertiser ID",
+    "description": "ID of the advertiser account the row belongs to."
+   },
+   "campaign_id": {
+    "alias": "Campaign ID",
+    "description": "ID of the campaign."
+   },
+   "adgroup_id": {
+    "alias": "Adgroup ID",
+    "description": "ID of the ad group."
+   },
+   "country_code": {
+    "alias": "Country Code"
+   },
+   "stat_time_day": {
+    "alias": "Stat Time Day"
+   },
+   "date_start": {
+    "alias": "Date Start",
+    "description": "First day of the reporting range; the connector fills it from `stat_time_day` when TikTok does not return it."
+   },
+   "date_end": {
+    "alias": "Date End",
+    "description": "Last day of the reporting range."
+   },
+   "impressions": {
+    "alias": "Impressions",
+    "description": "Number of times the ads were shown."
+   },
+   "clicks": {
+    "alias": "Clicks",
+    "description": "Number of clicks."
+   },
+   "cost": {
+    "alias": "Cost",
+    "description": "Cost. The connector does not request this metric, so the column stays empty; use `spend` for the amount spent."
+   },
+   "ctr": {
+    "alias": "CTR"
+   },
+   "conversion": {
+    "alias": "Conversion",
+    "description": "Number of conversions."
+   },
+   "cost_per_conversion": {
+    "alias": "Cost Per Conversion",
+    "description": "Spend divided by conversions, as TikTok reports it."
+   },
+   "conversion_rate": {
+    "alias": "Conversion Rate",
+    "description": "Conversions as a percentage of clicks, as TikTok reports it."
+   },
+   "reach": {
+    "alias": "Reach",
+    "description": "Number of unique users who saw the ads at least once."
+   },
+   "engagement": {
+    "alias": "Engagement",
+    "description": "Engagement. The connector does not request this metric, so the column stays empty."
+   },
+   "video_views": {
+    "alias": "Video Views",
+    "description": "Video views. The connector does not request this metric, so the column stays empty; use `video_play_actions` for video plays."
+   },
+   "video_watched_2s": {
+    "alias": "Video Watched 2s"
+   },
+   "video_watched_6s": {
+    "alias": "Video Watched 6s"
+   },
+   "video_completion": {
+    "alias": "Video Completion",
+    "description": "Video completions. The connector does not request this metric, so the column stays empty. Use `video_views_p100` for views to the end."
+   },
+   "spend": {
+    "alias": "Spend",
+    "description": "Amount spent, in the advertiser account's currency."
+   },
+   "cpc": {
+    "alias": "CPC"
+   },
+   "cpm": {
+    "alias": "CPM"
+   },
+   "frequency": {
+    "alias": "Frequency"
+   },
+   "video_play_actions": {
+    "alias": "Video Play Actions"
+   },
+   "video_views_p25": {
+    "alias": "Video Views 25%"
+   },
+   "video_views_p50": {
+    "alias": "Video Views 50%"
+   },
+   "video_views_p75": {
+    "alias": "Video Views 75%"
+   },
+   "video_views_p100": {
+    "alias": "Video Views 100%"
+   },
+   "profile_visits": {
+    "alias": "Profile Visits",
+    "description": "Visits to the advertiser's profile that came from the ads."
+   },
+   "likes": {
+    "alias": "Likes",
+    "description": "Number of likes."
+   },
+   "comments": {
+    "alias": "Comments"
+   },
+   "shares": {
+    "alias": "Shares"
+   },
+   "follows": {
+    "alias": "Follows"
+   },
+   "real_time_conversion": {
+    "alias": "Real Time Conversion"
+   },
+   "real_time_cost_per_conversion": {
+    "alias": "Real Time Cost Per Conversion"
+   },
+   "real_time_conversion_rate": {
+    "alias": "Real Time Conversion Rate",
+    "description": "Conversion rate as TikTok counts it in real time. The connector does not request this metric, so the column stays empty."
+   },
+   "result": {
+    "alias": "Result"
+   },
+   "cost_per_result": {
+    "alias": "Cost Per Result",
+    "description": "Cost per result. The connector does not request this metric, so the column stays empty."
+   }
+  }
+ },
+ "Ad Performance": {
+  "columns": {
+   "ad_id": {
+    "alias": "Ad ID",
+    "description": "ID of the ad. FK to [Ads](./ads.md)"
+   },
+   "advertiser_id": {
+    "alias": "Advertiser ID",
+    "description": "ID of the advertiser account the row belongs to."
+   },
+   "campaign_id": {
+    "alias": "Campaign ID",
+    "description": "ID of the campaign."
+   },
+   "adgroup_id": {
+    "alias": "Adgroup ID",
+    "description": "ID of the ad group."
+   },
+   "stat_time_day": {
+    "alias": "Stat Time Day"
+   },
+   "date_start": {
+    "alias": "Date Start",
+    "description": "First day of the reporting range; the connector fills it from `stat_time_day` when TikTok does not return it."
+   },
+   "date_end": {
+    "alias": "Date End",
+    "description": "Last day of the reporting range."
+   },
+   "impressions": {
+    "alias": "Impressions",
+    "description": "Number of times the ads were shown."
+   },
+   "clicks": {
+    "alias": "Clicks",
+    "description": "Number of clicks."
+   },
+   "cost": {
+    "alias": "Cost",
+    "description": "Cost. The connector does not request this metric, so the column stays empty; use `spend` for the amount spent."
+   },
+   "ctr": {
+    "alias": "CTR"
+   },
+   "conversion": {
+    "alias": "Conversion",
+    "description": "Number of conversions."
+   },
+   "cost_per_conversion": {
+    "alias": "Cost Per Conversion",
+    "description": "Spend divided by conversions, as TikTok reports it."
+   },
+   "conversion_rate": {
+    "alias": "Conversion Rate",
+    "description": "Conversions as a percentage of clicks, as TikTok reports it."
+   },
+   "reach": {
+    "alias": "Reach",
+    "description": "Number of unique users who saw the ads at least once."
+   },
+   "engagement": {
+    "alias": "Engagement",
+    "description": "Engagement. The connector does not request this metric, so the column stays empty."
+   },
+   "video_views": {
+    "alias": "Video Views",
+    "description": "Video views. The connector does not request this metric, so the column stays empty; use `video_play_actions` for video plays."
+   },
+   "video_watched_2s": {
+    "alias": "Video Watched 2s"
+   },
+   "video_watched_6s": {
+    "alias": "Video Watched 6s"
+   },
+   "video_completion": {
+    "alias": "Video Completion",
+    "description": "Video completions. The connector does not request this metric, so the column stays empty. Use `video_views_p100` for views to the end."
+   },
+   "spend": {
+    "alias": "Spend",
+    "description": "Amount spent, in the advertiser account's currency."
+   },
+   "cpc": {
+    "alias": "CPC"
+   },
+   "cpm": {
+    "alias": "CPM"
+   },
+   "frequency": {
+    "alias": "Frequency"
+   },
+   "video_play_actions": {
+    "alias": "Video Play Actions"
+   },
+   "video_views_p25": {
+    "alias": "Video Views 25%"
+   },
+   "video_views_p50": {
+    "alias": "Video Views 50%"
+   },
+   "video_views_p75": {
+    "alias": "Video Views 75%"
+   },
+   "video_views_p100": {
+    "alias": "Video Views 100%"
+   },
+   "profile_visits": {
+    "alias": "Profile Visits",
+    "description": "Visits to the advertiser's profile that came from the ads."
+   },
+   "likes": {
+    "alias": "Likes",
+    "description": "Number of likes."
+   },
+   "comments": {
+    "alias": "Comments"
+   },
+   "shares": {
+    "alias": "Shares"
+   },
+   "follows": {
+    "alias": "Follows"
+   },
+   "real_time_conversion": {
+    "alias": "Real Time Conversion"
+   },
+   "real_time_cost_per_conversion": {
+    "alias": "Real Time Cost Per Conversion"
+   },
+   "real_time_conversion_rate": {
+    "alias": "Real Time Conversion Rate",
+    "description": "Conversion rate as TikTok counts it in real time. The connector does not request this metric, so the column stays empty."
+   },
+   "result": {
+    "alias": "Result"
+   },
+   "cost_per_result": {
+    "alias": "Cost Per Result",
+    "description": "Cost per result. The connector does not request this metric, so the column stays empty."
+   }
+  }
+ },
+ "Ads": {
+  "columns": {
+   "ad_id": {
+    "alias": "Ad ID",
+    "description": "ID of the ad."
+   },
+   "ad_name": {
+    "alias": "Ad Name",
+    "description": "Name of the ad."
+   },
+   "advertiser_id": {
+    "alias": "Advertiser ID",
+    "description": "ID of the advertiser account the row belongs to."
+   },
+   "campaign_id": {
+    "alias": "Campaign ID",
+    "description": "ID of the campaign."
+   },
+   "campaign_name": {
+    "alias": "Campaign Name",
+    "description": "Name of the campaign the row belongs to."
+   },
+   "adgroup_id": {
+    "alias": "Adgroup ID",
+    "description": "ID of the ad group. FK to [Ad Groups](./ad-groups.md)"
+   },
+   "adgroup_name": {
+    "alias": "Adgroup Name"
+   },
+   "operation_status": {
+    "alias": "Operation Status",
+    "description": "The on or off status the advertiser set; the delivery status is in `secondary_status`."
+   },
+   "secondary_status": {
+    "alias": "Secondary Status",
+    "description": "The delivery status TikTok reports, next to the on or off `operation_status`."
+   },
+   "create_time": {
+    "alias": "Create Time"
+   },
+   "modify_time": {
+    "alias": "Modify Time"
+   },
+   "ad_text": {
+    "alias": "Ad Text"
+   },
+   "ad_texts": {
+    "alias": "Ad Texts",
+    "description": "Multiple Ad Text Variations. Stored as a JSON string."
+   },
+   "call_to_action": {
+    "alias": "Call To Action"
+   },
+   "call_to_action_id": {
+    "alias": "Call To Action ID",
+    "description": "ID of the call to action set on the ad."
+   },
+   "image_ids": {
+    "alias": "Image IDs",
+    "description": "Image IDs Used in the Ad. Stored as a JSON string."
+   },
+   "video_id": {
+    "alias": "Video ID"
+   },
+   "image_mode": {
+    "alias": "Image Mode"
+   },
+   "creative_type": {
+    "alias": "Creative Type"
+   },
+   "ad_format": {
+    "alias": "Ad Format"
+   },
+   "landing_page_url": {
+    "alias": "Landing Page URL",
+    "description": "Address of the page the ad leads to."
+   },
+   "landing_page_url_parsed": {
+    "alias": "Landing Page URL Parsed"
+   },
+   "landing_page_urls": {
+    "alias": "Landing Page URLs",
+    "description": "Multiple Landing Page URLs. Stored as a JSON string."
+   },
+   "landing_page_urls_parsed": {
+    "alias": "Landing Page URLs Parsed",
+    "description": "landing_page_urls with each short link resolved to its landing page; other URLs stay unchanged. Requires landing_page_urls and Process Short Links. Stored as a JSON string."
+   },
+   "deeplink": {
+    "alias": "Deeplink"
+   },
+   "deeplink_type": {
+    "alias": "Deeplink Type"
+   },
+   "tracking_pixel_id": {
+    "alias": "Tracking Pixel ID"
+   },
+   "impression_tracking_url": {
+    "alias": "Impression Tracking URL"
+   },
+   "click_tracking_url": {
+    "alias": "Click Tracking URL"
+   },
+   "video_view_tracking_url": {
+    "alias": "Video View Tracking URL"
+   },
+   "is_new_structure": {
+    "alias": "Is New Structure"
+   },
+   "is_aco": {
+    "alias": "Is ACO"
+   },
+   "optimization_event": {
+    "alias": "Optimization Event"
+   },
+   "catalog_id": {
+    "alias": "Catalog ID"
+   },
+   "product_set_id": {
+    "alias": "Product Set ID",
+    "description": "ID of the catalog product set the ad shows."
+   },
+   "sku_ids": {
+    "alias": "SKU IDs",
+    "description": "SKU IDs for Products. Stored as a JSON string."
+   },
+   "domain": {
+    "alias": "Domain"
+   },
+   "display_name": {
+    "alias": "Display Name"
+   },
+   "profile_image_url": {
+    "alias": "Profile Image URL"
+   },
+   "app_name": {
+    "alias": "App Name"
+   },
+   "tracking_app_id": {
+    "alias": "Tracking App ID"
+   },
+   "identity_id": {
+    "alias": "Identity ID",
+    "description": "ID of the identity the ad is published under."
+   },
+   "identity_type": {
+    "alias": "Identity Type"
+   },
+   "page_id": {
+    "alias": "Page ID"
+   },
+   "tiktok_item_id": {
+    "alias": "TikTok Item ID",
+    "description": "ID of the TikTok post the ad uses."
+   },
+   "disclaimer_type": {
+    "alias": "Disclaimer Type"
+   },
+   "disclaimer_text": {
+    "alias": "Disclaimer Text",
+    "description": "Disclaimer text shown with the ad."
+   },
+   "utm_params": {
+    "alias": "UTM Params",
+    "description": "UTM Parameters. Stored as a JSON string."
+   }
+  }
+ },
+ "Advertiser Account": {
+  "columns": {
+   "advertiser_id": {
+    "alias": "Advertiser ID",
+    "description": "ID of the advertiser account the row belongs to."
+   },
+   "advertiser_name": {
+    "alias": "Advertiser Name",
+    "description": "Name of the advertiser account."
+   },
+   "company_name": {
+    "alias": "Company Name",
+    "description": "Company name of the advertiser; TikTok's authorized ad accounts endpoint, which the connector reads, does not document this field."
+   },
+   "currency": {
+    "alias": "Currency"
+   }
+  }
+ },
+ "Campaigns": {
+  "columns": {
+   "advertiser_id": {
+    "alias": "Advertiser ID",
+    "description": "ID of the advertiser account the row belongs to. FK to [Advertiser Account](./advertiser-account.md)"
+   },
+   "campaign_id": {
+    "alias": "Campaign ID",
+    "description": "ID of the campaign."
+   },
+   "campaign_name": {
+    "alias": "Campaign Name",
+    "description": "Name of the campaign the row belongs to."
+   },
+   "app_promotion_type": {
+    "alias": "App Promotion Type"
+   },
+   "operation_status": {
+    "alias": "Operation Status",
+    "description": "The on or off status the advertiser set; the delivery status is in `secondary_status`."
+   },
+   "bid_type": {
+    "alias": "Bid Type"
+   },
+   "roas_bid": {
+    "alias": "ROAS Bid"
+   },
+   "is_advanced_dedicated_campaign": {
+    "alias": "Is Advanced Dedicated Campaign"
+   },
+   "is_search_campaign": {
+    "alias": "Is Search Campaign"
+   },
+   "rf_campaign_type": {
+    "alias": "RF Campaign Type"
+   },
+   "rta_bid_enabled": {
+    "alias": "RTA Bid Enabled"
+   },
+   "secondary_status": {
+    "alias": "Secondary Status"
+   },
+   "postback_window_mode": {
+    "alias": "Postback Window Mode"
+   },
+   "disable_skan_campaign": {
+    "alias": "Disable SKAN Campaign"
+   },
+   "budget_optimize_on": {
+    "alias": "Budget Optimize On"
+   },
+   "budget_mode": {
+    "alias": "Budget Mode"
+   },
+   "objective": {
+    "alias": "Objective"
+   },
+   "campaign_product_source": {
+    "alias": "Campaign Product Source"
+   },
+   "optimization_goal": {
+    "alias": "Optimization Goal"
+   },
+   "special_industries": {
+    "alias": "Special Industries"
+   },
+   "deep_bid_type": {
+    "alias": "Deep Bid Type"
+   },
+   "rta_id": {
+    "alias": "RTA ID"
+   },
+   "rta_product_selection_enabled": {
+    "alias": "RTA Product Selection Enabled"
+   },
+   "budget": {
+    "alias": "Budget"
+   },
+   "is_new_structure": {
+    "alias": "Is New Structure"
+   },
+   "is_smart_performance_campaign": {
+    "alias": "Is Smart Performance Campaign"
+   },
+   "modify_time": {
+    "alias": "Modify Time"
+   },
+   "app_id": {
+    "alias": "App ID"
+   },
+   "objective_type": {
+    "alias": "Objective Type"
+   },
+   "campaign_type": {
+    "alias": "Campaign Type"
+   },
+   "campaign_app_profile_page_state": {
+    "alias": "Campaign App Profile Page State"
+   },
+   "create_time": {
+    "alias": "Create Time"
+   },
+   "catalog_enabled": {
+    "alias": "Catalog Enabled"
+   },
+   "bid_align_type": {
+    "alias": "Bid Align Type"
+   }
+  }
+ },
+ "Custom Audiences": {
+  "columns": {
+   "audience_id": {
+    "alias": "Audience ID"
+   },
+   "advertiser_id": {
+    "alias": "Advertiser ID",
+    "description": "ID of the advertiser account the row belongs to. FK to [Advertiser Account](./advertiser-account.md)"
+   },
+   "name": {
+    "alias": "Name"
+   },
+   "audience_type": {
+    "alias": "Audience Type"
+   },
+   "cover_num": {
+    "alias": "Cover Num"
+   },
+   "create_time": {
+    "alias": "Create Time"
+   },
+   "is_valid": {
+    "alias": "Is Valid"
+   },
+   "is_expiring": {
+    "alias": "Is Expiring"
+   },
+   "expired_time": {
+    "alias": "Expired Time"
+   }
+  }
+ }
+}

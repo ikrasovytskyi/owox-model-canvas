@@ -1,0 +1,766 @@
+{
+ "Ad Performance Report": {
+  "columns": {
+   "AccountName": {
+    "alias": "Account Name",
+    "description": "Name of the ad account the row reports on."
+   },
+   "AccountNumber": {
+    "alias": "Account Number"
+   },
+   "AccountId": {
+    "alias": "Account ID"
+   },
+   "TimePeriod": {
+    "alias": "Time Period"
+   },
+   "CampaignName": {
+    "alias": "Campaign Name",
+    "description": "Name of the campaign the row reports on."
+   },
+   "CampaignId": {
+    "alias": "Campaign ID",
+    "description": "The Microsoft Advertising assigned identifier of a campaign. FK to [Campaigns](./campaigns.md)"
+   },
+   "AdGroupName": {
+    "alias": "Ad Group Name",
+    "description": "Name of the ad group the row reports on."
+   },
+   "AdId": {
+    "alias": "Ad ID"
+   },
+   "AdGroupId": {
+    "alias": "Ad Group ID"
+   },
+   "AdTitle": {
+    "alias": "Ad Title",
+    "description": "Title text of the ad."
+   },
+   "AdDescription": {
+    "alias": "Ad Description"
+   },
+   "AdDescription2": {
+    "alias": "Ad Description2"
+   },
+   "AdType": {
+    "alias": "Ad Type",
+    "description": "Type of the ad the row reports on."
+   },
+   "CurrencyCode": {
+    "alias": "Currency Code"
+   },
+   "AdDistribution": {
+    "alias": "Ad Distribution"
+   },
+   "Impressions": {
+    "alias": "Impressions"
+   },
+   "Clicks": {
+    "alias": "Clicks"
+   },
+   "Ctr": {
+    "alias": "CTR"
+   },
+   "AverageCpc": {
+    "alias": "Average CPC"
+   },
+   "Spend": {
+    "alias": "Spend"
+   },
+   "AveragePosition": {
+    "alias": "Average Position"
+   },
+   "Conversions": {
+    "alias": "Conversions",
+    "description": "Conversions for goals counted in bidding (ExcludeFromBidding off). Deprecated by Microsoft in 2022: it returns 0 going forward, so use `ConversionsQualified`."
+   },
+   "ConversionRate": {
+    "alias": "Conversion Rate",
+    "description": "Conversions divided by clicks, times 100, for goals counted in bidding (ExcludeFromBidding off); `AllConversionRate` covers all goals."
+   },
+   "CostPerConversion": {
+    "alias": "Cost Per Conversion",
+    "description": "Spend divided by conversions, for goals counted in bidding (ExcludeFromBidding off); only campaigns with conversion tracking add conversions."
+   },
+   "DestinationUrl": {
+    "alias": "Destination URL"
+   },
+   "DestinationUrlParsed": {
+    "alias": "Destination URL Parsed"
+   },
+   "DeviceType": {
+    "alias": "Device Type"
+   },
+   "Language": {
+    "alias": "Language"
+   },
+   "DisplayUrl": {
+    "alias": "Display URL"
+   },
+   "AdStatus": {
+    "alias": "Ad Status",
+    "description": "Status of the ad the row reports on."
+   },
+   "Network": {
+    "alias": "Network"
+   },
+   "TopVsOther": {
+    "alias": "Top Vs Other"
+   },
+   "BidMatchType": {
+    "alias": "Bid Match Type"
+   },
+   "DeliveredMatchType": {
+    "alias": "Delivered Match Type"
+   },
+   "DeviceOS": {
+    "alias": "Device OS"
+   },
+   "Assists": {
+    "alias": "Assists"
+   },
+   "Revenue": {
+    "alias": "Revenue",
+    "description": "Revenue the advertiser reports for conversions of goals counted in bidding (ExcludeFromBidding off); `AllRevenue` covers all goals."
+   },
+   "ReturnOnAdSpend": {
+    "alias": "Return On Ad Spend",
+    "description": "Revenue divided by spend (ROAS), for goals counted in bidding (ExcludeFromBidding off)."
+   },
+   "CostPerAssist": {
+    "alias": "Cost Per Assist",
+    "description": "Spend divided by `Assists`."
+   },
+   "RevenuePerConversion": {
+    "alias": "Revenue Per Conversion",
+    "description": "`Revenue` divided by conversions, for goals counted in bidding (ExcludeFromBidding off)."
+   },
+   "RevenuePerAssist": {
+    "alias": "Revenue Per Assist",
+    "description": "`Revenue` divided by `Assists`."
+   },
+   "TrackingTemplate": {
+    "alias": "Tracking Template"
+   },
+   "CustomParameters": {
+    "alias": "Custom Parameters"
+   },
+   "FinalUrl": {
+    "alias": "Final URL"
+   },
+   "FinalUrlParsed": {
+    "alias": "Final URL Parsed"
+   },
+   "FinalMobileUrl": {
+    "alias": "Final Mobile URL"
+   },
+   "FinalMobileUrlParsed": {
+    "alias": "Final Mobile URL Parsed"
+   },
+   "FinalAppUrl": {
+    "alias": "Final App URL"
+   },
+   "AccountStatus": {
+    "alias": "Account Status",
+    "description": "Status of the ad account the row reports on."
+   },
+   "CampaignStatus": {
+    "alias": "Campaign Status",
+    "description": "Status of the campaign the row reports on."
+   },
+   "AdGroupStatus": {
+    "alias": "Ad Group Status",
+    "description": "Status of the ad group the row reports on."
+   },
+   "TitlePart1": {
+    "alias": "Title Part1"
+   },
+   "TitlePart2": {
+    "alias": "Title Part2"
+   },
+   "TitlePart3": {
+    "alias": "Title Part3"
+   },
+   "Headline": {
+    "alias": "Headline"
+   },
+   "LongHeadline": {
+    "alias": "Long Headline"
+   },
+   "BusinessName": {
+    "alias": "Business Name"
+   },
+   "Path1": {
+    "alias": "Path1"
+   },
+   "Path2": {
+    "alias": "Path2"
+   },
+   "AdLabels": {
+    "alias": "Ad Labels"
+   },
+   "CustomerId": {
+    "alias": "Customer ID"
+   },
+   "CustomerName": {
+    "alias": "Customer Name",
+    "description": "Name of the Microsoft Advertising customer that owns the account."
+   },
+   "CampaignType": {
+    "alias": "Campaign Type",
+    "description": "Type of the campaign; Microsoft lists values such as Audience, Dynamic search, Search & content and Shopping."
+   },
+   "BaseCampaignId": {
+    "alias": "Base Campaign ID"
+   },
+   "AllConversions": {
+    "alias": "All Conversions",
+    "description": "Conversions for all goals, including those excluded from bidding. Deprecated by Microsoft in 2022: it returns 0 going forward, so use `AllConversionsQualified`."
+   },
+   "AllRevenue": {
+    "alias": "All Revenue",
+    "description": "Revenue the advertiser reports for conversions of all goals, including those excluded from bidding."
+   },
+   "AllConversionRate": {
+    "alias": "All Conversion Rate",
+    "description": "Conversions divided by clicks, times 100, for all goals, including those excluded from bidding."
+   },
+   "AllCostPerConversion": {
+    "alias": "All Cost Per Conversion",
+    "description": "Spend divided by conversions, for all goals, including those excluded from bidding; only campaigns with conversion tracking add conversions."
+   },
+   "AllReturnOnAdSpend": {
+    "alias": "All Return On Ad Spend",
+    "description": "Revenue divided by spend (ROAS), for all goals, including those excluded from bidding."
+   },
+   "AllRevenuePerConversion": {
+    "alias": "All Revenue Per Conversion",
+    "description": "`AllRevenue` divided by conversions, for all goals, including those excluded from bidding."
+   },
+   "FinalUrlSuffix": {
+    "alias": "Final URL Suffix"
+   },
+   "ViewThroughConversions": {
+    "alias": "View Through Conversions",
+    "description": "Conversions by people who saw but did not click an ad, counted only for Microsoft Audience network ads. Deprecated by Microsoft in 2022: it returns 0 going forward, so use `ViewThroughConversionsQualified`."
+   },
+   "Goal": {
+    "alias": "Goal"
+   },
+   "GoalType": {
+    "alias": "Goal Type"
+   },
+   "AbsoluteTopImpressionRatePercent": {
+    "alias": "Absolute Top Impression Rate Percent"
+   },
+   "TopImpressionRatePercent": {
+    "alias": "Top Impression Rate Percent"
+   },
+   "AverageCpm": {
+    "alias": "Average CPM"
+   },
+   "ConversionsQualified": {
+    "alias": "Conversions Qualified",
+    "description": "Conversions for goals counted in bidding (ExcludeFromBidding off); the column to use instead of the deprecated `Conversions`. Microsoft returns it as a decimal number."
+   },
+   "AllConversionsQualified": {
+    "alias": "All Conversions Qualified",
+    "description": "Conversions for all goals, including those excluded from bidding; the column to use instead of the deprecated `AllConversions`. Microsoft returns it as a decimal number."
+   },
+   "ViewThroughConversionsQualified": {
+    "alias": "View Through Conversions Qualified",
+    "description": "Conversions by people who saw but did not click an ad, counted only for Microsoft Audience network ads; the column to use instead of the deprecated `ViewThroughConversions`."
+   },
+   "ViewThroughRevenue": {
+    "alias": "View Through Revenue"
+   },
+   "VideoViews": {
+    "alias": "Video Views"
+   },
+   "ViewThroughRate": {
+    "alias": "View Through Rate"
+   },
+   "AverageCPV": {
+    "alias": "Average CPV"
+   },
+   "VideoViewsAt25Percent": {
+    "alias": "Video Views At 25 Percent"
+   },
+   "VideoViewsAt50Percent": {
+    "alias": "Video Views At 50 Percent"
+   },
+   "VideoViewsAt75Percent": {
+    "alias": "Video Views At 75 Percent"
+   },
+   "CompletedVideoViews": {
+    "alias": "Completed Video Views"
+   },
+   "VideoCompletionRate": {
+    "alias": "Video Completion Rate"
+   },
+   "TotalWatchTimeInMS": {
+    "alias": "Total Watch Time In MS"
+   },
+   "AverageWatchTimePerVideoView": {
+    "alias": "Average Watch Time Per Video View"
+   },
+   "AverageWatchTimePerImpression": {
+    "alias": "Average Watch Time Per Impression"
+   },
+   "AdStrength": {
+    "alias": "Ad Strength"
+   },
+   "AdStrengthActionItems": {
+    "alias": "Ad Strength Action Items"
+   },
+   "GoalId": {
+    "alias": "Goal ID"
+   }
+  }
+ },
+ "Campaigns": {
+  "columns": {
+   "Type": {
+    "alias": "Type"
+   },
+   "Status": {
+    "alias": "Status"
+   },
+   "Id": {
+    "alias": "ID"
+   },
+   "ParentId": {
+    "alias": "Parent ID"
+   },
+   "CampaignId": {
+    "alias": "Campaign ID"
+   },
+   "Campaign": {
+    "alias": "Campaign"
+   },
+   "CampaignType": {
+    "alias": "Campaign Type"
+   },
+   "CampaignSubType": {
+    "alias": "Campaign Sub Type"
+   },
+   "StartDate": {
+    "alias": "Start Date"
+   },
+   "EndDate": {
+    "alias": "End Date"
+   },
+   "Budget": {
+    "alias": "Budget"
+   },
+   "BudgetType": {
+    "alias": "Budget Type"
+   },
+   "BidStrategyName": {
+    "alias": "Bid Strategy Name"
+   },
+   "BidStrategyType": {
+    "alias": "Bid Strategy Type"
+   },
+   "Language": {
+    "alias": "Language"
+   },
+   "AdGroup": {
+    "alias": "Ad Group"
+   },
+   "AdGroupType": {
+    "alias": "Ad Group Type"
+   },
+   "AssetGroup": {
+    "alias": "Asset Group"
+   },
+   "AssetGroupId": {
+    "alias": "Asset Group ID"
+   },
+   "Keyword": {
+    "alias": "Keyword"
+   },
+   "MatchType": {
+    "alias": "Match Type"
+   },
+   "Bid": {
+    "alias": "Bid"
+   },
+   "DeviceType": {
+    "alias": "Device Type"
+   },
+   "OSNames": {
+    "alias": "OS Names"
+   },
+   "CountryCode": {
+    "alias": "Country Code"
+   },
+   "StateOrProvinceCode": {
+    "alias": "State Or Province Code",
+    "description": "Code of the state or province, next to `CountryCode` and `City`."
+   },
+   "City": {
+    "alias": "City",
+    "description": "Name of the city."
+   },
+   "Clicks": {
+    "alias": "Clicks"
+   },
+   "Impressions": {
+    "alias": "Impressions"
+   },
+   "Spend": {
+    "alias": "Spend"
+   },
+   "CurrencyCode": {
+    "alias": "Currency Code"
+   },
+   "AvgCPC": {
+    "alias": "Average CPC"
+   },
+   "AvgCPM": {
+    "alias": "Average CPM"
+   },
+   "CTR": {
+    "alias": "CTR"
+   },
+   "Avgposition": {
+    "alias": "Avgposition"
+   },
+   "QualityScore": {
+    "alias": "Quality Score"
+   },
+   "Conversions": {
+    "alias": "Conversions",
+    "description": "A Bulk performance-data column that stays empty: the connector downloads entity data only (DataScope EntityData). Conversions are in the two report tables."
+   },
+   "CPA": {
+    "alias": "CPA"
+   },
+   "TrackingTemplate": {
+    "alias": "Tracking Template"
+   },
+   "FinalUrlSuffix": {
+    "alias": "Final URL Suffix"
+   },
+   "FinalUrl": {
+    "alias": "Final URL"
+   },
+   "FinalUrlParsed": {
+    "alias": "Final URL Parsed"
+   },
+   "MobileFinalUrl": {
+    "alias": "Mobile Final URL"
+   },
+   "MobileFinalUrlParsed": {
+    "alias": "Mobile Final URL Parsed"
+   },
+   "DisplayUrl": {
+    "alias": "Display URL"
+   },
+   "Domain": {
+    "alias": "Domain"
+   },
+   "Promotion": {
+    "alias": "Promotion"
+   },
+   "DevicePreference": {
+    "alias": "Device Preference"
+   },
+   "EditorialStatus": {
+    "alias": "Editorial Status"
+   },
+   "EditorialReasonCode": {
+    "alias": "Editorial Reason Code"
+   },
+   "FeedId": {
+    "alias": "Feed ID"
+   },
+   "SitelinkExtensionLinkText": {
+    "alias": "Sitelink Extension Link Text"
+   },
+   "BusinessName": {
+    "alias": "Business Name"
+   },
+   "PhoneNumber": {
+    "alias": "Phone Number"
+   }
+  }
+ },
+ "User Location Performance Report": {
+  "columns": {
+   "AccountName": {
+    "alias": "Account Name",
+    "description": "Name of the ad account the row reports on."
+   },
+   "AccountNumber": {
+    "alias": "Account Number"
+   },
+   "AccountId": {
+    "alias": "Account ID"
+   },
+   "TimePeriod": {
+    "alias": "Time Period"
+   },
+   "CampaignName": {
+    "alias": "Campaign Name",
+    "description": "Name of the campaign the row reports on."
+   },
+   "CampaignId": {
+    "alias": "Campaign ID",
+    "description": "The Microsoft Advertising assigned identifier of a campaign. FK to [Campaigns](./campaigns.md)"
+   },
+   "AdGroupName": {
+    "alias": "Ad Group Name",
+    "description": "Name of the ad group the row reports on."
+   },
+   "AdGroupId": {
+    "alias": "Ad Group ID"
+   },
+   "Country": {
+    "alias": "Country"
+   },
+   "State": {
+    "alias": "State"
+   },
+   "MetroArea": {
+    "alias": "Metro Area"
+   },
+   "CurrencyCode": {
+    "alias": "Currency Code"
+   },
+   "AdDistribution": {
+    "alias": "Ad Distribution"
+   },
+   "Impressions": {
+    "alias": "Impressions"
+   },
+   "Clicks": {
+    "alias": "Clicks"
+   },
+   "Ctr": {
+    "alias": "CTR"
+   },
+   "AverageCpc": {
+    "alias": "Average CPC"
+   },
+   "Spend": {
+    "alias": "Spend"
+   },
+   "AveragePosition": {
+    "alias": "Average Position"
+   },
+   "ProximityTargetLocation": {
+    "alias": "Proximity Target Location"
+   },
+   "Radius": {
+    "alias": "Radius"
+   },
+   "Language": {
+    "alias": "Language"
+   },
+   "City": {
+    "alias": "City"
+   },
+   "QueryIntentCountry": {
+    "alias": "Query Intent Country"
+   },
+   "QueryIntentState": {
+    "alias": "Query Intent State"
+   },
+   "QueryIntentCity": {
+    "alias": "Query Intent City"
+   },
+   "QueryIntentDMA": {
+    "alias": "Query Intent DMA"
+   },
+   "BidMatchType": {
+    "alias": "Bid Match Type"
+   },
+   "DeliveredMatchType": {
+    "alias": "Delivered Match Type"
+   },
+   "Network": {
+    "alias": "Network"
+   },
+   "TopVsOther": {
+    "alias": "Top Vs Other"
+   },
+   "DeviceType": {
+    "alias": "Device Type"
+   },
+   "DeviceOS": {
+    "alias": "Device OS"
+   },
+   "Assists": {
+    "alias": "Assists"
+   },
+   "Conversions": {
+    "alias": "Conversions",
+    "description": "Conversions for goals counted in bidding (ExcludeFromBidding off). Deprecated by Microsoft in 2022: it returns 0 going forward, so use `ConversionsQualified`."
+   },
+   "ConversionRate": {
+    "alias": "Conversion Rate",
+    "description": "Conversions divided by clicks, times 100, for goals counted in bidding (ExcludeFromBidding off); `AllConversionRate` covers all goals."
+   },
+   "Revenue": {
+    "alias": "Revenue",
+    "description": "Revenue the advertiser reports for conversions of goals counted in bidding (ExcludeFromBidding off); `AllRevenue` covers all goals."
+   },
+   "ReturnOnAdSpend": {
+    "alias": "Return On Ad Spend",
+    "description": "Revenue divided by spend (ROAS), for goals counted in bidding (ExcludeFromBidding off)."
+   },
+   "CostPerConversion": {
+    "alias": "Cost Per Conversion",
+    "description": "Spend divided by conversions, for goals counted in bidding (ExcludeFromBidding off); only campaigns with conversion tracking add conversions."
+   },
+   "CostPerAssist": {
+    "alias": "Cost Per Assist",
+    "description": "Spend divided by `Assists`."
+   },
+   "RevenuePerConversion": {
+    "alias": "Revenue Per Conversion",
+    "description": "`Revenue` divided by conversions, for goals counted in bidding (ExcludeFromBidding off)."
+   },
+   "RevenuePerAssist": {
+    "alias": "Revenue Per Assist",
+    "description": "`Revenue` divided by `Assists`."
+   },
+   "County": {
+    "alias": "County"
+   },
+   "PostalCode": {
+    "alias": "Postal Code"
+   },
+   "QueryIntentCounty": {
+    "alias": "Query Intent County"
+   },
+   "QueryIntentPostalCode": {
+    "alias": "Query Intent Postal Code"
+   },
+   "LocationId": {
+    "alias": "Location ID"
+   },
+   "QueryIntentLocationId": {
+    "alias": "Query Intent Location ID"
+   },
+   "AllConversions": {
+    "alias": "All Conversions",
+    "description": "Conversions for all goals, including those excluded from bidding. Deprecated by Microsoft in 2022: it returns 0 going forward, so use `AllConversionsQualified`."
+   },
+   "AllRevenue": {
+    "alias": "All Revenue",
+    "description": "Revenue the advertiser reports for conversions of all goals, including those excluded from bidding."
+   },
+   "AllConversionRate": {
+    "alias": "All Conversion Rate",
+    "description": "Conversions divided by clicks, times 100, for all goals, including those excluded from bidding."
+   },
+   "AllCostPerConversion": {
+    "alias": "All Cost Per Conversion",
+    "description": "Spend divided by conversions, for all goals, including those excluded from bidding; only campaigns with conversion tracking add conversions."
+   },
+   "AllReturnOnAdSpend": {
+    "alias": "All Return On Ad Spend",
+    "description": "Revenue divided by spend (ROAS), for all goals, including those excluded from bidding."
+   },
+   "AllRevenuePerConversion": {
+    "alias": "All Revenue Per Conversion",
+    "description": "`AllRevenue` divided by conversions, for all goals, including those excluded from bidding."
+   },
+   "ViewThroughConversions": {
+    "alias": "View Through Conversions",
+    "description": "Conversions by people who saw but did not click an ad, counted only for Microsoft Audience network ads. Deprecated by Microsoft in 2022: it returns 0 going forward, so use `ViewThroughConversionsQualified`."
+   },
+   "Goal": {
+    "alias": "Goal"
+   },
+   "GoalType": {
+    "alias": "Goal Type"
+   },
+   "AbsoluteTopImpressionRatePercent": {
+    "alias": "Absolute Top Impression Rate Percent"
+   },
+   "TopImpressionRatePercent": {
+    "alias": "Top Impression Rate Percent"
+   },
+   "AverageCpm": {
+    "alias": "Average CPM"
+   },
+   "ConversionsQualified": {
+    "alias": "Conversions Qualified",
+    "description": "Conversions for goals counted in bidding (ExcludeFromBidding off); the column to use instead of the deprecated `Conversions`. Microsoft returns it as a decimal number."
+   },
+   "AllConversionsQualified": {
+    "alias": "All Conversions Qualified",
+    "description": "Conversions for all goals, including those excluded from bidding; the column to use instead of the deprecated `AllConversions`. Microsoft returns it as a decimal number."
+   },
+   "ViewThroughConversionsQualified": {
+    "alias": "View Through Conversions Qualified",
+    "description": "Conversions by people who saw but did not click an ad, counted only for Microsoft Audience network ads; the column to use instead of the deprecated `ViewThroughConversions`."
+   },
+   "Neighborhood": {
+    "alias": "Neighborhood"
+   },
+   "QueryIntentNeighborhood": {
+    "alias": "Query Intent Neighborhood"
+   },
+   "ViewThroughRevenue": {
+    "alias": "View Through Revenue"
+   },
+   "CampaignType": {
+    "alias": "Campaign Type",
+    "description": "Type of the campaign; Microsoft lists values such as Audience, Dynamic search, Search & content and Shopping."
+   },
+   "AssetGroupId": {
+    "alias": "Asset Group ID"
+   },
+   "AssetGroupName": {
+    "alias": "Asset Group Name",
+    "description": "Name of the asset group the row reports on."
+   },
+   "Downloads": {
+    "alias": "Downloads",
+    "description": "The number of times customers downloaded apps through the ads."
+   },
+   "PostClickDownloadRate": {
+    "alias": "Post Click Download Rate"
+   },
+   "CostPerDownload": {
+    "alias": "Cost Per Download",
+    "description": "Spend divided by `Downloads`: the average amount charged each time the ad led to a download."
+   },
+   "AppInstalls": {
+    "alias": "App Installs",
+    "description": "The number of times customers installed apps through the ads."
+   },
+   "PostClickInstallRate": {
+    "alias": "Post Click Install Rate"
+   },
+   "CPI": {
+    "alias": "CPI"
+   },
+   "Purchases": {
+    "alias": "Purchases",
+    "description": "The number of times customers used the ads to make a purchase in the app."
+   },
+   "PostInstallPurchaseRate": {
+    "alias": "Post Install Purchase Rate"
+   },
+   "CPP": {
+    "alias": "CPP"
+   },
+   "Subscriptions": {
+    "alias": "Subscriptions",
+    "description": "The number of times customers used the ads to buy a subscription in a game."
+   },
+   "PostInstallSubscriptionRate": {
+    "alias": "Post Install Subscription Rate"
+   },
+   "CPS": {
+    "alias": "CPS"
+   }
+  }
+ }
+}

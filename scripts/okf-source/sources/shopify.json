@@ -1,6 +1,6 @@
 {
   "vendorName": "Shopify Admin GraphQL API",
-  "description": "What the OWOX Data Marts Shopify connector loads from a store through the Shopify Admin GraphQL API, and how the tables fit together. The commerce core is Orders, Customers, Products and Product Variants: an order points to its customer, a variant to its product and to its inventory item, and money movements (Tender Transactions) and shipments (Fulfillment Orders) point back to the order. Fulfillment Orders also point to the Locations they ship from. Abandoned Checkouts record the customers who started and did not finish an order.\n\nThe store's content is Blogs, Articles and Pages. Ten metafield tables, one per owner type, hold the custom fields merchants and apps attach to blogs, articles, pages, products, variants, collections, customers, orders, locations and the shop; each points to its owner on `ownerId`.\n\nEvery id is a Shopify global ID, a string such as `gid://shopify/Order/…`. Order and customer detail without a column of its own (line items, shipping lines, refunds, discount codes) is kept as JSON text, to unnest in SQL.",
+  "description": "What the OWOX Data Marts Shopify connector loads from a store through the Shopify Admin GraphQL API, and how the tables fit together. The commerce core is Orders, Customers, Products and Product Variants: an order points to its customer, a variant to its product and to its inventory item, and money movements (Tender Transactions) and shipments (Fulfillment Orders) point back to the order. Fulfillment Orders also point to the Locations they ship from. Abandoned Checkouts record the customers who started and did not finish an order.\n\nThe store's content is Blogs, Articles and Pages. Ten metafield tables, one per owner type, hold the custom fields merchants and apps attach to blogs, articles, pages, products, variants, collections, customers, orders, locations and the shop; each points to its owner on `ownerId`.\n\nEvery id is a Shopify global ID, a string such as `gid://shopify/Order/…`. Order detail without a column of its own (line items, shipping lines, refunds, discount applications) is kept as JSON text, to unnest in SQL. The money columns of Orders and Abandoned Checkouts are in the store currency.",
   "questions": [
     "How do orders, refunds and discounts add up to net sales per month and per customer?",
     "Which customers placed repeat orders, and which started a checkout they never finished?",
@@ -8,7 +8,7 @@
   ],
   "endpoints": {
     "Orders": {
-      "description": "One row per order placed in the store: financial and fulfillment status, order totals (subtotal, tax, shipping, discounts, refunded), currency, customer contact fields, billing and shipping location, tags, source and the key timestamps. Detail that has no column of its own is kept as JSON text: the line items, shipping lines, refunds, discount codes and the customer object.\n\nThis is the table most questions start from. `customerId` points to Customers, and Fulfillment Orders, Tender Transactions and Order Metafields point back here on the order `id`. The `id` is Shopify's global ID, a string such as `gid://shopify/Order/…`, not a number.",
+      "description": "One row per order placed in the store: financial and fulfillment status, order totals (subtotal, tax, shipping, discounts, refunded), currency, customer contact fields, billing and shipping location, tags, source and the key timestamps. Detail that has no column of its own is kept as JSON text: the line items, shipping lines, refunds and discount applications. `discountCodes` lists the codes used as plain comma-separated text, and `customer` holds only the customer's ID.\n\nEvery money column is in the store currency (`currencyCode`). Several amounts come in families: `totalPrice` is before returns, `currentTotalPrice` after returns and refunds, and `originalTotalPrice` as at order creation; each field's description says which it is. `customerId` points to Customers, and Fulfillment Orders, Tender Transactions and Order Metafields point back here on the order `id`. The `id` is Shopify's global ID, a string such as `gid://shopify/Order/…`, not a number.",
       "questions": [
         "What were net sales, tax and shipping per month, and how much of it was refunded?",
         "Which discount codes brought in the most revenue, and what share of orders used one?",
@@ -16,7 +16,7 @@
       ]
     },
     "Customers": {
-      "description": "One row per customer account: name, email, phone, account state, locale, marketing consent for email and SMS, number of orders, lifetime spend, tags and default address. `amountSpent` is a JSON string holding the amount and its currency code.\n\nOrders and Abandoned Checkouts point here on `customerId`. A guest checkout can have an order without a customer row, so a join from Orders to Customers is a left join.",
+      "description": "One row per customer account: name, email, phone, account state, locale, marketing consent for email and SMS, number of orders, lifetime spend, tags and default address. `amountSpent` holds the amount only, without its currency code.\n\nOrders and Abandoned Checkouts point here on `customerId`. An order can have no customer, so a join from Orders to Customers is a left join.",
       "questions": [
         "How many customers placed one order, two orders, or more, and what did each group spend?",
         "Which countries do customers with email marketing consent live in?",
@@ -56,7 +56,7 @@
       ]
     },
     "Discount Codes": {
-      "description": "One row per discount code: the code, discount type, title, status, start and end time, usage limit, whether it applies once per customer and the number of uses counted asynchronously. The codes customers actually used on an order are kept as JSON text in Orders (`discountCodes`).\n\nThere is no key column to join this table to Orders; match on the `code` text inside the JSON.",
+      "description": "One row per discount code: the code, discount type, title, status, start and end time, usage limit, whether it applies once per customer and the number of uses counted asynchronously. The codes customers actually used on an order are listed in Orders as comma-separated text (`discountCodes`).\n\nThere is no key column to join this table to Orders; match `code` against the codes in that text. A discount with several codes shows only its first one here.",
       "questions": [
         "Which discount codes are active now, and which expire this month?",
         "How many codes of each discount type exist?",
@@ -64,7 +64,7 @@
       ]
     },
     "Abandoned Checkouts": {
-      "description": "Checkouts that a customer started and did not complete: recovery URL, completion time, line item quantity, total price, billing and shipping location, and the customer's name and email. `totalPriceSet` is a JSON string with the amount and currency.\n\nUse it for recovery campaigns and for the gap between started and completed checkouts. `customerId` points to Customers and may be empty when the checkout came from a draft order or an app.",
+      "description": "Checkouts that a customer started and did not complete: recovery URL, completion time, line item quantity, total price, billing and shipping location, and the customer's name and email. `totalPriceSet` is the amount in the store currency, without a currency code.\n\nUse it for recovery campaigns and for the gap between started and completed checkouts. `customerId` points to Customers and may be empty when the checkout came from a draft order or an app.",
       "questions": [
         "How many checkouts were abandoned each week, and what was their total value?",
         "Which countries have the most abandoned checkouts?",

@@ -1,0 +1,662 @@
+{
+ "Accounts": {
+  "columns": {
+   "name": {
+    "alias": "Name"
+   },
+   "business_name": {
+    "alias": "Business Name"
+   },
+   "timezone": {
+    "alias": "Timezone"
+   },
+   "timezone_switch_at": {
+    "alias": "Timezone Switch At"
+   },
+   "country_code": {
+    "alias": "Country Code"
+   },
+   "id": {
+    "alias": "ID"
+   },
+   "created_at": {
+    "alias": "Created At"
+   },
+   "updated_at": {
+    "alias": "Updated At"
+   },
+   "industry_type": {
+    "alias": "Industry Type"
+   },
+   "business_id": {
+    "alias": "Business ID"
+   },
+   "approval_status": {
+    "alias": "Approval Status"
+   },
+   "deleted": {
+    "alias": "Deleted"
+   }
+  }
+ },
+ "Ad Performance by Country": {
+  "columns": {
+   "id": {
+    "alias": "ID",
+    "description": "The unique identifier for the stats record. FK to [Promoted Tweets](./promoted-tweets.md)"
+   },
+   "date": {
+    "alias": "Date"
+   },
+   "placement": {
+    "alias": "Placement"
+   },
+   "country": {
+    "alias": "Country",
+    "description": "Location ID from X Ads (hex string, e.g. 96683cc9126741d1). Join with the targeting_locations node to get the human-readable name and country code. FK to [Targeting Locations](./targeting-locations.md)"
+   },
+   "impressions": {
+    "alias": "Impressions",
+    "description": "Times the promoted tweet was shown; X's engagement, click and follow rates divide by it."
+   },
+   "tweets_send": {
+    "alias": "Tweets Send"
+   },
+   "billed_charge_local_micro": {
+    "alias": "Billed Charge Local Micro"
+   },
+   "qualified_impressions": {
+    "alias": "Qualified Impressions",
+    "description": "Qualified impressions of the promoted tweet; X's qualified impression rate is this divided by `impressions`."
+   },
+   "follows": {
+    "alias": "Follows",
+    "description": "Follows that came from the promoted tweet; X's cost per follow is `billed_charge_local_micro` divided by this."
+   },
+   "app_clicks": {
+    "alias": "App Clicks",
+    "description": "App install or app open attempts from the promoted tweet."
+   },
+   "retweets": {
+    "alias": "Retweets",
+    "description": "Reposts (retweets) of the promoted tweet."
+   },
+   "unfollows": {
+    "alias": "Unfollows",
+    "description": "Unfollows; the current X Ads metrics table no longer lists it, and X's example responses return it as null."
+   },
+   "likes": {
+    "alias": "Likes",
+    "description": "Likes on the promoted tweet."
+   },
+   "engagements": {
+    "alias": "Engagements",
+    "description": "Engagements with the promoted tweet as X sums them (clicks, replies, reposts, follows and more); X's engagement rate is this divided by `impressions`."
+   },
+   "clicks": {
+    "alias": "Clicks",
+    "description": "Clicks on the promoted tweet, including likes (favorites) and other engagements, per X; `url_clicks` counts only link clicks."
+   },
+   "card_engagements": {
+    "alias": "Card Engagements",
+    "description": "Engagements with the card attached to the promoted tweet."
+   },
+   "poll_card_vote": {
+    "alias": "Poll Card Vote"
+   },
+   "replies": {
+    "alias": "Replies",
+    "description": "Replies to the promoted tweet."
+   },
+   "url_clicks": {
+    "alias": "URL Clicks",
+    "description": "Clicks on the link or Website Card in the ad, including earned clicks."
+   },
+   "billed_engagements": {
+    "alias": "Billed Engagements",
+    "description": "Engagements X billed, from its BILLING metric group, as opposed to all `engagements`."
+   },
+   "carousel_swipes": {
+    "alias": "Carousel Swipes",
+    "description": "Swipes on carousel images or videos."
+   }
+  }
+ },
+ "Ad Performance": {
+  "columns": {
+   "id": {
+    "alias": "ID",
+    "description": "The unique identifier for the stats record. FK to [Promoted Tweets](./promoted-tweets.md)"
+   },
+   "date": {
+    "alias": "Date"
+   },
+   "placement": {
+    "alias": "Placement"
+   },
+   "impressions": {
+    "alias": "Impressions",
+    "description": "Times the promoted tweet was shown; X's engagement, click and follow rates divide by it."
+   },
+   "tweets_send": {
+    "alias": "Tweets Send"
+   },
+   "billed_charge_local_micro": {
+    "alias": "Billed Charge Local Micro"
+   },
+   "qualified_impressions": {
+    "alias": "Qualified Impressions",
+    "description": "Qualified impressions of the promoted tweet; X's qualified impression rate is this divided by `impressions`."
+   },
+   "follows": {
+    "alias": "Follows",
+    "description": "Follows that came from the promoted tweet; X's cost per follow is `billed_charge_local_micro` divided by this."
+   },
+   "app_clicks": {
+    "alias": "App Clicks",
+    "description": "App install or app open attempts from the promoted tweet."
+   },
+   "retweets": {
+    "alias": "Retweets",
+    "description": "Reposts (retweets) of the promoted tweet."
+   },
+   "unfollows": {
+    "alias": "Unfollows",
+    "description": "Unfollows; the current X Ads metrics table no longer lists it, and X's example responses return it as null."
+   },
+   "likes": {
+    "alias": "Likes",
+    "description": "Likes on the promoted tweet."
+   },
+   "engagements": {
+    "alias": "Engagements",
+    "description": "Engagements with the promoted tweet as X sums them (clicks, replies, reposts, follows and more); X's engagement rate is this divided by `impressions`."
+   },
+   "clicks": {
+    "alias": "Clicks",
+    "description": "Clicks on the promoted tweet, including likes (favorites) and other engagements, per X; `url_clicks` counts only link clicks."
+   },
+   "card_engagements": {
+    "alias": "Card Engagements",
+    "description": "Engagements with the card attached to the promoted tweet."
+   },
+   "poll_card_vote": {
+    "alias": "Poll Card Vote"
+   },
+   "replies": {
+    "alias": "Replies",
+    "description": "Replies to the promoted tweet."
+   },
+   "url_clicks": {
+    "alias": "URL Clicks",
+    "description": "Clicks on the link or Website Card in the ad, including earned clicks."
+   },
+   "billed_engagements": {
+    "alias": "Billed Engagements",
+    "description": "Engagements X billed, from its BILLING metric group, as opposed to all `engagements`."
+   },
+   "carousel_swipes": {
+    "alias": "Carousel Swipes",
+    "description": "Swipes on carousel images or videos."
+   }
+  }
+ },
+ "All Cards": {
+  "columns": {
+   "id": {
+    "alias": "ID"
+   },
+   "name": {
+    "alias": "Name"
+   },
+   "card_type": {
+    "alias": "Card Type"
+   },
+   "card_uri": {
+    "alias": "Card URI"
+   },
+   "created_at": {
+    "alias": "Created At"
+   },
+   "updated_at": {
+    "alias": "Updated At"
+   },
+   "deleted": {
+    "alias": "Deleted"
+   },
+   "googleplay_app_id": {
+    "alias": "Googleplay App ID"
+   },
+   "country_code": {
+    "alias": "Country Code"
+   },
+   "wide_app_image": {
+    "alias": "Wide App Image"
+   },
+   "image_display_width": {
+    "alias": "Image Display Width"
+   },
+   "image_display_height": {
+    "alias": "Image Display Height"
+   },
+   "app_cta": {
+    "alias": "App CTA"
+   },
+   "title": {
+    "alias": "Title"
+   },
+   "website_url": {
+    "alias": "Website URL"
+   },
+   "website_url_parsed": {
+    "alias": "Website URL Parsed"
+   },
+   "website_dest_url": {
+    "alias": "Website Destination URL"
+   },
+   "website_dest_url_parsed": {
+    "alias": "Website Destination URL Parsed"
+   },
+   "website_display_url": {
+    "alias": "Website Display URL"
+   },
+   "website_shortened_url": {
+    "alias": "Website Shortened URL"
+   },
+   "video_url": {
+    "alias": "Video URL"
+   },
+   "video_hls_url": {
+    "alias": "Video HLS URL"
+   },
+   "video_poster_url": {
+    "alias": "Video Poster URL"
+   },
+   "video_content_id": {
+    "alias": "Video Content ID"
+   },
+   "video_owner_id": {
+    "alias": "Video Owner ID"
+   },
+   "content_duration_seconds": {
+    "alias": "Content Duration Seconds"
+   },
+   "video_width": {
+    "alias": "Video Width"
+   },
+   "video_height": {
+    "alias": "Video Height"
+   },
+   "video_poster_width": {
+    "alias": "Video Poster Width"
+   },
+   "video_poster_height": {
+    "alias": "Video Poster Height"
+   }
+  }
+ },
+ "Campaigns": {
+  "columns": {
+   "name": {
+    "alias": "Name"
+   },
+   "budget_optimization": {
+    "alias": "Budget Optimization"
+   },
+   "reasons_not_servable": {
+    "alias": "Reasons Not Servable",
+    "description": "Reasons why the campaign is not servable. Stored as a JSON string."
+   },
+   "servable": {
+    "alias": "Servable"
+   },
+   "purchase_order_number": {
+    "alias": "Purchase Order Number",
+    "description": "The purchase order number set on the campaign; X's example responses show it as null."
+   },
+   "effective_status": {
+    "alias": "Effective Status"
+   },
+   "daily_budget_amount_local_micro": {
+    "alias": "Daily Budget Amount Local Micro"
+   },
+   "funding_instrument_id": {
+    "alias": "Funding Instrument ID"
+   },
+   "duration_in_days": {
+    "alias": "Duration In Days"
+   },
+   "standard_delivery": {
+    "alias": "Standard Delivery"
+   },
+   "total_budget_amount_local_micro": {
+    "alias": "Total Budget Amount Local Micro"
+   },
+   "id": {
+    "alias": "ID"
+   },
+   "entity_status": {
+    "alias": "Entity Status"
+   },
+   "frequency_cap": {
+    "alias": "Frequency Cap"
+   },
+   "currency": {
+    "alias": "Currency"
+   },
+   "created_at": {
+    "alias": "Created At"
+   },
+   "updated_at": {
+    "alias": "Updated At"
+   },
+   "deleted": {
+    "alias": "Deleted"
+   },
+   "account_id": {
+    "alias": "Account ID",
+    "description": "ID of the account FK to [Accounts](./accounts.md)"
+   }
+  }
+ },
+ "Cards": {
+  "columns": {
+   "id": {
+    "alias": "ID",
+    "description": "The unique identifier for the card. FK to [All Cards](./all-cards.md)"
+   },
+   "name": {
+    "alias": "Name"
+   },
+   "card_type": {
+    "alias": "Card Type"
+   },
+   "card_uri": {
+    "alias": "Card URI"
+   },
+   "created_at": {
+    "alias": "Created At"
+   },
+   "updated_at": {
+    "alias": "Updated At"
+   },
+   "deleted": {
+    "alias": "Deleted"
+   },
+   "components": {
+    "alias": "Components",
+    "description": "Card components including media and buttons. Stored as a JSON string."
+   }
+  }
+ },
+ "Line Items": {
+  "columns": {
+   "advertiser_user_id": {
+    "alias": "Advertiser User ID"
+   },
+   "name": {
+    "alias": "Name"
+   },
+   "placements": {
+    "alias": "Placements",
+    "description": "List of placement targets (e.g. ALL_ON_TWITTER). Stored as a JSON string."
+   },
+   "start_time": {
+    "alias": "Start Time"
+   },
+   "bid_amount_local_micro": {
+    "alias": "Bid Amount Local Micro"
+   },
+   "advertiser_domain": {
+    "alias": "Advertiser Domain"
+   },
+   "target_cpa_local_micro": {
+    "alias": "Target CPA Local Micro"
+   },
+   "primary_web_event_tag": {
+    "alias": "Primary Web Event Tag"
+   },
+   "goal": {
+    "alias": "Goal"
+   },
+   "daily_budget_amount_local_micro": {
+    "alias": "Daily Budget Amount Local Micro"
+   },
+   "product_type": {
+    "alias": "Product Type"
+   },
+   "end_time": {
+    "alias": "End Time"
+   },
+   "funding_instrument_id": {
+    "alias": "Funding Instrument ID"
+   },
+   "bid_strategy": {
+    "alias": "Bid Strategy"
+   },
+   "duration_in_days": {
+    "alias": "Duration In Days"
+   },
+   "standard_delivery": {
+    "alias": "Standard Delivery"
+   },
+   "total_budget_amount_local_micro": {
+    "alias": "Total Budget Amount Local Micro"
+   },
+   "objective": {
+    "alias": "Objective"
+   },
+   "id": {
+    "alias": "ID"
+   },
+   "entity_status": {
+    "alias": "Entity Status"
+   },
+   "automatic_tweet_promotion": {
+    "alias": "Automatic Tweet Promotion"
+   },
+   "frequency_cap": {
+    "alias": "Frequency Cap"
+   },
+   "android_app_store_identifier": {
+    "alias": "Android App Store Identifier",
+    "description": "Google Play identifier of the app the line item promotes; setting it adds Android platform targeting, and app install and app engagement objectives need it or the iOS one."
+   },
+   "categories": {
+    "alias": "Categories",
+    "description": "Array of category labels. Stored as a JSON string."
+   },
+   "currency": {
+    "alias": "Currency"
+   },
+   "pay_by": {
+    "alias": "Pay By"
+   },
+   "created_at": {
+    "alias": "Created At"
+   },
+   "ios_app_store_identifier": {
+    "alias": "iOS App Store Identifier",
+    "description": "App Store identifier of the app the line item promotes; setting it adds iOS platform targeting, and app install and app engagement objectives need it or the Android one."
+   },
+   "updated_at": {
+    "alias": "Updated At"
+   },
+   "campaign_id": {
+    "alias": "Campaign ID",
+    "description": "ID of the parent campaign FK to [Campaigns](./campaigns.md)"
+   },
+   "creative_source": {
+    "alias": "Creative Source"
+   },
+   "audience_expansion": {
+    "alias": "Audience Expansion"
+   },
+   "deleted": {
+    "alias": "Deleted"
+   }
+  }
+ },
+ "Promoted Tweets": {
+  "columns": {
+   "line_item_id": {
+    "alias": "Line Item ID",
+    "description": "ID of the parent line item FK to [Line Items](./line-items.md)"
+   },
+   "id": {
+    "alias": "ID"
+   },
+   "entity_status": {
+    "alias": "Entity Status"
+   },
+   "created_at": {
+    "alias": "Created At"
+   },
+   "updated_at": {
+    "alias": "Updated At"
+   },
+   "approval_status": {
+    "alias": "Approval Status"
+   },
+   "tweet_id": {
+    "alias": "Tweet ID",
+    "description": "ID of the original tweet FK to [Tweets](./tweets.md)"
+   },
+   "deleted": {
+    "alias": "Deleted"
+   }
+  }
+ },
+ "Targeting Locations": {
+  "columns": {
+   "targeting_value": {
+    "alias": "Targeting Value"
+   },
+   "name": {
+    "alias": "Name"
+   },
+   "location_type": {
+    "alias": "Location Type"
+   },
+   "country_code": {
+    "alias": "Country Code"
+   }
+  }
+ },
+ "Tweets": {
+  "columns": {
+   "coordinates": {
+    "alias": "Coordinates",
+    "description": "The geographic coordinates (latitude/longitude) of the tweet, if available. Stored as a JSON string."
+   },
+   "retweeted": {
+    "alias": "Retweeted"
+   },
+   "name": {
+    "alias": "Name"
+   },
+   "conversation_settings": {
+    "alias": "Conversation Settings"
+   },
+   "source": {
+    "alias": "Source"
+   },
+   "entities": {
+    "alias": "Entities",
+    "description": "Parsed entities in the tweet (mentions, hashtags, URLs, media, etc.). Stored as a JSON string."
+   },
+   "display_text_range": {
+    "alias": "Display Text Range",
+    "description": "Start/end indices for which portion of the tweet text to display. Stored as a JSON string."
+   },
+   "favorite_count": {
+    "alias": "Favorite Count"
+   },
+   "in_reply_to_status_id_str": {
+    "alias": "In Reply To Status ID String"
+   },
+   "geo": {
+    "alias": "Geo",
+    "description": "Deprecated geographic information, if present. Stored as a JSON string."
+   },
+   "id_str": {
+    "alias": "ID String"
+   },
+   "scopes": {
+    "alias": "Scopes",
+    "description": "Visibility scopes (e.g. { followers: false }). Stored as a JSON string."
+   },
+   "in_reply_to_user_id": {
+    "alias": "In Reply To User ID"
+   },
+   "truncated": {
+    "alias": "Truncated"
+   },
+   "retweet_count": {
+    "alias": "Retweet Count"
+   },
+   "scheduled_status": {
+    "alias": "Scheduled Status"
+   },
+   "id": {
+    "alias": "ID"
+   },
+   "in_reply_to_status_id": {
+    "alias": "In Reply To Status ID"
+   },
+   "possibly_sensitive": {
+    "alias": "Possibly Sensitive"
+   },
+   "nullcast": {
+    "alias": "Nullcast"
+   },
+   "created_at": {
+    "alias": "Created At"
+   },
+   "place": {
+    "alias": "Place",
+    "description": "Place (location) associated with the tweet, if any. Stored as a JSON string."
+   },
+   "scheduled_at": {
+    "alias": "Scheduled At"
+   },
+   "tweet_type": {
+    "alias": "Tweet Type"
+   },
+   "favorited": {
+    "alias": "Favorited"
+   },
+   "card_uri": {
+    "alias": "Card URI",
+    "description": "URI of the associated Twitter Card. FK to [All Cards](./all-cards.md)"
+   },
+   "full_text": {
+    "alias": "Full Text"
+   },
+   "lang": {
+    "alias": "Lang"
+   },
+   "contributors": {
+    "alias": "Contributors",
+    "description": "Array of contributors to the tweet, if any. Stored as a JSON string."
+   },
+   "in_reply_to_screen_name": {
+    "alias": "In Reply To Screen Name"
+   },
+   "in_reply_to_user_id_str": {
+    "alias": "In Reply To User ID String"
+   },
+   "user": {
+    "alias": "User",
+    "description": "The user object of the author (contains id, id_str, etc.). Stored as a JSON string."
+   },
+   "tweet_id": {
+    "alias": "Tweet ID"
+   },
+   "extended_entities": {
+    "alias": "Extended Entities",
+    "description": "Extended media entities (e.g. video variants, additional media info). Stored as a JSON string."
+   }
+  }
+ }
+}

@@ -1,0 +1,1682 @@
+{
+ "A/P Aging Summary report": {
+  "columns": {
+   "currency": {
+    "alias": "Currency"
+   },
+   "realm_id": {
+    "alias": "Realm ID",
+    "description": "Company (realm) id, stamped from the RealmId parameter. FK to [Company info](./company-info.md)"
+   },
+   "end_period": {
+    "alias": "End Period"
+   },
+   "report_name": {
+    "alias": "Report Name"
+   },
+   "report_rows": {
+    "alias": "Report Rows",
+    "description": "Nested Section/Data rows as JSON. Flatten in SQL; ColData.id is the Account/Customer/Vendor Id. Stored as a JSON string."
+   },
+   "report_time": {
+    "alias": "Report Time"
+   },
+   "report_basis": {
+    "alias": "Report Basis"
+   },
+   "start_period": {
+    "alias": "Start Period"
+   },
+   "header_options": {
+    "alias": "Header Options",
+    "description": "Name/Value pairs; NoReportData=true means an empty report. Stored as a JSON string."
+   },
+   "report_columns": {
+    "alias": "Report Columns",
+    "description": "Column metadata (ColTitle, ColType) as JSON; index-aligned with every ColData array. Stored as a JSON string."
+   },
+   "summarize_columns_by": {
+    "alias": "Summarize Columns By"
+   }
+  }
+ },
+ "A/R Aging Summary report": {
+  "columns": {
+   "currency": {
+    "alias": "Currency"
+   },
+   "realm_id": {
+    "alias": "Realm ID",
+    "description": "Company (realm) id, stamped from the RealmId parameter. FK to [Company info](./company-info.md)"
+   },
+   "end_period": {
+    "alias": "End Period"
+   },
+   "report_name": {
+    "alias": "Report Name"
+   },
+   "report_rows": {
+    "alias": "Report Rows",
+    "description": "Nested Section/Data rows as JSON. Flatten in SQL; ColData.id is the Account/Customer/Vendor Id. Stored as a JSON string."
+   },
+   "report_time": {
+    "alias": "Report Time"
+   },
+   "report_basis": {
+    "alias": "Report Basis"
+   },
+   "start_period": {
+    "alias": "Start Period"
+   },
+   "header_options": {
+    "alias": "Header Options",
+    "description": "Name/Value pairs; NoReportData=true means an empty report. Stored as a JSON string."
+   },
+   "report_columns": {
+    "alias": "Report Columns",
+    "description": "Column metadata (ColTitle, ColType) as JSON; index-aligned with every ColData array. Stored as a JSON string."
+   },
+   "summarize_columns_by": {
+    "alias": "Summarize Columns By"
+   }
+  }
+ },
+ "Accounts": {
+  "columns": {
+   "id": {
+    "alias": "ID"
+   },
+   "name": {
+    "alias": "Name"
+   },
+   "active": {
+    "alias": "Active"
+   },
+   "acct_num": {
+    "alias": "Acct Num"
+   },
+   "realm_id": {
+    "alias": "Realm ID",
+    "description": "Company (realm) id, stamped from the RealmId parameter. FK to [Company info](./company-info.md)"
+   },
+   "parent_id": {
+    "alias": "Parent ID"
+   },
+   "sync_token": {
+    "alias": "Sync Token"
+   },
+   "create_time": {
+    "alias": "Create Time"
+   },
+   "currency_id": {
+    "alias": "Currency ID",
+    "description": "Currency code the account holds its amounts in, for example USD."
+   },
+   "description": {
+    "alias": "Description"
+   },
+   "parent_name": {
+    "alias": "Parent Name"
+   },
+   "sub_account": {
+    "alias": "Sub Account"
+   },
+   "account_type": {
+    "alias": "Account Type"
+   },
+   "currency_name": {
+    "alias": "Currency Name"
+   },
+   "classification": {
+    "alias": "Classification"
+   },
+   "current_balance": {
+    "alias": "Current Balance",
+    "description": "Balance of the account itself, without its sub-accounts; Intuit sets it for balance sheet accounts."
+   },
+   "account_sub_type": {
+    "alias": "Account Sub Type"
+   },
+   "last_updated_time": {
+    "alias": "Last Updated Time",
+    "description": "When the record was last changed in QuickBooks (MetaData.LastUpdatedTime); the connector reads every record, whatever this time."
+   },
+   "fully_qualified_name": {
+    "alias": "Fully Qualified Name"
+   },
+   "current_balance_with_sub_accounts": {
+    "alias": "Current Balance With Sub Accounts",
+    "description": "Balance of the account plus all of its sub-accounts."
+   }
+  }
+ },
+ "Balance Sheet report": {
+  "columns": {
+   "currency": {
+    "alias": "Currency"
+   },
+   "realm_id": {
+    "alias": "Realm ID",
+    "description": "Company (realm) id, stamped from the RealmId parameter. FK to [Company info](./company-info.md)"
+   },
+   "end_period": {
+    "alias": "End Period"
+   },
+   "report_name": {
+    "alias": "Report Name"
+   },
+   "report_rows": {
+    "alias": "Report Rows",
+    "description": "Nested Section/Data rows as JSON. Flatten in SQL; ColData.id is the Account/Customer/Vendor Id. Stored as a JSON string."
+   },
+   "report_time": {
+    "alias": "Report Time"
+   },
+   "report_basis": {
+    "alias": "Report Basis"
+   },
+   "start_period": {
+    "alias": "Start Period"
+   },
+   "header_options": {
+    "alias": "Header Options",
+    "description": "Name/Value pairs; NoReportData=true means an empty report. Stored as a JSON string."
+   },
+   "report_columns": {
+    "alias": "Report Columns",
+    "description": "Column metadata (ColTitle, ColType) as JSON; index-aligned with every ColData array. Stored as a JSON string."
+   },
+   "summarize_columns_by": {
+    "alias": "Summarize Columns By"
+   },
+   "accounting_method_param": {
+    "alias": "Accounting Method Param"
+   }
+  }
+ },
+ "Bill payments": {
+  "columns": {
+   "id": {
+    "alias": "ID"
+   },
+   "line": {
+    "alias": "Line",
+    "description": "Line[] as JSON; LinkedTxn[] {TxnId, TxnType=Bill} names the bills settled. Stored as a JSON string."
+   },
+   "pay_type": {
+    "alias": "Pay Type"
+   },
+   "realm_id": {
+    "alias": "Realm ID",
+    "description": "Company (realm) id, stamped from the RealmId parameter. FK to [Company info](./company-info.md)"
+   },
+   "txn_date": {
+    "alias": "Transaction Date"
+   },
+   "total_amt": {
+    "alias": "Total Amount",
+    "description": "Total amount paid, the sum of the payment's lines, in the document currency."
+   },
+   "vendor_id": {
+    "alias": "Vendor ID",
+    "description": "Id of the vendor on the document; joins to vendor.id. FK to [Vendors](./vendors.md)"
+   },
+   "doc_number": {
+    "alias": "Doc Number"
+   },
+   "sync_token": {
+    "alias": "Sync Token"
+   },
+   "create_time": {
+    "alias": "Create Time"
+   },
+   "currency_id": {
+    "alias": "Currency ID"
+   },
+   "vendor_name": {
+    "alias": "Vendor Name"
+   },
+   "private_note": {
+    "alias": "Private Note"
+   },
+   "ap_account_id": {
+    "alias": "AP Account ID",
+    "description": "Id of the accounts payable account the document is posted to; joins to account.id. FK to [Accounts](./accounts.md)"
+   },
+   "currency_name": {
+    "alias": "Currency Name"
+   },
+   "exchange_rate": {
+    "alias": "Exchange Rate"
+   },
+   "ap_account_name": {
+    "alias": "AP Account Name"
+   },
+   "last_updated_time": {
+    "alias": "Last Updated Time",
+    "description": "When the record was last changed in QuickBooks (MetaData.LastUpdatedTime); the connector reads only records changed after its Load changes since setting."
+   },
+   "check_print_status": {
+    "alias": "Check Print Status"
+   },
+   "check_bank_account_id": {
+    "alias": "Check Bank Account ID",
+    "description": "Id of the bank account a check payment is drawn from; joins to account.id. FK to [Accounts](./accounts.md)"
+   },
+   "credit_card_account_id": {
+    "alias": "Credit Card Account ID",
+    "description": "Id of the credit card account the payment was made with; joins to account.id. FK to [Accounts](./accounts.md)"
+   },
+   "check_bank_account_name": {
+    "alias": "Check Bank Account Name"
+   },
+   "credit_card_account_name": {
+    "alias": "Credit Card Account Name"
+   }
+  }
+ },
+ "Bills": {
+  "columns": {
+   "id": {
+    "alias": "ID"
+   },
+   "line": {
+    "alias": "Line",
+    "description": "Line[] as JSON; DetailType is AccountBasedExpenseLineDetail (AccountRef) or ItemBasedExpenseLineDetail (ItemRef). Stored as a JSON string."
+   },
+   "balance": {
+    "alias": "Balance"
+   },
+   "due_date": {
+    "alias": "Due Date"
+   },
+   "realm_id": {
+    "alias": "Realm ID",
+    "description": "Company (realm) id, stamped from the RealmId parameter. FK to [Company info](./company-info.md)"
+   },
+   "txn_date": {
+    "alias": "Transaction Date"
+   },
+   "total_amt": {
+    "alias": "Total Amount"
+   },
+   "vendor_id": {
+    "alias": "Vendor ID",
+    "description": "Id of the vendor on the document; joins to vendor.id. FK to [Vendors](./vendors.md)"
+   },
+   "doc_number": {
+    "alias": "Doc Number"
+   },
+   "linked_txn": {
+    "alias": "Linked Transaction",
+    "description": "Transactions linked to this one (for example the payments applied to a bill) as a JSON array of transaction id and type; flatten with UNNEST or JSON functions in SQL. Stored as a JSON string."
+   },
+   "sync_token": {
+    "alias": "Sync Token"
+   },
+   "create_time": {
+    "alias": "Create Time"
+   },
+   "currency_id": {
+    "alias": "Currency ID"
+   },
+   "vendor_name": {
+    "alias": "Vendor Name"
+   },
+   "home_balance": {
+    "alias": "Home Balance"
+   },
+   "private_note": {
+    "alias": "Private Note"
+   },
+   "ap_account_id": {
+    "alias": "AP Account ID",
+    "description": "Id of the accounts payable account the document is posted to; joins to account.id. FK to [Accounts](./accounts.md)"
+   },
+   "currency_name": {
+    "alias": "Currency Name"
+   },
+   "department_id": {
+    "alias": "Department ID"
+   },
+   "exchange_rate": {
+    "alias": "Exchange Rate"
+   },
+   "sales_term_id": {
+    "alias": "Sales Term ID"
+   },
+   "ap_account_name": {
+    "alias": "AP Account Name"
+   },
+   "department_name": {
+    "alias": "Department Name"
+   },
+   "sales_term_name": {
+    "alias": "Sales Term Name"
+   },
+   "last_updated_time": {
+    "alias": "Last Updated Time",
+    "description": "When the record was last changed in QuickBooks (MetaData.LastUpdatedTime); the connector reads only records changed after its Load changes since setting."
+   }
+  }
+ },
+ "Cash Flow report": {
+  "columns": {
+   "currency": {
+    "alias": "Currency"
+   },
+   "realm_id": {
+    "alias": "Realm ID",
+    "description": "Company (realm) id, stamped from the RealmId parameter. FK to [Company info](./company-info.md)"
+   },
+   "end_period": {
+    "alias": "End Period"
+   },
+   "report_name": {
+    "alias": "Report Name"
+   },
+   "report_rows": {
+    "alias": "Report Rows",
+    "description": "Nested Section/Data rows as JSON. Flatten in SQL; ColData.id is the Account/Customer/Vendor Id. Stored as a JSON string."
+   },
+   "report_time": {
+    "alias": "Report Time"
+   },
+   "report_basis": {
+    "alias": "Report Basis"
+   },
+   "start_period": {
+    "alias": "Start Period"
+   },
+   "header_options": {
+    "alias": "Header Options",
+    "description": "Name/Value pairs; NoReportData=true means an empty report. Stored as a JSON string."
+   },
+   "report_columns": {
+    "alias": "Report Columns",
+    "description": "Column metadata (ColTitle, ColType) as JSON; index-aligned with every ColData array. Stored as a JSON string."
+   },
+   "summarize_columns_by": {
+    "alias": "Summarize Columns By"
+   },
+   "accounting_method_param": {
+    "alias": "Accounting Method Param"
+   }
+  }
+ },
+ "Company info": {
+  "columns": {
+   "id": {
+    "alias": "ID"
+   },
+   "email": {
+    "alias": "Email"
+   },
+   "country": {
+    "alias": "Country"
+   },
+   "realm_id": {
+    "alias": "Realm ID"
+   },
+   "legal_name": {
+    "alias": "Legal Name"
+   },
+   "name_value": {
+    "alias": "Name Value",
+    "description": "Extra settings as Name/Value pairs (industry type, subscription status…). Stored as a JSON string."
+   },
+   "sync_token": {
+    "alias": "Sync Token"
+   },
+   "create_time": {
+    "alias": "Create Time"
+   },
+   "company_addr": {
+    "alias": "Company Addr",
+    "description": "Company address as JSON: lines, city, country subdivision, postal code and country. Stored as a JSON string."
+   },
+   "company_name": {
+    "alias": "Company Name"
+   },
+   "last_updated_time": {
+    "alias": "Last Updated Time",
+    "description": "When the record was last changed in QuickBooks (MetaData.LastUpdatedTime); the connector reads every record, whatever this time."
+   },
+   "company_start_date": {
+    "alias": "Company Start Date"
+   },
+   "supported_languages": {
+    "alias": "Supported Languages"
+   },
+   "company_addr_country": {
+    "alias": "Company Addr Country"
+   },
+   "fiscal_year_start_month": {
+    "alias": "Fiscal Year Start Month"
+   }
+  }
+ },
+ "Credit memos": {
+  "columns": {
+   "id": {
+    "alias": "ID"
+   },
+   "line": {
+    "alias": "Line",
+    "description": "Line array kept as JSON. Unnest in SQL: DetailType decides which *LineDetail object is present. Stored as a JSON string."
+   },
+   "balance": {
+    "alias": "Balance"
+   },
+   "class_id": {
+    "alias": "Class ID"
+   },
+   "realm_id": {
+    "alias": "Realm ID",
+    "description": "Company (realm) id, stamped from the RealmId parameter. FK to [Company info](./company-info.md)"
+   },
+   "txn_date": {
+    "alias": "Transaction Date"
+   },
+   "total_amt": {
+    "alias": "Total Amount"
+   },
+   "total_tax": {
+    "alias": "Total Tax"
+   },
+   "class_name": {
+    "alias": "Class Name"
+   },
+   "doc_number": {
+    "alias": "Doc Number"
+   },
+   "sync_token": {
+    "alias": "Sync Token"
+   },
+   "create_time": {
+    "alias": "Create Time"
+   },
+   "currency_id": {
+    "alias": "Currency ID"
+   },
+   "customer_id": {
+    "alias": "Customer ID",
+    "description": "Id of the customer on the document; joins to customer.id. FK to [Customers](./customers.md)"
+   },
+   "private_note": {
+    "alias": "Private Note"
+   },
+   "currency_name": {
+    "alias": "Currency Name"
+   },
+   "customer_name": {
+    "alias": "Customer Name"
+   },
+   "department_id": {
+    "alias": "Department ID"
+   },
+   "exchange_rate": {
+    "alias": "Exchange Rate"
+   },
+   "home_total_amt": {
+    "alias": "Home Total Amount"
+   },
+   "department_name": {
+    "alias": "Department Name"
+   },
+   "remaining_credit": {
+    "alias": "Remaining Credit"
+   },
+   "last_updated_time": {
+    "alias": "Last Updated Time",
+    "description": "When the record was last changed in QuickBooks (MetaData.LastUpdatedTime); the connector reads only records changed after its Load changes since setting."
+   }
+  }
+ },
+ "Customers": {
+  "columns": {
+   "id": {
+    "alias": "ID"
+   },
+   "job": {
+    "alias": "Job"
+   },
+   "active": {
+    "alias": "Active"
+   },
+   "balance": {
+    "alias": "Balance"
+   },
+   "taxable": {
+    "alias": "Taxable"
+   },
+   "realm_id": {
+    "alias": "Realm ID",
+    "description": "Company (realm) id, stamped from the RealmId parameter. FK to [Company info](./company-info.md)"
+   },
+   "bill_addr": {
+    "alias": "Bill Addr",
+    "description": "Full billing address as JSON. Stored as a JSON string."
+   },
+   "parent_id": {
+    "alias": "Parent ID"
+   },
+   "given_name": {
+    "alias": "Given Name"
+   },
+   "sync_token": {
+    "alias": "Sync Token"
+   },
+   "create_time": {
+    "alias": "Create Time"
+   },
+   "currency_id": {
+    "alias": "Currency ID"
+   },
+   "family_name": {
+    "alias": "Family Name"
+   },
+   "parent_name": {
+    "alias": "Parent Name"
+   },
+   "company_name": {
+    "alias": "Company Name"
+   },
+   "display_name": {
+    "alias": "Display Name"
+   },
+   "currency_name": {
+    "alias": "Currency Name"
+   },
+   "primary_email": {
+    "alias": "Primary Email"
+   },
+   "primary_phone": {
+    "alias": "Primary Phone"
+   },
+   "sales_term_id": {
+    "alias": "Sales Term ID"
+   },
+   "bill_addr_city": {
+    "alias": "Bill Addr City"
+   },
+   "sales_term_name": {
+    "alias": "Sales Term Name"
+   },
+   "balance_with_jobs": {
+    "alias": "Balance With Jobs"
+   },
+   "bill_addr_country": {
+    "alias": "Bill Addr Country"
+   },
+   "last_updated_time": {
+    "alias": "Last Updated Time",
+    "description": "When the record was last changed in QuickBooks (MetaData.LastUpdatedTime); the connector reads only records changed after its Load changes since setting."
+   },
+   "payment_method_id": {
+    "alias": "Payment Method ID"
+   },
+   "payment_method_name": {
+    "alias": "Payment Method Name"
+   },
+   "bill_addr_postal_code": {
+    "alias": "Bill Addr Postal Code"
+   }
+  }
+ },
+ "Deposits": {
+  "columns": {
+   "id": {
+    "alias": "ID"
+   },
+   "line": {
+    "alias": "Line",
+    "description": "Line[] as JSON; lines either link received Payments (LinkedTxn) or post directly (DepositLineDetail.AccountRef, Entity). Stored as a JSON string."
+   },
+   "realm_id": {
+    "alias": "Realm ID",
+    "description": "Company (realm) id, stamped from the RealmId parameter. FK to [Company info](./company-info.md)"
+   },
+   "txn_date": {
+    "alias": "Transaction Date"
+   },
+   "total_amt": {
+    "alias": "Total Amount",
+    "description": "Total amount of the deposit, in the document currency."
+   },
+   "doc_number": {
+    "alias": "Doc Number"
+   },
+   "sync_token": {
+    "alias": "Sync Token"
+   },
+   "create_time": {
+    "alias": "Create Time"
+   },
+   "currency_id": {
+    "alias": "Currency ID"
+   },
+   "private_note": {
+    "alias": "Private Note"
+   },
+   "currency_name": {
+    "alias": "Currency Name"
+   },
+   "department_id": {
+    "alias": "Department ID"
+   },
+   "exchange_rate": {
+    "alias": "Exchange Rate"
+   },
+   "home_total_amt": {
+    "alias": "Home Total Amount"
+   },
+   "department_name": {
+    "alias": "Department Name"
+   },
+   "cash_back_amount": {
+    "alias": "Cash Back Amount"
+   },
+   "last_updated_time": {
+    "alias": "Last Updated Time",
+    "description": "When the record was last changed in QuickBooks (MetaData.LastUpdatedTime); the connector reads only records changed after its Load changes since setting."
+   },
+   "cash_back_account_id": {
+    "alias": "Cash Back Account ID",
+    "description": "Id of the account the cash back is posted to; joins to account.id. FK to [Accounts](./accounts.md)"
+   },
+   "deposit_to_account_id": {
+    "alias": "Deposit To Account ID",
+    "description": "Id of the account the money is deposited to; joins to account.id. FK to [Accounts](./accounts.md)"
+   },
+   "cash_back_account_name": {
+    "alias": "Cash Back Account Name"
+   },
+   "deposit_to_account_name": {
+    "alias": "Deposit To Account Name"
+   }
+  }
+ },
+ "General Ledger Detail report": {
+  "columns": {
+   "currency": {
+    "alias": "Currency"
+   },
+   "realm_id": {
+    "alias": "Realm ID",
+    "description": "Company (realm) id, stamped from the RealmId parameter. FK to [Company info](./company-info.md)"
+   },
+   "end_period": {
+    "alias": "End Period"
+   },
+   "report_name": {
+    "alias": "Report Name"
+   },
+   "report_rows": {
+    "alias": "Report Rows",
+    "description": "Nested Section/Data rows as JSON. Flatten in SQL; ColData.id is the Account/Customer/Vendor Id. Stored as a JSON string."
+   },
+   "report_time": {
+    "alias": "Report Time"
+   },
+   "report_basis": {
+    "alias": "Report Basis"
+   },
+   "start_period": {
+    "alias": "Start Period"
+   },
+   "header_options": {
+    "alias": "Header Options",
+    "description": "Name/Value pairs; NoReportData=true means an empty report. Stored as a JSON string."
+   },
+   "report_columns": {
+    "alias": "Report Columns",
+    "description": "Column metadata (ColTitle, ColType) as JSON; index-aligned with every ColData array. Stored as a JSON string."
+   },
+   "summarize_columns_by": {
+    "alias": "Summarize Columns By"
+   },
+   "accounting_method_param": {
+    "alias": "Accounting Method Param"
+   }
+  }
+ },
+ "Invoice changes (CDC, incl. deletes)": {
+  "columns": {
+   "id": {
+    "alias": "ID",
+    "description": "QuickBooks invoice Id; with realm_id it identifies the invoice that changed. FK to [Invoices](./invoices.md)"
+   },
+   "entity": {
+    "alias": "Entity"
+   },
+   "status": {
+    "alias": "Status"
+   },
+   "payload": {
+    "alias": "Payload",
+    "description": "Whole object as JSON (CDC returns the full payload, so the main node's columns can be re-derived). Stored as a JSON string."
+   },
+   "realm_id": {
+    "alias": "Realm ID",
+    "description": "Company (realm) id, stamped from the RealmId parameter. FK to [Company info](./company-info.md)"
+   },
+   "txn_date": {
+    "alias": "Transaction Date"
+   },
+   "total_amt": {
+    "alias": "Total Amount"
+   },
+   "sync_token": {
+    "alias": "Sync Token"
+   },
+   "last_updated_time": {
+    "alias": "Last Updated Time"
+   }
+  }
+ },
+ "Invoices": {
+  "columns": {
+   "id": {
+    "alias": "ID"
+   },
+   "line": {
+    "alias": "Line",
+    "description": "Line array kept as JSON. Unnest in SQL: DetailType decides which *LineDetail object is present. Stored as a JSON string."
+   },
+   "balance": {
+    "alias": "Balance"
+   },
+   "class_id": {
+    "alias": "Class ID"
+   },
+   "due_date": {
+    "alias": "Due Date"
+   },
+   "realm_id": {
+    "alias": "Realm ID",
+    "description": "Company (realm) id, stamped from the RealmId parameter. FK to [Company info](./company-info.md)"
+   },
+   "txn_date": {
+    "alias": "Transaction Date"
+   },
+   "ship_date": {
+    "alias": "Ship Date"
+   },
+   "total_amt": {
+    "alias": "Total Amount"
+   },
+   "total_tax": {
+    "alias": "Total Tax"
+   },
+   "bill_email": {
+    "alias": "Bill Email"
+   },
+   "class_name": {
+    "alias": "Class Name"
+   },
+   "doc_number": {
+    "alias": "Doc Number"
+   },
+   "linked_txn": {
+    "alias": "Linked Transaction",
+    "description": "Header-level links (payments, estimates) as JSON: TxnId, TxnType. Stored as a JSON string."
+   },
+   "sync_token": {
+    "alias": "Sync Token"
+   },
+   "create_time": {
+    "alias": "Create Time"
+   },
+   "currency_id": {
+    "alias": "Currency ID"
+   },
+   "customer_id": {
+    "alias": "Customer ID",
+    "description": "Id of the customer on the document; joins to customer.id. FK to [Customers](./customers.md)"
+   },
+   "email_status": {
+    "alias": "Email Status"
+   },
+   "home_balance": {
+    "alias": "Home Balance"
+   },
+   "print_status": {
+    "alias": "Print Status"
+   },
+   "private_note": {
+    "alias": "Private Note"
+   },
+   "tracking_num": {
+    "alias": "Tracking Num"
+   },
+   "currency_name": {
+    "alias": "Currency Name"
+   },
+   "customer_memo": {
+    "alias": "Customer Memo"
+   },
+   "customer_name": {
+    "alias": "Customer Name"
+   },
+   "department_id": {
+    "alias": "Department ID"
+   },
+   "exchange_rate": {
+    "alias": "Exchange Rate"
+   },
+   "sales_term_id": {
+    "alias": "Sales Term ID"
+   },
+   "home_total_amt": {
+    "alias": "Home Total Amount"
+   },
+   "txn_tax_detail": {
+    "alias": "Transaction Tax Detail",
+    "description": "Tax detail of the document as JSON: total tax, tax code and the per-rate tax lines. Stored as a JSON string."
+   },
+   "department_name": {
+    "alias": "Department Name"
+   },
+   "sales_term_name": {
+    "alias": "Sales Term Name"
+   },
+   "last_updated_time": {
+    "alias": "Last Updated Time",
+    "description": "When the record was last changed in QuickBooks (MetaData.LastUpdatedTime); the connector reads only records changed after its Load changes since setting."
+   },
+   "deposit_to_account_id": {
+    "alias": "Deposit To Account ID",
+    "description": "Id of the account the money is deposited to; joins to account.id. FK to [Accounts](./accounts.md)"
+   },
+   "deposit_to_account_name": {
+    "alias": "Deposit To Account Name"
+   }
+  }
+ },
+ "Items": {
+  "columns": {
+   "id": {
+    "alias": "ID"
+   },
+   "sku": {
+    "alias": "SKU"
+   },
+   "name": {
+    "alias": "Name"
+   },
+   "type": {
+    "alias": "Type"
+   },
+   "active": {
+    "alias": "Active"
+   },
+   "taxable": {
+    "alias": "Taxable"
+   },
+   "realm_id": {
+    "alias": "Realm ID",
+    "description": "Company (realm) id, stamped from the RealmId parameter. FK to [Company info](./company-info.md)"
+   },
+   "sub_item": {
+    "alias": "Sub Item"
+   },
+   "parent_id": {
+    "alias": "Parent ID"
+   },
+   "sync_token": {
+    "alias": "Sync Token"
+   },
+   "unit_price": {
+    "alias": "Unit Price"
+   },
+   "create_time": {
+    "alias": "Create Time"
+   },
+   "description": {
+    "alias": "Description"
+   },
+   "parent_name": {
+    "alias": "Parent Name"
+   },
+   "qty_on_hand": {
+    "alias": "Quantity On Hand"
+   },
+   "purchase_cost": {
+    "alias": "Purchase Cost"
+   },
+   "asset_account_id": {
+    "alias": "Asset Account ID",
+    "description": "Id of the inventory asset account that tracks the current value of the item's stock; required for inventory and assembly items."
+   },
+   "income_account_id": {
+    "alias": "Income Account ID",
+    "description": "Id of the income account that sales of the item are posted to; joins to account.id. FK to [Accounts](./accounts.md)"
+   },
+   "last_updated_time": {
+    "alias": "Last Updated Time",
+    "description": "When the record was last changed in QuickBooks (MetaData.LastUpdatedTime); the connector reads every record, whatever this time."
+   },
+   "track_qty_on_hand": {
+    "alias": "Track Quantity On Hand"
+   },
+   "asset_account_name": {
+    "alias": "Asset Account Name"
+   },
+   "expense_account_id": {
+    "alias": "Expense Account ID",
+    "description": "Id of the expense or cost of goods sold account that purchases of the item are posted to; joins to account.id. FK to [Accounts](./accounts.md)"
+   },
+   "income_account_name": {
+    "alias": "Income Account Name"
+   },
+   "expense_account_name": {
+    "alias": "Expense Account Name"
+   },
+   "fully_qualified_name": {
+    "alias": "Fully Qualified Name"
+   }
+  }
+ },
+ "Journal entries": {
+  "columns": {
+   "id": {
+    "alias": "ID"
+   },
+   "line": {
+    "alias": "Line",
+    "description": "Line[] as JSON; JournalEntryLineDetail has PostingType (Debit/Credit), AccountRef and optional Entity {Type, EntityRef}. Stored as a JSON string."
+   },
+   "realm_id": {
+    "alias": "Realm ID",
+    "description": "Company (realm) id, stamped from the RealmId parameter. FK to [Company info](./company-info.md)"
+   },
+   "txn_date": {
+    "alias": "Transaction Date"
+   },
+   "total_amt": {
+    "alias": "Total Amount"
+   },
+   "adjustment": {
+    "alias": "Adjustment"
+   },
+   "doc_number": {
+    "alias": "Doc Number"
+   },
+   "sync_token": {
+    "alias": "Sync Token"
+   },
+   "create_time": {
+    "alias": "Create Time"
+   },
+   "currency_id": {
+    "alias": "Currency ID"
+   },
+   "private_note": {
+    "alias": "Private Note"
+   },
+   "currency_name": {
+    "alias": "Currency Name"
+   },
+   "exchange_rate": {
+    "alias": "Exchange Rate"
+   },
+   "home_total_amt": {
+    "alias": "Home Total Amount"
+   },
+   "last_updated_time": {
+    "alias": "Last Updated Time",
+    "description": "When the record was last changed in QuickBooks (MetaData.LastUpdatedTime); the connector reads only records changed after its Load changes since setting."
+   }
+  }
+ },
+ "Payments": {
+  "columns": {
+   "id": {
+    "alias": "ID"
+   },
+   "line": {
+    "alias": "Line",
+    "description": "Line[] as JSON; each line has Amount and LinkedTxn[] {TxnId, TxnType} pointing at the Invoice it settles. Stored as a JSON string."
+   },
+   "realm_id": {
+    "alias": "Realm ID",
+    "description": "Company (realm) id, stamped from the RealmId parameter. FK to [Company info](./company-info.md)"
+   },
+   "txn_date": {
+    "alias": "Transaction Date"
+   },
+   "total_amt": {
+    "alias": "Total Amount",
+    "description": "Total amount of the payment received, in the document currency."
+   },
+   "sync_token": {
+    "alias": "Sync Token"
+   },
+   "create_time": {
+    "alias": "Create Time"
+   },
+   "currency_id": {
+    "alias": "Currency ID"
+   },
+   "customer_id": {
+    "alias": "Customer ID",
+    "description": "Id of the customer on the document; joins to customer.id. FK to [Customers](./customers.md)"
+   },
+   "private_note": {
+    "alias": "Private Note"
+   },
+   "currency_name": {
+    "alias": "Currency Name"
+   },
+   "customer_name": {
+    "alias": "Customer Name"
+   },
+   "exchange_rate": {
+    "alias": "Exchange Rate"
+   },
+   "unapplied_amt": {
+    "alias": "Unapplied Amount"
+   },
+   "payment_ref_num": {
+    "alias": "Payment Ref Num"
+   },
+   "process_payment": {
+    "alias": "Process Payment"
+   },
+   "last_updated_time": {
+    "alias": "Last Updated Time",
+    "description": "When the record was last changed in QuickBooks (MetaData.LastUpdatedTime); the connector reads only records changed after its Load changes since setting."
+   },
+   "payment_method_id": {
+    "alias": "Payment Method ID"
+   },
+   "payment_method_name": {
+    "alias": "Payment Method Name"
+   },
+   "deposit_to_account_id": {
+    "alias": "Deposit To Account ID",
+    "description": "Id of the account the money is deposited to; joins to account.id. FK to [Accounts](./accounts.md)"
+   },
+   "deposit_to_account_name": {
+    "alias": "Deposit To Account Name"
+   }
+  }
+ },
+ "Preferences": {
+  "columns": {
+   "id": {
+    "alias": "ID"
+   },
+   "realm_id": {
+    "alias": "Realm ID",
+    "description": "Company (realm) id, stamped from the RealmId parameter. FK to [Company info](./company-info.md)"
+   },
+   "sync_token": {
+    "alias": "Sync Token"
+   },
+   "create_time": {
+    "alias": "Create Time"
+   },
+   "home_currency": {
+    "alias": "Home Currency"
+   },
+   "tax_year_month": {
+    "alias": "Tax Year Month"
+   },
+   "book_close_date": {
+    "alias": "Book Close Date"
+   },
+   "using_sales_tax": {
+    "alias": "Using Sales Tax"
+   },
+   "last_updated_time": {
+    "alias": "Last Updated Time",
+    "description": "When the record was last changed in QuickBooks (MetaData.LastUpdatedTime); the connector reads every record, whatever this time."
+   },
+   "sales_forms_prefs": {
+    "alias": "Sales Forms Prefs",
+    "description": "Sales form preferences as JSON: default terms, shipping, discounts, deposits and custom fields. Stored as a JSON string."
+   },
+   "track_departments": {
+    "alias": "Track Departments"
+   },
+   "class_tracking_per_txn": {
+    "alias": "Class Tracking Per Transaction"
+   },
+   "multi_currency_enabled": {
+    "alias": "Multi Currency Enabled"
+   },
+   "first_month_of_fiscal_year": {
+    "alias": "First Month Of Fiscal Year"
+   },
+   "product_and_services_prefs": {
+    "alias": "Product And Services Prefs",
+    "description": "Product and service preferences as JSON: inventory tracking, quantity on hand and price rules. Stored as a JSON string."
+   },
+   "vendor_and_purchases_prefs": {
+    "alias": "Vendor And Purchases Prefs",
+    "description": "Vendor and purchase preferences as JSON: bill payment, purchase order and expense tracking settings. Stored as a JSON string."
+   },
+   "class_tracking_per_txn_line": {
+    "alias": "Class Tracking Per Transaction Line"
+   }
+  }
+ },
+ "Profit and Loss report": {
+  "columns": {
+   "currency": {
+    "alias": "Currency"
+   },
+   "realm_id": {
+    "alias": "Realm ID",
+    "description": "Company (realm) id, stamped from the RealmId parameter. FK to [Company info](./company-info.md)"
+   },
+   "end_period": {
+    "alias": "End Period"
+   },
+   "report_name": {
+    "alias": "Report Name"
+   },
+   "report_rows": {
+    "alias": "Report Rows",
+    "description": "Nested Section/Data rows as JSON. Flatten in SQL; ColData.id is the Account/Customer/Vendor Id. Stored as a JSON string."
+   },
+   "report_time": {
+    "alias": "Report Time"
+   },
+   "report_basis": {
+    "alias": "Report Basis"
+   },
+   "start_period": {
+    "alias": "Start Period"
+   },
+   "header_options": {
+    "alias": "Header Options",
+    "description": "Name/Value pairs; NoReportData=true means an empty report. Stored as a JSON string."
+   },
+   "report_columns": {
+    "alias": "Report Columns",
+    "description": "Column metadata (ColTitle, ColType) as JSON; index-aligned with every ColData array. Stored as a JSON string."
+   },
+   "summarize_columns_by": {
+    "alias": "Summarize Columns By"
+   },
+   "accounting_method_param": {
+    "alias": "Accounting Method Param"
+   }
+  }
+ },
+ "Purchases": {
+  "columns": {
+   "id": {
+    "alias": "ID"
+   },
+   "line": {
+    "alias": "Line",
+    "description": "Line array kept as JSON. Unnest in SQL: DetailType decides which *LineDetail object is present. Stored as a JSON string."
+   },
+   "credit": {
+    "alias": "Credit"
+   },
+   "realm_id": {
+    "alias": "Realm ID",
+    "description": "Company (realm) id, stamped from the RealmId parameter. FK to [Company info](./company-info.md)"
+   },
+   "txn_date": {
+    "alias": "Transaction Date"
+   },
+   "entity_id": {
+    "alias": "Entity ID",
+    "description": "Vendor, Customer or Employee paid. FK to [Vendors](./vendors.md)"
+   },
+   "total_amt": {
+    "alias": "Total Amount"
+   },
+   "total_tax": {
+    "alias": "Total Tax"
+   },
+   "account_id": {
+    "alias": "Account ID",
+    "description": "Bank or credit-card account the money left. FK to [Accounts](./accounts.md)"
+   },
+   "doc_number": {
+    "alias": "Doc Number"
+   },
+   "sync_token": {
+    "alias": "Sync Token"
+   },
+   "create_time": {
+    "alias": "Create Time"
+   },
+   "currency_id": {
+    "alias": "Currency ID"
+   },
+   "entity_name": {
+    "alias": "Entity Name"
+   },
+   "entity_type": {
+    "alias": "Entity Type"
+   },
+   "account_name": {
+    "alias": "Account Name"
+   },
+   "payment_type": {
+    "alias": "Payment Type"
+   },
+   "print_status": {
+    "alias": "Print Status"
+   },
+   "private_note": {
+    "alias": "Private Note"
+   },
+   "currency_name": {
+    "alias": "Currency Name"
+   },
+   "department_id": {
+    "alias": "Department ID"
+   },
+   "exchange_rate": {
+    "alias": "Exchange Rate"
+   },
+   "department_name": {
+    "alias": "Department Name"
+   },
+   "last_updated_time": {
+    "alias": "Last Updated Time",
+    "description": "When the record was last changed in QuickBooks (MetaData.LastUpdatedTime); the connector reads only records changed after its Load changes since setting."
+   },
+   "payment_method_id": {
+    "alias": "Payment Method ID"
+   },
+   "payment_method_name": {
+    "alias": "Payment Method Name"
+   }
+  }
+ },
+ "Refund receipts": {
+  "columns": {
+   "id": {
+    "alias": "ID"
+   },
+   "line": {
+    "alias": "Line",
+    "description": "Line array kept as JSON. Unnest in SQL: DetailType decides which *LineDetail object is present. Stored as a JSON string."
+   },
+   "class_id": {
+    "alias": "Class ID"
+   },
+   "realm_id": {
+    "alias": "Realm ID",
+    "description": "Company (realm) id, stamped from the RealmId parameter. FK to [Company info](./company-info.md)"
+   },
+   "txn_date": {
+    "alias": "Transaction Date"
+   },
+   "total_amt": {
+    "alias": "Total Amount"
+   },
+   "total_tax": {
+    "alias": "Total Tax"
+   },
+   "class_name": {
+    "alias": "Class Name"
+   },
+   "doc_number": {
+    "alias": "Doc Number"
+   },
+   "sync_token": {
+    "alias": "Sync Token"
+   },
+   "create_time": {
+    "alias": "Create Time"
+   },
+   "currency_id": {
+    "alias": "Currency ID"
+   },
+   "customer_id": {
+    "alias": "Customer ID",
+    "description": "Id of the customer on the document; joins to customer.id. FK to [Customers](./customers.md)"
+   },
+   "private_note": {
+    "alias": "Private Note"
+   },
+   "currency_name": {
+    "alias": "Currency Name"
+   },
+   "customer_name": {
+    "alias": "Customer Name"
+   },
+   "department_id": {
+    "alias": "Department ID"
+   },
+   "exchange_rate": {
+    "alias": "Exchange Rate"
+   },
+   "home_total_amt": {
+    "alias": "Home Total Amount"
+   },
+   "department_name": {
+    "alias": "Department Name"
+   },
+   "payment_ref_num": {
+    "alias": "Payment Ref Num"
+   },
+   "last_updated_time": {
+    "alias": "Last Updated Time",
+    "description": "When the record was last changed in QuickBooks (MetaData.LastUpdatedTime); the connector reads only records changed after its Load changes since setting."
+   },
+   "payment_method_id": {
+    "alias": "Payment Method ID"
+   },
+   "payment_method_name": {
+    "alias": "Payment Method Name"
+   },
+   "deposit_to_account_id": {
+    "alias": "Deposit To Account ID",
+    "description": "Account the refund was paid from. FK to [Accounts](./accounts.md)"
+   },
+   "deposit_to_account_name": {
+    "alias": "Deposit To Account Name"
+   }
+  }
+ },
+ "Sales by Customer report": {
+  "columns": {
+   "currency": {
+    "alias": "Currency"
+   },
+   "realm_id": {
+    "alias": "Realm ID",
+    "description": "Company (realm) id, stamped from the RealmId parameter. FK to [Company info](./company-info.md)"
+   },
+   "end_period": {
+    "alias": "End Period"
+   },
+   "report_name": {
+    "alias": "Report Name"
+   },
+   "report_rows": {
+    "alias": "Report Rows",
+    "description": "Nested Section/Data rows as JSON. Flatten in SQL; ColData.id is the Account/Customer/Vendor Id. Stored as a JSON string."
+   },
+   "report_time": {
+    "alias": "Report Time"
+   },
+   "report_basis": {
+    "alias": "Report Basis"
+   },
+   "start_period": {
+    "alias": "Start Period"
+   },
+   "header_options": {
+    "alias": "Header Options",
+    "description": "Name/Value pairs; NoReportData=true means an empty report. Stored as a JSON string."
+   },
+   "report_columns": {
+    "alias": "Report Columns",
+    "description": "Column metadata (ColTitle, ColType) as JSON; index-aligned with every ColData array. Stored as a JSON string."
+   },
+   "summarize_columns_by": {
+    "alias": "Summarize Columns By"
+   },
+   "accounting_method_param": {
+    "alias": "Accounting Method Param"
+   }
+  }
+ },
+ "Sales receipts": {
+  "columns": {
+   "id": {
+    "alias": "ID"
+   },
+   "line": {
+    "alias": "Line",
+    "description": "Line array kept as JSON. Unnest in SQL: DetailType decides which *LineDetail object is present. Stored as a JSON string."
+   },
+   "class_id": {
+    "alias": "Class ID"
+   },
+   "realm_id": {
+    "alias": "Realm ID",
+    "description": "Company (realm) id, stamped from the RealmId parameter. FK to [Company info](./company-info.md)"
+   },
+   "txn_date": {
+    "alias": "Transaction Date"
+   },
+   "total_amt": {
+    "alias": "Total Amount"
+   },
+   "total_tax": {
+    "alias": "Total Tax"
+   },
+   "bill_email": {
+    "alias": "Bill Email"
+   },
+   "class_name": {
+    "alias": "Class Name"
+   },
+   "doc_number": {
+    "alias": "Doc Number"
+   },
+   "sync_token": {
+    "alias": "Sync Token"
+   },
+   "create_time": {
+    "alias": "Create Time"
+   },
+   "currency_id": {
+    "alias": "Currency ID"
+   },
+   "customer_id": {
+    "alias": "Customer ID",
+    "description": "Id of the customer on the document; joins to customer.id. FK to [Customers](./customers.md)"
+   },
+   "private_note": {
+    "alias": "Private Note"
+   },
+   "currency_name": {
+    "alias": "Currency Name"
+   },
+   "customer_name": {
+    "alias": "Customer Name"
+   },
+   "department_id": {
+    "alias": "Department ID"
+   },
+   "exchange_rate": {
+    "alias": "Exchange Rate"
+   },
+   "home_total_amt": {
+    "alias": "Home Total Amount"
+   },
+   "department_name": {
+    "alias": "Department Name"
+   },
+   "payment_ref_num": {
+    "alias": "Payment Ref Num"
+   },
+   "last_updated_time": {
+    "alias": "Last Updated Time",
+    "description": "When the record was last changed in QuickBooks (MetaData.LastUpdatedTime); the connector reads only records changed after its Load changes since setting."
+   },
+   "payment_method_id": {
+    "alias": "Payment Method ID"
+   },
+   "payment_method_name": {
+    "alias": "Payment Method Name"
+   },
+   "deposit_to_account_id": {
+    "alias": "Deposit To Account ID",
+    "description": "Id of the account the money is deposited to; joins to account.id. FK to [Accounts](./accounts.md)"
+   },
+   "deposit_to_account_name": {
+    "alias": "Deposit To Account Name"
+   }
+  }
+ },
+ "Transfers": {
+  "columns": {
+   "id": {
+    "alias": "ID"
+   },
+   "amount": {
+    "alias": "Amount"
+   },
+   "realm_id": {
+    "alias": "Realm ID",
+    "description": "Company (realm) id, stamped from the RealmId parameter. FK to [Company info](./company-info.md)"
+   },
+   "txn_date": {
+    "alias": "Transaction Date"
+   },
+   "total_amt": {
+    "alias": "Total Amount"
+   },
+   "sync_token": {
+    "alias": "Sync Token"
+   },
+   "create_time": {
+    "alias": "Create Time"
+   },
+   "currency_id": {
+    "alias": "Currency ID"
+   },
+   "private_note": {
+    "alias": "Private Note"
+   },
+   "currency_name": {
+    "alias": "Currency Name"
+   },
+   "exchange_rate": {
+    "alias": "Exchange Rate"
+   },
+   "to_account_id": {
+    "alias": "To Account ID",
+    "description": "Id of the account the money is moved to; joins to account.id. FK to [Accounts](./accounts.md)"
+   },
+   "from_account_id": {
+    "alias": "From Account ID",
+    "description": "Id of the account the money is moved from; joins to account.id. FK to [Accounts](./accounts.md)"
+   },
+   "to_account_name": {
+    "alias": "To Account Name"
+   },
+   "from_account_name": {
+    "alias": "From Account Name"
+   },
+   "last_updated_time": {
+    "alias": "Last Updated Time",
+    "description": "When the record was last changed in QuickBooks (MetaData.LastUpdatedTime); the connector reads only records changed after its Load changes since setting."
+   }
+  }
+ },
+ "Vendor Expenses report": {
+  "columns": {
+   "currency": {
+    "alias": "Currency"
+   },
+   "realm_id": {
+    "alias": "Realm ID",
+    "description": "Company (realm) id, stamped from the RealmId parameter. FK to [Company info](./company-info.md)"
+   },
+   "end_period": {
+    "alias": "End Period"
+   },
+   "report_name": {
+    "alias": "Report Name"
+   },
+   "report_rows": {
+    "alias": "Report Rows",
+    "description": "Nested Section/Data rows as JSON. Flatten in SQL; ColData.id is the Account/Customer/Vendor Id. Stored as a JSON string."
+   },
+   "report_time": {
+    "alias": "Report Time"
+   },
+   "report_basis": {
+    "alias": "Report Basis"
+   },
+   "start_period": {
+    "alias": "Start Period"
+   },
+   "header_options": {
+    "alias": "Header Options",
+    "description": "Name/Value pairs; NoReportData=true means an empty report. Stored as a JSON string."
+   },
+   "report_columns": {
+    "alias": "Report Columns",
+    "description": "Column metadata (ColTitle, ColType) as JSON; index-aligned with every ColData array. Stored as a JSON string."
+   },
+   "summarize_columns_by": {
+    "alias": "Summarize Columns By"
+   },
+   "accounting_method_param": {
+    "alias": "Accounting Method Param"
+   }
+  }
+ },
+ "Vendors": {
+  "columns": {
+   "id": {
+    "alias": "ID"
+   },
+   "active": {
+    "alias": "Active"
+   },
+   "balance": {
+    "alias": "Balance"
+   },
+   "term_id": {
+    "alias": "Term ID"
+   },
+   "acct_num": {
+    "alias": "Acct Num"
+   },
+   "realm_id": {
+    "alias": "Realm ID",
+    "description": "Company (realm) id, stamped from the RealmId parameter. FK to [Company info](./company-info.md)"
+   },
+   "bill_addr": {
+    "alias": "Bill Addr",
+    "description": "Billing address as JSON: line1 to line5, city, country subdivision, postal code and country. Stored as a JSON string."
+   },
+   "term_name": {
+    "alias": "Term Name"
+   },
+   "sync_token": {
+    "alias": "Sync Token"
+   },
+   "create_time": {
+    "alias": "Create Time"
+   },
+   "currency_id": {
+    "alias": "Currency ID"
+   },
+   "vendor_1099": {
+    "alias": "Vendor 1099"
+   },
+   "company_name": {
+    "alias": "Company Name"
+   },
+   "display_name": {
+    "alias": "Display Name"
+   },
+   "currency_name": {
+    "alias": "Currency Name"
+   },
+   "primary_email": {
+    "alias": "Primary Email"
+   },
+   "primary_phone": {
+    "alias": "Primary Phone"
+   },
+   "bill_addr_country": {
+    "alias": "Bill Addr Country"
+   },
+   "last_updated_time": {
+    "alias": "Last Updated Time",
+    "description": "When the record was last changed in QuickBooks (MetaData.LastUpdatedTime); the connector reads only records changed after its Load changes since setting."
+   }
+  }
+ }
+}

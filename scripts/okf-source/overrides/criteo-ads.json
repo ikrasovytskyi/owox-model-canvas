@@ -1,0 +1,606 @@
+{
+ "Placement Categories": {
+  "columns": {
+   "advertiserId": {
+    "alias": "Advertiser ID"
+   },
+   "categoryId": {
+    "alias": "Category ID"
+   },
+   "categoryName": {
+    "alias": "Category Name"
+   },
+   "day": {
+    "alias": "Day"
+   },
+   "displays": {
+    "alias": "Displays"
+   },
+   "clicks": {
+    "alias": "Clicks"
+   },
+   "salesPc30d": {
+    "alias": "Sales Post-Click 30d"
+   },
+   "salesPv1d": {
+    "alias": "Sales Post-View 1d"
+   }
+  }
+ },
+ "Placements": {
+  "columns": {
+   "advertiserId": {
+    "alias": "Advertiser ID"
+   },
+   "adsetId": {
+    "alias": "Adset ID"
+   },
+   "adsetName": {
+    "alias": "Adset Name"
+   },
+   "environment": {
+    "alias": "Environment"
+   },
+   "placement": {
+    "alias": "Placement"
+   },
+   "day": {
+    "alias": "Day"
+   },
+   "clicks": {
+    "alias": "Clicks"
+   },
+   "displays": {
+    "alias": "Displays"
+   },
+   "cost": {
+    "alias": "Cost"
+   },
+   "salesPc30d": {
+    "alias": "Sales Post-Click 30d"
+   },
+   "salesPv1d": {
+    "alias": "Sales Post-View 1d"
+   },
+   "revenuePc30d": {
+    "alias": "Revenue Post-Click 30d"
+   },
+   "revenuePv1d": {
+    "alias": "Revenue Post-View 1d"
+   },
+   "cosPc30d": {
+    "alias": "COS Post-Click 30d"
+   },
+   "cosPv1d": {
+    "alias": "COS Post-View 1d"
+   },
+   "roasPc30d": {
+    "alias": "ROAS Post-Click 30d"
+   },
+   "roasPv1d": {
+    "alias": "ROAS Post-View 1d"
+   },
+   "cpoPc30d": {
+    "alias": "CPO Post-Click 30d"
+   },
+   "cpoPv1d": {
+    "alias": "CPO Post-View 1d"
+   },
+   "cvrPc30d": {
+    "alias": "CVR Post-Click 30d"
+   },
+   "cvrPv1d": {
+    "alias": "CVR Post-View 1d"
+   }
+  }
+ },
+ "Statistics": {
+  "columns": {
+   "Clicks": {
+    "alias": "Clicks"
+   },
+   "Displays": {
+    "alias": "Displays"
+   },
+   "ViewableDisplays": {
+    "alias": "Viewable Displays"
+   },
+   "NonViewableDisplays": {
+    "alias": "Non Viewable Displays"
+   },
+   "UntrackableDisplays": {
+    "alias": "Untrackable Displays"
+   },
+   "AdvertiserCost": {
+    "alias": "Advertiser Cost"
+   },
+   "QualifiedVisits": {
+    "alias": "Qualified Visits"
+   },
+   "Visits": {
+    "alias": "Visits"
+   },
+   "CostPerVisit": {
+    "alias": "Cost Per Visit"
+   },
+   "BounceRate": {
+    "alias": "Bounce Rate"
+   },
+   "PotentialDisplays": {
+    "alias": "Potential Displays"
+   },
+   "OverallCompetitionWin": {
+    "alias": "Overall Competition Win"
+   },
+   "ExposedUsers": {
+    "alias": "Exposed Users"
+   },
+   "Audience": {
+    "alias": "Audience"
+   },
+   "Reach": {
+    "alias": "Reach"
+   },
+   "ClickThroughRate": {
+    "alias": "Click Through Rate"
+   },
+   "Cpc": {
+    "alias": "CPC"
+   },
+   "ECpm": {
+    "alias": "ECPM"
+   },
+   "PostInstallSales": {
+    "alias": "Post Install Sales"
+   },
+   "AppInstalls": {
+    "alias": "App Installs"
+   },
+   "PostInstallConversionRate": {
+    "alias": "Post Install Conversion Rate"
+   },
+   "PostInstallCostOfSale": {
+    "alias": "Post Install Cost Of Sale"
+   },
+   "PostInstallOrderValue": {
+    "alias": "Post Install Order Value"
+   },
+   "CostPerInstall": {
+    "alias": "Cost Per Install"
+   },
+   "InstallRate": {
+    "alias": "Install Rate"
+   },
+   "PostInstallCostPerOrder": {
+    "alias": "Post Install Cost Per Order"
+   },
+   "PostInstallRoas": {
+    "alias": "Post Install ROAS"
+   },
+   "SalesClientAttribution": {
+    "alias": "Sales Client Attribution"
+   },
+   "SalesAllClientAttribution": {
+    "alias": "Sales All Client Attribution"
+   },
+   "SalesPc30d": {
+    "alias": "Sales Post-Click 30d"
+   },
+   "SalesAllPc30d": {
+    "alias": "Sales All Post-Click 30d"
+   },
+   "SalesPv24h": {
+    "alias": "Sales Post-View 24h"
+   },
+   "SalesAllPv24h": {
+    "alias": "Sales All Post-View 24h"
+   },
+   "SalesPc30dPv24h": {
+    "alias": "Sales Post-Click 30d Post-View 24h"
+   },
+   "SalesAllPc30dPv24h": {
+    "alias": "Sales All Post-Click 30d Post-View 24h"
+   },
+   "SalesPc1d": {
+    "alias": "Sales Post-Click 1d"
+   },
+   "SalesAllPc1d": {
+    "alias": "Sales All Post-Click 1d"
+   },
+   "SalesPc7d": {
+    "alias": "Sales Post-Click 7d"
+   },
+   "SalesAllPc7d": {
+    "alias": "Sales All Post-Click 7d"
+   },
+   "RevenueGeneratedClientAttribution": {
+    "alias": "Revenue Generated Client Attribution"
+   },
+   "RevenueGeneratedAllClientAttribution": {
+    "alias": "Revenue Generated All Client Attribution"
+   },
+   "RevenueGeneratedPc30d": {
+    "alias": "Revenue Generated Post-Click 30d"
+   },
+   "RevenueGeneratedAllPc30d": {
+    "alias": "Revenue Generated All Post-Click 30d"
+   },
+   "RevenueGeneratedPv24h": {
+    "alias": "Revenue Generated Post-View 24h"
+   },
+   "RevenueGeneratedAllPv24h": {
+    "alias": "Revenue Generated All Post-View 24h"
+   },
+   "RevenueGeneratedPc30dPv24h": {
+    "alias": "Revenue Generated Post-Click 30d Post-View 24h"
+   },
+   "RevenueGeneratedAllPc30dPv24h": {
+    "alias": "Revenue Generated All Post-Click 30d Post-View 24h"
+   },
+   "RevenueGeneratedPc1d": {
+    "alias": "Revenue Generated Post-Click 1d"
+   },
+   "RevenueGeneratedAllPc1d": {
+    "alias": "Revenue Generated All Post-Click 1d"
+   },
+   "RevenueGeneratedPc7d": {
+    "alias": "Revenue Generated Post-Click 7d"
+   },
+   "RevenueGeneratedAllPc7d": {
+    "alias": "Revenue Generated All Post-Click 7d"
+   },
+   "AverageCartClientAttribution": {
+    "alias": "Average Cart Client Attribution"
+   },
+   "AverageCartAllClientAttribution": {
+    "alias": "Average Cart All Client Attribution"
+   },
+   "AverageCartPc30d": {
+    "alias": "Average Cart Post-Click 30d"
+   },
+   "AverageCartAllPc30d": {
+    "alias": "Average Cart All Post-Click 30d"
+   },
+   "AverageCartPv24h": {
+    "alias": "Average Cart Post-View 24h"
+   },
+   "AverageCartAllPv24h": {
+    "alias": "Average Cart All Post-View 24h"
+   },
+   "AverageCartPc30dPv24h": {
+    "alias": "Average Cart Post-Click 30d Post-View 24h"
+   },
+   "AverageCartAllPc30dPv24h": {
+    "alias": "Average Cart All Post-Click 30d Post-View 24h"
+   },
+   "AverageCartPc1d": {
+    "alias": "Average Cart Post-Click 1d"
+   },
+   "AverageCartAllPc1d": {
+    "alias": "Average Cart All Post-Click 1d"
+   },
+   "AverageCartPc7d": {
+    "alias": "Average Cart Post-Click 7d"
+   },
+   "AverageCartAllPc7d": {
+    "alias": "Average Cart All Post-Click 7d"
+   },
+   "ConversionRateClientAttribution": {
+    "alias": "Conversion Rate Client Attribution"
+   },
+   "ConversionRateAllClientAttribution": {
+    "alias": "Conversion Rate All Client Attribution"
+   },
+   "ConversionRatePc30d": {
+    "alias": "Conversion Rate Post-Click 30d"
+   },
+   "ConversionRateAllPc30d": {
+    "alias": "Conversion Rate All Post-Click 30d"
+   },
+   "ConversionRatePv24h": {
+    "alias": "Conversion Rate Post-View 24h"
+   },
+   "ConversionRateAllPv24h": {
+    "alias": "Conversion Rate All Post-View 24h"
+   },
+   "ConversionRatePc30dPv24h": {
+    "alias": "Conversion Rate Post-Click 30d Post-View 24h"
+   },
+   "ConversionRateAllPc30dPv24h": {
+    "alias": "Conversion Rate All Post-Click 30d Post-View 24h"
+   },
+   "ConversionRatePc1d": {
+    "alias": "Conversion Rate Post-Click 1d"
+   },
+   "ConversionRateAllPc1d": {
+    "alias": "Conversion Rate All Post-Click 1d"
+   },
+   "ConversionRatePc7d": {
+    "alias": "Conversion Rate Post-Click 7d"
+   },
+   "ConversionRateAllPc7d": {
+    "alias": "Conversion Rate All Post-Click 7d"
+   },
+   "ECosClientAttribution": {
+    "alias": "ECOS Client Attribution"
+   },
+   "ECosAllClientAttribution": {
+    "alias": "ECOS All Client Attribution"
+   },
+   "ECosPc30d": {
+    "alias": "ECOS Post-Click 30d"
+   },
+   "ECosAllPc30d": {
+    "alias": "ECOS All Post-Click 30d"
+   },
+   "ECosPv24h": {
+    "alias": "ECOS Post-View 24h"
+   },
+   "ECosAllPv24h": {
+    "alias": "ECOS All Post-View 24h"
+   },
+   "ECosPc30dPv24h": {
+    "alias": "ECOS Post-Click 30d Post-View 24h"
+   },
+   "ECosAllPc30dPv24h": {
+    "alias": "ECOS All Post-Click 30d Post-View 24h"
+   },
+   "ECosPc1d": {
+    "alias": "ECOS Post-Click 1d"
+   },
+   "ECosAllPc1d": {
+    "alias": "ECOS All Post-Click 1d"
+   },
+   "ECosPc7d": {
+    "alias": "ECOS Post-Click 7d"
+   },
+   "ECosAllPc7d": {
+    "alias": "ECOS All Post-Click 7d"
+   },
+   "CostPerOrderClientAttribution": {
+    "alias": "Cost Per Order Client Attribution"
+   },
+   "CostPerOrderAllClientAttribution": {
+    "alias": "Cost Per Order All Client Attribution"
+   },
+   "CostPerOrderPc30d": {
+    "alias": "Cost Per Order Post-Click 30d"
+   },
+   "CostPerOrderAllPc30d": {
+    "alias": "Cost Per Order All Post-Click 30d"
+   },
+   "CostPerOrderPv24h": {
+    "alias": "Cost Per Order Post-View 24h"
+   },
+   "CostPerOrderAllPv24h": {
+    "alias": "Cost Per Order All Post-View 24h"
+   },
+   "CostPerOrderPc30dPv24h": {
+    "alias": "Cost Per Order Post-Click 30d Post-View 24h"
+   },
+   "CostPerOrderAllPc30dPv24h": {
+    "alias": "Cost Per Order All Post-Click 30d Post-View 24h"
+   },
+   "CostPerOrderPc1d": {
+    "alias": "Cost Per Order Post-Click 1d"
+   },
+   "CostPerOrderAllPc1d": {
+    "alias": "Cost Per Order All Post-Click 1d"
+   },
+   "CostPerOrderPc7d": {
+    "alias": "Cost Per Order Post-Click 7d"
+   },
+   "CostPerOrderAllPc7d": {
+    "alias": "Cost Per Order All Post-Click 7d"
+   },
+   "RoasClientAttribution": {
+    "alias": "ROAS Client Attribution"
+   },
+   "RoasAllClientAttribution": {
+    "alias": "ROAS All Client Attribution"
+   },
+   "RoasPc30d": {
+    "alias": "ROAS Post-Click 30d"
+   },
+   "RoasAllPc30d": {
+    "alias": "ROAS All Post-Click 30d"
+   },
+   "RoasPv24h": {
+    "alias": "ROAS Post-View 24h"
+   },
+   "RoasAllPv24h": {
+    "alias": "ROAS All Post-View 24h"
+   },
+   "RoasPc30dPv24h": {
+    "alias": "ROAS Post-Click 30d Post-View 24h"
+   },
+   "RoasAllPc30dPv24h": {
+    "alias": "ROAS All Post-Click 30d Post-View 24h"
+   },
+   "RoasPc1d": {
+    "alias": "ROAS Post-Click 1d"
+   },
+   "RoasAllPc1d": {
+    "alias": "ROAS All Post-Click 1d"
+   },
+   "RoasPc7d": {
+    "alias": "ROAS Post-Click 7d"
+   },
+   "RoasAllPc7d": {
+    "alias": "ROAS All Post-Click 7d"
+   },
+   "AdvertiserValue": {
+    "alias": "Advertiser Value"
+   },
+   "AdvertiserAllValue": {
+    "alias": "Advertiser All Value"
+   },
+   "CostOfAdvertiserValue": {
+    "alias": "Cost Of Advertiser Value"
+   },
+   "CostOfAdvertiserValueAll": {
+    "alias": "Cost Of Advertiser Value All"
+   },
+   "OmnichannelRoasClientAttribution": {
+    "alias": "Omnichannel ROAS Client Attribution"
+   },
+   "OmnichannelRoasPc30d": {
+    "alias": "Omnichannel ROAS Post-Click 30d"
+   },
+   "OmnichannelRoasAllPc30d": {
+    "alias": "Omnichannel ROAS All Post-Click 30d"
+   },
+   "OmnichannelRoasPv24h": {
+    "alias": "Omnichannel ROAS Post-View 24h"
+   },
+   "OmnichannelRoasAllPv24h": {
+    "alias": "Omnichannel ROAS All Post-View 24h"
+   },
+   "OmnichannelRevenueClientAttribution": {
+    "alias": "Omnichannel Revenue Client Attribution"
+   },
+   "OmnichannelRevenuePc30d": {
+    "alias": "Omnichannel Revenue Post-Click 30d"
+   },
+   "OmnichannelRevenueAllPc30d": {
+    "alias": "Omnichannel Revenue All Post-Click 30d"
+   },
+   "OmnichannelRevenuePv24h": {
+    "alias": "Omnichannel Revenue Post-View 24h"
+   },
+   "OmnichannelRevenueAllPv24h": {
+    "alias": "Omnichannel Revenue All Post-View 24h"
+   },
+   "OmnichannelsalesClientAttribution": {
+    "alias": "Omnichannelsales Client Attribution"
+   },
+   "OmnichannelSalesPc30d": {
+    "alias": "Omnichannel Sales Post-Click 30d"
+   },
+   "OmnichannelSalesAllPc30d": {
+    "alias": "Omnichannel Sales All Post-Click 30d"
+   },
+   "OmnichannelSalesPv24h": {
+    "alias": "Omnichannel Sales Post-View 24h"
+   },
+   "OmnichannelSalesAllPv24h": {
+    "alias": "Omnichannel Sales All Post-View 24h"
+   },
+   "RoasOfflinePc30d": {
+    "alias": "ROAS Offline Post-Click 30d"
+   },
+   "RoasOfflinePv24h": {
+    "alias": "ROAS Offline Post-View 24h"
+   },
+   "SalesOfflinePc30d": {
+    "alias": "Sales Offline Post-Click 30d"
+   },
+   "SalesOfflinePv24h": {
+    "alias": "Sales Offline Post-View 24h"
+   },
+   "RevenueGeneratedOfflinePc30d": {
+    "alias": "Revenue Generated Offline Post-Click 30d"
+   },
+   "RevenueGeneratedOfflinePv24h": {
+    "alias": "Revenue Generated Offline Post-View 24h"
+   },
+   "Day": {
+    "alias": "Day"
+   },
+   "Campaign": {
+    "alias": "Campaign"
+   },
+   "CampaignId": {
+    "alias": "Campaign ID"
+   },
+   "AdvertiserId": {
+    "alias": "Advertiser ID"
+   },
+   "Advertiser": {
+    "alias": "Advertiser"
+   },
+   "Adset": {
+    "alias": "Adset"
+   },
+   "AdsetId": {
+    "alias": "Adset ID"
+   },
+   "Ad": {
+    "alias": "Ad"
+   },
+   "AdId": {
+    "alias": "Ad ID"
+   },
+   "Currency": {
+    "alias": "Currency"
+   },
+   "Device": {
+    "alias": "Device"
+   },
+   "Os": {
+    "alias": "OS"
+   },
+   "Channel": {
+    "alias": "Channel"
+   },
+   "ChannelId": {
+    "alias": "Channel ID"
+   },
+   "Category": {
+    "alias": "Category"
+   },
+   "CategoryId": {
+    "alias": "Category ID"
+   },
+   "Coupon": {
+    "alias": "Coupon"
+   },
+   "CouponId": {
+    "alias": "Coupon ID"
+   },
+   "MarketingObjective": {
+    "alias": "Marketing Objective"
+   },
+   "MarketingObjectiveId": {
+    "alias": "Marketing Objective ID"
+   }
+  }
+ },
+ "Transactions": {
+  "columns": {
+   "transactionId": {
+    "alias": "Transaction ID"
+   },
+   "transactionDate": {
+    "alias": "Transaction Date"
+   },
+   "advertiserId": {
+    "alias": "Advertiser ID"
+   },
+   "advertiserName": {
+    "alias": "Advertiser Name"
+   },
+   "adsetName": {
+    "alias": "Adset Name"
+   },
+   "eventType": {
+    "alias": "Event Type"
+   },
+   "eventDate": {
+    "alias": "Event Date"
+   },
+   "attributedTransaction": {
+    "alias": "Attributed Transaction"
+   },
+   "currency": {
+    "alias": "Currency"
+   },
+   "amount": {
+    "alias": "Amount"
+   },
+   "crossDeviceTransaction": {
+    "alias": "Cross Device Transaction"
+   }
+  }
+ }
+}

@@ -1,0 +1,4311 @@
+{
+ "Ad Account User": {
+  "columns": {
+   "id": {
+    "alias": "ID",
+    "description": "As currently requested, the ad account's own ID in `act_<number>` form. FK to [Ad Account](./ad-account.md)"
+   },
+   "name": {
+    "alias": "Name",
+    "description": "As currently requested, the ad account's name."
+   }
+  }
+ },
+ "Ad Account": {
+  "columns": {
+   "id": {
+    "alias": "ID",
+    "description": "The account as `act_` followed by its number — the form Ad Account User carries and joins on. The ads, creatives and insights tables carry the bare number instead — join them on `account_id`."
+   },
+   "account_id": {
+    "alias": "Account ID",
+    "description": "The account number without the `act_` prefix — the value the ads, creatives and insights tables carry to point here."
+   },
+   "account_status": {
+    "alias": "Account Status",
+    "description": "Status of the account as a number: 1 active, 2 disabled, 3 unsettled, 7 pending risk review, 8 pending settlement, 9 in grace period, 100 pending closure, 101 closed."
+   },
+   "age": {
+    "alias": "Age"
+   },
+   "agency_client_declaration": {
+    "alias": "Agency Client Declaration"
+   },
+   "amount_spent": {
+    "alias": "Amount Spent"
+   },
+   "attribution_spec": {
+    "alias": "Attribution Spec",
+    "description": "Deprecated due to iOS 14 changes. Please visit the changelog for more information. Stored as a JSON string."
+   },
+   "balance": {
+    "alias": "Balance"
+   },
+   "brand_safety_content_filter_levels": {
+    "alias": "Brand Safety Content Filter Levels",
+    "description": "Brand safety content filter levels set for in-content ads (Facebook in-stream videos and Ads on Facebook Reels) and Audience Network along with feed ads (Facebook Feed, Instagram feed, Facebook Reels feed and Instagram Reels feed) if applicable. Stored as a JSON string."
+   },
+   "business": {
+    "alias": "Business"
+   },
+   "business_city": {
+    "alias": "Business City"
+   },
+   "business_country_code": {
+    "alias": "Business Country Code"
+   },
+   "business_name": {
+    "alias": "Business Name"
+   },
+   "business_state": {
+    "alias": "Business State"
+   },
+   "business_street": {
+    "alias": "Business Street"
+   },
+   "business_street2": {
+    "alias": "Business Street2"
+   },
+   "business_zip": {
+    "alias": "Business ZIP"
+   },
+   "can_create_brand_lift_study": {
+    "alias": "Can Create Brand Lift Study"
+   },
+   "capabilities": {
+    "alias": "Capabilities",
+    "description": "List of capabilities an Ad Account can have. See capabilities. Stored as a JSON string."
+   },
+   "created_time": {
+    "alias": "Created Time"
+   },
+   "currency": {
+    "alias": "Currency"
+   },
+   "default_dsa_beneficiary": {
+    "alias": "Default DSA Beneficiary"
+   },
+   "default_dsa_payor": {
+    "alias": "Default DSA Payor"
+   },
+   "disable_reason": {
+    "alias": "Disable Reason",
+    "description": "Why the account was disabled, as a number; 0 means it is not disabled. The other codes name the review or policy that closed it."
+   },
+   "end_advertiser": {
+    "alias": "End Advertiser"
+   },
+   "end_advertiser_name": {
+    "alias": "End Advertiser Name"
+   },
+   "existing_customers": {
+    "alias": "Existing Customers",
+    "description": "The custom audience ids that are used by advertisers to define their existing customers. This definition is primarily used by Automated Shopping Ads. Stored as a JSON string."
+   },
+   "expired_funding_source_details": {
+    "alias": "Expired Funding Source Details"
+   },
+   "extended_credit_invoice_group": {
+    "alias": "Extended Credit Invoice Group"
+   },
+   "failed_delivery_checks": {
+    "alias": "Failed Delivery Checks",
+    "description": "The delivery checks the account has failed, as Meta reports them. Stored as a JSON string."
+   },
+   "fb_entity": {
+    "alias": "Facebook Entity",
+    "description": "Internal Meta entity code for the account."
+   },
+   "funding_source": {
+    "alias": "Funding Source"
+   },
+   "funding_source_details": {
+    "alias": "Funding Source Details"
+   },
+   "has_migrated_permissions": {
+    "alias": "Has Migrated Permissions"
+   },
+   "io_number": {
+    "alias": "IO Number"
+   },
+   "is_attribution_spec_system_default": {
+    "alias": "Is Attribution Spec System Default"
+   },
+   "is_direct_deals_enabled": {
+    "alias": "Is Direct Deals Enabled"
+   },
+   "is_in_3ds_authorization_enabled_market": {
+    "alias": "Is in 3DS Authorization Enabled Market"
+   },
+   "is_notifications_enabled": {
+    "alias": "Is Notifications Enabled"
+   },
+   "is_personal": {
+    "alias": "Is Personal"
+   },
+   "is_prepay_account": {
+    "alias": "Is Prepay Account"
+   },
+   "is_tax_id_required": {
+    "alias": "Is Tax ID Required"
+   },
+   "line_numbers": {
+    "alias": "Line Numbers",
+    "description": "Line numbers on the account, as Meta's ad account reference lists them: a list of integers. Stored as a JSON string."
+   },
+   "media_agency": {
+    "alias": "Media Agency"
+   },
+   "min_campaign_group_spend_cap": {
+    "alias": "Min Campaign Group Spend Cap"
+   },
+   "min_daily_budget": {
+    "alias": "Min Daily Budget"
+   },
+   "name": {
+    "alias": "Name"
+   },
+   "offsite_pixels_tos_accepted": {
+    "alias": "Offsite Pixels ToS Accepted"
+   },
+   "owner": {
+    "alias": "Owner"
+   },
+   "partner": {
+    "alias": "Partner"
+   },
+   "rf_spec": {
+    "alias": "RF Spec",
+    "description": "Reach and Frequency limits configuration. See Reach and Frequency. Stored as a JSON string."
+   },
+   "spend_cap": {
+    "alias": "Spend Cap"
+   },
+   "tax_id": {
+    "alias": "Tax ID",
+    "description": "The tax identification number registered on the account."
+   },
+   "tax_id_status": {
+    "alias": "Tax ID Status"
+   },
+   "tax_id_type": {
+    "alias": "Tax ID Type"
+   },
+   "timezone_id": {
+    "alias": "Timezone ID"
+   },
+   "timezone_name": {
+    "alias": "Timezone Name"
+   },
+   "timezone_offset_hours_utc": {
+    "alias": "Timezone Offset Hours UTC"
+   },
+   "tos_accepted": {
+    "alias": "ToS Accepted",
+    "description": "Checks if this specific ad account has signed the Terms of Service contracts. Returns 1, if terms were accepted. Stored as a JSON string."
+   },
+   "user_tasks": {
+    "alias": "User Tasks",
+    "description": "The tasks the connecting user is allowed to perform on this account, such as manage, advertise or analyze. Stored as a JSON string."
+   },
+   "user_tos_accepted": {
+    "alias": "User ToS Accepted",
+    "description": "Checks if a user has signed the Terms of Service contracts related to the Business that contains a specific ad account. Must include user's access token to get information. This verification is not valid for system users. Stored as a JSON string."
+   }
+  }
+ },
+ "Ad Creatives": {
+  "columns": {
+   "id": {
+    "alias": "ID",
+    "description": "The creative's ID. Several ads can point at the same one."
+   },
+   "account_id": {
+    "alias": "Account ID",
+    "description": "The ad account whose library holds this creative. FK to [Ad Account](./ad-account.md)"
+   },
+   "actor_id": {
+    "alias": "Actor ID"
+   },
+   "ad_disclaimer_spec": {
+    "alias": "Ad Disclaimer Spec"
+   },
+   "adlabels": {
+    "alias": "Ad Labels",
+    "description": "Ad Labels associated with this creative. Used to group it with related ad objects. Stored as a JSON string."
+   },
+   "applink_treatment": {
+    "alias": "App Link Treatment"
+   },
+   "asset_feed_spec": {
+    "alias": "Asset Feed Spec"
+   },
+   "authorization_category": {
+    "alias": "Authorization Category"
+   },
+   "body": {
+    "alias": "Body"
+   },
+   "branded_content": {
+    "alias": "Branded Content",
+    "description": "Branded content settings of the creative, when it is a paid partnership."
+   },
+   "branded_content_sponsor_page_id": {
+    "alias": "Branded Content Sponsor Page ID"
+   },
+   "bundle_folder_id": {
+    "alias": "Bundle Folder ID"
+   },
+   "call_to_action_type": {
+    "alias": "Call To Action Type"
+   },
+   "categorization_criteria": {
+    "alias": "Categorization Criteria"
+   },
+   "category_media_source": {
+    "alias": "Category Media Source"
+   },
+   "collaborative_ads_lsb_image_bank_id": {
+    "alias": "Collaborative Ads LSB Image Bank ID"
+   },
+   "contextual_multi_ads": {
+    "alias": "Contextual Multi Ads",
+    "description": "Whether the creative may be shown among other ads in a multi-ad unit."
+   },
+   "creative_sourcing_spec": {
+    "alias": "Creative Sourcing Spec",
+    "description": "Settings that let Meta source extra creative material, such as product images, for this creative."
+   },
+   "degrees_of_freedom_spec": {
+    "alias": "Degrees Of Freedom Spec"
+   },
+   "destination_set_id": {
+    "alias": "Destination Set ID"
+   },
+   "dynamic_ad_voice": {
+    "alias": "Dynamic Ad Voice"
+   },
+   "effective_authorization_category": {
+    "alias": "Effective Authorization Category"
+   },
+   "effective_instagram_media_id": {
+    "alias": "Effective Instagram Media ID"
+   },
+   "effective_object_story_id": {
+    "alias": "Effective Object Story ID"
+   },
+   "enable_direct_install": {
+    "alias": "Enable Direct Install"
+   },
+   "enable_launch_instant_app": {
+    "alias": "Enable Launch Instant App"
+   },
+   "facebook_branded_content": {
+    "alias": "Facebook Branded Content"
+   },
+   "image_crops": {
+    "alias": "Image Crops"
+   },
+   "image_hash": {
+    "alias": "Image Hash"
+   },
+   "image_url": {
+    "alias": "Image URL"
+   },
+   "instagram_permalink_url": {
+    "alias": "Instagram Permalink URL"
+   },
+   "instagram_user_id": {
+    "alias": "Instagram User ID"
+   },
+   "interactive_components_spec": {
+    "alias": "Interactive Components Spec"
+   },
+   "link_destination_display_url": {
+    "alias": "Link Destination Display URL"
+   },
+   "link_og_id": {
+    "alias": "Link OG ID"
+   },
+   "link_url": {
+    "alias": "Link URL"
+   },
+   "link_url_parsed": {
+    "alias": "Link URL Parsed"
+   },
+   "messenger_sponsored_message": {
+    "alias": "Messenger Sponsored Message"
+   },
+   "name": {
+    "alias": "Name"
+   },
+   "object_id": {
+    "alias": "Object ID"
+   },
+   "object_store_url": {
+    "alias": "Object Store URL"
+   },
+   "object_story_id": {
+    "alias": "Object Story ID"
+   },
+   "object_story_spec": {
+    "alias": "Object Story Spec"
+   },
+   "object_type": {
+    "alias": "Object Type",
+    "description": "The kind of object the creative promotes, such as `PAGE`, `SHARE`, `PHOTO`, `VIDEO`, `STATUS` or `APPLICATION`."
+   },
+   "object_url": {
+    "alias": "Object URL"
+   },
+   "object_url_parsed": {
+    "alias": "Object URL Parsed"
+   },
+   "page_welcome_message": {
+    "alias": "Page Welcome Message"
+   },
+   "photo_album_source_object_story_id": {
+    "alias": "Photo Album Source Object Story ID",
+    "description": "The Page post whose photo album the creative was built from."
+   },
+   "place_page_set_id": {
+    "alias": "Place Page Set ID"
+   },
+   "platform_customizations": {
+    "alias": "Platform Customizations"
+   },
+   "playable_asset_id": {
+    "alias": "Playable Asset ID"
+   },
+   "portrait_customizations": {
+    "alias": "Portrait Customizations"
+   },
+   "product_data": {
+    "alias": "Product Data",
+    "description": "Product information attached to the creative. Stored as a JSON string."
+   },
+   "product_set_id": {
+    "alias": "Product Set ID"
+   },
+   "recommender_settings": {
+    "alias": "Recommender Settings"
+   },
+   "source_instagram_media_id": {
+    "alias": "Source Instagram Media ID"
+   },
+   "status": {
+    "alias": "Status"
+   },
+   "template_url": {
+    "alias": "Template URL"
+   },
+   "template_url_spec": {
+    "alias": "Template URL Spec"
+   },
+   "thumbnail_id": {
+    "alias": "Thumbnail ID",
+    "description": "ID of the thumbnail image used for the creative."
+   },
+   "thumbnail_url": {
+    "alias": "Thumbnail URL"
+   },
+   "title": {
+    "alias": "Title"
+   },
+   "url_tags": {
+    "alias": "URL Tags"
+   },
+   "use_page_actor_override": {
+    "alias": "Use Page Actor Override"
+   },
+   "video_id": {
+    "alias": "Video ID",
+    "description": "ID of the video used in the creative, when it is a video ad."
+   }
+  }
+ },
+ "Ad Insights by Ad Set": {
+  "columns": {
+   "account_currency": {
+    "alias": "Account Currency"
+   },
+   "account_id": {
+    "alias": "Account ID",
+    "description": "The ad account the row belongs to. FK to [Ad Account](./ad-account.md)"
+   },
+   "account_name": {
+    "alias": "Account Name"
+   },
+   "action_values": {
+    "alias": "Action Values",
+    "description": "The total value of all conversions attributed to your ads. Stored as a JSON string."
+   },
+   "actions": {
+    "alias": "Actions",
+    "description": "The total number of actions people took that are attributed to your ads. Actions may include engagement, clicks or conversions. Stored as a JSON string."
+   },
+   "adset_id": {
+    "alias": "Ad Set ID",
+    "description": "The ad set this row reports on."
+   },
+   "adset_name": {
+    "alias": "Ad Set Name"
+   },
+   "attribution_setting": {
+    "alias": "Attribution Setting"
+   },
+   "buying_type": {
+    "alias": "Buying Type"
+   },
+   "campaign_id": {
+    "alias": "Campaign ID",
+    "description": "The campaign the ad set sits in; no campaign table is loaded, the name is on the row."
+   },
+   "campaign_name": {
+    "alias": "Campaign Name"
+   },
+   "canvas_avg_view_percent": {
+    "alias": "Canvas Avg View Percent"
+   },
+   "canvas_avg_view_time": {
+    "alias": "Canvas Avg View Time"
+   },
+   "catalog_segment_actions": {
+    "alias": "Catalog Segment Actions",
+    "description": "The number of actions performed attributed to your ads promoting your catalog segment, broken down by action type. Stored as a JSON string."
+   },
+   "catalog_segment_value": {
+    "alias": "Catalog Segment Value",
+    "description": "The total value of all conversions from your catalog segment attributed to your ads. Stored as a JSON string."
+   },
+   "catalog_segment_value_mobile_purchase_roas": {
+    "alias": "Catalog Segment Value Mobile Purchase ROAS",
+    "description": "The total return on ad spend (ROAS) from mobile app purchases for your catalog segment. Stored as a JSON string."
+   },
+   "catalog_segment_value_omni_purchase_roas": {
+    "alias": "Catalog Segment Value Omni Purchase ROAS",
+    "description": "The total return on ad spend (ROAS) from all purchases for your catalog segment. Stored as a JSON string."
+   },
+   "catalog_segment_value_website_purchase_roas": {
+    "alias": "Catalog Segment Value Website Purchase ROAS",
+    "description": "The total return on ad spend (ROAS) from website purchases for your catalog segment. Stored as a JSON string."
+   },
+   "clicks": {
+    "alias": "Clicks"
+   },
+   "conversion_values": {
+    "alias": "Conversion Values",
+    "description": "The total value of the conversions attributed to your ads, counting conversion events only. Unlike action_values, it excludes engagement and clicks. Stored as a JSON string."
+   },
+   "conversions": {
+    "alias": "Conversions",
+    "description": "The total number of conversions attributed to your ads. Counts conversion events only, unlike actions, which also counts engagement and clicks. Stored as a JSON string."
+   },
+   "converted_product_quantity": {
+    "alias": "Converted Product Quantity",
+    "description": "The number of products purchased which are recorded by your merchant partner's pixel or app SDK for a given product ID and driven by your ads. Has to be used together with converted product ID breakdown. Stored as a JSON string."
+   },
+   "converted_product_value": {
+    "alias": "Converted Product Value",
+    "description": "The value of purchases recorded by your merchant partner's pixel or app SDK for a given product ID and driven by your ads. Has to be used together with converted product ID breakdown. Stored as a JSON string."
+   },
+   "cost_per_15_sec_video_view": {
+    "alias": "Cost Per 15 Sec Video View",
+    "description": "Average cost per video view of at least 15 seconds. Stored as a JSON string."
+   },
+   "cost_per_2_sec_continuous_video_view": {
+    "alias": "Cost Per 2 Sec Continuous Video View",
+    "description": "Average cost per continuous video view of at least 2 seconds. Stored as a JSON string."
+   },
+   "cost_per_action_type": {
+    "alias": "Cost Per Action Type",
+    "description": "The average cost of a relevant action. Stored as a JSON string."
+   },
+   "cost_per_ad_click": {
+    "alias": "Cost Per Ad Click",
+    "description": "Average cost per click on the ad. Stored as a JSON string."
+   },
+   "cost_per_conversion": {
+    "alias": "Cost Per Conversion",
+    "description": "Average cost per conversion, by conversion type. Stored as a JSON string."
+   },
+   "cost_per_dda_countby_convs": {
+    "alias": "Cost Per DDA Countby Convs",
+    "description": "Average cost per conversion counted by data-driven attribution."
+   },
+   "cost_per_inline_link_click": {
+    "alias": "Cost Per Inline Link Click"
+   },
+   "cost_per_inline_post_engagement": {
+    "alias": "Cost Per Inline Post Engagement"
+   },
+   "cost_per_one_thousand_ad_impression": {
+    "alias": "Cost Per One Thousand Ad Impression",
+    "description": "Average cost per 1,000 ad impressions. Stored as a JSON string."
+   },
+   "cost_per_outbound_click": {
+    "alias": "Cost Per Outbound Click",
+    "description": "The average cost for each outbound click. Stored as a JSON string."
+   },
+   "cost_per_result": {
+    "alias": "Cost Per Result",
+    "description": "The average cost per result from your ads. Stored as a JSON string."
+   },
+   "cost_per_thruplay": {
+    "alias": "Cost Per ThruPlay",
+    "description": "The average cost for each ThruPlay. This metric is in development. Stored as a JSON string."
+   },
+   "cost_per_unique_action_type": {
+    "alias": "Cost Per Unique Action Type",
+    "description": "The average cost of each unique action. This metric is estimated. Stored as a JSON string."
+   },
+   "cost_per_unique_click": {
+    "alias": "Cost Per Unique Click"
+   },
+   "cost_per_unique_conversion": {
+    "alias": "Cost Per Unique Conversion",
+    "description": "Average cost per unique conversion, by conversion type. Not additive across rows. Stored as a JSON string."
+   },
+   "cost_per_unique_inline_link_click": {
+    "alias": "Cost Per Unique Inline Link Click"
+   },
+   "cost_per_unique_outbound_click": {
+    "alias": "Cost Per Unique Outbound Click",
+    "description": "The average cost for each unique outbound click. This metric is estimated. Stored as a JSON string."
+   },
+   "cpc": {
+    "alias": "CPC"
+   },
+   "cpm": {
+    "alias": "CPM"
+   },
+   "cpp": {
+    "alias": "CPP"
+   },
+   "created_time": {
+    "alias": "Created Time",
+    "description": "When the object this row describes was created, as Meta reports it."
+   },
+   "ctr": {
+    "alias": "CTR"
+   },
+   "date_start": {
+    "alias": "Date Start",
+    "description": "The day the row reports on; equal to `date_stop`, because the connector requests one day at a time."
+   },
+   "date_stop": {
+    "alias": "Date Stop",
+    "description": "The day the row reports on; equal to `date_start`."
+   },
+   "dda_countby_convs": {
+    "alias": "DDA Countby Convs",
+    "description": "Conversions counted by Meta's data-driven attribution."
+   },
+   "dda_results": {
+    "alias": "DDA Results",
+    "description": "Results counted by Meta's data-driven attribution. Stored as a JSON string."
+   },
+   "frequency": {
+    "alias": "Frequency"
+   },
+   "full_view_impressions": {
+    "alias": "Full View Impressions"
+   },
+   "full_view_reach": {
+    "alias": "Full View Reach"
+   },
+   "impressions": {
+    "alias": "Impressions"
+   },
+   "inline_link_click_ctr": {
+    "alias": "Inline Link Click CTR"
+   },
+   "inline_link_clicks": {
+    "alias": "Inline Link Clicks"
+   },
+   "inline_post_engagement": {
+    "alias": "Inline Post Engagement"
+   },
+   "instagram_upcoming_event_reminders_set": {
+    "alias": "Instagram Upcoming Event Reminders Set",
+    "description": "Reminders people set for an upcoming event promoted on Instagram."
+   },
+   "instant_experience_clicks_to_open": {
+    "alias": "Instant Experience Clicks To Open",
+    "description": "Clicks that opened the ad's Instant Experience."
+   },
+   "instant_experience_clicks_to_start": {
+    "alias": "Instant Experience Clicks To Start",
+    "description": "Clicks that started the ad's Instant Experience."
+   },
+   "instant_experience_outbound_clicks": {
+    "alias": "Instant Experience Outbound Clicks",
+    "description": "Clicks from the ad's Instant Experience to a destination off Meta. Stored as a JSON string."
+   },
+   "interactive_component_tap": {
+    "alias": "Interactive Component Tap",
+    "description": "Taps on interactive components of the ad, such as polls or sliders. Stored as a JSON string."
+   },
+   "marketing_messages_delivery_rate": {
+    "alias": "Marketing Messages Delivery Rate"
+   },
+   "mobile_app_purchase_roas": {
+    "alias": "Mobile App Purchase ROAS",
+    "description": "The total return on ad spend (ROAS) from mobile app purchases. This is based on the value that you assigned when you set up the app event. Stored as a JSON string."
+   },
+   "objective": {
+    "alias": "Objective"
+   },
+   "optimization_goal": {
+    "alias": "Optimization Goal"
+   },
+   "outbound_clicks": {
+    "alias": "Outbound Clicks",
+    "description": "The number of clicks on links that take people off Facebook-owned properties. Stored as a JSON string."
+   },
+   "outbound_clicks_ctr": {
+    "alias": "Outbound Clicks CTR",
+    "description": "The percentage of times people saw your ad and performed an outbound click. Stored as a JSON string."
+   },
+   "purchase_roas": {
+    "alias": "Purchase ROAS",
+    "description": "The total return on ad spend (ROAS) from purchases. This is based on information received from one or more of your connected Facebook Business Tools and attributed to your ads. Stored as a JSON string."
+   },
+   "qualifying_question_qualify_answer_rate": {
+    "alias": "Qualifying Question Qualify Answer Rate",
+    "description": "Share of lead-form respondents whose answer to a qualifying question marked them as qualified."
+   },
+   "reach": {
+    "alias": "Reach"
+   },
+   "result_rate": {
+    "alias": "Result Rate",
+    "description": "The percentage of results you received out of all the views of your ads. Stored as a JSON string."
+   },
+   "results": {
+    "alias": "Results",
+    "description": "The number of results you received out of all the views of your ads. Stored as a JSON string."
+   },
+   "shops_assisted_purchases": {
+    "alias": "Shops Assisted Purchases",
+    "description": "Purchases on Meta Shops that the ad assisted."
+   },
+   "social_spend": {
+    "alias": "Social Spend"
+   },
+   "spend": {
+    "alias": "Spend"
+   },
+   "updated_time": {
+    "alias": "Updated Time",
+    "description": "When the object this row describes was last updated, as Meta reports it."
+   },
+   "video_30_sec_watched_actions": {
+    "alias": "Video 30 Sec Watched Actions",
+    "description": "The number of times your video played for at least 30 seconds, or for nearly its total length if it's shorter than 30 seconds. For each impression of a video, we'll count video views separately and exclude any time spent replaying the video. Stored as a JSON string."
+   },
+   "video_avg_time_watched_actions": {
+    "alias": "Video Avg Time Watched Actions",
+    "description": "The average time a video was played, including any time spent replaying the video for a single impression. Stored as a JSON string."
+   },
+   "video_continuous_2_sec_watched_actions": {
+    "alias": "Video Continuous 2 Sec Watched Actions",
+    "description": "Video plays of at least 2 continuous seconds. Stored as a JSON string."
+   },
+   "video_p100_watched_actions": {
+    "alias": "Video 100% Watched Actions",
+    "description": "The number of times your video was played at 100% of its length, including plays that skipped to this point. Stored as a JSON string."
+   },
+   "video_p25_watched_actions": {
+    "alias": "Video 25% Watched Actions",
+    "description": "The number of times your video was played at 25% of its length, including plays that skipped to this point. Stored as a JSON string."
+   },
+   "video_p50_watched_actions": {
+    "alias": "Video 50% Watched Actions",
+    "description": "The number of times your video was played at 50% of its length, including plays that skipped to this point. Stored as a JSON string."
+   },
+   "video_p75_watched_actions": {
+    "alias": "Video 75% Watched Actions",
+    "description": "The number of times your video was played at 75% of its length, including plays that skipped to this point. Stored as a JSON string."
+   },
+   "video_p95_watched_actions": {
+    "alias": "Video 95% Watched Actions",
+    "description": "The number of times your video was played at 95% of its length, including plays that skipped to this point. Stored as a JSON string."
+   },
+   "video_play_actions": {
+    "alias": "Video Play Actions",
+    "description": "The number of times your video starts to play. This is counted for each impression of a video, and excludes replays. This metric is in development. Stored as a JSON string."
+   },
+   "video_play_curve_actions": {
+    "alias": "Video Play Curve Actions",
+    "description": "A video-play based curve graph that illustrates the percentage of video plays that reached a given second. Entries 0 to 14 represent seconds 0 thru 14. Entries 15 to 17 represent second ranges [15 to 20), [20 to 25), and [25 to 30). Entries 18 to 20 represent second ranges [30 to 40), [40 to 50), and [50 to 60). Entry 21 represents plays over 60 seconds. Stored as a JSON string."
+   },
+   "video_play_retention_0_to_15s_actions": {
+    "alias": "Video Play Retention 0 To 15s Actions",
+    "description": "Viewer retention over the first 15 seconds of the video. Stored as a JSON string."
+   },
+   "video_play_retention_20_to_60s_actions": {
+    "alias": "Video Play Retention 20 To 60s Actions",
+    "description": "Viewer retention between 20 and 60 seconds of the video. Stored as a JSON string."
+   },
+   "video_play_retention_graph_actions": {
+    "alias": "Video Play Retention Graph Actions",
+    "description": "Viewer retention across the whole video, as a curve. Stored as a JSON string."
+   },
+   "video_time_watched_actions": {
+    "alias": "Video Time Watched Actions",
+    "description": "Total time the video was watched. Stored as a JSON string."
+   },
+   "website_ctr": {
+    "alias": "Website CTR",
+    "description": "The percentage of times people saw your ad and performed a link click. Stored as a JSON string."
+   },
+   "website_purchase_roas": {
+    "alias": "Website Purchase ROAS",
+    "description": "The total return on ad spend (ROAS) from website purchases. This is based on the value of all conversions recorded by the Facebook pixel on your website and attributed to your ads. Stored as a JSON string."
+   }
+  }
+ },
+ "Ad Insights by Age and Gender": {
+  "columns": {
+   "account_currency": {
+    "alias": "Account Currency"
+   },
+   "account_id": {
+    "alias": "Account ID",
+    "description": "The ad account the row belongs to."
+   },
+   "account_name": {
+    "alias": "Account Name"
+   },
+   "action_values": {
+    "alias": "Action Values",
+    "description": "The total value of all conversions attributed to your ads. Stored as a JSON string."
+   },
+   "actions": {
+    "alias": "Actions",
+    "description": "The total number of actions people took that are attributed to your ads. Actions may include engagement, clicks or conversions. Stored as a JSON string."
+   },
+   "ad_click_actions": {
+    "alias": "Ad Click Actions",
+    "description": "Actions taken by people who clicked the ad. Stored as a JSON string."
+   },
+   "ad_id": {
+    "alias": "Ad ID",
+    "description": "The ad this row reports on. FK to [Ad Insights](./ad-insights.md)"
+   },
+   "ad_impression_actions": {
+    "alias": "Ad Impression Actions",
+    "description": "Actions taken by people who saw the ad. Stored as a JSON string."
+   },
+   "ad_name": {
+    "alias": "Ad Name"
+   },
+   "adset_id": {
+    "alias": "Ad Set ID",
+    "description": "The ad set of the ad. This connector loads no ad set table, so it has no join target; the name is on the row as `adset_name`."
+   },
+   "adset_name": {
+    "alias": "Ad Set Name"
+   },
+   "age": {
+    "alias": "Age"
+   },
+   "attribution_setting": {
+    "alias": "Attribution Setting"
+   },
+   "auction_bid": {
+    "alias": "Auction Bid",
+    "description": "The bid used in the ad auction."
+   },
+   "auction_competitiveness": {
+    "alias": "Auction Competitiveness",
+    "description": "How competitive the ad was in its auctions."
+   },
+   "auction_max_competitor_bid": {
+    "alias": "Auction Max Competitor Bid",
+    "description": "The highest competing bid in the ad's auctions."
+   },
+   "buying_type": {
+    "alias": "Buying Type"
+   },
+   "campaign_id": {
+    "alias": "Campaign ID",
+    "description": "The campaign of the ad. This connector loads no campaign table, so it has no join target; the name is on the row as `campaign_name`."
+   },
+   "campaign_name": {
+    "alias": "Campaign Name"
+   },
+   "canvas_avg_view_percent": {
+    "alias": "Canvas Avg View Percent"
+   },
+   "canvas_avg_view_time": {
+    "alias": "Canvas Avg View Time"
+   },
+   "catalog_segment_actions": {
+    "alias": "Catalog Segment Actions",
+    "description": "The number of actions performed attributed to your ads promoting your catalog segment, broken down by action type. Stored as a JSON string."
+   },
+   "catalog_segment_value": {
+    "alias": "Catalog Segment Value",
+    "description": "The total value of all conversions from your catalog segment attributed to your ads. Stored as a JSON string."
+   },
+   "catalog_segment_value_mobile_purchase_roas": {
+    "alias": "Catalog Segment Value Mobile Purchase ROAS",
+    "description": "The total return on ad spend (ROAS) from mobile app purchases for your catalog segment. Stored as a JSON string."
+   },
+   "catalog_segment_value_omni_purchase_roas": {
+    "alias": "Catalog Segment Value Omni Purchase ROAS",
+    "description": "The total return on ad spend (ROAS) from all purchases for your catalog segment. Stored as a JSON string."
+   },
+   "catalog_segment_value_website_purchase_roas": {
+    "alias": "Catalog Segment Value Website Purchase ROAS",
+    "description": "The total return on ad spend (ROAS) from website purchases for your catalog segment. Stored as a JSON string."
+   },
+   "clicks": {
+    "alias": "Clicks"
+   },
+   "conversion_values": {
+    "alias": "Conversion Values",
+    "description": "The total value of the conversions attributed to your ads, counting conversion events only. Unlike action_values, it excludes engagement and clicks. Stored as a JSON string."
+   },
+   "conversions": {
+    "alias": "Conversions",
+    "description": "The total number of conversions attributed to your ads. Counts conversion events only, unlike actions, which also counts engagement and clicks. Stored as a JSON string."
+   },
+   "converted_product_quantity": {
+    "alias": "Converted Product Quantity",
+    "description": "The number of products purchased which are recorded by your merchant partner's pixel or app SDK for a given product ID and driven by your ads. Has to be used together with converted product ID breakdown. Stored as a JSON string."
+   },
+   "converted_product_value": {
+    "alias": "Converted Product Value",
+    "description": "The value of purchases recorded by your merchant partner's pixel or app SDK for a given product ID and driven by your ads. Has to be used together with converted product ID breakdown. Stored as a JSON string."
+   },
+   "cost_per_15_sec_video_view": {
+    "alias": "Cost Per 15 Sec Video View",
+    "description": "Average cost per video view of at least 15 seconds. Stored as a JSON string."
+   },
+   "cost_per_2_sec_continuous_video_view": {
+    "alias": "Cost Per 2 Sec Continuous Video View",
+    "description": "Average cost per continuous video view of at least 2 seconds. Stored as a JSON string."
+   },
+   "cost_per_action_type": {
+    "alias": "Cost Per Action Type",
+    "description": "The average cost of a relevant action. Stored as a JSON string."
+   },
+   "cost_per_ad_click": {
+    "alias": "Cost Per Ad Click",
+    "description": "Average cost per click on the ad. Stored as a JSON string."
+   },
+   "cost_per_conversion": {
+    "alias": "Cost Per Conversion",
+    "description": "Average cost per conversion, by conversion type. Stored as a JSON string."
+   },
+   "cost_per_dda_countby_convs": {
+    "alias": "Cost Per DDA Countby Convs",
+    "description": "Average cost per conversion counted by data-driven attribution."
+   },
+   "cost_per_inline_link_click": {
+    "alias": "Cost Per Inline Link Click"
+   },
+   "cost_per_inline_post_engagement": {
+    "alias": "Cost Per Inline Post Engagement"
+   },
+   "cost_per_one_thousand_ad_impression": {
+    "alias": "Cost Per One Thousand Ad Impression",
+    "description": "Average cost per 1,000 ad impressions. Stored as a JSON string."
+   },
+   "cost_per_outbound_click": {
+    "alias": "Cost Per Outbound Click",
+    "description": "The average cost for each outbound click. Stored as a JSON string."
+   },
+   "cost_per_result": {
+    "alias": "Cost Per Result",
+    "description": "The average cost per result from your ads. Stored as a JSON string."
+   },
+   "cost_per_thruplay": {
+    "alias": "Cost Per ThruPlay",
+    "description": "The average cost for each ThruPlay. This metric is in development. Stored as a JSON string."
+   },
+   "cost_per_unique_action_type": {
+    "alias": "Cost Per Unique Action Type",
+    "description": "The average cost of each unique action. This metric is estimated. Stored as a JSON string."
+   },
+   "cost_per_unique_click": {
+    "alias": "Cost Per Unique Click"
+   },
+   "cost_per_unique_conversion": {
+    "alias": "Cost Per Unique Conversion",
+    "description": "Average cost per unique conversion, by conversion type. Not additive across rows. Stored as a JSON string."
+   },
+   "cost_per_unique_inline_link_click": {
+    "alias": "Cost Per Unique Inline Link Click"
+   },
+   "cost_per_unique_outbound_click": {
+    "alias": "Cost Per Unique Outbound Click",
+    "description": "The average cost for each unique outbound click. This metric is estimated. Stored as a JSON string."
+   },
+   "cpc": {
+    "alias": "CPC"
+   },
+   "cpm": {
+    "alias": "CPM"
+   },
+   "cpp": {
+    "alias": "CPP"
+   },
+   "created_time": {
+    "alias": "Created Time",
+    "description": "When the object this row describes was created, as Meta reports it."
+   },
+   "ctr": {
+    "alias": "CTR"
+   },
+   "date_start": {
+    "alias": "Date Start",
+    "description": "The day the row reports on; equal to `date_stop`, because the connector requests one day at a time. FK to [Ad Insights](./ad-insights.md)"
+   },
+   "date_stop": {
+    "alias": "Date Stop",
+    "description": "The day the row reports on; equal to `date_start`. FK to [Ad Insights](./ad-insights.md)"
+   },
+   "dda_countby_convs": {
+    "alias": "DDA Countby Convs",
+    "description": "Conversions counted by Meta's data-driven attribution."
+   },
+   "dda_results": {
+    "alias": "DDA Results",
+    "description": "Results counted by Meta's data-driven attribution. Stored as a JSON string."
+   },
+   "frequency": {
+    "alias": "Frequency"
+   },
+   "full_view_impressions": {
+    "alias": "Full View Impressions"
+   },
+   "full_view_reach": {
+    "alias": "Full View Reach"
+   },
+   "gender": {
+    "alias": "Gender"
+   },
+   "impressions": {
+    "alias": "Impressions"
+   },
+   "inline_link_click_ctr": {
+    "alias": "Inline Link Click CTR"
+   },
+   "inline_link_clicks": {
+    "alias": "Inline Link Clicks"
+   },
+   "inline_post_engagement": {
+    "alias": "Inline Post Engagement"
+   },
+   "instagram_upcoming_event_reminders_set": {
+    "alias": "Instagram Upcoming Event Reminders Set",
+    "description": "Reminders people set for an upcoming event promoted on Instagram."
+   },
+   "instant_experience_clicks_to_open": {
+    "alias": "Instant Experience Clicks To Open",
+    "description": "Clicks that opened the ad's Instant Experience."
+   },
+   "instant_experience_clicks_to_start": {
+    "alias": "Instant Experience Clicks To Start",
+    "description": "Clicks that started the ad's Instant Experience."
+   },
+   "instant_experience_outbound_clicks": {
+    "alias": "Instant Experience Outbound Clicks",
+    "description": "Clicks from the ad's Instant Experience to a destination off Meta. Stored as a JSON string."
+   },
+   "interactive_component_tap": {
+    "alias": "Interactive Component Tap",
+    "description": "Taps on interactive components of the ad, such as polls or sliders. Stored as a JSON string."
+   },
+   "marketing_messages_delivery_rate": {
+    "alias": "Marketing Messages Delivery Rate"
+   },
+   "mobile_app_purchase_roas": {
+    "alias": "Mobile App Purchase ROAS",
+    "description": "The total return on ad spend (ROAS) from mobile app purchases. This is based on the value that you assigned when you set up the app event. Stored as a JSON string."
+   },
+   "objective": {
+    "alias": "Objective"
+   },
+   "optimization_goal": {
+    "alias": "Optimization Goal"
+   },
+   "outbound_clicks": {
+    "alias": "Outbound Clicks",
+    "description": "The number of clicks on links that take people off Facebook-owned properties. Stored as a JSON string."
+   },
+   "outbound_clicks_ctr": {
+    "alias": "Outbound Clicks CTR",
+    "description": "The percentage of times people saw your ad and performed an outbound click. Stored as a JSON string."
+   },
+   "purchase_roas": {
+    "alias": "Purchase ROAS",
+    "description": "The total return on ad spend (ROAS) from purchases. This is based on information received from one or more of your connected Facebook Business Tools and attributed to your ads. Stored as a JSON string."
+   },
+   "qualifying_question_qualify_answer_rate": {
+    "alias": "Qualifying Question Qualify Answer Rate",
+    "description": "Share of lead-form respondents whose answer to a qualifying question marked them as qualified."
+   },
+   "reach": {
+    "alias": "Reach"
+   },
+   "result_rate": {
+    "alias": "Result Rate",
+    "description": "The result rate from your ads. Stored as a JSON string."
+   },
+   "results": {
+    "alias": "Results",
+    "description": "The number of results from your ads. Stored as a JSON string."
+   },
+   "shops_assisted_purchases": {
+    "alias": "Shops Assisted Purchases",
+    "description": "Purchases on Meta Shops that the ad assisted."
+   },
+   "social_spend": {
+    "alias": "Social Spend"
+   },
+   "spend": {
+    "alias": "Spend"
+   },
+   "updated_time": {
+    "alias": "Updated Time",
+    "description": "When the object this row describes was last updated, as Meta reports it."
+   },
+   "video_30_sec_watched_actions": {
+    "alias": "Video 30 Sec Watched Actions",
+    "description": "The number of times your video played for at least 30 seconds, or for nearly its total length if it's shorter than 30 seconds. For each impression of a video, we'll count video views separately and exclude any time spent replaying the video. Stored as a JSON string."
+   },
+   "video_avg_time_watched_actions": {
+    "alias": "Video Avg Time Watched Actions",
+    "description": "The average time a video was played, including any time spent replaying the video for a single impression. Stored as a JSON string."
+   },
+   "video_continuous_2_sec_watched_actions": {
+    "alias": "Video Continuous 2 Sec Watched Actions",
+    "description": "Video plays of at least 2 continuous seconds. Stored as a JSON string."
+   },
+   "video_p100_watched_actions": {
+    "alias": "Video 100% Watched Actions",
+    "description": "The number of times your video was played at 100% of its length, including plays that skipped to this point. Stored as a JSON string."
+   },
+   "video_p25_watched_actions": {
+    "alias": "Video 25% Watched Actions",
+    "description": "The number of times your video was played at 25% of its length, including plays that skipped to this point. Stored as a JSON string."
+   },
+   "video_p50_watched_actions": {
+    "alias": "Video 50% Watched Actions",
+    "description": "The number of times your video was played at 50% of its length, including plays that skipped to this point. Stored as a JSON string."
+   },
+   "video_p75_watched_actions": {
+    "alias": "Video 75% Watched Actions",
+    "description": "The number of times your video was played at 75% of its length, including plays that skipped to this point. Stored as a JSON string."
+   },
+   "video_p95_watched_actions": {
+    "alias": "Video 95% Watched Actions",
+    "description": "The number of times your video was played at 95% of its length, including plays that skipped to this point. Stored as a JSON string."
+   },
+   "video_play_actions": {
+    "alias": "Video Play Actions",
+    "description": "The number of times your video starts to play. This is counted for each impression of a video, and excludes replays. This metric is in development. Stored as a JSON string."
+   },
+   "video_play_curve_actions": {
+    "alias": "Video Play Curve Actions",
+    "description": "A video-play based curve graph that illustrates the percentage of video plays that reached a given second. Entries 0 to 14 represent seconds 0 thru 14. Entries 15 to 17 represent second ranges [15 to 20), [20 to 25), and [25 to 30). Entries 18 to 20 represent second ranges [30 to 40), [40 to 50), and [50 to 60). Entry 21 represents plays over 60 seconds. Stored as a JSON string."
+   },
+   "video_play_retention_0_to_15s_actions": {
+    "alias": "Video Play Retention 0 To 15s Actions",
+    "description": "Viewer retention over the first 15 seconds of the video. Stored as a JSON string."
+   },
+   "video_play_retention_20_to_60s_actions": {
+    "alias": "Video Play Retention 20 To 60s Actions",
+    "description": "Viewer retention between 20 and 60 seconds of the video. Stored as a JSON string."
+   },
+   "video_play_retention_graph_actions": {
+    "alias": "Video Play Retention Graph Actions",
+    "description": "Viewer retention across the whole video, as a curve. Stored as a JSON string."
+   },
+   "video_time_watched_actions": {
+    "alias": "Video Time Watched Actions",
+    "description": "Total time the video was watched. Stored as a JSON string."
+   },
+   "website_ctr": {
+    "alias": "Website CTR",
+    "description": "The percentage of times people saw your ad and performed a link click. Stored as a JSON string."
+   },
+   "website_purchase_roas": {
+    "alias": "Website Purchase ROAS",
+    "description": "The total return on ad spend (ROAS) from website purchases. This is based on the value of all conversions recorded by the Facebook pixel on your website and attributed to your ads. Stored as a JSON string."
+   },
+   "wish_bid": {
+    "alias": "Wish Bid",
+    "description": "The bid the advertiser was willing to pay, as reported by Meta."
+   }
+  }
+ },
+ "Ad Insights by Campaign": {
+  "columns": {
+   "account_currency": {
+    "alias": "Account Currency"
+   },
+   "account_id": {
+    "alias": "Account ID",
+    "description": "The ad account the row belongs to. FK to [Ad Account](./ad-account.md)"
+   },
+   "account_name": {
+    "alias": "Account Name"
+   },
+   "action_values": {
+    "alias": "Action Values",
+    "description": "The total value of all conversions attributed to your ads. Stored as a JSON string."
+   },
+   "actions": {
+    "alias": "Actions",
+    "description": "The total number of actions people took that are attributed to your ads. Actions may include engagement, clicks or conversions. Stored as a JSON string."
+   },
+   "attribution_setting": {
+    "alias": "Attribution Setting"
+   },
+   "buying_type": {
+    "alias": "Buying Type"
+   },
+   "campaign_id": {
+    "alias": "Campaign ID",
+    "description": "The campaign this row reports on."
+   },
+   "campaign_name": {
+    "alias": "Campaign Name"
+   },
+   "canvas_avg_view_percent": {
+    "alias": "Canvas Avg View Percent"
+   },
+   "canvas_avg_view_time": {
+    "alias": "Canvas Avg View Time"
+   },
+   "catalog_segment_actions": {
+    "alias": "Catalog Segment Actions",
+    "description": "The number of actions performed attributed to your ads promoting your catalog segment, broken down by action type. Stored as a JSON string."
+   },
+   "catalog_segment_value": {
+    "alias": "Catalog Segment Value",
+    "description": "The total value of all conversions from your catalog segment attributed to your ads. Stored as a JSON string."
+   },
+   "catalog_segment_value_mobile_purchase_roas": {
+    "alias": "Catalog Segment Value Mobile Purchase ROAS",
+    "description": "The total return on ad spend (ROAS) from mobile app purchases for your catalog segment. Stored as a JSON string."
+   },
+   "catalog_segment_value_omni_purchase_roas": {
+    "alias": "Catalog Segment Value Omni Purchase ROAS",
+    "description": "The total return on ad spend (ROAS) from all purchases for your catalog segment. Stored as a JSON string."
+   },
+   "catalog_segment_value_website_purchase_roas": {
+    "alias": "Catalog Segment Value Website Purchase ROAS",
+    "description": "The total return on ad spend (ROAS) from website purchases for your catalog segment. Stored as a JSON string."
+   },
+   "clicks": {
+    "alias": "Clicks"
+   },
+   "conversion_values": {
+    "alias": "Conversion Values",
+    "description": "The total value of the conversions attributed to your ads, counting conversion events only. Unlike action_values, it excludes engagement and clicks. Stored as a JSON string."
+   },
+   "conversions": {
+    "alias": "Conversions",
+    "description": "The total number of conversions attributed to your ads. Counts conversion events only, unlike actions, which also counts engagement and clicks. Stored as a JSON string."
+   },
+   "converted_product_quantity": {
+    "alias": "Converted Product Quantity",
+    "description": "The number of products purchased which are recorded by your merchant partner's pixel or app SDK for a given product ID and driven by your ads. Has to be used together with converted product ID breakdown. Stored as a JSON string."
+   },
+   "converted_product_value": {
+    "alias": "Converted Product Value",
+    "description": "The value of purchases recorded by your merchant partner's pixel or app SDK for a given product ID and driven by your ads. Has to be used together with converted product ID breakdown. Stored as a JSON string."
+   },
+   "cost_per_15_sec_video_view": {
+    "alias": "Cost Per 15 Sec Video View",
+    "description": "Average cost per video view of at least 15 seconds. Stored as a JSON string."
+   },
+   "cost_per_2_sec_continuous_video_view": {
+    "alias": "Cost Per 2 Sec Continuous Video View",
+    "description": "Average cost per continuous video view of at least 2 seconds. Stored as a JSON string."
+   },
+   "cost_per_action_type": {
+    "alias": "Cost Per Action Type",
+    "description": "The average cost of a relevant action. Stored as a JSON string."
+   },
+   "cost_per_ad_click": {
+    "alias": "Cost Per Ad Click",
+    "description": "Average cost per click on the ad. Stored as a JSON string."
+   },
+   "cost_per_conversion": {
+    "alias": "Cost Per Conversion",
+    "description": "Average cost per conversion, by conversion type. Stored as a JSON string."
+   },
+   "cost_per_dda_countby_convs": {
+    "alias": "Cost Per DDA Countby Convs",
+    "description": "Average cost per conversion counted by data-driven attribution."
+   },
+   "cost_per_inline_link_click": {
+    "alias": "Cost Per Inline Link Click"
+   },
+   "cost_per_inline_post_engagement": {
+    "alias": "Cost Per Inline Post Engagement"
+   },
+   "cost_per_one_thousand_ad_impression": {
+    "alias": "Cost Per One Thousand Ad Impression",
+    "description": "Average cost per 1,000 ad impressions. Stored as a JSON string."
+   },
+   "cost_per_outbound_click": {
+    "alias": "Cost Per Outbound Click",
+    "description": "The average cost for each outbound click. Stored as a JSON string."
+   },
+   "cost_per_result": {
+    "alias": "Cost Per Result",
+    "description": "The average cost per result from your ads. Stored as a JSON string."
+   },
+   "cost_per_thruplay": {
+    "alias": "Cost Per ThruPlay",
+    "description": "The average cost for each ThruPlay. This metric is in development. Stored as a JSON string."
+   },
+   "cost_per_unique_action_type": {
+    "alias": "Cost Per Unique Action Type",
+    "description": "The average cost of each unique action. This metric is estimated. Stored as a JSON string."
+   },
+   "cost_per_unique_click": {
+    "alias": "Cost Per Unique Click"
+   },
+   "cost_per_unique_conversion": {
+    "alias": "Cost Per Unique Conversion",
+    "description": "Average cost per unique conversion, by conversion type. Not additive across rows. Stored as a JSON string."
+   },
+   "cost_per_unique_inline_link_click": {
+    "alias": "Cost Per Unique Inline Link Click"
+   },
+   "cost_per_unique_outbound_click": {
+    "alias": "Cost Per Unique Outbound Click",
+    "description": "The average cost for each unique outbound click. This metric is estimated. Stored as a JSON string."
+   },
+   "cpc": {
+    "alias": "CPC"
+   },
+   "cpm": {
+    "alias": "CPM"
+   },
+   "cpp": {
+    "alias": "CPP"
+   },
+   "created_time": {
+    "alias": "Created Time",
+    "description": "When the object this row describes was created, as Meta reports it."
+   },
+   "ctr": {
+    "alias": "CTR"
+   },
+   "date_start": {
+    "alias": "Date Start",
+    "description": "The day the row reports on; equal to `date_stop`, because the connector requests one day at a time."
+   },
+   "date_stop": {
+    "alias": "Date Stop",
+    "description": "The day the row reports on; equal to `date_start`."
+   },
+   "dda_countby_convs": {
+    "alias": "DDA Countby Convs",
+    "description": "Conversions counted by Meta's data-driven attribution."
+   },
+   "dda_results": {
+    "alias": "DDA Results",
+    "description": "Results counted by Meta's data-driven attribution. Stored as a JSON string."
+   },
+   "frequency": {
+    "alias": "Frequency"
+   },
+   "full_view_impressions": {
+    "alias": "Full View Impressions"
+   },
+   "full_view_reach": {
+    "alias": "Full View Reach"
+   },
+   "impressions": {
+    "alias": "Impressions"
+   },
+   "inline_link_click_ctr": {
+    "alias": "Inline Link Click CTR"
+   },
+   "inline_link_clicks": {
+    "alias": "Inline Link Clicks"
+   },
+   "inline_post_engagement": {
+    "alias": "Inline Post Engagement"
+   },
+   "instagram_upcoming_event_reminders_set": {
+    "alias": "Instagram Upcoming Event Reminders Set",
+    "description": "Reminders people set for an upcoming event promoted on Instagram."
+   },
+   "instant_experience_clicks_to_open": {
+    "alias": "Instant Experience Clicks To Open",
+    "description": "Clicks that opened the ad's Instant Experience."
+   },
+   "instant_experience_clicks_to_start": {
+    "alias": "Instant Experience Clicks To Start",
+    "description": "Clicks that started the ad's Instant Experience."
+   },
+   "instant_experience_outbound_clicks": {
+    "alias": "Instant Experience Outbound Clicks",
+    "description": "Clicks from the ad's Instant Experience to a destination off Meta. Stored as a JSON string."
+   },
+   "interactive_component_tap": {
+    "alias": "Interactive Component Tap",
+    "description": "Taps on interactive components of the ad, such as polls or sliders. Stored as a JSON string."
+   },
+   "marketing_messages_delivery_rate": {
+    "alias": "Marketing Messages Delivery Rate"
+   },
+   "mobile_app_purchase_roas": {
+    "alias": "Mobile App Purchase ROAS",
+    "description": "The total return on ad spend (ROAS) from mobile app purchases. This is based on the value that you assigned when you set up the app event. Stored as a JSON string."
+   },
+   "objective": {
+    "alias": "Objective"
+   },
+   "outbound_clicks": {
+    "alias": "Outbound Clicks",
+    "description": "The number of clicks on links that take people off Facebook-owned properties. Stored as a JSON string."
+   },
+   "outbound_clicks_ctr": {
+    "alias": "Outbound Clicks CTR",
+    "description": "The percentage of times people saw your ad and performed an outbound click. Stored as a JSON string."
+   },
+   "purchase_roas": {
+    "alias": "Purchase ROAS",
+    "description": "The total return on ad spend (ROAS) from purchases. This is based on information received from one or more of your connected Facebook Business Tools and attributed to your ads. Stored as a JSON string."
+   },
+   "qualifying_question_qualify_answer_rate": {
+    "alias": "Qualifying Question Qualify Answer Rate",
+    "description": "Share of lead-form respondents whose answer to a qualifying question marked them as qualified."
+   },
+   "reach": {
+    "alias": "Reach"
+   },
+   "result_rate": {
+    "alias": "Result Rate",
+    "description": "The percentage of results you received out of all the views of your ads. Stored as a JSON string."
+   },
+   "results": {
+    "alias": "Results",
+    "description": "The number of results you received out of all the views of your ads. Stored as a JSON string."
+   },
+   "shops_assisted_purchases": {
+    "alias": "Shops Assisted Purchases",
+    "description": "Purchases on Meta Shops that the ad assisted."
+   },
+   "social_spend": {
+    "alias": "Social Spend"
+   },
+   "spend": {
+    "alias": "Spend"
+   },
+   "updated_time": {
+    "alias": "Updated Time",
+    "description": "When the object this row describes was last updated, as Meta reports it."
+   },
+   "video_30_sec_watched_actions": {
+    "alias": "Video 30 Sec Watched Actions",
+    "description": "The number of times your video played for at least 30 seconds, or for nearly its total length if it's shorter than 30 seconds. For each impression of a video, we'll count video views separately and exclude any time spent replaying the video. Stored as a JSON string."
+   },
+   "video_avg_time_watched_actions": {
+    "alias": "Video Avg Time Watched Actions",
+    "description": "The average time a video was played, including any time spent replaying the video for a single impression. Stored as a JSON string."
+   },
+   "video_continuous_2_sec_watched_actions": {
+    "alias": "Video Continuous 2 Sec Watched Actions",
+    "description": "Video plays of at least 2 continuous seconds. Stored as a JSON string."
+   },
+   "video_p100_watched_actions": {
+    "alias": "Video 100% Watched Actions",
+    "description": "The number of times your video was played at 100% of its length, including plays that skipped to this point. Stored as a JSON string."
+   },
+   "video_p25_watched_actions": {
+    "alias": "Video 25% Watched Actions",
+    "description": "The number of times your video was played at 25% of its length, including plays that skipped to this point. Stored as a JSON string."
+   },
+   "video_p50_watched_actions": {
+    "alias": "Video 50% Watched Actions",
+    "description": "The number of times your video was played at 50% of its length, including plays that skipped to this point. Stored as a JSON string."
+   },
+   "video_p75_watched_actions": {
+    "alias": "Video 75% Watched Actions",
+    "description": "The number of times your video was played at 75% of its length, including plays that skipped to this point. Stored as a JSON string."
+   },
+   "video_p95_watched_actions": {
+    "alias": "Video 95% Watched Actions",
+    "description": "The number of times your video was played at 95% of its length, including plays that skipped to this point. Stored as a JSON string."
+   },
+   "video_play_actions": {
+    "alias": "Video Play Actions",
+    "description": "The number of times your video starts to play. This is counted for each impression of a video, and excludes replays. This metric is in development. Stored as a JSON string."
+   },
+   "video_play_curve_actions": {
+    "alias": "Video Play Curve Actions",
+    "description": "A video-play based curve graph that illustrates the percentage of video plays that reached a given second. Entries 0 to 14 represent seconds 0 thru 14. Entries 15 to 17 represent second ranges [15 to 20), [20 to 25), and [25 to 30). Entries 18 to 20 represent second ranges [30 to 40), [40 to 50), and [50 to 60). Entry 21 represents plays over 60 seconds. Stored as a JSON string."
+   },
+   "video_play_retention_0_to_15s_actions": {
+    "alias": "Video Play Retention 0 To 15s Actions",
+    "description": "Viewer retention over the first 15 seconds of the video. Stored as a JSON string."
+   },
+   "video_play_retention_20_to_60s_actions": {
+    "alias": "Video Play Retention 20 To 60s Actions",
+    "description": "Viewer retention between 20 and 60 seconds of the video. Stored as a JSON string."
+   },
+   "video_play_retention_graph_actions": {
+    "alias": "Video Play Retention Graph Actions",
+    "description": "Viewer retention across the whole video, as a curve. Stored as a JSON string."
+   },
+   "video_time_watched_actions": {
+    "alias": "Video Time Watched Actions",
+    "description": "Total time the video was watched. Stored as a JSON string."
+   },
+   "website_ctr": {
+    "alias": "Website CTR",
+    "description": "The percentage of times people saw your ad and performed a link click. Stored as a JSON string."
+   },
+   "website_purchase_roas": {
+    "alias": "Website Purchase ROAS",
+    "description": "The total return on ad spend (ROAS) from website purchases. This is based on the value of all conversions recorded by the Facebook pixel on your website and attributed to your ads. Stored as a JSON string."
+   }
+  }
+ },
+ "Ad Insights by Country": {
+  "columns": {
+   "account_currency": {
+    "alias": "Account Currency"
+   },
+   "account_id": {
+    "alias": "Account ID",
+    "description": "The ad account the row belongs to."
+   },
+   "account_name": {
+    "alias": "Account Name"
+   },
+   "action_values": {
+    "alias": "Action Values",
+    "description": "The total value of all conversions attributed to your ads. Stored as a JSON string."
+   },
+   "actions": {
+    "alias": "Actions",
+    "description": "The total number of actions people took that are attributed to your ads. Actions may include engagement, clicks or conversions. Stored as a JSON string."
+   },
+   "ad_click_actions": {
+    "alias": "Ad Click Actions",
+    "description": "Actions taken by people who clicked the ad. Stored as a JSON string."
+   },
+   "ad_id": {
+    "alias": "Ad ID",
+    "description": "The ad this row reports on. FK to [Ad Insights](./ad-insights.md)"
+   },
+   "ad_impression_actions": {
+    "alias": "Ad Impression Actions",
+    "description": "Actions taken by people who saw the ad. Stored as a JSON string."
+   },
+   "ad_name": {
+    "alias": "Ad Name"
+   },
+   "adset_id": {
+    "alias": "Ad Set ID",
+    "description": "The ad set of the ad. This connector loads no ad set table, so it has no join target; the name is on the row as `adset_name`."
+   },
+   "adset_name": {
+    "alias": "Ad Set Name"
+   },
+   "attribution_setting": {
+    "alias": "Attribution Setting"
+   },
+   "auction_bid": {
+    "alias": "Auction Bid",
+    "description": "The bid used in the ad auction."
+   },
+   "auction_competitiveness": {
+    "alias": "Auction Competitiveness",
+    "description": "How competitive the ad was in its auctions."
+   },
+   "auction_max_competitor_bid": {
+    "alias": "Auction Max Competitor Bid",
+    "description": "The highest competing bid in the ad's auctions."
+   },
+   "buying_type": {
+    "alias": "Buying Type"
+   },
+   "campaign_id": {
+    "alias": "Campaign ID",
+    "description": "The campaign of the ad. This connector loads no campaign table, so it has no join target; the name is on the row as `campaign_name`."
+   },
+   "campaign_name": {
+    "alias": "Campaign Name"
+   },
+   "canvas_avg_view_percent": {
+    "alias": "Canvas Avg View Percent"
+   },
+   "canvas_avg_view_time": {
+    "alias": "Canvas Avg View Time"
+   },
+   "catalog_segment_actions": {
+    "alias": "Catalog Segment Actions",
+    "description": "The number of actions performed attributed to your ads promoting your catalog segment, broken down by action type. Stored as a JSON string."
+   },
+   "catalog_segment_value": {
+    "alias": "Catalog Segment Value",
+    "description": "The total value of all conversions from your catalog segment attributed to your ads. Stored as a JSON string."
+   },
+   "catalog_segment_value_mobile_purchase_roas": {
+    "alias": "Catalog Segment Value Mobile Purchase ROAS",
+    "description": "The total return on ad spend (ROAS) from mobile app purchases for your catalog segment. Stored as a JSON string."
+   },
+   "catalog_segment_value_omni_purchase_roas": {
+    "alias": "Catalog Segment Value Omni Purchase ROAS",
+    "description": "The total return on ad spend (ROAS) from all purchases for your catalog segment. Stored as a JSON string."
+   },
+   "catalog_segment_value_website_purchase_roas": {
+    "alias": "Catalog Segment Value Website Purchase ROAS",
+    "description": "The total return on ad spend (ROAS) from website purchases for your catalog segment. Stored as a JSON string."
+   },
+   "clicks": {
+    "alias": "Clicks"
+   },
+   "country": {
+    "alias": "Country"
+   },
+   "conversion_values": {
+    "alias": "Conversion Values",
+    "description": "The total value of the conversions attributed to your ads, counting conversion events only. Unlike action_values, it excludes engagement and clicks. Stored as a JSON string."
+   },
+   "conversions": {
+    "alias": "Conversions",
+    "description": "The total number of conversions attributed to your ads. Counts conversion events only, unlike actions, which also counts engagement and clicks. Stored as a JSON string."
+   },
+   "converted_product_quantity": {
+    "alias": "Converted Product Quantity",
+    "description": "The number of products purchased which are recorded by your merchant partner's pixel or app SDK for a given product ID and driven by your ads. Has to be used together with converted product ID breakdown. Stored as a JSON string."
+   },
+   "converted_product_value": {
+    "alias": "Converted Product Value",
+    "description": "The value of purchases recorded by your merchant partner's pixel or app SDK for a given product ID and driven by your ads. Has to be used together with converted product ID breakdown. Stored as a JSON string."
+   },
+   "cost_per_15_sec_video_view": {
+    "alias": "Cost Per 15 Sec Video View",
+    "description": "Average cost per video view of at least 15 seconds. Stored as a JSON string."
+   },
+   "cost_per_2_sec_continuous_video_view": {
+    "alias": "Cost Per 2 Sec Continuous Video View",
+    "description": "Average cost per continuous video view of at least 2 seconds. Stored as a JSON string."
+   },
+   "cost_per_action_type": {
+    "alias": "Cost Per Action Type",
+    "description": "The average cost of a relevant action. Stored as a JSON string."
+   },
+   "cost_per_ad_click": {
+    "alias": "Cost Per Ad Click",
+    "description": "Average cost per click on the ad. Stored as a JSON string."
+   },
+   "cost_per_conversion": {
+    "alias": "Cost Per Conversion",
+    "description": "Average cost per conversion, by conversion type. Stored as a JSON string."
+   },
+   "cost_per_dda_countby_convs": {
+    "alias": "Cost Per DDA Countby Convs",
+    "description": "Average cost per conversion counted by data-driven attribution."
+   },
+   "cost_per_inline_link_click": {
+    "alias": "Cost Per Inline Link Click"
+   },
+   "cost_per_inline_post_engagement": {
+    "alias": "Cost Per Inline Post Engagement"
+   },
+   "cost_per_one_thousand_ad_impression": {
+    "alias": "Cost Per One Thousand Ad Impression",
+    "description": "Average cost per 1,000 ad impressions. Stored as a JSON string."
+   },
+   "cost_per_outbound_click": {
+    "alias": "Cost Per Outbound Click",
+    "description": "The average cost for each outbound click. Stored as a JSON string."
+   },
+   "cost_per_result": {
+    "alias": "Cost Per Result",
+    "description": "The average cost per result from your ads. Stored as a JSON string."
+   },
+   "cost_per_thruplay": {
+    "alias": "Cost Per ThruPlay",
+    "description": "The average cost for each ThruPlay. This metric is in development. Stored as a JSON string."
+   },
+   "cost_per_unique_action_type": {
+    "alias": "Cost Per Unique Action Type",
+    "description": "The average cost of each unique action. This metric is estimated. Stored as a JSON string."
+   },
+   "cost_per_unique_click": {
+    "alias": "Cost Per Unique Click"
+   },
+   "cost_per_unique_conversion": {
+    "alias": "Cost Per Unique Conversion",
+    "description": "Average cost per unique conversion, by conversion type. Not additive across rows. Stored as a JSON string."
+   },
+   "cost_per_unique_inline_link_click": {
+    "alias": "Cost Per Unique Inline Link Click"
+   },
+   "cost_per_unique_outbound_click": {
+    "alias": "Cost Per Unique Outbound Click",
+    "description": "The average cost for each unique outbound click. This metric is estimated. Stored as a JSON string."
+   },
+   "cpc": {
+    "alias": "CPC"
+   },
+   "cpm": {
+    "alias": "CPM"
+   },
+   "cpp": {
+    "alias": "CPP"
+   },
+   "created_time": {
+    "alias": "Created Time",
+    "description": "When the object this row describes was created, as Meta reports it."
+   },
+   "ctr": {
+    "alias": "CTR"
+   },
+   "date_start": {
+    "alias": "Date Start",
+    "description": "The day the row reports on; equal to `date_stop`, because the connector requests one day at a time. FK to [Ad Insights](./ad-insights.md)"
+   },
+   "date_stop": {
+    "alias": "Date Stop",
+    "description": "The day the row reports on; equal to `date_start`. FK to [Ad Insights](./ad-insights.md)"
+   },
+   "dda_countby_convs": {
+    "alias": "DDA Countby Convs",
+    "description": "Conversions counted by Meta's data-driven attribution."
+   },
+   "dda_results": {
+    "alias": "DDA Results",
+    "description": "Results counted by Meta's data-driven attribution. Stored as a JSON string."
+   },
+   "frequency": {
+    "alias": "Frequency"
+   },
+   "full_view_impressions": {
+    "alias": "Full View Impressions"
+   },
+   "full_view_reach": {
+    "alias": "Full View Reach"
+   },
+   "impressions": {
+    "alias": "Impressions"
+   },
+   "inline_link_click_ctr": {
+    "alias": "Inline Link Click CTR"
+   },
+   "inline_link_clicks": {
+    "alias": "Inline Link Clicks"
+   },
+   "inline_post_engagement": {
+    "alias": "Inline Post Engagement"
+   },
+   "instagram_upcoming_event_reminders_set": {
+    "alias": "Instagram Upcoming Event Reminders Set",
+    "description": "Reminders people set for an upcoming event promoted on Instagram."
+   },
+   "instant_experience_clicks_to_open": {
+    "alias": "Instant Experience Clicks To Open",
+    "description": "Clicks that opened the ad's Instant Experience."
+   },
+   "instant_experience_clicks_to_start": {
+    "alias": "Instant Experience Clicks To Start",
+    "description": "Clicks that started the ad's Instant Experience."
+   },
+   "instant_experience_outbound_clicks": {
+    "alias": "Instant Experience Outbound Clicks",
+    "description": "Clicks from the ad's Instant Experience to a destination off Meta. Stored as a JSON string."
+   },
+   "interactive_component_tap": {
+    "alias": "Interactive Component Tap",
+    "description": "Taps on interactive components of the ad, such as polls or sliders. Stored as a JSON string."
+   },
+   "marketing_messages_delivery_rate": {
+    "alias": "Marketing Messages Delivery Rate"
+   },
+   "mobile_app_purchase_roas": {
+    "alias": "Mobile App Purchase ROAS",
+    "description": "The total return on ad spend (ROAS) from mobile app purchases. This is based on the value that you assigned when you set up the app event. Stored as a JSON string."
+   },
+   "objective": {
+    "alias": "Objective"
+   },
+   "optimization_goal": {
+    "alias": "Optimization Goal"
+   },
+   "outbound_clicks": {
+    "alias": "Outbound Clicks",
+    "description": "The number of clicks on links that take people off Facebook-owned properties. Stored as a JSON string."
+   },
+   "outbound_clicks_ctr": {
+    "alias": "Outbound Clicks CTR",
+    "description": "The percentage of times people saw your ad and performed an outbound click. Stored as a JSON string."
+   },
+   "purchase_roas": {
+    "alias": "Purchase ROAS",
+    "description": "The total return on ad spend (ROAS) from purchases. This is based on information received from one or more of your connected Facebook Business Tools and attributed to your ads. Stored as a JSON string."
+   },
+   "qualifying_question_qualify_answer_rate": {
+    "alias": "Qualifying Question Qualify Answer Rate",
+    "description": "Share of lead-form respondents whose answer to a qualifying question marked them as qualified."
+   },
+   "reach": {
+    "alias": "Reach"
+   },
+   "result_rate": {
+    "alias": "Result Rate",
+    "description": "The result rate from your ads. Stored as a JSON string."
+   },
+   "results": {
+    "alias": "Results",
+    "description": "The number of results from your ads. Stored as a JSON string."
+   },
+   "shops_assisted_purchases": {
+    "alias": "Shops Assisted Purchases",
+    "description": "Purchases on Meta Shops that the ad assisted."
+   },
+   "social_spend": {
+    "alias": "Social Spend"
+   },
+   "spend": {
+    "alias": "Spend"
+   },
+   "updated_time": {
+    "alias": "Updated Time",
+    "description": "When the object this row describes was last updated, as Meta reports it."
+   },
+   "video_30_sec_watched_actions": {
+    "alias": "Video 30 Sec Watched Actions",
+    "description": "The number of times your video played for at least 30 seconds, or for nearly its total length if it's shorter than 30 seconds. For each impression of a video, we'll count video views separately and exclude any time spent replaying the video. Stored as a JSON string."
+   },
+   "video_avg_time_watched_actions": {
+    "alias": "Video Avg Time Watched Actions",
+    "description": "The average time a video was played, including any time spent replaying the video for a single impression. Stored as a JSON string."
+   },
+   "video_continuous_2_sec_watched_actions": {
+    "alias": "Video Continuous 2 Sec Watched Actions",
+    "description": "Video plays of at least 2 continuous seconds. Stored as a JSON string."
+   },
+   "video_p100_watched_actions": {
+    "alias": "Video 100% Watched Actions",
+    "description": "The number of times your video was played at 100% of its length, including plays that skipped to this point. Stored as a JSON string."
+   },
+   "video_p25_watched_actions": {
+    "alias": "Video 25% Watched Actions",
+    "description": "The number of times your video was played at 25% of its length, including plays that skipped to this point. Stored as a JSON string."
+   },
+   "video_p50_watched_actions": {
+    "alias": "Video 50% Watched Actions",
+    "description": "The number of times your video was played at 50% of its length, including plays that skipped to this point. Stored as a JSON string."
+   },
+   "video_p75_watched_actions": {
+    "alias": "Video 75% Watched Actions",
+    "description": "The number of times your video was played at 75% of its length, including plays that skipped to this point. Stored as a JSON string."
+   },
+   "video_p95_watched_actions": {
+    "alias": "Video 95% Watched Actions",
+    "description": "The number of times your video was played at 95% of its length, including plays that skipped to this point. Stored as a JSON string."
+   },
+   "video_play_actions": {
+    "alias": "Video Play Actions",
+    "description": "The number of times your video starts to play. This is counted for each impression of a video, and excludes replays. This metric is in development. Stored as a JSON string."
+   },
+   "video_play_curve_actions": {
+    "alias": "Video Play Curve Actions",
+    "description": "A video-play based curve graph that illustrates the percentage of video plays that reached a given second. Entries 0 to 14 represent seconds 0 thru 14. Entries 15 to 17 represent second ranges [15 to 20), [20 to 25), and [25 to 30). Entries 18 to 20 represent second ranges [30 to 40), [40 to 50), and [50 to 60). Entry 21 represents plays over 60 seconds. Stored as a JSON string."
+   },
+   "video_play_retention_0_to_15s_actions": {
+    "alias": "Video Play Retention 0 To 15s Actions",
+    "description": "Viewer retention over the first 15 seconds of the video. Stored as a JSON string."
+   },
+   "video_play_retention_20_to_60s_actions": {
+    "alias": "Video Play Retention 20 To 60s Actions",
+    "description": "Viewer retention between 20 and 60 seconds of the video. Stored as a JSON string."
+   },
+   "video_play_retention_graph_actions": {
+    "alias": "Video Play Retention Graph Actions",
+    "description": "Viewer retention across the whole video, as a curve. Stored as a JSON string."
+   },
+   "video_time_watched_actions": {
+    "alias": "Video Time Watched Actions",
+    "description": "Total time the video was watched. Stored as a JSON string."
+   },
+   "website_ctr": {
+    "alias": "Website CTR",
+    "description": "The percentage of times people saw your ad and performed a link click. Stored as a JSON string."
+   },
+   "website_purchase_roas": {
+    "alias": "Website Purchase ROAS",
+    "description": "The total return on ad spend (ROAS) from website purchases. This is based on the value of all conversions recorded by the Facebook pixel on your website and attributed to your ads. Stored as a JSON string."
+   },
+   "wish_bid": {
+    "alias": "Wish Bid",
+    "description": "The bid the advertiser was willing to pay, as reported by Meta."
+   }
+  }
+ },
+ "Ad Insights by Device Platform": {
+  "columns": {
+   "account_currency": {
+    "alias": "Account Currency"
+   },
+   "account_id": {
+    "alias": "Account ID",
+    "description": "The ad account the row belongs to."
+   },
+   "account_name": {
+    "alias": "Account Name"
+   },
+   "action_values": {
+    "alias": "Action Values",
+    "description": "The total value of all conversions attributed to your ads. Stored as a JSON string."
+   },
+   "actions": {
+    "alias": "Actions",
+    "description": "The total number of actions people took that are attributed to your ads. Actions may include engagement, clicks or conversions. Stored as a JSON string."
+   },
+   "ad_click_actions": {
+    "alias": "Ad Click Actions",
+    "description": "Actions taken by people who clicked the ad. Stored as a JSON string."
+   },
+   "ad_id": {
+    "alias": "Ad ID",
+    "description": "The ad this row reports on. FK to [Ad Insights](./ad-insights.md)"
+   },
+   "ad_impression_actions": {
+    "alias": "Ad Impression Actions",
+    "description": "Actions taken by people who saw the ad. Stored as a JSON string."
+   },
+   "ad_name": {
+    "alias": "Ad Name"
+   },
+   "adset_id": {
+    "alias": "Ad Set ID",
+    "description": "The ad set of the ad. This connector loads no ad set table, so it has no join target; the name is on the row as `adset_name`."
+   },
+   "adset_name": {
+    "alias": "Ad Set Name"
+   },
+   "attribution_setting": {
+    "alias": "Attribution Setting"
+   },
+   "auction_bid": {
+    "alias": "Auction Bid",
+    "description": "The bid used in the ad auction."
+   },
+   "auction_competitiveness": {
+    "alias": "Auction Competitiveness",
+    "description": "How competitive the ad was in its auctions."
+   },
+   "auction_max_competitor_bid": {
+    "alias": "Auction Max Competitor Bid",
+    "description": "The highest competing bid in the ad's auctions."
+   },
+   "buying_type": {
+    "alias": "Buying Type"
+   },
+   "campaign_id": {
+    "alias": "Campaign ID",
+    "description": "The campaign of the ad. This connector loads no campaign table, so it has no join target; the name is on the row as `campaign_name`."
+   },
+   "campaign_name": {
+    "alias": "Campaign Name"
+   },
+   "canvas_avg_view_percent": {
+    "alias": "Canvas Avg View Percent"
+   },
+   "canvas_avg_view_time": {
+    "alias": "Canvas Avg View Time"
+   },
+   "catalog_segment_actions": {
+    "alias": "Catalog Segment Actions",
+    "description": "The number of actions performed attributed to your ads promoting your catalog segment, broken down by action type. Stored as a JSON string."
+   },
+   "catalog_segment_value": {
+    "alias": "Catalog Segment Value",
+    "description": "The total value of all conversions from your catalog segment attributed to your ads. Stored as a JSON string."
+   },
+   "catalog_segment_value_mobile_purchase_roas": {
+    "alias": "Catalog Segment Value Mobile Purchase ROAS",
+    "description": "The total return on ad spend (ROAS) from mobile app purchases for your catalog segment. Stored as a JSON string."
+   },
+   "catalog_segment_value_omni_purchase_roas": {
+    "alias": "Catalog Segment Value Omni Purchase ROAS",
+    "description": "The total return on ad spend (ROAS) from all purchases for your catalog segment. Stored as a JSON string."
+   },
+   "catalog_segment_value_website_purchase_roas": {
+    "alias": "Catalog Segment Value Website Purchase ROAS",
+    "description": "The total return on ad spend (ROAS) from website purchases for your catalog segment. Stored as a JSON string."
+   },
+   "clicks": {
+    "alias": "Clicks"
+   },
+   "conversion_values": {
+    "alias": "Conversion Values",
+    "description": "The total value of the conversions attributed to your ads, counting conversion events only. Unlike action_values, it excludes engagement and clicks. Stored as a JSON string."
+   },
+   "conversions": {
+    "alias": "Conversions",
+    "description": "The total number of conversions attributed to your ads. Counts conversion events only, unlike actions, which also counts engagement and clicks. Stored as a JSON string."
+   },
+   "converted_product_quantity": {
+    "alias": "Converted Product Quantity",
+    "description": "The number of products purchased which are recorded by your merchant partner's pixel or app SDK for a given product ID and driven by your ads. Has to be used together with converted product ID breakdown. Stored as a JSON string."
+   },
+   "converted_product_value": {
+    "alias": "Converted Product Value",
+    "description": "The value of purchases recorded by your merchant partner's pixel or app SDK for a given product ID and driven by your ads. Has to be used together with converted product ID breakdown. Stored as a JSON string."
+   },
+   "cost_per_15_sec_video_view": {
+    "alias": "Cost Per 15 Sec Video View",
+    "description": "Average cost per video view of at least 15 seconds. Stored as a JSON string."
+   },
+   "cost_per_2_sec_continuous_video_view": {
+    "alias": "Cost Per 2 Sec Continuous Video View",
+    "description": "Average cost per continuous video view of at least 2 seconds. Stored as a JSON string."
+   },
+   "cost_per_action_type": {
+    "alias": "Cost Per Action Type",
+    "description": "The average cost of a relevant action. Stored as a JSON string."
+   },
+   "cost_per_ad_click": {
+    "alias": "Cost Per Ad Click",
+    "description": "Average cost per click on the ad. Stored as a JSON string."
+   },
+   "cost_per_conversion": {
+    "alias": "Cost Per Conversion",
+    "description": "Average cost per conversion, by conversion type. Stored as a JSON string."
+   },
+   "cost_per_dda_countby_convs": {
+    "alias": "Cost Per DDA Countby Convs",
+    "description": "Average cost per conversion counted by data-driven attribution."
+   },
+   "cost_per_inline_link_click": {
+    "alias": "Cost Per Inline Link Click"
+   },
+   "cost_per_inline_post_engagement": {
+    "alias": "Cost Per Inline Post Engagement"
+   },
+   "cost_per_one_thousand_ad_impression": {
+    "alias": "Cost Per One Thousand Ad Impression",
+    "description": "Average cost per 1,000 ad impressions. Stored as a JSON string."
+   },
+   "cost_per_outbound_click": {
+    "alias": "Cost Per Outbound Click",
+    "description": "The average cost for each outbound click. Stored as a JSON string."
+   },
+   "cost_per_result": {
+    "alias": "Cost Per Result",
+    "description": "The average cost per result from your ads. Stored as a JSON string."
+   },
+   "cost_per_thruplay": {
+    "alias": "Cost Per ThruPlay",
+    "description": "The average cost for each ThruPlay. This metric is in development. Stored as a JSON string."
+   },
+   "cost_per_unique_action_type": {
+    "alias": "Cost Per Unique Action Type",
+    "description": "The average cost of each unique action. This metric is estimated. Stored as a JSON string."
+   },
+   "cost_per_unique_click": {
+    "alias": "Cost Per Unique Click"
+   },
+   "cost_per_unique_conversion": {
+    "alias": "Cost Per Unique Conversion",
+    "description": "Average cost per unique conversion, by conversion type. Not additive across rows. Stored as a JSON string."
+   },
+   "cost_per_unique_inline_link_click": {
+    "alias": "Cost Per Unique Inline Link Click"
+   },
+   "cost_per_unique_outbound_click": {
+    "alias": "Cost Per Unique Outbound Click",
+    "description": "The average cost for each unique outbound click. This metric is estimated. Stored as a JSON string."
+   },
+   "cpc": {
+    "alias": "CPC"
+   },
+   "cpm": {
+    "alias": "CPM"
+   },
+   "cpp": {
+    "alias": "CPP"
+   },
+   "created_time": {
+    "alias": "Created Time",
+    "description": "When the object this row describes was created, as Meta reports it."
+   },
+   "ctr": {
+    "alias": "CTR"
+   },
+   "date_start": {
+    "alias": "Date Start",
+    "description": "The day the row reports on; equal to `date_stop`, because the connector requests one day at a time. FK to [Ad Insights](./ad-insights.md)"
+   },
+   "date_stop": {
+    "alias": "Date Stop",
+    "description": "The day the row reports on; equal to `date_start`. FK to [Ad Insights](./ad-insights.md)"
+   },
+   "dda_countby_convs": {
+    "alias": "DDA Countby Convs",
+    "description": "Conversions counted by Meta's data-driven attribution."
+   },
+   "dda_results": {
+    "alias": "DDA Results",
+    "description": "Results counted by Meta's data-driven attribution. Stored as a JSON string."
+   },
+   "device_platform": {
+    "alias": "Device Platform",
+    "description": "The device the ad was shown on: `mobile_app`, `mobile_web` or `desktop`."
+   },
+   "frequency": {
+    "alias": "Frequency"
+   },
+   "full_view_impressions": {
+    "alias": "Full View Impressions"
+   },
+   "full_view_reach": {
+    "alias": "Full View Reach"
+   },
+   "impressions": {
+    "alias": "Impressions"
+   },
+   "inline_link_click_ctr": {
+    "alias": "Inline Link Click CTR"
+   },
+   "inline_link_clicks": {
+    "alias": "Inline Link Clicks"
+   },
+   "inline_post_engagement": {
+    "alias": "Inline Post Engagement"
+   },
+   "instagram_upcoming_event_reminders_set": {
+    "alias": "Instagram Upcoming Event Reminders Set",
+    "description": "Reminders people set for an upcoming event promoted on Instagram."
+   },
+   "instant_experience_clicks_to_open": {
+    "alias": "Instant Experience Clicks To Open",
+    "description": "Clicks that opened the ad's Instant Experience."
+   },
+   "instant_experience_clicks_to_start": {
+    "alias": "Instant Experience Clicks To Start",
+    "description": "Clicks that started the ad's Instant Experience."
+   },
+   "instant_experience_outbound_clicks": {
+    "alias": "Instant Experience Outbound Clicks",
+    "description": "Clicks from the ad's Instant Experience to a destination off Meta. Stored as a JSON string."
+   },
+   "interactive_component_tap": {
+    "alias": "Interactive Component Tap",
+    "description": "Taps on interactive components of the ad, such as polls or sliders. Stored as a JSON string."
+   },
+   "marketing_messages_delivery_rate": {
+    "alias": "Marketing Messages Delivery Rate"
+   },
+   "mobile_app_purchase_roas": {
+    "alias": "Mobile App Purchase ROAS",
+    "description": "The total return on ad spend (ROAS) from mobile app purchases. This is based on the value that you assigned when you set up the app event. Stored as a JSON string."
+   },
+   "objective": {
+    "alias": "Objective"
+   },
+   "optimization_goal": {
+    "alias": "Optimization Goal"
+   },
+   "outbound_clicks": {
+    "alias": "Outbound Clicks",
+    "description": "The number of clicks on links that take people off Facebook-owned properties. Stored as a JSON string."
+   },
+   "outbound_clicks_ctr": {
+    "alias": "Outbound Clicks CTR",
+    "description": "The percentage of times people saw your ad and performed an outbound click. Stored as a JSON string."
+   },
+   "purchase_roas": {
+    "alias": "Purchase ROAS",
+    "description": "The total return on ad spend (ROAS) from purchases. This is based on information received from one or more of your connected Facebook Business Tools and attributed to your ads. Stored as a JSON string."
+   },
+   "qualifying_question_qualify_answer_rate": {
+    "alias": "Qualifying Question Qualify Answer Rate",
+    "description": "Share of lead-form respondents whose answer to a qualifying question marked them as qualified."
+   },
+   "reach": {
+    "alias": "Reach"
+   },
+   "result_rate": {
+    "alias": "Result Rate",
+    "description": "The result rate from your ads. Stored as a JSON string."
+   },
+   "results": {
+    "alias": "Results",
+    "description": "The number of results from your ads. Stored as a JSON string."
+   },
+   "shops_assisted_purchases": {
+    "alias": "Shops Assisted Purchases",
+    "description": "Purchases on Meta Shops that the ad assisted."
+   },
+   "social_spend": {
+    "alias": "Social Spend"
+   },
+   "spend": {
+    "alias": "Spend"
+   },
+   "updated_time": {
+    "alias": "Updated Time",
+    "description": "When the object this row describes was last updated, as Meta reports it."
+   },
+   "video_30_sec_watched_actions": {
+    "alias": "Video 30 Sec Watched Actions",
+    "description": "The number of times your video played for at least 30 seconds, or for nearly its total length if it's shorter than 30 seconds. For each impression of a video, we'll count video views separately and exclude any time spent replaying the video. Stored as a JSON string."
+   },
+   "video_avg_time_watched_actions": {
+    "alias": "Video Avg Time Watched Actions",
+    "description": "The average time a video was played, including any time spent replaying the video for a single impression. Stored as a JSON string."
+   },
+   "video_continuous_2_sec_watched_actions": {
+    "alias": "Video Continuous 2 Sec Watched Actions",
+    "description": "Video plays of at least 2 continuous seconds. Stored as a JSON string."
+   },
+   "video_p100_watched_actions": {
+    "alias": "Video 100% Watched Actions",
+    "description": "The number of times your video was played at 100% of its length, including plays that skipped to this point. Stored as a JSON string."
+   },
+   "video_p25_watched_actions": {
+    "alias": "Video 25% Watched Actions",
+    "description": "The number of times your video was played at 25% of its length, including plays that skipped to this point. Stored as a JSON string."
+   },
+   "video_p50_watched_actions": {
+    "alias": "Video 50% Watched Actions",
+    "description": "The number of times your video was played at 50% of its length, including plays that skipped to this point. Stored as a JSON string."
+   },
+   "video_p75_watched_actions": {
+    "alias": "Video 75% Watched Actions",
+    "description": "The number of times your video was played at 75% of its length, including plays that skipped to this point. Stored as a JSON string."
+   },
+   "video_p95_watched_actions": {
+    "alias": "Video 95% Watched Actions",
+    "description": "The number of times your video was played at 95% of its length, including plays that skipped to this point. Stored as a JSON string."
+   },
+   "video_play_actions": {
+    "alias": "Video Play Actions",
+    "description": "The number of times your video starts to play. This is counted for each impression of a video, and excludes replays. This metric is in development. Stored as a JSON string."
+   },
+   "video_play_curve_actions": {
+    "alias": "Video Play Curve Actions",
+    "description": "A video-play based curve graph that illustrates the percentage of video plays that reached a given second. Entries 0 to 14 represent seconds 0 thru 14. Entries 15 to 17 represent second ranges [15 to 20), [20 to 25), and [25 to 30). Entries 18 to 20 represent second ranges [30 to 40), [40 to 50), and [50 to 60). Entry 21 represents plays over 60 seconds. Stored as a JSON string."
+   },
+   "video_play_retention_0_to_15s_actions": {
+    "alias": "Video Play Retention 0 To 15s Actions",
+    "description": "Viewer retention over the first 15 seconds of the video. Stored as a JSON string."
+   },
+   "video_play_retention_20_to_60s_actions": {
+    "alias": "Video Play Retention 20 To 60s Actions",
+    "description": "Viewer retention between 20 and 60 seconds of the video. Stored as a JSON string."
+   },
+   "video_play_retention_graph_actions": {
+    "alias": "Video Play Retention Graph Actions",
+    "description": "Viewer retention across the whole video, as a curve. Stored as a JSON string."
+   },
+   "video_time_watched_actions": {
+    "alias": "Video Time Watched Actions",
+    "description": "Total time the video was watched. Stored as a JSON string."
+   },
+   "website_ctr": {
+    "alias": "Website CTR",
+    "description": "The percentage of times people saw your ad and performed a link click. Stored as a JSON string."
+   },
+   "website_purchase_roas": {
+    "alias": "Website Purchase ROAS",
+    "description": "The total return on ad spend (ROAS) from website purchases. This is based on the value of all conversions recorded by the Facebook pixel on your website and attributed to your ads. Stored as a JSON string."
+   },
+   "wish_bid": {
+    "alias": "Wish Bid",
+    "description": "The bid the advertiser was willing to pay, as reported by Meta."
+   }
+  }
+ },
+ "Ad Insights by Link URL Asset": {
+  "columns": {
+   "account_currency": {
+    "alias": "Account Currency"
+   },
+   "account_id": {
+    "alias": "Account ID",
+    "description": "The ad account the row belongs to."
+   },
+   "account_name": {
+    "alias": "Account Name"
+   },
+   "action_values": {
+    "alias": "Action Values",
+    "description": "The total value of all conversions attributed to your ads. Stored as a JSON string."
+   },
+   "actions": {
+    "alias": "Actions",
+    "description": "The total number of actions people took that are attributed to your ads. Actions may include engagement, clicks or conversions. Stored as a JSON string."
+   },
+   "ad_click_actions": {
+    "alias": "Ad Click Actions",
+    "description": "Actions taken by people who clicked the ad. Stored as a JSON string."
+   },
+   "ad_id": {
+    "alias": "Ad ID",
+    "description": "The ad this row reports on. FK to [Ad Insights](./ad-insights.md)"
+   },
+   "ad_impression_actions": {
+    "alias": "Ad Impression Actions",
+    "description": "Actions taken by people who saw the ad. Stored as a JSON string."
+   },
+   "ad_name": {
+    "alias": "Ad Name"
+   },
+   "adset_id": {
+    "alias": "Ad Set ID",
+    "description": "The ad set of the ad. This connector loads no ad set table, so it has no join target; the name is on the row as `adset_name`."
+   },
+   "adset_name": {
+    "alias": "Ad Set Name"
+   },
+   "attribution_setting": {
+    "alias": "Attribution Setting"
+   },
+   "auction_bid": {
+    "alias": "Auction Bid",
+    "description": "The bid used in the ad auction."
+   },
+   "auction_competitiveness": {
+    "alias": "Auction Competitiveness",
+    "description": "How competitive the ad was in its auctions."
+   },
+   "auction_max_competitor_bid": {
+    "alias": "Auction Max Competitor Bid",
+    "description": "The highest competing bid in the ad's auctions."
+   },
+   "buying_type": {
+    "alias": "Buying Type"
+   },
+   "campaign_id": {
+    "alias": "Campaign ID",
+    "description": "The campaign of the ad. This connector loads no campaign table, so it has no join target; the name is on the row as `campaign_name`."
+   },
+   "campaign_name": {
+    "alias": "Campaign Name"
+   },
+   "canvas_avg_view_percent": {
+    "alias": "Canvas Avg View Percent"
+   },
+   "canvas_avg_view_time": {
+    "alias": "Canvas Avg View Time"
+   },
+   "catalog_segment_actions": {
+    "alias": "Catalog Segment Actions",
+    "description": "The number of actions performed attributed to your ads promoting your catalog segment, broken down by action type. Stored as a JSON string."
+   },
+   "catalog_segment_value": {
+    "alias": "Catalog Segment Value",
+    "description": "The total value of all conversions from your catalog segment attributed to your ads. Stored as a JSON string."
+   },
+   "catalog_segment_value_mobile_purchase_roas": {
+    "alias": "Catalog Segment Value Mobile Purchase ROAS",
+    "description": "The total return on ad spend (ROAS) from mobile app purchases for your catalog segment. Stored as a JSON string."
+   },
+   "catalog_segment_value_omni_purchase_roas": {
+    "alias": "Catalog Segment Value Omni Purchase ROAS",
+    "description": "The total return on ad spend (ROAS) from all purchases for your catalog segment. Stored as a JSON string."
+   },
+   "catalog_segment_value_website_purchase_roas": {
+    "alias": "Catalog Segment Value Website Purchase ROAS",
+    "description": "The total return on ad spend (ROAS) from website purchases for your catalog segment. Stored as a JSON string."
+   },
+   "clicks": {
+    "alias": "Clicks"
+   },
+   "conversion_values": {
+    "alias": "Conversion Values",
+    "description": "The total value of the conversions attributed to your ads, counting conversion events only. Unlike action_values, it excludes engagement and clicks. Stored as a JSON string."
+   },
+   "conversions": {
+    "alias": "Conversions",
+    "description": "The total number of conversions attributed to your ads. Counts conversion events only, unlike actions, which also counts engagement and clicks. Stored as a JSON string."
+   },
+   "converted_product_quantity": {
+    "alias": "Converted Product Quantity",
+    "description": "The number of products purchased which are recorded by your merchant partner's pixel or app SDK for a given product ID and driven by your ads. Has to be used together with converted product ID breakdown. Stored as a JSON string."
+   },
+   "converted_product_value": {
+    "alias": "Converted Product Value",
+    "description": "The value of purchases recorded by your merchant partner's pixel or app SDK for a given product ID and driven by your ads. Has to be used together with converted product ID breakdown. Stored as a JSON string."
+   },
+   "cost_per_15_sec_video_view": {
+    "alias": "Cost Per 15 Sec Video View",
+    "description": "Average cost per video view of at least 15 seconds. Stored as a JSON string."
+   },
+   "cost_per_2_sec_continuous_video_view": {
+    "alias": "Cost Per 2 Sec Continuous Video View",
+    "description": "Average cost per continuous video view of at least 2 seconds. Stored as a JSON string."
+   },
+   "cost_per_action_type": {
+    "alias": "Cost Per Action Type",
+    "description": "The average cost of a relevant action. Stored as a JSON string."
+   },
+   "cost_per_ad_click": {
+    "alias": "Cost Per Ad Click",
+    "description": "Average cost per click on the ad. Stored as a JSON string."
+   },
+   "cost_per_conversion": {
+    "alias": "Cost Per Conversion",
+    "description": "Average cost per conversion, by conversion type. Stored as a JSON string."
+   },
+   "cost_per_dda_countby_convs": {
+    "alias": "Cost Per DDA Countby Convs",
+    "description": "Average cost per conversion counted by data-driven attribution."
+   },
+   "cost_per_inline_link_click": {
+    "alias": "Cost Per Inline Link Click"
+   },
+   "cost_per_inline_post_engagement": {
+    "alias": "Cost Per Inline Post Engagement"
+   },
+   "cost_per_one_thousand_ad_impression": {
+    "alias": "Cost Per One Thousand Ad Impression",
+    "description": "Average cost per 1,000 ad impressions. Stored as a JSON string."
+   },
+   "cost_per_outbound_click": {
+    "alias": "Cost Per Outbound Click",
+    "description": "The average cost for each outbound click. Stored as a JSON string."
+   },
+   "cost_per_result": {
+    "alias": "Cost Per Result",
+    "description": "The average cost per result from your ads. Stored as a JSON string."
+   },
+   "cost_per_thruplay": {
+    "alias": "Cost Per ThruPlay",
+    "description": "The average cost for each ThruPlay. This metric is in development. Stored as a JSON string."
+   },
+   "cost_per_unique_action_type": {
+    "alias": "Cost Per Unique Action Type",
+    "description": "The average cost of each unique action. This metric is estimated. Stored as a JSON string."
+   },
+   "cost_per_unique_click": {
+    "alias": "Cost Per Unique Click"
+   },
+   "cost_per_unique_conversion": {
+    "alias": "Cost Per Unique Conversion",
+    "description": "Average cost per unique conversion, by conversion type. Not additive across rows. Stored as a JSON string."
+   },
+   "cost_per_unique_inline_link_click": {
+    "alias": "Cost Per Unique Inline Link Click"
+   },
+   "cost_per_unique_outbound_click": {
+    "alias": "Cost Per Unique Outbound Click",
+    "description": "The average cost for each unique outbound click. This metric is estimated. Stored as a JSON string."
+   },
+   "cpc": {
+    "alias": "CPC"
+   },
+   "cpm": {
+    "alias": "CPM"
+   },
+   "cpp": {
+    "alias": "CPP"
+   },
+   "created_time": {
+    "alias": "Created Time",
+    "description": "When the object this row describes was created, as Meta reports it."
+   },
+   "ctr": {
+    "alias": "CTR"
+   },
+   "date_start": {
+    "alias": "Date Start",
+    "description": "The day the row reports on; equal to `date_stop`, because the connector requests one day at a time. FK to [Ad Insights](./ad-insights.md)"
+   },
+   "date_stop": {
+    "alias": "Date Stop",
+    "description": "The day the row reports on; equal to `date_start`. FK to [Ad Insights](./ad-insights.md)"
+   },
+   "dda_countby_convs": {
+    "alias": "DDA Countby Convs",
+    "description": "Conversions counted by Meta's data-driven attribution."
+   },
+   "dda_results": {
+    "alias": "DDA Results",
+    "description": "Results counted by Meta's data-driven attribution. Stored as a JSON string."
+   },
+   "frequency": {
+    "alias": "Frequency"
+   },
+   "full_view_impressions": {
+    "alias": "Full View Impressions"
+   },
+   "full_view_reach": {
+    "alias": "Full View Reach"
+   },
+   "impressions": {
+    "alias": "Impressions"
+   },
+   "inline_link_click_ctr": {
+    "alias": "Inline Link Click CTR"
+   },
+   "inline_link_clicks": {
+    "alias": "Inline Link Clicks"
+   },
+   "inline_post_engagement": {
+    "alias": "Inline Post Engagement"
+   },
+   "instagram_upcoming_event_reminders_set": {
+    "alias": "Instagram Upcoming Event Reminders Set",
+    "description": "Reminders people set for an upcoming event promoted on Instagram."
+   },
+   "instant_experience_clicks_to_open": {
+    "alias": "Instant Experience Clicks To Open",
+    "description": "Clicks that opened the ad's Instant Experience."
+   },
+   "instant_experience_clicks_to_start": {
+    "alias": "Instant Experience Clicks To Start",
+    "description": "Clicks that started the ad's Instant Experience."
+   },
+   "instant_experience_outbound_clicks": {
+    "alias": "Instant Experience Outbound Clicks",
+    "description": "Clicks from the ad's Instant Experience to a destination off Meta. Stored as a JSON string."
+   },
+   "interactive_component_tap": {
+    "alias": "Interactive Component Tap",
+    "description": "Taps on interactive components of the ad, such as polls or sliders. Stored as a JSON string."
+   },
+   "link_url_asset": {
+    "alias": "Link URL Asset",
+    "description": "The ID of the URL asset involved in impression, click or action. Stored as a JSON string."
+   },
+   "marketing_messages_delivery_rate": {
+    "alias": "Marketing Messages Delivery Rate"
+   },
+   "mobile_app_purchase_roas": {
+    "alias": "Mobile App Purchase ROAS",
+    "description": "The total return on ad spend (ROAS) from mobile app purchases. This is based on the value that you assigned when you set up the app event. Stored as a JSON string."
+   },
+   "objective": {
+    "alias": "Objective"
+   },
+   "optimization_goal": {
+    "alias": "Optimization Goal"
+   },
+   "outbound_clicks": {
+    "alias": "Outbound Clicks",
+    "description": "The number of clicks on links that take people off Facebook-owned properties. Stored as a JSON string."
+   },
+   "outbound_clicks_ctr": {
+    "alias": "Outbound Clicks CTR",
+    "description": "The percentage of times people saw your ad and performed an outbound click. Stored as a JSON string."
+   },
+   "purchase_roas": {
+    "alias": "Purchase ROAS",
+    "description": "The total return on ad spend (ROAS) from purchases. This is based on information received from one or more of your connected Facebook Business Tools and attributed to your ads. Stored as a JSON string."
+   },
+   "qualifying_question_qualify_answer_rate": {
+    "alias": "Qualifying Question Qualify Answer Rate",
+    "description": "Share of lead-form respondents whose answer to a qualifying question marked them as qualified."
+   },
+   "reach": {
+    "alias": "Reach"
+   },
+   "result_rate": {
+    "alias": "Result Rate",
+    "description": "The result rate from your ads. Stored as a JSON string."
+   },
+   "results": {
+    "alias": "Results",
+    "description": "The number of results from your ads. Stored as a JSON string."
+   },
+   "shops_assisted_purchases": {
+    "alias": "Shops Assisted Purchases",
+    "description": "Purchases on Meta Shops that the ad assisted."
+   },
+   "social_spend": {
+    "alias": "Social Spend"
+   },
+   "spend": {
+    "alias": "Spend"
+   },
+   "updated_time": {
+    "alias": "Updated Time",
+    "description": "When the object this row describes was last updated, as Meta reports it."
+   },
+   "video_30_sec_watched_actions": {
+    "alias": "Video 30 Sec Watched Actions",
+    "description": "The number of times your video played for at least 30 seconds, or for nearly its total length if it's shorter than 30 seconds. For each impression of a video, we'll count video views separately and exclude any time spent replaying the video. Stored as a JSON string."
+   },
+   "video_avg_time_watched_actions": {
+    "alias": "Video Avg Time Watched Actions",
+    "description": "The average time a video was played, including any time spent replaying the video for a single impression. Stored as a JSON string."
+   },
+   "video_continuous_2_sec_watched_actions": {
+    "alias": "Video Continuous 2 Sec Watched Actions",
+    "description": "Video plays of at least 2 continuous seconds. Stored as a JSON string."
+   },
+   "video_p100_watched_actions": {
+    "alias": "Video 100% Watched Actions",
+    "description": "The number of times your video was played at 100% of its length, including plays that skipped to this point. Stored as a JSON string."
+   },
+   "video_p25_watched_actions": {
+    "alias": "Video 25% Watched Actions",
+    "description": "The number of times your video was played at 25% of its length, including plays that skipped to this point. Stored as a JSON string."
+   },
+   "video_p50_watched_actions": {
+    "alias": "Video 50% Watched Actions",
+    "description": "The number of times your video was played at 50% of its length, including plays that skipped to this point. Stored as a JSON string."
+   },
+   "video_p75_watched_actions": {
+    "alias": "Video 75% Watched Actions",
+    "description": "The number of times your video was played at 75% of its length, including plays that skipped to this point. Stored as a JSON string."
+   },
+   "video_p95_watched_actions": {
+    "alias": "Video 95% Watched Actions",
+    "description": "The number of times your video was played at 95% of its length, including plays that skipped to this point. Stored as a JSON string."
+   },
+   "video_play_actions": {
+    "alias": "Video Play Actions",
+    "description": "The number of times your video starts to play. This is counted for each impression of a video, and excludes replays. This metric is in development. Stored as a JSON string."
+   },
+   "video_play_curve_actions": {
+    "alias": "Video Play Curve Actions",
+    "description": "A video-play based curve graph that illustrates the percentage of video plays that reached a given second. Entries 0 to 14 represent seconds 0 thru 14. Entries 15 to 17 represent second ranges [15 to 20), [20 to 25), and [25 to 30). Entries 18 to 20 represent second ranges [30 to 40), [40 to 50), and [50 to 60). Entry 21 represents plays over 60 seconds. Stored as a JSON string."
+   },
+   "video_play_retention_0_to_15s_actions": {
+    "alias": "Video Play Retention 0 To 15s Actions",
+    "description": "Viewer retention over the first 15 seconds of the video. Stored as a JSON string."
+   },
+   "video_play_retention_20_to_60s_actions": {
+    "alias": "Video Play Retention 20 To 60s Actions",
+    "description": "Viewer retention between 20 and 60 seconds of the video. Stored as a JSON string."
+   },
+   "video_play_retention_graph_actions": {
+    "alias": "Video Play Retention Graph Actions",
+    "description": "Viewer retention across the whole video, as a curve. Stored as a JSON string."
+   },
+   "video_time_watched_actions": {
+    "alias": "Video Time Watched Actions",
+    "description": "Total time the video was watched. Stored as a JSON string."
+   },
+   "website_ctr": {
+    "alias": "Website CTR",
+    "description": "The percentage of times people saw your ad and performed a link click. Stored as a JSON string."
+   },
+   "website_purchase_roas": {
+    "alias": "Website Purchase ROAS",
+    "description": "The total return on ad spend (ROAS) from website purchases. This is based on the value of all conversions recorded by the Facebook pixel on your website and attributed to your ads. Stored as a JSON string."
+   },
+   "wish_bid": {
+    "alias": "Wish Bid",
+    "description": "The bid the advertiser was willing to pay, as reported by Meta."
+   }
+  }
+ },
+ "Ad Insights by Product ID": {
+  "columns": {
+   "account_currency": {
+    "alias": "Account Currency"
+   },
+   "account_id": {
+    "alias": "Account ID",
+    "description": "The ad account the row belongs to."
+   },
+   "account_name": {
+    "alias": "Account Name"
+   },
+   "action_values": {
+    "alias": "Action Values",
+    "description": "The total value of all conversions attributed to your ads. Stored as a JSON string."
+   },
+   "actions": {
+    "alias": "Actions",
+    "description": "The total number of actions people took that are attributed to your ads. Actions may include engagement, clicks or conversions. Stored as a JSON string."
+   },
+   "ad_click_actions": {
+    "alias": "Ad Click Actions",
+    "description": "Actions taken by people who clicked the ad. Stored as a JSON string."
+   },
+   "ad_id": {
+    "alias": "Ad ID",
+    "description": "The ad this row reports on. FK to [Ad Insights](./ad-insights.md)"
+   },
+   "ad_impression_actions": {
+    "alias": "Ad Impression Actions",
+    "description": "Actions taken by people who saw the ad. Stored as a JSON string."
+   },
+   "ad_name": {
+    "alias": "Ad Name"
+   },
+   "adset_id": {
+    "alias": "Ad Set ID",
+    "description": "The ad set of the ad. This connector loads no ad set table, so it has no join target; the name is on the row as `adset_name`."
+   },
+   "adset_name": {
+    "alias": "Ad Set Name"
+   },
+   "attribution_setting": {
+    "alias": "Attribution Setting"
+   },
+   "auction_bid": {
+    "alias": "Auction Bid",
+    "description": "The bid used in the ad auction."
+   },
+   "auction_competitiveness": {
+    "alias": "Auction Competitiveness",
+    "description": "How competitive the ad was in its auctions."
+   },
+   "auction_max_competitor_bid": {
+    "alias": "Auction Max Competitor Bid",
+    "description": "The highest competing bid in the ad's auctions."
+   },
+   "buying_type": {
+    "alias": "Buying Type"
+   },
+   "campaign_id": {
+    "alias": "Campaign ID",
+    "description": "The campaign of the ad. This connector loads no campaign table, so it has no join target; the name is on the row as `campaign_name`."
+   },
+   "campaign_name": {
+    "alias": "Campaign Name"
+   },
+   "canvas_avg_view_percent": {
+    "alias": "Canvas Avg View Percent"
+   },
+   "canvas_avg_view_time": {
+    "alias": "Canvas Avg View Time"
+   },
+   "catalog_segment_actions": {
+    "alias": "Catalog Segment Actions",
+    "description": "The number of actions performed attributed to your ads promoting your catalog segment, broken down by action type. Stored as a JSON string."
+   },
+   "catalog_segment_value": {
+    "alias": "Catalog Segment Value",
+    "description": "The total value of all conversions from your catalog segment attributed to your ads. Stored as a JSON string."
+   },
+   "catalog_segment_value_mobile_purchase_roas": {
+    "alias": "Catalog Segment Value Mobile Purchase ROAS",
+    "description": "The total return on ad spend (ROAS) from mobile app purchases for your catalog segment. Stored as a JSON string."
+   },
+   "catalog_segment_value_omni_purchase_roas": {
+    "alias": "Catalog Segment Value Omni Purchase ROAS",
+    "description": "The total return on ad spend (ROAS) from all purchases for your catalog segment. Stored as a JSON string."
+   },
+   "catalog_segment_value_website_purchase_roas": {
+    "alias": "Catalog Segment Value Website Purchase ROAS",
+    "description": "The total return on ad spend (ROAS) from website purchases for your catalog segment. Stored as a JSON string."
+   },
+   "clicks": {
+    "alias": "Clicks"
+   },
+   "conversion_values": {
+    "alias": "Conversion Values",
+    "description": "The total value of the conversions attributed to your ads, counting conversion events only. Unlike action_values, it excludes engagement and clicks. Stored as a JSON string."
+   },
+   "conversions": {
+    "alias": "Conversions",
+    "description": "The total number of conversions attributed to your ads. Counts conversion events only, unlike actions, which also counts engagement and clicks. Stored as a JSON string."
+   },
+   "converted_product_quantity": {
+    "alias": "Converted Product Quantity",
+    "description": "The number of products purchased which are recorded by your merchant partner's pixel or app SDK for a given product ID and driven by your ads. Has to be used together with converted product ID breakdown. Stored as a JSON string."
+   },
+   "converted_product_value": {
+    "alias": "Converted Product Value",
+    "description": "The value of purchases recorded by your merchant partner's pixel or app SDK for a given product ID and driven by your ads. Has to be used together with converted product ID breakdown. Stored as a JSON string."
+   },
+   "cost_per_15_sec_video_view": {
+    "alias": "Cost Per 15 Sec Video View",
+    "description": "Average cost per video view of at least 15 seconds. Stored as a JSON string."
+   },
+   "cost_per_2_sec_continuous_video_view": {
+    "alias": "Cost Per 2 Sec Continuous Video View",
+    "description": "Average cost per continuous video view of at least 2 seconds. Stored as a JSON string."
+   },
+   "cost_per_action_type": {
+    "alias": "Cost Per Action Type",
+    "description": "The average cost of a relevant action. Stored as a JSON string."
+   },
+   "cost_per_ad_click": {
+    "alias": "Cost Per Ad Click",
+    "description": "Average cost per click on the ad. Stored as a JSON string."
+   },
+   "cost_per_conversion": {
+    "alias": "Cost Per Conversion",
+    "description": "Average cost per conversion, by conversion type. Stored as a JSON string."
+   },
+   "cost_per_dda_countby_convs": {
+    "alias": "Cost Per DDA Countby Convs",
+    "description": "Average cost per conversion counted by data-driven attribution."
+   },
+   "cost_per_inline_link_click": {
+    "alias": "Cost Per Inline Link Click"
+   },
+   "cost_per_inline_post_engagement": {
+    "alias": "Cost Per Inline Post Engagement"
+   },
+   "cost_per_one_thousand_ad_impression": {
+    "alias": "Cost Per One Thousand Ad Impression",
+    "description": "Average cost per 1,000 ad impressions. Stored as a JSON string."
+   },
+   "cost_per_outbound_click": {
+    "alias": "Cost Per Outbound Click",
+    "description": "The average cost for each outbound click. Stored as a JSON string."
+   },
+   "cost_per_result": {
+    "alias": "Cost Per Result",
+    "description": "The average cost per result from your ads. Stored as a JSON string."
+   },
+   "cost_per_thruplay": {
+    "alias": "Cost Per ThruPlay",
+    "description": "The average cost for each ThruPlay. This metric is in development. Stored as a JSON string."
+   },
+   "cost_per_unique_action_type": {
+    "alias": "Cost Per Unique Action Type",
+    "description": "The average cost of each unique action. This metric is estimated. Stored as a JSON string."
+   },
+   "cost_per_unique_click": {
+    "alias": "Cost Per Unique Click"
+   },
+   "cost_per_unique_conversion": {
+    "alias": "Cost Per Unique Conversion",
+    "description": "Average cost per unique conversion, by conversion type. Not additive across rows. Stored as a JSON string."
+   },
+   "cost_per_unique_inline_link_click": {
+    "alias": "Cost Per Unique Inline Link Click"
+   },
+   "cost_per_unique_outbound_click": {
+    "alias": "Cost Per Unique Outbound Click",
+    "description": "The average cost for each unique outbound click. This metric is estimated. Stored as a JSON string."
+   },
+   "cpc": {
+    "alias": "CPC"
+   },
+   "cpm": {
+    "alias": "CPM"
+   },
+   "cpp": {
+    "alias": "CPP"
+   },
+   "created_time": {
+    "alias": "Created Time",
+    "description": "When the object this row describes was created, as Meta reports it."
+   },
+   "ctr": {
+    "alias": "CTR"
+   },
+   "date_start": {
+    "alias": "Date Start",
+    "description": "The day the row reports on; equal to `date_stop`, because the connector requests one day at a time. FK to [Ad Insights](./ad-insights.md)"
+   },
+   "date_stop": {
+    "alias": "Date Stop",
+    "description": "The day the row reports on; equal to `date_start`. FK to [Ad Insights](./ad-insights.md)"
+   },
+   "dda_countby_convs": {
+    "alias": "DDA Countby Convs",
+    "description": "Conversions counted by Meta's data-driven attribution."
+   },
+   "dda_results": {
+    "alias": "DDA Results",
+    "description": "Results counted by Meta's data-driven attribution. Stored as a JSON string."
+   },
+   "frequency": {
+    "alias": "Frequency"
+   },
+   "full_view_impressions": {
+    "alias": "Full View Impressions"
+   },
+   "full_view_reach": {
+    "alias": "Full View Reach"
+   },
+   "impressions": {
+    "alias": "Impressions"
+   },
+   "inline_link_click_ctr": {
+    "alias": "Inline Link Click CTR"
+   },
+   "inline_link_clicks": {
+    "alias": "Inline Link Clicks"
+   },
+   "inline_post_engagement": {
+    "alias": "Inline Post Engagement"
+   },
+   "instagram_upcoming_event_reminders_set": {
+    "alias": "Instagram Upcoming Event Reminders Set",
+    "description": "Reminders people set for an upcoming event promoted on Instagram."
+   },
+   "instant_experience_clicks_to_open": {
+    "alias": "Instant Experience Clicks To Open",
+    "description": "Clicks that opened the ad's Instant Experience."
+   },
+   "instant_experience_clicks_to_start": {
+    "alias": "Instant Experience Clicks To Start",
+    "description": "Clicks that started the ad's Instant Experience."
+   },
+   "instant_experience_outbound_clicks": {
+    "alias": "Instant Experience Outbound Clicks",
+    "description": "Clicks from the ad's Instant Experience to a destination off Meta. Stored as a JSON string."
+   },
+   "interactive_component_tap": {
+    "alias": "Interactive Component Tap",
+    "description": "Taps on interactive components of the ad, such as polls or sliders. Stored as a JSON string."
+   },
+   "marketing_messages_delivery_rate": {
+    "alias": "Marketing Messages Delivery Rate"
+   },
+   "mobile_app_purchase_roas": {
+    "alias": "Mobile App Purchase ROAS",
+    "description": "The total return on ad spend (ROAS) from mobile app purchases. This is based on the value that you assigned when you set up the app event. Stored as a JSON string."
+   },
+   "objective": {
+    "alias": "Objective"
+   },
+   "optimization_goal": {
+    "alias": "Optimization Goal"
+   },
+   "outbound_clicks": {
+    "alias": "Outbound Clicks",
+    "description": "The number of clicks on links that take people off Facebook-owned properties. Stored as a JSON string."
+   },
+   "outbound_clicks_ctr": {
+    "alias": "Outbound Clicks CTR",
+    "description": "The percentage of times people saw your ad and performed an outbound click. Stored as a JSON string."
+   },
+   "product_id": {
+    "alias": "Product ID"
+   },
+   "purchase_roas": {
+    "alias": "Purchase ROAS",
+    "description": "The total return on ad spend (ROAS) from purchases. This is based on information received from one or more of your connected Facebook Business Tools and attributed to your ads. Stored as a JSON string."
+   },
+   "qualifying_question_qualify_answer_rate": {
+    "alias": "Qualifying Question Qualify Answer Rate",
+    "description": "Share of lead-form respondents whose answer to a qualifying question marked them as qualified."
+   },
+   "reach": {
+    "alias": "Reach"
+   },
+   "result_rate": {
+    "alias": "Result Rate",
+    "description": "The result rate from your ads. Stored as a JSON string."
+   },
+   "results": {
+    "alias": "Results",
+    "description": "The number of results from your ads. Stored as a JSON string."
+   },
+   "shops_assisted_purchases": {
+    "alias": "Shops Assisted Purchases",
+    "description": "Purchases on Meta Shops that the ad assisted."
+   },
+   "social_spend": {
+    "alias": "Social Spend"
+   },
+   "spend": {
+    "alias": "Spend"
+   },
+   "updated_time": {
+    "alias": "Updated Time",
+    "description": "When the object this row describes was last updated, as Meta reports it."
+   },
+   "video_30_sec_watched_actions": {
+    "alias": "Video 30 Sec Watched Actions",
+    "description": "The number of times your video played for at least 30 seconds, or for nearly its total length if it's shorter than 30 seconds. For each impression of a video, we'll count video views separately and exclude any time spent replaying the video. Stored as a JSON string."
+   },
+   "video_avg_time_watched_actions": {
+    "alias": "Video Avg Time Watched Actions",
+    "description": "The average time a video was played, including any time spent replaying the video for a single impression. Stored as a JSON string."
+   },
+   "video_continuous_2_sec_watched_actions": {
+    "alias": "Video Continuous 2 Sec Watched Actions",
+    "description": "Video plays of at least 2 continuous seconds. Stored as a JSON string."
+   },
+   "video_p100_watched_actions": {
+    "alias": "Video 100% Watched Actions",
+    "description": "The number of times your video was played at 100% of its length, including plays that skipped to this point. Stored as a JSON string."
+   },
+   "video_p25_watched_actions": {
+    "alias": "Video 25% Watched Actions",
+    "description": "The number of times your video was played at 25% of its length, including plays that skipped to this point. Stored as a JSON string."
+   },
+   "video_p50_watched_actions": {
+    "alias": "Video 50% Watched Actions",
+    "description": "The number of times your video was played at 50% of its length, including plays that skipped to this point. Stored as a JSON string."
+   },
+   "video_p75_watched_actions": {
+    "alias": "Video 75% Watched Actions",
+    "description": "The number of times your video was played at 75% of its length, including plays that skipped to this point. Stored as a JSON string."
+   },
+   "video_p95_watched_actions": {
+    "alias": "Video 95% Watched Actions",
+    "description": "The number of times your video was played at 95% of its length, including plays that skipped to this point. Stored as a JSON string."
+   },
+   "video_play_actions": {
+    "alias": "Video Play Actions",
+    "description": "The number of times your video starts to play. This is counted for each impression of a video, and excludes replays. This metric is in development. Stored as a JSON string."
+   },
+   "video_play_curve_actions": {
+    "alias": "Video Play Curve Actions",
+    "description": "A video-play based curve graph that illustrates the percentage of video plays that reached a given second. Entries 0 to 14 represent seconds 0 thru 14. Entries 15 to 17 represent second ranges [15 to 20), [20 to 25), and [25 to 30). Entries 18 to 20 represent second ranges [30 to 40), [40 to 50), and [50 to 60). Entry 21 represents plays over 60 seconds. Stored as a JSON string."
+   },
+   "video_play_retention_0_to_15s_actions": {
+    "alias": "Video Play Retention 0 To 15s Actions",
+    "description": "Viewer retention over the first 15 seconds of the video. Stored as a JSON string."
+   },
+   "video_play_retention_20_to_60s_actions": {
+    "alias": "Video Play Retention 20 To 60s Actions",
+    "description": "Viewer retention between 20 and 60 seconds of the video. Stored as a JSON string."
+   },
+   "video_play_retention_graph_actions": {
+    "alias": "Video Play Retention Graph Actions",
+    "description": "Viewer retention across the whole video, as a curve. Stored as a JSON string."
+   },
+   "video_time_watched_actions": {
+    "alias": "Video Time Watched Actions",
+    "description": "Total time the video was watched. Stored as a JSON string."
+   },
+   "website_ctr": {
+    "alias": "Website CTR",
+    "description": "The percentage of times people saw your ad and performed a link click. Stored as a JSON string."
+   },
+   "website_purchase_roas": {
+    "alias": "Website Purchase ROAS",
+    "description": "The total return on ad spend (ROAS) from website purchases. This is based on the value of all conversions recorded by the Facebook pixel on your website and attributed to your ads. Stored as a JSON string."
+   },
+   "wish_bid": {
+    "alias": "Wish Bid",
+    "description": "The bid the advertiser was willing to pay, as reported by Meta."
+   }
+  }
+ },
+ "Ad Insights by Publisher Platform and Position": {
+  "columns": {
+   "account_currency": {
+    "alias": "Account Currency"
+   },
+   "account_id": {
+    "alias": "Account ID",
+    "description": "The ad account the row belongs to."
+   },
+   "account_name": {
+    "alias": "Account Name"
+   },
+   "action_values": {
+    "alias": "Action Values",
+    "description": "The total value of all conversions attributed to your ads. Stored as a JSON string."
+   },
+   "actions": {
+    "alias": "Actions",
+    "description": "The total number of actions people took that are attributed to your ads. Actions may include engagement, clicks or conversions. Stored as a JSON string."
+   },
+   "ad_click_actions": {
+    "alias": "Ad Click Actions",
+    "description": "Actions taken by people who clicked the ad. Stored as a JSON string."
+   },
+   "ad_id": {
+    "alias": "Ad ID",
+    "description": "The ad this row reports on. FK to [Ad Insights](./ad-insights.md)"
+   },
+   "ad_impression_actions": {
+    "alias": "Ad Impression Actions",
+    "description": "Actions taken by people who saw the ad. Stored as a JSON string."
+   },
+   "ad_name": {
+    "alias": "Ad Name"
+   },
+   "adset_id": {
+    "alias": "Ad Set ID",
+    "description": "The ad set of the ad. This connector loads no ad set table, so it has no join target; the name is on the row as `adset_name`."
+   },
+   "adset_name": {
+    "alias": "Ad Set Name"
+   },
+   "attribution_setting": {
+    "alias": "Attribution Setting"
+   },
+   "auction_bid": {
+    "alias": "Auction Bid",
+    "description": "The bid used in the ad auction."
+   },
+   "auction_competitiveness": {
+    "alias": "Auction Competitiveness",
+    "description": "How competitive the ad was in its auctions."
+   },
+   "auction_max_competitor_bid": {
+    "alias": "Auction Max Competitor Bid",
+    "description": "The highest competing bid in the ad's auctions."
+   },
+   "buying_type": {
+    "alias": "Buying Type"
+   },
+   "campaign_id": {
+    "alias": "Campaign ID",
+    "description": "The campaign of the ad. This connector loads no campaign table, so it has no join target; the name is on the row as `campaign_name`."
+   },
+   "campaign_name": {
+    "alias": "Campaign Name"
+   },
+   "canvas_avg_view_percent": {
+    "alias": "Canvas Avg View Percent"
+   },
+   "canvas_avg_view_time": {
+    "alias": "Canvas Avg View Time"
+   },
+   "catalog_segment_actions": {
+    "alias": "Catalog Segment Actions",
+    "description": "The number of actions performed attributed to your ads promoting your catalog segment, broken down by action type. Stored as a JSON string."
+   },
+   "catalog_segment_value": {
+    "alias": "Catalog Segment Value",
+    "description": "The total value of all conversions from your catalog segment attributed to your ads. Stored as a JSON string."
+   },
+   "catalog_segment_value_mobile_purchase_roas": {
+    "alias": "Catalog Segment Value Mobile Purchase ROAS",
+    "description": "The total return on ad spend (ROAS) from mobile app purchases for your catalog segment. Stored as a JSON string."
+   },
+   "catalog_segment_value_omni_purchase_roas": {
+    "alias": "Catalog Segment Value Omni Purchase ROAS",
+    "description": "The total return on ad spend (ROAS) from all purchases for your catalog segment. Stored as a JSON string."
+   },
+   "catalog_segment_value_website_purchase_roas": {
+    "alias": "Catalog Segment Value Website Purchase ROAS",
+    "description": "The total return on ad spend (ROAS) from website purchases for your catalog segment. Stored as a JSON string."
+   },
+   "clicks": {
+    "alias": "Clicks"
+   },
+   "conversion_values": {
+    "alias": "Conversion Values",
+    "description": "The total value of the conversions attributed to your ads, counting conversion events only. Unlike action_values, it excludes engagement and clicks. Stored as a JSON string."
+   },
+   "conversions": {
+    "alias": "Conversions",
+    "description": "The total number of conversions attributed to your ads. Counts conversion events only, unlike actions, which also counts engagement and clicks. Stored as a JSON string."
+   },
+   "converted_product_quantity": {
+    "alias": "Converted Product Quantity",
+    "description": "The number of products purchased which are recorded by your merchant partner's pixel or app SDK for a given product ID and driven by your ads. Has to be used together with converted product ID breakdown. Stored as a JSON string."
+   },
+   "converted_product_value": {
+    "alias": "Converted Product Value",
+    "description": "The value of purchases recorded by your merchant partner's pixel or app SDK for a given product ID and driven by your ads. Has to be used together with converted product ID breakdown. Stored as a JSON string."
+   },
+   "cost_per_15_sec_video_view": {
+    "alias": "Cost Per 15 Sec Video View",
+    "description": "Average cost per video view of at least 15 seconds. Stored as a JSON string."
+   },
+   "cost_per_2_sec_continuous_video_view": {
+    "alias": "Cost Per 2 Sec Continuous Video View",
+    "description": "Average cost per continuous video view of at least 2 seconds. Stored as a JSON string."
+   },
+   "cost_per_action_type": {
+    "alias": "Cost Per Action Type",
+    "description": "The average cost of a relevant action. Stored as a JSON string."
+   },
+   "cost_per_ad_click": {
+    "alias": "Cost Per Ad Click",
+    "description": "Average cost per click on the ad. Stored as a JSON string."
+   },
+   "cost_per_conversion": {
+    "alias": "Cost Per Conversion",
+    "description": "Average cost per conversion, by conversion type. Stored as a JSON string."
+   },
+   "cost_per_dda_countby_convs": {
+    "alias": "Cost Per DDA Countby Convs",
+    "description": "Average cost per conversion counted by data-driven attribution."
+   },
+   "cost_per_inline_link_click": {
+    "alias": "Cost Per Inline Link Click"
+   },
+   "cost_per_inline_post_engagement": {
+    "alias": "Cost Per Inline Post Engagement"
+   },
+   "cost_per_one_thousand_ad_impression": {
+    "alias": "Cost Per One Thousand Ad Impression",
+    "description": "Average cost per 1,000 ad impressions. Stored as a JSON string."
+   },
+   "cost_per_outbound_click": {
+    "alias": "Cost Per Outbound Click",
+    "description": "The average cost for each outbound click. Stored as a JSON string."
+   },
+   "cost_per_result": {
+    "alias": "Cost Per Result",
+    "description": "The average cost per result from your ads. Stored as a JSON string."
+   },
+   "cost_per_thruplay": {
+    "alias": "Cost Per ThruPlay",
+    "description": "The average cost for each ThruPlay. This metric is in development. Stored as a JSON string."
+   },
+   "cost_per_unique_action_type": {
+    "alias": "Cost Per Unique Action Type",
+    "description": "The average cost of each unique action. This metric is estimated. Stored as a JSON string."
+   },
+   "cost_per_unique_click": {
+    "alias": "Cost Per Unique Click"
+   },
+   "cost_per_unique_conversion": {
+    "alias": "Cost Per Unique Conversion",
+    "description": "Average cost per unique conversion, by conversion type. Not additive across rows. Stored as a JSON string."
+   },
+   "cost_per_unique_inline_link_click": {
+    "alias": "Cost Per Unique Inline Link Click"
+   },
+   "cost_per_unique_outbound_click": {
+    "alias": "Cost Per Unique Outbound Click",
+    "description": "The average cost for each unique outbound click. This metric is estimated. Stored as a JSON string."
+   },
+   "cpc": {
+    "alias": "CPC"
+   },
+   "cpm": {
+    "alias": "CPM"
+   },
+   "cpp": {
+    "alias": "CPP"
+   },
+   "created_time": {
+    "alias": "Created Time",
+    "description": "When the object this row describes was created, as Meta reports it."
+   },
+   "ctr": {
+    "alias": "CTR"
+   },
+   "date_start": {
+    "alias": "Date Start",
+    "description": "The day the row reports on; equal to `date_stop`, because the connector requests one day at a time. FK to [Ad Insights](./ad-insights.md)"
+   },
+   "date_stop": {
+    "alias": "Date Stop",
+    "description": "The day the row reports on; equal to `date_start`. FK to [Ad Insights](./ad-insights.md)"
+   },
+   "dda_countby_convs": {
+    "alias": "DDA Countby Convs",
+    "description": "Conversions counted by Meta's data-driven attribution."
+   },
+   "dda_results": {
+    "alias": "DDA Results",
+    "description": "Results counted by Meta's data-driven attribution. Stored as a JSON string."
+   },
+   "frequency": {
+    "alias": "Frequency"
+   },
+   "full_view_impressions": {
+    "alias": "Full View Impressions"
+   },
+   "full_view_reach": {
+    "alias": "Full View Reach"
+   },
+   "impressions": {
+    "alias": "Impressions"
+   },
+   "inline_link_click_ctr": {
+    "alias": "Inline Link Click CTR"
+   },
+   "inline_link_clicks": {
+    "alias": "Inline Link Clicks"
+   },
+   "inline_post_engagement": {
+    "alias": "Inline Post Engagement"
+   },
+   "instagram_upcoming_event_reminders_set": {
+    "alias": "Instagram Upcoming Event Reminders Set",
+    "description": "Reminders people set for an upcoming event promoted on Instagram."
+   },
+   "instant_experience_clicks_to_open": {
+    "alias": "Instant Experience Clicks To Open",
+    "description": "Clicks that opened the ad's Instant Experience."
+   },
+   "instant_experience_clicks_to_start": {
+    "alias": "Instant Experience Clicks To Start",
+    "description": "Clicks that started the ad's Instant Experience."
+   },
+   "instant_experience_outbound_clicks": {
+    "alias": "Instant Experience Outbound Clicks",
+    "description": "Clicks from the ad's Instant Experience to a destination off Meta. Stored as a JSON string."
+   },
+   "interactive_component_tap": {
+    "alias": "Interactive Component Tap",
+    "description": "Taps on interactive components of the ad, such as polls or sliders. Stored as a JSON string."
+   },
+   "marketing_messages_delivery_rate": {
+    "alias": "Marketing Messages Delivery Rate"
+   },
+   "mobile_app_purchase_roas": {
+    "alias": "Mobile App Purchase ROAS",
+    "description": "The total return on ad spend (ROAS) from mobile app purchases. This is based on the value that you assigned when you set up the app event. Stored as a JSON string."
+   },
+   "objective": {
+    "alias": "Objective"
+   },
+   "optimization_goal": {
+    "alias": "Optimization Goal"
+   },
+   "outbound_clicks": {
+    "alias": "Outbound Clicks",
+    "description": "The number of clicks on links that take people off Facebook-owned properties. Stored as a JSON string."
+   },
+   "outbound_clicks_ctr": {
+    "alias": "Outbound Clicks CTR",
+    "description": "The percentage of times people saw your ad and performed an outbound click. Stored as a JSON string."
+   },
+   "platform_position": {
+    "alias": "Platform Position",
+    "description": "The placement within the platform, such as `feed`, `story`, `reels` or `instream_video`."
+   },
+   "publisher_platform": {
+    "alias": "Publisher Platform"
+   },
+   "purchase_roas": {
+    "alias": "Purchase ROAS",
+    "description": "The total return on ad spend (ROAS) from purchases. This is based on information received from one or more of your connected Facebook Business Tools and attributed to your ads. Stored as a JSON string."
+   },
+   "qualifying_question_qualify_answer_rate": {
+    "alias": "Qualifying Question Qualify Answer Rate",
+    "description": "Share of lead-form respondents whose answer to a qualifying question marked them as qualified."
+   },
+   "reach": {
+    "alias": "Reach"
+   },
+   "result_rate": {
+    "alias": "Result Rate",
+    "description": "The result rate from your ads. Stored as a JSON string."
+   },
+   "results": {
+    "alias": "Results",
+    "description": "The number of results from your ads. Stored as a JSON string."
+   },
+   "shops_assisted_purchases": {
+    "alias": "Shops Assisted Purchases",
+    "description": "Purchases on Meta Shops that the ad assisted."
+   },
+   "social_spend": {
+    "alias": "Social Spend"
+   },
+   "spend": {
+    "alias": "Spend"
+   },
+   "updated_time": {
+    "alias": "Updated Time",
+    "description": "When the object this row describes was last updated, as Meta reports it."
+   },
+   "video_30_sec_watched_actions": {
+    "alias": "Video 30 Sec Watched Actions",
+    "description": "The number of times your video played for at least 30 seconds, or for nearly its total length if it's shorter than 30 seconds. For each impression of a video, we'll count video views separately and exclude any time spent replaying the video. Stored as a JSON string."
+   },
+   "video_avg_time_watched_actions": {
+    "alias": "Video Avg Time Watched Actions",
+    "description": "The average time a video was played, including any time spent replaying the video for a single impression. Stored as a JSON string."
+   },
+   "video_continuous_2_sec_watched_actions": {
+    "alias": "Video Continuous 2 Sec Watched Actions",
+    "description": "Video plays of at least 2 continuous seconds. Stored as a JSON string."
+   },
+   "video_p100_watched_actions": {
+    "alias": "Video 100% Watched Actions",
+    "description": "The number of times your video was played at 100% of its length, including plays that skipped to this point. Stored as a JSON string."
+   },
+   "video_p25_watched_actions": {
+    "alias": "Video 25% Watched Actions",
+    "description": "The number of times your video was played at 25% of its length, including plays that skipped to this point. Stored as a JSON string."
+   },
+   "video_p50_watched_actions": {
+    "alias": "Video 50% Watched Actions",
+    "description": "The number of times your video was played at 50% of its length, including plays that skipped to this point. Stored as a JSON string."
+   },
+   "video_p75_watched_actions": {
+    "alias": "Video 75% Watched Actions",
+    "description": "The number of times your video was played at 75% of its length, including plays that skipped to this point. Stored as a JSON string."
+   },
+   "video_p95_watched_actions": {
+    "alias": "Video 95% Watched Actions",
+    "description": "The number of times your video was played at 95% of its length, including plays that skipped to this point. Stored as a JSON string."
+   },
+   "video_play_actions": {
+    "alias": "Video Play Actions",
+    "description": "The number of times your video starts to play. This is counted for each impression of a video, and excludes replays. This metric is in development. Stored as a JSON string."
+   },
+   "video_play_curve_actions": {
+    "alias": "Video Play Curve Actions",
+    "description": "A video-play based curve graph that illustrates the percentage of video plays that reached a given second. Entries 0 to 14 represent seconds 0 thru 14. Entries 15 to 17 represent second ranges [15 to 20), [20 to 25), and [25 to 30). Entries 18 to 20 represent second ranges [30 to 40), [40 to 50), and [50 to 60). Entry 21 represents plays over 60 seconds. Stored as a JSON string."
+   },
+   "video_play_retention_0_to_15s_actions": {
+    "alias": "Video Play Retention 0 To 15s Actions",
+    "description": "Viewer retention over the first 15 seconds of the video. Stored as a JSON string."
+   },
+   "video_play_retention_20_to_60s_actions": {
+    "alias": "Video Play Retention 20 To 60s Actions",
+    "description": "Viewer retention between 20 and 60 seconds of the video. Stored as a JSON string."
+   },
+   "video_play_retention_graph_actions": {
+    "alias": "Video Play Retention Graph Actions",
+    "description": "Viewer retention across the whole video, as a curve. Stored as a JSON string."
+   },
+   "video_time_watched_actions": {
+    "alias": "Video Time Watched Actions",
+    "description": "Total time the video was watched. Stored as a JSON string."
+   },
+   "website_ctr": {
+    "alias": "Website CTR",
+    "description": "The percentage of times people saw your ad and performed a link click. Stored as a JSON string."
+   },
+   "website_purchase_roas": {
+    "alias": "Website Purchase ROAS",
+    "description": "The total return on ad spend (ROAS) from website purchases. This is based on the value of all conversions recorded by the Facebook pixel on your website and attributed to your ads. Stored as a JSON string."
+   },
+   "wish_bid": {
+    "alias": "Wish Bid",
+    "description": "The bid the advertiser was willing to pay, as reported by Meta."
+   }
+  }
+ },
+ "Ad Insights by Region": {
+  "columns": {
+   "account_currency": {
+    "alias": "Account Currency"
+   },
+   "account_id": {
+    "alias": "Account ID",
+    "description": "The ad account the row belongs to."
+   },
+   "account_name": {
+    "alias": "Account Name"
+   },
+   "action_values": {
+    "alias": "Action Values",
+    "description": "The total value of all conversions attributed to your ads. Stored as a JSON string."
+   },
+   "actions": {
+    "alias": "Actions",
+    "description": "The total number of actions people took that are attributed to your ads. Actions may include engagement, clicks or conversions. Stored as a JSON string."
+   },
+   "ad_click_actions": {
+    "alias": "Ad Click Actions",
+    "description": "Actions taken by people who clicked the ad. Stored as a JSON string."
+   },
+   "ad_id": {
+    "alias": "Ad ID",
+    "description": "The ad this row reports on. FK to [Ad Insights](./ad-insights.md)"
+   },
+   "ad_impression_actions": {
+    "alias": "Ad Impression Actions",
+    "description": "Actions taken by people who saw the ad. Stored as a JSON string."
+   },
+   "ad_name": {
+    "alias": "Ad Name"
+   },
+   "adset_id": {
+    "alias": "Ad Set ID",
+    "description": "The ad set of the ad. This connector loads no ad set table, so it has no join target; the name is on the row as `adset_name`."
+   },
+   "adset_name": {
+    "alias": "Ad Set Name"
+   },
+   "attribution_setting": {
+    "alias": "Attribution Setting"
+   },
+   "auction_bid": {
+    "alias": "Auction Bid",
+    "description": "The bid used in the ad auction."
+   },
+   "auction_competitiveness": {
+    "alias": "Auction Competitiveness",
+    "description": "How competitive the ad was in its auctions."
+   },
+   "auction_max_competitor_bid": {
+    "alias": "Auction Max Competitor Bid",
+    "description": "The highest competing bid in the ad's auctions."
+   },
+   "buying_type": {
+    "alias": "Buying Type"
+   },
+   "campaign_id": {
+    "alias": "Campaign ID",
+    "description": "The campaign of the ad. This connector loads no campaign table, so it has no join target; the name is on the row as `campaign_name`."
+   },
+   "campaign_name": {
+    "alias": "Campaign Name"
+   },
+   "canvas_avg_view_percent": {
+    "alias": "Canvas Avg View Percent"
+   },
+   "canvas_avg_view_time": {
+    "alias": "Canvas Avg View Time"
+   },
+   "catalog_segment_actions": {
+    "alias": "Catalog Segment Actions",
+    "description": "The number of actions performed attributed to your ads promoting your catalog segment, broken down by action type. Stored as a JSON string."
+   },
+   "catalog_segment_value": {
+    "alias": "Catalog Segment Value",
+    "description": "The total value of all conversions from your catalog segment attributed to your ads. Stored as a JSON string."
+   },
+   "catalog_segment_value_mobile_purchase_roas": {
+    "alias": "Catalog Segment Value Mobile Purchase ROAS",
+    "description": "The total return on ad spend (ROAS) from mobile app purchases for your catalog segment. Stored as a JSON string."
+   },
+   "catalog_segment_value_omni_purchase_roas": {
+    "alias": "Catalog Segment Value Omni Purchase ROAS",
+    "description": "The total return on ad spend (ROAS) from all purchases for your catalog segment. Stored as a JSON string."
+   },
+   "catalog_segment_value_website_purchase_roas": {
+    "alias": "Catalog Segment Value Website Purchase ROAS",
+    "description": "The total return on ad spend (ROAS) from website purchases for your catalog segment. Stored as a JSON string."
+   },
+   "clicks": {
+    "alias": "Clicks"
+   },
+   "conversion_values": {
+    "alias": "Conversion Values",
+    "description": "The total value of the conversions attributed to your ads, counting conversion events only. Unlike action_values, it excludes engagement and clicks. Stored as a JSON string."
+   },
+   "conversions": {
+    "alias": "Conversions",
+    "description": "The total number of conversions attributed to your ads. Counts conversion events only, unlike actions, which also counts engagement and clicks. Stored as a JSON string."
+   },
+   "converted_product_quantity": {
+    "alias": "Converted Product Quantity",
+    "description": "The number of products purchased which are recorded by your merchant partner's pixel or app SDK for a given product ID and driven by your ads. Has to be used together with converted product ID breakdown. Stored as a JSON string."
+   },
+   "converted_product_value": {
+    "alias": "Converted Product Value",
+    "description": "The value of purchases recorded by your merchant partner's pixel or app SDK for a given product ID and driven by your ads. Has to be used together with converted product ID breakdown. Stored as a JSON string."
+   },
+   "cost_per_15_sec_video_view": {
+    "alias": "Cost Per 15 Sec Video View",
+    "description": "Average cost per video view of at least 15 seconds. Stored as a JSON string."
+   },
+   "cost_per_2_sec_continuous_video_view": {
+    "alias": "Cost Per 2 Sec Continuous Video View",
+    "description": "Average cost per continuous video view of at least 2 seconds. Stored as a JSON string."
+   },
+   "cost_per_action_type": {
+    "alias": "Cost Per Action Type",
+    "description": "The average cost of a relevant action. Stored as a JSON string."
+   },
+   "cost_per_ad_click": {
+    "alias": "Cost Per Ad Click",
+    "description": "Average cost per click on the ad. Stored as a JSON string."
+   },
+   "cost_per_conversion": {
+    "alias": "Cost Per Conversion",
+    "description": "Average cost per conversion, by conversion type. Stored as a JSON string."
+   },
+   "cost_per_dda_countby_convs": {
+    "alias": "Cost Per DDA Countby Convs",
+    "description": "Average cost per conversion counted by data-driven attribution."
+   },
+   "cost_per_inline_link_click": {
+    "alias": "Cost Per Inline Link Click"
+   },
+   "cost_per_inline_post_engagement": {
+    "alias": "Cost Per Inline Post Engagement"
+   },
+   "cost_per_one_thousand_ad_impression": {
+    "alias": "Cost Per One Thousand Ad Impression",
+    "description": "Average cost per 1,000 ad impressions. Stored as a JSON string."
+   },
+   "cost_per_outbound_click": {
+    "alias": "Cost Per Outbound Click",
+    "description": "The average cost for each outbound click. Stored as a JSON string."
+   },
+   "cost_per_result": {
+    "alias": "Cost Per Result",
+    "description": "The average cost per result from your ads. Stored as a JSON string."
+   },
+   "cost_per_thruplay": {
+    "alias": "Cost Per ThruPlay",
+    "description": "The average cost for each ThruPlay. This metric is in development. Stored as a JSON string."
+   },
+   "cost_per_unique_action_type": {
+    "alias": "Cost Per Unique Action Type",
+    "description": "The average cost of each unique action. This metric is estimated. Stored as a JSON string."
+   },
+   "cost_per_unique_click": {
+    "alias": "Cost Per Unique Click"
+   },
+   "cost_per_unique_conversion": {
+    "alias": "Cost Per Unique Conversion",
+    "description": "Average cost per unique conversion, by conversion type. Not additive across rows. Stored as a JSON string."
+   },
+   "cost_per_unique_inline_link_click": {
+    "alias": "Cost Per Unique Inline Link Click"
+   },
+   "cost_per_unique_outbound_click": {
+    "alias": "Cost Per Unique Outbound Click",
+    "description": "The average cost for each unique outbound click. This metric is estimated. Stored as a JSON string."
+   },
+   "cpc": {
+    "alias": "CPC"
+   },
+   "cpm": {
+    "alias": "CPM"
+   },
+   "cpp": {
+    "alias": "CPP"
+   },
+   "created_time": {
+    "alias": "Created Time",
+    "description": "When the object this row describes was created, as Meta reports it."
+   },
+   "ctr": {
+    "alias": "CTR"
+   },
+   "date_start": {
+    "alias": "Date Start",
+    "description": "The day the row reports on; equal to `date_stop`, because the connector requests one day at a time. FK to [Ad Insights](./ad-insights.md)"
+   },
+   "date_stop": {
+    "alias": "Date Stop",
+    "description": "The day the row reports on; equal to `date_start`. FK to [Ad Insights](./ad-insights.md)"
+   },
+   "dda_countby_convs": {
+    "alias": "DDA Countby Convs",
+    "description": "Conversions counted by Meta's data-driven attribution."
+   },
+   "dda_results": {
+    "alias": "DDA Results",
+    "description": "Results counted by Meta's data-driven attribution. Stored as a JSON string."
+   },
+   "frequency": {
+    "alias": "Frequency"
+   },
+   "full_view_impressions": {
+    "alias": "Full View Impressions"
+   },
+   "full_view_reach": {
+    "alias": "Full View Reach"
+   },
+   "impressions": {
+    "alias": "Impressions"
+   },
+   "inline_link_click_ctr": {
+    "alias": "Inline Link Click CTR"
+   },
+   "inline_link_clicks": {
+    "alias": "Inline Link Clicks"
+   },
+   "inline_post_engagement": {
+    "alias": "Inline Post Engagement"
+   },
+   "instagram_upcoming_event_reminders_set": {
+    "alias": "Instagram Upcoming Event Reminders Set",
+    "description": "Reminders people set for an upcoming event promoted on Instagram."
+   },
+   "instant_experience_clicks_to_open": {
+    "alias": "Instant Experience Clicks To Open",
+    "description": "Clicks that opened the ad's Instant Experience."
+   },
+   "instant_experience_clicks_to_start": {
+    "alias": "Instant Experience Clicks To Start",
+    "description": "Clicks that started the ad's Instant Experience."
+   },
+   "instant_experience_outbound_clicks": {
+    "alias": "Instant Experience Outbound Clicks",
+    "description": "Clicks from the ad's Instant Experience to a destination off Meta. Stored as a JSON string."
+   },
+   "interactive_component_tap": {
+    "alias": "Interactive Component Tap",
+    "description": "Taps on interactive components of the ad, such as polls or sliders. Stored as a JSON string."
+   },
+   "marketing_messages_delivery_rate": {
+    "alias": "Marketing Messages Delivery Rate"
+   },
+   "mobile_app_purchase_roas": {
+    "alias": "Mobile App Purchase ROAS",
+    "description": "The total return on ad spend (ROAS) from mobile app purchases. This is based on the value that you assigned when you set up the app event. Stored as a JSON string."
+   },
+   "objective": {
+    "alias": "Objective"
+   },
+   "optimization_goal": {
+    "alias": "Optimization Goal"
+   },
+   "outbound_clicks": {
+    "alias": "Outbound Clicks",
+    "description": "The number of clicks on links that take people off Facebook-owned properties. Stored as a JSON string."
+   },
+   "outbound_clicks_ctr": {
+    "alias": "Outbound Clicks CTR",
+    "description": "The percentage of times people saw your ad and performed an outbound click. Stored as a JSON string."
+   },
+   "purchase_roas": {
+    "alias": "Purchase ROAS",
+    "description": "The total return on ad spend (ROAS) from purchases. This is based on information received from one or more of your connected Facebook Business Tools and attributed to your ads. Stored as a JSON string."
+   },
+   "qualifying_question_qualify_answer_rate": {
+    "alias": "Qualifying Question Qualify Answer Rate",
+    "description": "Share of lead-form respondents whose answer to a qualifying question marked them as qualified."
+   },
+   "reach": {
+    "alias": "Reach"
+   },
+   "region": {
+    "alias": "Region"
+   },
+   "result_rate": {
+    "alias": "Result Rate",
+    "description": "The result rate from your ads. Stored as a JSON string."
+   },
+   "results": {
+    "alias": "Results",
+    "description": "The number of results from your ads. Stored as a JSON string."
+   },
+   "shops_assisted_purchases": {
+    "alias": "Shops Assisted Purchases",
+    "description": "Purchases on Meta Shops that the ad assisted."
+   },
+   "social_spend": {
+    "alias": "Social Spend"
+   },
+   "spend": {
+    "alias": "Spend"
+   },
+   "updated_time": {
+    "alias": "Updated Time",
+    "description": "When the object this row describes was last updated, as Meta reports it."
+   },
+   "video_30_sec_watched_actions": {
+    "alias": "Video 30 Sec Watched Actions",
+    "description": "The number of times your video played for at least 30 seconds, or for nearly its total length if it's shorter than 30 seconds. For each impression of a video, we'll count video views separately and exclude any time spent replaying the video. Stored as a JSON string."
+   },
+   "video_avg_time_watched_actions": {
+    "alias": "Video Avg Time Watched Actions",
+    "description": "The average time a video was played, including any time spent replaying the video for a single impression. Stored as a JSON string."
+   },
+   "video_continuous_2_sec_watched_actions": {
+    "alias": "Video Continuous 2 Sec Watched Actions",
+    "description": "Video plays of at least 2 continuous seconds. Stored as a JSON string."
+   },
+   "video_p100_watched_actions": {
+    "alias": "Video 100% Watched Actions",
+    "description": "The number of times your video was played at 100% of its length, including plays that skipped to this point. Stored as a JSON string."
+   },
+   "video_p25_watched_actions": {
+    "alias": "Video 25% Watched Actions",
+    "description": "The number of times your video was played at 25% of its length, including plays that skipped to this point. Stored as a JSON string."
+   },
+   "video_p50_watched_actions": {
+    "alias": "Video 50% Watched Actions",
+    "description": "The number of times your video was played at 50% of its length, including plays that skipped to this point. Stored as a JSON string."
+   },
+   "video_p75_watched_actions": {
+    "alias": "Video 75% Watched Actions",
+    "description": "The number of times your video was played at 75% of its length, including plays that skipped to this point. Stored as a JSON string."
+   },
+   "video_p95_watched_actions": {
+    "alias": "Video 95% Watched Actions",
+    "description": "The number of times your video was played at 95% of its length, including plays that skipped to this point. Stored as a JSON string."
+   },
+   "video_play_actions": {
+    "alias": "Video Play Actions",
+    "description": "The number of times your video starts to play. This is counted for each impression of a video, and excludes replays. This metric is in development. Stored as a JSON string."
+   },
+   "video_play_curve_actions": {
+    "alias": "Video Play Curve Actions",
+    "description": "A video-play based curve graph that illustrates the percentage of video plays that reached a given second. Entries 0 to 14 represent seconds 0 thru 14. Entries 15 to 17 represent second ranges [15 to 20), [20 to 25), and [25 to 30). Entries 18 to 20 represent second ranges [30 to 40), [40 to 50), and [50 to 60). Entry 21 represents plays over 60 seconds. Stored as a JSON string."
+   },
+   "video_play_retention_0_to_15s_actions": {
+    "alias": "Video Play Retention 0 To 15s Actions",
+    "description": "Viewer retention over the first 15 seconds of the video. Stored as a JSON string."
+   },
+   "video_play_retention_20_to_60s_actions": {
+    "alias": "Video Play Retention 20 To 60s Actions",
+    "description": "Viewer retention between 20 and 60 seconds of the video. Stored as a JSON string."
+   },
+   "video_play_retention_graph_actions": {
+    "alias": "Video Play Retention Graph Actions",
+    "description": "Viewer retention across the whole video, as a curve. Stored as a JSON string."
+   },
+   "video_time_watched_actions": {
+    "alias": "Video Time Watched Actions",
+    "description": "Total time the video was watched. Stored as a JSON string."
+   },
+   "website_ctr": {
+    "alias": "Website CTR",
+    "description": "The percentage of times people saw your ad and performed a link click. Stored as a JSON string."
+   },
+   "website_purchase_roas": {
+    "alias": "Website Purchase ROAS",
+    "description": "The total return on ad spend (ROAS) from website purchases. This is based on the value of all conversions recorded by the Facebook pixel on your website and attributed to your ads. Stored as a JSON string."
+   },
+   "wish_bid": {
+    "alias": "Wish Bid",
+    "description": "The bid the advertiser was willing to pay, as reported by Meta."
+   }
+  }
+ },
+ "Ad Insights": {
+  "columns": {
+   "account_currency": {
+    "alias": "Account Currency"
+   },
+   "account_id": {
+    "alias": "Account ID",
+    "description": "The ad account the row belongs to. FK to [Ad Account](./ad-account.md)"
+   },
+   "account_name": {
+    "alias": "Account Name"
+   },
+   "action_values": {
+    "alias": "Action Values",
+    "description": "The total value of all conversions attributed to your ads. Stored as a JSON string."
+   },
+   "actions": {
+    "alias": "Actions",
+    "description": "The total number of actions people took that are attributed to your ads. Actions may include engagement, clicks or conversions. Stored as a JSON string."
+   },
+   "ad_click_actions": {
+    "alias": "Ad Click Actions",
+    "description": "Actions taken by people who clicked the ad. Stored as a JSON string."
+   },
+   "ad_id": {
+    "alias": "Ad ID",
+    "description": "The ad this row reports on. FK to [Ads](./ads.md)"
+   },
+   "ad_impression_actions": {
+    "alias": "Ad Impression Actions",
+    "description": "Actions taken by people who saw the ad. Stored as a JSON string."
+   },
+   "ad_name": {
+    "alias": "Ad Name"
+   },
+   "adset_id": {
+    "alias": "Ad Set ID",
+    "description": "The ad set of the ad. This connector loads no ad set table, so it has no join target; the name is on the row as `adset_name`."
+   },
+   "adset_name": {
+    "alias": "Ad Set Name"
+   },
+   "attribution_setting": {
+    "alias": "Attribution Setting"
+   },
+   "auction_bid": {
+    "alias": "Auction Bid",
+    "description": "The bid used in the ad auction."
+   },
+   "auction_competitiveness": {
+    "alias": "Auction Competitiveness",
+    "description": "How competitive the ad was in its auctions."
+   },
+   "auction_max_competitor_bid": {
+    "alias": "Auction Max Competitor Bid",
+    "description": "The highest competing bid in the ad's auctions."
+   },
+   "buying_type": {
+    "alias": "Buying Type"
+   },
+   "campaign_id": {
+    "alias": "Campaign ID",
+    "description": "The campaign of the ad. This connector loads no campaign table, so it has no join target; the name is on the row as `campaign_name`."
+   },
+   "campaign_name": {
+    "alias": "Campaign Name"
+   },
+   "canvas_avg_view_percent": {
+    "alias": "Canvas Avg View Percent"
+   },
+   "canvas_avg_view_time": {
+    "alias": "Canvas Avg View Time"
+   },
+   "catalog_segment_actions": {
+    "alias": "Catalog Segment Actions",
+    "description": "The number of actions performed attributed to your ads promoting your catalog segment, broken down by action type. Stored as a JSON string."
+   },
+   "catalog_segment_value": {
+    "alias": "Catalog Segment Value",
+    "description": "The total value of all conversions from your catalog segment attributed to your ads. Stored as a JSON string."
+   },
+   "catalog_segment_value_mobile_purchase_roas": {
+    "alias": "Catalog Segment Value Mobile Purchase ROAS",
+    "description": "The total return on ad spend (ROAS) from mobile app purchases for your catalog segment. Stored as a JSON string."
+   },
+   "catalog_segment_value_omni_purchase_roas": {
+    "alias": "Catalog Segment Value Omni Purchase ROAS",
+    "description": "The total return on ad spend (ROAS) from all purchases for your catalog segment. Stored as a JSON string."
+   },
+   "catalog_segment_value_website_purchase_roas": {
+    "alias": "Catalog Segment Value Website Purchase ROAS",
+    "description": "The total return on ad spend (ROAS) from website purchases for your catalog segment. Stored as a JSON string."
+   },
+   "clicks": {
+    "alias": "Clicks"
+   },
+   "conversion_values": {
+    "alias": "Conversion Values",
+    "description": "The total value of the conversions attributed to your ads, counting conversion events only. Unlike action_values, it excludes engagement and clicks. Stored as a JSON string."
+   },
+   "conversions": {
+    "alias": "Conversions",
+    "description": "The total number of conversions attributed to your ads. Counts conversion events only, unlike actions, which also counts engagement and clicks. Stored as a JSON string."
+   },
+   "converted_product_quantity": {
+    "alias": "Converted Product Quantity",
+    "description": "The number of products purchased which are recorded by your merchant partner's pixel or app SDK for a given product ID and driven by your ads. Has to be used together with converted product ID breakdown. Stored as a JSON string."
+   },
+   "converted_product_value": {
+    "alias": "Converted Product Value",
+    "description": "The value of purchases recorded by your merchant partner's pixel or app SDK for a given product ID and driven by your ads. Has to be used together with converted product ID breakdown. Stored as a JSON string."
+   },
+   "cost_per_15_sec_video_view": {
+    "alias": "Cost Per 15 Sec Video View",
+    "description": "Average cost per video view of at least 15 seconds. Stored as a JSON string."
+   },
+   "cost_per_2_sec_continuous_video_view": {
+    "alias": "Cost Per 2 Sec Continuous Video View",
+    "description": "Average cost per continuous video view of at least 2 seconds. Stored as a JSON string."
+   },
+   "cost_per_action_type": {
+    "alias": "Cost Per Action Type",
+    "description": "The average cost of a relevant action. Stored as a JSON string."
+   },
+   "cost_per_ad_click": {
+    "alias": "Cost Per Ad Click",
+    "description": "Average cost per click on the ad. Stored as a JSON string."
+   },
+   "cost_per_conversion": {
+    "alias": "Cost Per Conversion",
+    "description": "Average cost per conversion, by conversion type. Stored as a JSON string."
+   },
+   "cost_per_dda_countby_convs": {
+    "alias": "Cost Per DDA Countby Convs",
+    "description": "Average cost per conversion counted by data-driven attribution."
+   },
+   "cost_per_inline_link_click": {
+    "alias": "Cost Per Inline Link Click"
+   },
+   "cost_per_inline_post_engagement": {
+    "alias": "Cost Per Inline Post Engagement"
+   },
+   "cost_per_one_thousand_ad_impression": {
+    "alias": "Cost Per One Thousand Ad Impression",
+    "description": "Average cost per 1,000 ad impressions. Stored as a JSON string."
+   },
+   "cost_per_outbound_click": {
+    "alias": "Cost Per Outbound Click",
+    "description": "The average cost for each outbound click. Stored as a JSON string."
+   },
+   "cost_per_result": {
+    "alias": "Cost Per Result",
+    "description": "The average cost per result from your ads. Stored as a JSON string."
+   },
+   "cost_per_thruplay": {
+    "alias": "Cost Per ThruPlay",
+    "description": "The average cost for each ThruPlay. This metric is in development. Stored as a JSON string."
+   },
+   "cost_per_unique_action_type": {
+    "alias": "Cost Per Unique Action Type",
+    "description": "The average cost of each unique action. This metric is estimated. Stored as a JSON string."
+   },
+   "cost_per_unique_click": {
+    "alias": "Cost Per Unique Click"
+   },
+   "cost_per_unique_conversion": {
+    "alias": "Cost Per Unique Conversion",
+    "description": "Average cost per unique conversion, by conversion type. Not additive across rows. Stored as a JSON string."
+   },
+   "cost_per_unique_inline_link_click": {
+    "alias": "Cost Per Unique Inline Link Click"
+   },
+   "cost_per_unique_outbound_click": {
+    "alias": "Cost Per Unique Outbound Click",
+    "description": "The average cost for each unique outbound click. This metric is estimated. Stored as a JSON string."
+   },
+   "cpc": {
+    "alias": "CPC"
+   },
+   "cpm": {
+    "alias": "CPM"
+   },
+   "cpp": {
+    "alias": "CPP"
+   },
+   "created_time": {
+    "alias": "Created Time",
+    "description": "When the object this row describes was created, as Meta reports it."
+   },
+   "ctr": {
+    "alias": "CTR"
+   },
+   "date_start": {
+    "alias": "Date Start",
+    "description": "The day the row reports on; equal to `date_stop`, because the connector requests one day at a time."
+   },
+   "date_stop": {
+    "alias": "Date Stop",
+    "description": "The day the row reports on; equal to `date_start`."
+   },
+   "dda_countby_convs": {
+    "alias": "DDA Countby Convs",
+    "description": "Conversions counted by Meta's data-driven attribution."
+   },
+   "dda_results": {
+    "alias": "DDA Results",
+    "description": "Results counted by Meta's data-driven attribution. Stored as a JSON string."
+   },
+   "frequency": {
+    "alias": "Frequency"
+   },
+   "full_view_impressions": {
+    "alias": "Full View Impressions"
+   },
+   "full_view_reach": {
+    "alias": "Full View Reach"
+   },
+   "impressions": {
+    "alias": "Impressions"
+   },
+   "inline_link_click_ctr": {
+    "alias": "Inline Link Click CTR"
+   },
+   "inline_link_clicks": {
+    "alias": "Inline Link Clicks"
+   },
+   "inline_post_engagement": {
+    "alias": "Inline Post Engagement"
+   },
+   "instagram_upcoming_event_reminders_set": {
+    "alias": "Instagram Upcoming Event Reminders Set",
+    "description": "Reminders people set for an upcoming event promoted on Instagram."
+   },
+   "instant_experience_clicks_to_open": {
+    "alias": "Instant Experience Clicks To Open",
+    "description": "Clicks that opened the ad's Instant Experience."
+   },
+   "instant_experience_clicks_to_start": {
+    "alias": "Instant Experience Clicks To Start",
+    "description": "Clicks that started the ad's Instant Experience."
+   },
+   "instant_experience_outbound_clicks": {
+    "alias": "Instant Experience Outbound Clicks",
+    "description": "Clicks from the ad's Instant Experience to a destination off Meta. Stored as a JSON string."
+   },
+   "interactive_component_tap": {
+    "alias": "Interactive Component Tap",
+    "description": "Taps on interactive components of the ad, such as polls or sliders. Stored as a JSON string."
+   },
+   "marketing_messages_delivery_rate": {
+    "alias": "Marketing Messages Delivery Rate"
+   },
+   "mobile_app_purchase_roas": {
+    "alias": "Mobile App Purchase ROAS",
+    "description": "The total return on ad spend (ROAS) from mobile app purchases. This is based on the value that you assigned when you set up the app event. Stored as a JSON string."
+   },
+   "objective": {
+    "alias": "Objective"
+   },
+   "optimization_goal": {
+    "alias": "Optimization Goal"
+   },
+   "outbound_clicks": {
+    "alias": "Outbound Clicks",
+    "description": "The number of clicks on links that take people off Facebook-owned properties. Stored as a JSON string."
+   },
+   "outbound_clicks_ctr": {
+    "alias": "Outbound Clicks CTR",
+    "description": "The percentage of times people saw your ad and performed an outbound click. Stored as a JSON string."
+   },
+   "purchase_roas": {
+    "alias": "Purchase ROAS",
+    "description": "The total return on ad spend (ROAS) from purchases. This is based on information received from one or more of your connected Facebook Business Tools and attributed to your ads. Stored as a JSON string."
+   },
+   "qualifying_question_qualify_answer_rate": {
+    "alias": "Qualifying Question Qualify Answer Rate",
+    "description": "Share of lead-form respondents whose answer to a qualifying question marked them as qualified."
+   },
+   "reach": {
+    "alias": "Reach"
+   },
+   "result_rate": {
+    "alias": "Result Rate",
+    "description": "The percentage of results you received out of all the views of your ads. Stored as a JSON string."
+   },
+   "results": {
+    "alias": "Results",
+    "description": "The number of results you received out of all the views of your ads. Stored as a JSON string."
+   },
+   "shops_assisted_purchases": {
+    "alias": "Shops Assisted Purchases",
+    "description": "Purchases on Meta Shops that the ad assisted."
+   },
+   "social_spend": {
+    "alias": "Social Spend"
+   },
+   "spend": {
+    "alias": "Spend"
+   },
+   "updated_time": {
+    "alias": "Updated Time",
+    "description": "When the object this row describes was last updated, as Meta reports it."
+   },
+   "video_30_sec_watched_actions": {
+    "alias": "Video 30 Sec Watched Actions",
+    "description": "The number of times your video played for at least 30 seconds, or for nearly its total length if it's shorter than 30 seconds. For each impression of a video, we'll count video views separately and exclude any time spent replaying the video. Stored as a JSON string."
+   },
+   "video_avg_time_watched_actions": {
+    "alias": "Video Avg Time Watched Actions",
+    "description": "The average time a video was played, including any time spent replaying the video for a single impression. Stored as a JSON string."
+   },
+   "video_continuous_2_sec_watched_actions": {
+    "alias": "Video Continuous 2 Sec Watched Actions",
+    "description": "Video plays of at least 2 continuous seconds. Stored as a JSON string."
+   },
+   "video_p100_watched_actions": {
+    "alias": "Video 100% Watched Actions",
+    "description": "The number of times your video was played at 100% of its length, including plays that skipped to this point. Stored as a JSON string."
+   },
+   "video_p25_watched_actions": {
+    "alias": "Video 25% Watched Actions",
+    "description": "The number of times your video was played at 25% of its length, including plays that skipped to this point. Stored as a JSON string."
+   },
+   "video_p50_watched_actions": {
+    "alias": "Video 50% Watched Actions",
+    "description": "The number of times your video was played at 50% of its length, including plays that skipped to this point. Stored as a JSON string."
+   },
+   "video_p75_watched_actions": {
+    "alias": "Video 75% Watched Actions",
+    "description": "The number of times your video was played at 75% of its length, including plays that skipped to this point. Stored as a JSON string."
+   },
+   "video_p95_watched_actions": {
+    "alias": "Video 95% Watched Actions",
+    "description": "The number of times your video was played at 95% of its length, including plays that skipped to this point. Stored as a JSON string."
+   },
+   "video_play_actions": {
+    "alias": "Video Play Actions",
+    "description": "The number of times your video starts to play. This is counted for each impression of a video, and excludes replays. This metric is in development. Stored as a JSON string."
+   },
+   "video_play_curve_actions": {
+    "alias": "Video Play Curve Actions",
+    "description": "A video-play based curve graph that illustrates the percentage of video plays that reached a given second. Entries 0 to 14 represent seconds 0 thru 14. Entries 15 to 17 represent second ranges [15 to 20), [20 to 25), and [25 to 30). Entries 18 to 20 represent second ranges [30 to 40), [40 to 50), and [50 to 60). Entry 21 represents plays over 60 seconds. Stored as a JSON string."
+   },
+   "video_play_retention_0_to_15s_actions": {
+    "alias": "Video Play Retention 0 To 15s Actions",
+    "description": "Viewer retention over the first 15 seconds of the video. Stored as a JSON string."
+   },
+   "video_play_retention_20_to_60s_actions": {
+    "alias": "Video Play Retention 20 To 60s Actions",
+    "description": "Viewer retention between 20 and 60 seconds of the video. Stored as a JSON string."
+   },
+   "video_play_retention_graph_actions": {
+    "alias": "Video Play Retention Graph Actions",
+    "description": "Viewer retention across the whole video, as a curve. Stored as a JSON string."
+   },
+   "video_time_watched_actions": {
+    "alias": "Video Time Watched Actions",
+    "description": "Total time the video was watched. Stored as a JSON string."
+   },
+   "website_ctr": {
+    "alias": "Website CTR",
+    "description": "The percentage of times people saw your ad and performed a link click. Stored as a JSON string."
+   },
+   "website_purchase_roas": {
+    "alias": "Website Purchase ROAS",
+    "description": "The total return on ad spend (ROAS) from website purchases. This is based on the value of all conversions recorded by the Facebook pixel on your website and attributed to your ads. Stored as a JSON string."
+   },
+   "wish_bid": {
+    "alias": "Wish Bid",
+    "description": "The bid the advertiser was willing to pay, as reported by Meta."
+   }
+  }
+ },
+ "Ad": {
+  "columns": {
+   "id": {
+    "alias": "ID",
+    "description": "The ad's ID — the same value as in Ads. FK to [Ads](./ads.md)"
+   },
+   "account_id": {
+    "alias": "Account ID",
+    "description": "The ad account the ad belongs to."
+   },
+   "ad_active_time": {
+    "alias": "Ad Active Time"
+   },
+   "ad_review_feedback": {
+    "alias": "Ad Review Feedback",
+    "description": "The review feedback for this ad after it is reviewed. Stored as a JSON string."
+   },
+   "ad_schedule_end_time": {
+    "alias": "Ad Schedule End Time"
+   },
+   "ad_schedule_start_time": {
+    "alias": "Ad Schedule Start Time"
+   },
+   "adlabels": {
+    "alias": "Ad Labels",
+    "description": "Ad labels associated with this ad. Stored as a JSON string."
+   },
+   "adset": {
+    "alias": "Ad Set",
+    "description": "Ad set that contains this ad. Stored as a JSON string."
+   },
+   "adset_id": {
+    "alias": "Ad Set ID"
+   },
+   "bid_amount": {
+    "alias": "Bid Amount"
+   },
+   "campaign": {
+    "alias": "Campaign",
+    "description": "Ad campaign that contains this ad. Stored as a JSON string."
+   },
+   "campaign_id": {
+    "alias": "Campaign ID"
+   },
+   "configured_status": {
+    "alias": "Configured Status"
+   },
+   "conversion_domain": {
+    "alias": "Conversion Domain"
+   },
+   "created_time": {
+    "alias": "Created Time"
+   },
+   "creative_id": {
+    "alias": "Creative ID",
+    "description": "The creative the ad runs now."
+   },
+   "creative_effective_object_story_id": {
+    "alias": "Creative Effective Object Story ID"
+   },
+   "creative_name": {
+    "alias": "Creative Name"
+   },
+   "creative_object_story_spec": {
+    "alias": "Creative Object Story Spec"
+   },
+   "creative_url_tags": {
+    "alias": "Creative URL Tags"
+   },
+   "creative_asset_groups_spec": {
+    "alias": "Creative Asset Groups Spec",
+    "description": "This field is used to create ads using the Flexible ad format. You can read more about that here. Stored as a JSON string."
+   },
+   "effective_status": {
+    "alias": "Effective Status"
+   },
+   "issues_info": {
+    "alias": "Issues Info",
+    "description": "Issues for this ad that prevented it from delivering. Stored as a JSON string."
+   },
+   "last_updated_by_app_id": {
+    "alias": "Last Updated By App ID"
+   },
+   "name": {
+    "alias": "Name"
+   },
+   "preview_shareable_link": {
+    "alias": "Preview Shareable Link"
+   },
+   "recommendations": {
+    "alias": "Recommendations",
+    "description": "If there are recommendations for this ad, this field includes them. Otherwise, it is not included in the response. Field not included in redownload mode. Stored as a JSON string."
+   },
+   "source_ad": {
+    "alias": "Source Ad",
+    "description": "The source ad that this ad is copied from. Stored as a JSON string."
+   },
+   "source_ad_id": {
+    "alias": "Source Ad ID"
+   },
+   "status": {
+    "alias": "Status"
+   },
+   "tracking_specs": {
+    "alias": "Tracking Specs",
+    "description": "With tracking specs, you log actions taken by people on your ad. This field takes arguments identical to action spec. See Tracking and Conversion Specs. Stored as a JSON string."
+   },
+   "updated_time": {
+    "alias": "Updated Time"
+   }
+  }
+ },
+ "Ads": {
+  "columns": {
+   "id": {
+    "alias": "ID",
+    "description": "The ad's ID — the value performance tables carry as `ad_id`."
+   },
+   "account_id": {
+    "alias": "Account ID",
+    "description": "The ad account the ad belongs to. FK to [Ad Account](./ad-account.md)"
+   },
+   "ad_active_time": {
+    "alias": "Ad Active Time"
+   },
+   "ad_schedule_end_time": {
+    "alias": "Ad Schedule End Time"
+   },
+   "ad_schedule_start_time": {
+    "alias": "Ad Schedule Start Time"
+   },
+   "adlabels": {
+    "alias": "Ad Labels",
+    "description": "Ad labels associated with this ad. Stored as a JSON string."
+   },
+   "adset_id": {
+    "alias": "Ad Set ID",
+    "description": "The ad set the ad sits in. This connector loads no ad set table; the name travels on the performance rows as `adset_name`."
+   },
+   "bid_amount": {
+    "alias": "Bid Amount"
+   },
+   "campaign_id": {
+    "alias": "Campaign ID",
+    "description": "The campaign the ad sits in. This connector loads no campaign table; the name travels on the performance rows as `campaign_name`."
+   },
+   "configured_status": {
+    "alias": "Configured Status"
+   },
+   "conversion_domain": {
+    "alias": "Conversion Domain"
+   },
+   "created_time": {
+    "alias": "Created Time"
+   },
+   "creative_id": {
+    "alias": "Creative ID",
+    "description": "The creative the ad runs now. It can change over the ad's life, so it is not necessarily what ran on an earlier day. FK to [Ad Creatives](./ad-creatives.md)"
+   },
+   "creative_effective_object_story_id": {
+    "alias": "Creative Effective Object Story ID"
+   },
+   "creative_name": {
+    "alias": "Creative Name"
+   },
+   "creative_url_tags": {
+    "alias": "Creative URL Tags"
+   },
+   "effective_status": {
+    "alias": "Effective Status"
+   },
+   "issues_info": {
+    "alias": "Issues Info",
+    "description": "Issues for this ad that prevented it from delivering. Stored as a JSON string."
+   },
+   "last_updated_by_app_id": {
+    "alias": "Last Updated By App ID"
+   },
+   "name": {
+    "alias": "Name"
+   },
+   "preview_shareable_link": {
+    "alias": "Preview Shareable Link"
+   },
+   "source_ad_id": {
+    "alias": "Source Ad ID",
+    "description": "The ad this one was copied from, when it was created as a duplicate — another row of this table."
+   },
+   "status": {
+    "alias": "Status"
+   },
+   "updated_time": {
+    "alias": "Updated Time"
+   }
+  }
+ }
+}

@@ -181,7 +181,10 @@
       ],
       "cardinality": "N:1",
       "note": "The tweet the promoted tweet attaches to the line item; matched on the text ID, since the numeric id can arrive rounded.",
-      "source": "https://docs.x.com/x-ads-api/campaign-management/reference (GET accounts/:account_id/promoted_tweets: \"Use the GET accounts/:account_id/tweets endpoint to fetch the Tweet objects. Use the tweet_id values for each promoted_tweets object.\"); https://docs.x.com/x-ads-api/creatives/reference (GET accounts/:account_id/tweets example response: \"id\": 1166476031668015104 and \"tweet_id\": \"1166476031668015104\")"
+      "source": "https://docs.x.com/x-ads-api/campaign-management/reference (GET accounts/:account_id/promoted_tweets: \"Use the GET accounts/:account_id/tweets endpoint to fetch the Tweet objects. Use the tweet_id values for each promoted_tweets object.\"); https://docs.x.com/x-ads-api/creatives/reference (GET accounts/:account_id/tweets example response: \"id\": 1166476031668015104 and \"tweet_id\": \"1166476031668015104\")",
+      "uniqueAlone": [
+        "tweet_id"
+      ]
     },
     {
       "from": "Tweets",
@@ -194,7 +197,10 @@
       ],
       "cardinality": "N:1",
       "note": "The card attached to the tweet; one card can be attached to several tweets.",
-      "source": "https://docs.x.com/x-ads-api/creatives/reference (Tweets: \"Associate a card with the Tweet using the card_uri value from any cards response, if available.\"; GET accounts/:account_id/cards/all: \"Retrieve multiple cards, by card_uri, associated with the current account.\"); the connector fetches All Cards by the card_uri values of the tweets it loaded (https://github.com/OWOX/owox-data-marts/blob/8aff3513fdade6760a74baad9aa985167cf542ba/packages/connectors/src/Sources/XAds/Source.js)"
+      "source": "https://docs.x.com/x-ads-api/creatives/reference (Tweets: \"Associate a card with the Tweet using the card_uri value from any cards response, if available.\"; GET accounts/:account_id/cards/all: \"Retrieve multiple cards, by card_uri, associated with the current account.\"); the connector fetches All Cards by the card_uri values of the tweets it loaded (https://github.com/OWOX/owox-data-marts/blob/8aff3513fdade6760a74baad9aa985167cf542ba/packages/connectors/src/Sources/XAds/Source.js)",
+      "uniqueAlone": [
+        "card_uri"
+      ]
     },
     {
       "from": "Cards",

@@ -1,0 +1,194 @@
+{
+ "Repository Contributors": {
+  "columns": {
+   "login": {
+    "alias": "Login"
+   },
+   "id": {
+    "alias": "ID"
+   },
+   "node_id": {
+    "alias": "Node ID"
+   },
+   "avatar_url": {
+    "alias": "Avatar URL"
+   },
+   "gravatar_id": {
+    "alias": "Gravatar ID"
+   },
+   "html_url": {
+    "alias": "HTML URL"
+   },
+   "type": {
+    "alias": "Type"
+   },
+   "site_admin": {
+    "alias": "Site Admin"
+   },
+   "contributions": {
+    "alias": "Contributions"
+   }
+  }
+ },
+ "Repository Information": {
+  "columns": {
+   "id": {
+    "alias": "ID"
+   },
+   "node_id": {
+    "alias": "Node ID"
+   },
+   "name": {
+    "alias": "Name"
+   },
+   "full_name": {
+    "alias": "Full Name"
+   },
+   "private": {
+    "alias": "Private"
+   },
+   "owner_login": {
+    "alias": "Owner Login",
+    "description": "Meant for the owner's login, but GitHub returns the owner as an object the connector does not unpack, so the column stays empty; `full_name` starts with the owner's login."
+   },
+   "owner_id": {
+    "alias": "Owner ID",
+    "description": "Meant for the owner's ID, but GitHub returns the owner as an object the connector does not unpack, so the column stays empty."
+   },
+   "owner_type": {
+    "alias": "Owner Type",
+    "description": "Meant for the owner's type (User or Organization), but GitHub returns the owner as an object the connector does not unpack, so the column stays empty."
+   },
+   "html_url": {
+    "alias": "HTML URL"
+   },
+   "description": {
+    "alias": "Description"
+   },
+   "fork": {
+    "alias": "Fork"
+   },
+   "created_at": {
+    "alias": "Created At"
+   },
+   "updated_at": {
+    "alias": "Updated At"
+   },
+   "pushed_at": {
+    "alias": "Pushed At"
+   },
+   "homepage": {
+    "alias": "Homepage"
+   },
+   "size": {
+    "alias": "Size"
+   },
+   "stargazers_count": {
+    "alias": "Stargazers Count",
+    "description": "Number of users who starred the repository."
+   },
+   "watchers_count": {
+    "alias": "Watchers Count (Stars)",
+    "description": "Number of users who starred the repository, the same as `stargazers_count`: GitHub kept the old name; people watching the repository are in `subscribers_count`."
+   },
+   "language": {
+    "alias": "Language"
+   },
+   "has_issues": {
+    "alias": "Has Issues"
+   },
+   "has_projects": {
+    "alias": "Has Projects"
+   },
+   "has_downloads": {
+    "alias": "Has Downloads"
+   },
+   "has_wiki": {
+    "alias": "Has Wiki"
+   },
+   "has_pages": {
+    "alias": "Has Pages"
+   },
+   "has_discussions": {
+    "alias": "Has Discussions"
+   },
+   "forks_count": {
+    "alias": "Forks Count",
+    "description": "Number of forks of the repository."
+   },
+   "archived": {
+    "alias": "Archived"
+   },
+   "disabled": {
+    "alias": "Disabled"
+   },
+   "open_issues_count": {
+    "alias": "Open Issues Count",
+    "description": "Open issues of the repository, open pull requests included: GitHub's REST API counts every pull request as an issue."
+   },
+   "license_key": {
+    "alias": "License Key",
+    "description": "Meant for the license key, but GitHub returns the license as an object the connector does not unpack, so the column stays empty."
+   },
+   "license_name": {
+    "alias": "License Name",
+    "description": "Meant for the license name, but GitHub returns the license as an object the connector does not unpack, so the column stays empty."
+   },
+   "allow_forking": {
+    "alias": "Allow Forking"
+   },
+   "is_template": {
+    "alias": "Is Template"
+   },
+   "web_commit_signoff_required": {
+    "alias": "Web Commit Signoff Required"
+   },
+   "topics": {
+    "alias": "Topics",
+    "description": "Meant as comma-separated topics, but GitHub returns an array the connector passes through unchanged, so the column holds JSON array text such as `[\"a\",\"b\"]`."
+   },
+   "visibility": {
+    "alias": "Visibility"
+   },
+   "forks": {
+    "alias": "Forks",
+    "description": "Same value as `forks_count`; GitHub returns both."
+   },
+   "open_issues": {
+    "alias": "Open Issues",
+    "description": "Same value as `open_issues_count`, so it includes open pull requests."
+   },
+   "watchers": {
+    "alias": "Watchers (Stars)",
+    "description": "Same value as `watchers_count`: the number of stars, not of watchers."
+   },
+   "default_branch": {
+    "alias": "Default Branch"
+   },
+   "network_count": {
+    "alias": "Network Count",
+    "description": "A count GitHub returns next to `forks_count` without defining it in its REST reference; for the number of forks use `forks_count`."
+   },
+   "subscribers_count": {
+    "alias": "Watchers (Subscribers)",
+    "description": "Number of users watching the repository, that is, getting its notifications; GitHub's `watchers` fields count stars instead."
+   }
+  }
+ },
+ "Repository Statistics": {
+  "columns": {
+   "date": {
+    "alias": "Date",
+    "description": "The day the connector ran and read the counts; a day it did not run has no row."
+   },
+   "stars": {
+    "alias": "Stars",
+    "description": "Stars the repository had on the run day, GitHub's `stargazers_count`."
+   },
+   "contributors": {
+    "alias": "Contributors",
+    "description": "Contributors on the first page GitHub returned on the run day, so never more than 100."
+   }
+  }
+ }
+}

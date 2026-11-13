@@ -9,10 +9,10 @@ const SCHEMA = `| Field | Type | Description |
 `
 
 describe('parseSchemaMd', () => {
-  it('maps OBJECT to JSON and DATETIME to DATETIME', () => {
+  it('maps OBJECT to STRING (the connector stores it as JSON text) and DATETIME to DATETIME', () => {
     const t = '| Field | Type | Description |\n| --- | --- | --- |\n| a | OBJECT | x |\n| b | DATETIME | y |\n'
     expect(parseSchemaMd(t).map((r) => r.type)).toEqual(['OBJECT', 'DATETIME'])
-    expect(TYPE_MAP.OBJECT).toBe('JSON')
+    expect(TYPE_MAP.OBJECT).toBe('STRING')
     expect(TYPE_MAP.DATETIME).toBe('DATETIME')
   })
   it('reads rows, keeps an escaped pipe in a description', () => {
@@ -22,10 +22,12 @@ describe('parseSchemaMd', () => {
       { column: 'urls', type: 'ARRAY', description: 'Final URLs' },
     ])
   })
-  it('maps OBJECT to JSON', () => {
+  it('maps OBJECT and ARRAY to STRING, NUMBER to FLOAT', () => {
     expect(parseSchemaMd('| Field | Type | Description |\n| --- | --- | --- |\n| by_geo | OBJECT | x |\n')[0].type).toBe('OBJECT')
-    expect(TYPE_MAP.OBJECT).toBe('JSON')
+    expect(TYPE_MAP.OBJECT).toBe('STRING')
     expect(TYPE_MAP.JSON).toBe('JSON')
+    expect(TYPE_MAP.NUMBER).toBe('FLOAT')
+    expect(TYPE_MAP.ARRAY).toBe('STRING')
   })
   it('refuses a type it cannot map and a repeated field', () => {
     expect(() => parseSchemaMd(SCHEMA.replace('ARRAY', 'DECIMAL128'))).toThrow(/DECIMAL128/)
@@ -115,7 +117,7 @@ const base = () => ({
 })
 
 describe('buildModel, OBJECT and DATETIME columns', () => {
-  it('renders them as JSON and DATETIME in the schema table', () => {
+  it('renders OBJECT as STRING and DATETIME in the schema table', () => {
     const b = base()
     b.endpoints[1].rows = [
       { column: 'id', type: 'STRING', description: 'id.' },
@@ -124,7 +126,7 @@ describe('buildModel, OBJECT and DATETIME columns', () => {
       { column: 'created_at', type: 'DATETIME', description: 'created.' },
     ]
     const doc = renderBundle(buildModel(b), { svgPath: '../../res/screens/sources/x.svg', exploreUrl: 'https://model.owox.com/?okf=u' })['children.md']
-    expect(doc).toContain('| `spec` | JSON |')
+    expect(doc).toContain('| `spec` | STRING |')
     expect(doc).toContain('| `created_at` | DATETIME |')
   })
 })
@@ -135,8 +137,17 @@ describe('buildModel', () => {
     expect(Object.keys(files).sort()).toEqual(['children.md', 'index.md', 'parents.md'])
     expect(files['children.md']).toContain('- [Parents](./parents.md) — `parent_id = id` [N:1] — The parent.')
     expect(files['parents.md']).not.toContain('## Joins')
-    expect(files['children.md']).toContain('| `id` | STRING | PK. id. |')
-    expect(files['children.md']).toContain('| `parent_id` | STRING | parent_id. |')
+    expect(files['children.md']).toContain('| `id` | STRING | ID | PK. id. |')
+    expect(files['children.md']).toContain('| `parent_id` | STRING | Parent ID | parent_id. |')
+  })
+
+  it('takes alias and description text from overrides, and refuses overrides that name nothing', () => {
+    const b = base()
+    b.overrides = { Children: { columns: { parent_id: { alias: 'Parent', description: 'The parent row.' } } } }
+    const files = renderBundle(buildModel(b), { svgPath: '../../res/screens/sources/x.svg', exploreUrl: 'https://model.owox.com/?okf=u' })
+    expect(files['children.md']).toContain('| `parent_id` | STRING | Parent | The parent row. |')
+    b.overrides = { Children: { columns: { nope: { alias: 'X' } } }, Ghost: { columns: {} } }
+    expect(() => buildModel(b)).toThrow(/no field nope[\s\S]*Ghost/)
   })
   it('is deterministic', () => {
     const o = { svgPath: 's.svg', exploreUrl: 'u' }

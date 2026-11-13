@@ -1,0 +1,22 @@
+{
+ "Historical exchange rates data": {
+  "columns": {
+   "date": {
+    "alias": "Date",
+    "description": "The UTC day the rate is for; a load for today's date holds the latest rate at load time, not the day's closing value."
+   },
+   "base": {
+    "alias": "Base",
+    "description": "Three-letter code of the currency every rate on the row is relative to; USD unless the connector's base is changed, which needs a Developer, Enterprise or Unlimited plan."
+   },
+   "currency": {
+    "alias": "Currency",
+    "description": "Three-letter code of the currency the rate is quoted in."
+   },
+   "rate": {
+    "alias": "Rate",
+    "description": "Units of `currency` for one unit of `base`: the last value Open Exchange Rates published for that UTC day."
+   }
+  }
+ }
+}

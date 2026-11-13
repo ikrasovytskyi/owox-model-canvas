@@ -1,0 +1,1488 @@
+{
+ "Ad Accounts": {
+  "columns": {
+   "currency": {
+    "alias": "Currency"
+   },
+   "id": {
+    "alias": "ID"
+   },
+   "name": {
+    "alias": "Name"
+   },
+   "notifiedOnCampaignOptimization": {
+    "alias": "Notified On Campaign Optimization"
+   },
+   "notifiedOnCreativeApproval": {
+    "alias": "Notified On Creative Approval"
+   },
+   "notifiedOnCreativeRejection": {
+    "alias": "Notified On Creative Rejection"
+   },
+   "notifiedOnEndOfCampaign": {
+    "alias": "Notified On End Of Campaign"
+   },
+   "notifiedOnNewFeaturesEnabled": {
+    "alias": "Notified On New Features Enabled"
+   },
+   "reference": {
+    "alias": "Reference"
+   },
+   "referenceInfo": {
+    "alias": "Reference Info",
+    "description": "Information about the entity associated with the reference. If the entity is an organization, an Organizationinfo object is returned. If the entity is a person, a Personinfo object is returned. For all other entity types an empty record will be returned. This is a read only field. Please refer to Additional Info Fields to learn how to access this field. Stored as a JSON string."
+   },
+   "servingStatuses": {
+    "alias": "Serving Statuses",
+    "description": "An array of enums with the account's system serving statuses. If the account is eligible for serving, the array has a single element, `RUNNABLE`; otherwise it lists one or more reasons why the account cannot serve. Stored as a JSON string."
+   },
+   "status": {
+    "alias": "Status"
+   },
+   "type": {
+    "alias": "Type"
+   },
+   "test": {
+    "alias": "Test"
+   }
+  }
+ },
+ "Ad Analytics by Country": {
+  "columns": {
+   "account": {
+    "alias": "Account"
+   },
+   "campaign": {
+    "alias": "Campaign"
+   },
+   "country": {
+    "alias": "Country"
+   },
+   "countryName": {
+    "alias": "Country Name"
+   },
+   "actionClicks": {
+    "alias": "Action Clicks"
+   },
+   "adUnitClicks": {
+    "alias": "Ad Unit Clicks"
+   },
+   "averageDwellTime": {
+    "alias": "Average Dwell Time"
+   },
+   "clicks": {
+    "alias": "Clicks"
+   },
+   "commentLikes": {
+    "alias": "Comment Likes"
+   },
+   "comments": {
+    "alias": "Comments"
+   },
+   "companyPageClicks": {
+    "alias": "Company Page Clicks"
+   },
+   "costInLocalCurrency": {
+    "alias": "Cost In Local Currency"
+   },
+   "costInUsd": {
+    "alias": "Cost In USD"
+   },
+   "costPerQualifiedLead": {
+    "alias": "Cost Per Qualified Lead"
+   },
+   "dateRangeStart": {
+    "alias": "Date Range Start"
+   },
+   "dateRangeEnd": {
+    "alias": "Date Range End"
+   },
+   "documentCompletions": {
+    "alias": "Document Completions"
+   },
+   "documentFirstQuartileCompletions": {
+    "alias": "Document First Quartile Completions"
+   },
+   "documentMidpointCompletions": {
+    "alias": "Document Midpoint Completions"
+   },
+   "documentThirdQuartileCompletions": {
+    "alias": "Document Third Quartile Completions"
+   },
+   "downloadClicks": {
+    "alias": "Download Clicks"
+   },
+   "externalWebsiteConversions": {
+    "alias": "External Website Conversions"
+   },
+   "externalWebsitePostClickConversions": {
+    "alias": "External Website Post Click Conversions"
+   },
+   "externalWebsitePostViewConversions": {
+    "alias": "External Website Post View Conversions"
+   },
+   "follows": {
+    "alias": "Follows"
+   },
+   "fullScreenPlays": {
+    "alias": "Full Screen Plays"
+   },
+   "headlineClicks": {
+    "alias": "Headline Clicks"
+   },
+   "headlineImpressions": {
+    "alias": "Headline Impressions"
+   },
+   "impressions": {
+    "alias": "Impressions"
+   },
+   "jobApplications": {
+    "alias": "Job Applications"
+   },
+   "jobApplyClicks": {
+    "alias": "Job Apply Clicks"
+   },
+   "landingPageClicks": {
+    "alias": "Landing Page Clicks"
+   },
+   "leadGenerationMailContactInfoShares": {
+    "alias": "Lead Generation Mail Contact Info Shares"
+   },
+   "leadGenerationMailInterestedClicks": {
+    "alias": "Lead Generation Mail Interested Clicks"
+   },
+   "likes": {
+    "alias": "Likes"
+   },
+   "oneClickLeadFormOpens": {
+    "alias": "One Click Lead Form Opens"
+   },
+   "oneClickLeads": {
+    "alias": "One Click Leads"
+   },
+   "opens": {
+    "alias": "Opens"
+   },
+   "otherEngagements": {
+    "alias": "Other Engagements"
+   },
+   "postClickJobApplications": {
+    "alias": "Post Click Job Applications"
+   },
+   "postClickJobApplyClicks": {
+    "alias": "Post Click Job Apply Clicks"
+   },
+   "postClickRegistrations": {
+    "alias": "Post Click Registrations"
+   },
+   "postViewJobApplications": {
+    "alias": "Post View Job Applications"
+   },
+   "postViewJobApplyClicks": {
+    "alias": "Post View Job Apply Clicks"
+   },
+   "postViewRegistrations": {
+    "alias": "Post View Registrations"
+   },
+   "qualifiedLeads": {
+    "alias": "Qualified Leads"
+   },
+   "reactions": {
+    "alias": "Reactions"
+   },
+   "registrations": {
+    "alias": "Registrations"
+   },
+   "sends": {
+    "alias": "Sends"
+   },
+   "shares": {
+    "alias": "Shares"
+   },
+   "subscriptionClicks": {
+    "alias": "Subscription Clicks"
+   },
+   "talentLeads": {
+    "alias": "Talent Leads"
+   },
+   "textUrlClicks": {
+    "alias": "Text URL Clicks"
+   },
+   "totalEngagements": {
+    "alias": "Total Engagements"
+   },
+   "validWorkEmailLeads": {
+    "alias": "Valid Work Email Leads"
+   },
+   "videoCompletions": {
+    "alias": "Video Completions"
+   },
+   "videoFirstQuartileCompletions": {
+    "alias": "Video First Quartile Completions"
+   },
+   "videoMidpointCompletions": {
+    "alias": "Video Midpoint Completions"
+   },
+   "videoStarts": {
+    "alias": "Video Starts"
+   },
+   "videoThirdQuartileCompletions": {
+    "alias": "Video Third Quartile Completions"
+   },
+   "videoViews": {
+    "alias": "Video Views"
+   },
+   "viralClicks": {
+    "alias": "Viral Clicks"
+   },
+   "viralCommentLikes": {
+    "alias": "Viral Comment Likes"
+   },
+   "viralComments": {
+    "alias": "Viral Comments"
+   },
+   "viralCompanyPageClicks": {
+    "alias": "Viral Company Page Clicks"
+   },
+   "viralDocumentCompletions": {
+    "alias": "Viral Document Completions"
+   },
+   "viralDocumentFirstQuartileCompletions": {
+    "alias": "Viral Document First Quartile Completions"
+   },
+   "viralDocumentMidpointCompletions": {
+    "alias": "Viral Document Midpoint Completions"
+   },
+   "viralDocumentThirdQuartileCompletions": {
+    "alias": "Viral Document Third Quartile Completions"
+   },
+   "viralDownloadClicks": {
+    "alias": "Viral Download Clicks"
+   },
+   "viralExternalWebsiteConversions": {
+    "alias": "Viral External Website Conversions"
+   },
+   "viralExternalWebsitePostClickConversions": {
+    "alias": "Viral External Website Post Click Conversions"
+   },
+   "viralExternalWebsitePostViewConversions": {
+    "alias": "Viral External Website Post View Conversions"
+   },
+   "viralFollows": {
+    "alias": "Viral Follows"
+   },
+   "viralFullScreenPlays": {
+    "alias": "Viral Full Screen Plays"
+   },
+   "viralImpressions": {
+    "alias": "Viral Impressions"
+   },
+   "viralJobApplications": {
+    "alias": "Viral Job Applications"
+   },
+   "viralJobApplyClicks": {
+    "alias": "Viral Job Apply Clicks"
+   },
+   "viralLandingPageClicks": {
+    "alias": "Viral Landing Page Clicks"
+   },
+   "viralLikes": {
+    "alias": "Viral Likes"
+   },
+   "viralOneClickLeadFormOpens": {
+    "alias": "Viral One Click Lead Form Opens"
+   },
+   "viralOneClickLeads": {
+    "alias": "Viral One Click Leads"
+   },
+   "viralOtherEngagements": {
+    "alias": "Viral Other Engagements"
+   },
+   "viralPostClickJobApplications": {
+    "alias": "Viral Post Click Job Applications"
+   },
+   "viralPostClickJobApplyClicks": {
+    "alias": "Viral Post Click Job Apply Clicks"
+   },
+   "viralPostClickRegistrations": {
+    "alias": "Viral Post Click Registrations"
+   },
+   "viralPostViewJobApplications": {
+    "alias": "Viral Post View Job Applications"
+   },
+   "viralPostViewJobApplyClicks": {
+    "alias": "Viral Post View Job Apply Clicks"
+   },
+   "viralPostViewRegistrations": {
+    "alias": "Viral Post View Registrations"
+   },
+   "viralReactions": {
+    "alias": "Viral Reactions"
+   },
+   "viralRegistrations": {
+    "alias": "Viral Registrations"
+   },
+   "viralShares": {
+    "alias": "Viral Shares"
+   },
+   "viralSubscriptionClicks": {
+    "alias": "Viral Subscription Clicks"
+   },
+   "viralTotalEngagements": {
+    "alias": "Viral Total Engagements"
+   },
+   "viralVideoCompletions": {
+    "alias": "Viral Video Completions"
+   },
+   "viralVideoFirstQuartileCompletions": {
+    "alias": "Viral Video First Quartile Completions"
+   },
+   "viralVideoMidpointCompletions": {
+    "alias": "Viral Video Midpoint Completions"
+   },
+   "viralVideoStarts": {
+    "alias": "Viral Video Starts"
+   },
+   "viralVideoThirdQuartileCompletions": {
+    "alias": "Viral Video Third Quartile Completions"
+   },
+   "viralVideoViews": {
+    "alias": "Viral Video Views"
+   }
+  }
+ },
+ "Ad Analytics by County": {
+  "columns": {
+   "account": {
+    "alias": "Account"
+   },
+   "campaign": {
+    "alias": "Campaign"
+   },
+   "county": {
+    "alias": "County"
+   },
+   "countyName": {
+    "alias": "County Name"
+   },
+   "actionClicks": {
+    "alias": "Action Clicks"
+   },
+   "adUnitClicks": {
+    "alias": "Ad Unit Clicks"
+   },
+   "averageDwellTime": {
+    "alias": "Average Dwell Time"
+   },
+   "clicks": {
+    "alias": "Clicks"
+   },
+   "commentLikes": {
+    "alias": "Comment Likes"
+   },
+   "comments": {
+    "alias": "Comments"
+   },
+   "companyPageClicks": {
+    "alias": "Company Page Clicks"
+   },
+   "costInLocalCurrency": {
+    "alias": "Cost In Local Currency"
+   },
+   "costInUsd": {
+    "alias": "Cost In USD"
+   },
+   "costPerQualifiedLead": {
+    "alias": "Cost Per Qualified Lead"
+   },
+   "dateRangeStart": {
+    "alias": "Date Range Start"
+   },
+   "dateRangeEnd": {
+    "alias": "Date Range End"
+   },
+   "documentCompletions": {
+    "alias": "Document Completions"
+   },
+   "documentFirstQuartileCompletions": {
+    "alias": "Document First Quartile Completions"
+   },
+   "documentMidpointCompletions": {
+    "alias": "Document Midpoint Completions"
+   },
+   "documentThirdQuartileCompletions": {
+    "alias": "Document Third Quartile Completions"
+   },
+   "downloadClicks": {
+    "alias": "Download Clicks"
+   },
+   "externalWebsiteConversions": {
+    "alias": "External Website Conversions"
+   },
+   "externalWebsitePostClickConversions": {
+    "alias": "External Website Post Click Conversions"
+   },
+   "externalWebsitePostViewConversions": {
+    "alias": "External Website Post View Conversions"
+   },
+   "follows": {
+    "alias": "Follows"
+   },
+   "fullScreenPlays": {
+    "alias": "Full Screen Plays"
+   },
+   "headlineClicks": {
+    "alias": "Headline Clicks"
+   },
+   "headlineImpressions": {
+    "alias": "Headline Impressions"
+   },
+   "impressions": {
+    "alias": "Impressions"
+   },
+   "jobApplications": {
+    "alias": "Job Applications"
+   },
+   "jobApplyClicks": {
+    "alias": "Job Apply Clicks"
+   },
+   "landingPageClicks": {
+    "alias": "Landing Page Clicks"
+   },
+   "leadGenerationMailContactInfoShares": {
+    "alias": "Lead Generation Mail Contact Info Shares"
+   },
+   "leadGenerationMailInterestedClicks": {
+    "alias": "Lead Generation Mail Interested Clicks"
+   },
+   "likes": {
+    "alias": "Likes"
+   },
+   "oneClickLeadFormOpens": {
+    "alias": "One Click Lead Form Opens"
+   },
+   "oneClickLeads": {
+    "alias": "One Click Leads"
+   },
+   "opens": {
+    "alias": "Opens"
+   },
+   "otherEngagements": {
+    "alias": "Other Engagements"
+   },
+   "postClickJobApplications": {
+    "alias": "Post Click Job Applications"
+   },
+   "postClickJobApplyClicks": {
+    "alias": "Post Click Job Apply Clicks"
+   },
+   "postClickRegistrations": {
+    "alias": "Post Click Registrations"
+   },
+   "postViewJobApplications": {
+    "alias": "Post View Job Applications"
+   },
+   "postViewJobApplyClicks": {
+    "alias": "Post View Job Apply Clicks"
+   },
+   "postViewRegistrations": {
+    "alias": "Post View Registrations"
+   },
+   "qualifiedLeads": {
+    "alias": "Qualified Leads"
+   },
+   "reactions": {
+    "alias": "Reactions"
+   },
+   "registrations": {
+    "alias": "Registrations"
+   },
+   "sends": {
+    "alias": "Sends"
+   },
+   "shares": {
+    "alias": "Shares"
+   },
+   "subscriptionClicks": {
+    "alias": "Subscription Clicks"
+   },
+   "talentLeads": {
+    "alias": "Talent Leads"
+   },
+   "textUrlClicks": {
+    "alias": "Text URL Clicks"
+   },
+   "totalEngagements": {
+    "alias": "Total Engagements"
+   },
+   "validWorkEmailLeads": {
+    "alias": "Valid Work Email Leads"
+   },
+   "videoCompletions": {
+    "alias": "Video Completions"
+   },
+   "videoFirstQuartileCompletions": {
+    "alias": "Video First Quartile Completions"
+   },
+   "videoMidpointCompletions": {
+    "alias": "Video Midpoint Completions"
+   },
+   "videoStarts": {
+    "alias": "Video Starts"
+   },
+   "videoThirdQuartileCompletions": {
+    "alias": "Video Third Quartile Completions"
+   },
+   "videoViews": {
+    "alias": "Video Views"
+   },
+   "viralClicks": {
+    "alias": "Viral Clicks"
+   },
+   "viralCommentLikes": {
+    "alias": "Viral Comment Likes"
+   },
+   "viralComments": {
+    "alias": "Viral Comments"
+   },
+   "viralCompanyPageClicks": {
+    "alias": "Viral Company Page Clicks"
+   },
+   "viralDocumentCompletions": {
+    "alias": "Viral Document Completions"
+   },
+   "viralDocumentFirstQuartileCompletions": {
+    "alias": "Viral Document First Quartile Completions"
+   },
+   "viralDocumentMidpointCompletions": {
+    "alias": "Viral Document Midpoint Completions"
+   },
+   "viralDocumentThirdQuartileCompletions": {
+    "alias": "Viral Document Third Quartile Completions"
+   },
+   "viralDownloadClicks": {
+    "alias": "Viral Download Clicks"
+   },
+   "viralExternalWebsiteConversions": {
+    "alias": "Viral External Website Conversions"
+   },
+   "viralExternalWebsitePostClickConversions": {
+    "alias": "Viral External Website Post Click Conversions"
+   },
+   "viralExternalWebsitePostViewConversions": {
+    "alias": "Viral External Website Post View Conversions"
+   },
+   "viralFollows": {
+    "alias": "Viral Follows"
+   },
+   "viralFullScreenPlays": {
+    "alias": "Viral Full Screen Plays"
+   },
+   "viralImpressions": {
+    "alias": "Viral Impressions"
+   },
+   "viralJobApplications": {
+    "alias": "Viral Job Applications"
+   },
+   "viralJobApplyClicks": {
+    "alias": "Viral Job Apply Clicks"
+   },
+   "viralLandingPageClicks": {
+    "alias": "Viral Landing Page Clicks"
+   },
+   "viralLikes": {
+    "alias": "Viral Likes"
+   },
+   "viralOneClickLeadFormOpens": {
+    "alias": "Viral One Click Lead Form Opens"
+   },
+   "viralOneClickLeads": {
+    "alias": "Viral One Click Leads"
+   },
+   "viralOtherEngagements": {
+    "alias": "Viral Other Engagements"
+   },
+   "viralPostClickJobApplications": {
+    "alias": "Viral Post Click Job Applications"
+   },
+   "viralPostClickJobApplyClicks": {
+    "alias": "Viral Post Click Job Apply Clicks"
+   },
+   "viralPostClickRegistrations": {
+    "alias": "Viral Post Click Registrations"
+   },
+   "viralPostViewJobApplications": {
+    "alias": "Viral Post View Job Applications"
+   },
+   "viralPostViewJobApplyClicks": {
+    "alias": "Viral Post View Job Apply Clicks"
+   },
+   "viralPostViewRegistrations": {
+    "alias": "Viral Post View Registrations"
+   },
+   "viralReactions": {
+    "alias": "Viral Reactions"
+   },
+   "viralRegistrations": {
+    "alias": "Viral Registrations"
+   },
+   "viralShares": {
+    "alias": "Viral Shares"
+   },
+   "viralSubscriptionClicks": {
+    "alias": "Viral Subscription Clicks"
+   },
+   "viralTotalEngagements": {
+    "alias": "Viral Total Engagements"
+   },
+   "viralVideoCompletions": {
+    "alias": "Viral Video Completions"
+   },
+   "viralVideoFirstQuartileCompletions": {
+    "alias": "Viral Video First Quartile Completions"
+   },
+   "viralVideoMidpointCompletions": {
+    "alias": "Viral Video Midpoint Completions"
+   },
+   "viralVideoStarts": {
+    "alias": "Viral Video Starts"
+   },
+   "viralVideoThirdQuartileCompletions": {
+    "alias": "Viral Video Third Quartile Completions"
+   },
+   "viralVideoViews": {
+    "alias": "Viral Video Views"
+   }
+  }
+ },
+ "Ad Analytics by Region": {
+  "columns": {
+   "account": {
+    "alias": "Account"
+   },
+   "campaign": {
+    "alias": "Campaign"
+   },
+   "region": {
+    "alias": "Region"
+   },
+   "regionName": {
+    "alias": "Region Name"
+   },
+   "actionClicks": {
+    "alias": "Action Clicks"
+   },
+   "adUnitClicks": {
+    "alias": "Ad Unit Clicks"
+   },
+   "averageDwellTime": {
+    "alias": "Average Dwell Time"
+   },
+   "clicks": {
+    "alias": "Clicks"
+   },
+   "commentLikes": {
+    "alias": "Comment Likes"
+   },
+   "comments": {
+    "alias": "Comments"
+   },
+   "companyPageClicks": {
+    "alias": "Company Page Clicks"
+   },
+   "costInLocalCurrency": {
+    "alias": "Cost In Local Currency"
+   },
+   "costInUsd": {
+    "alias": "Cost In USD"
+   },
+   "costPerQualifiedLead": {
+    "alias": "Cost Per Qualified Lead"
+   },
+   "dateRangeStart": {
+    "alias": "Date Range Start"
+   },
+   "dateRangeEnd": {
+    "alias": "Date Range End"
+   },
+   "documentCompletions": {
+    "alias": "Document Completions"
+   },
+   "documentFirstQuartileCompletions": {
+    "alias": "Document First Quartile Completions"
+   },
+   "documentMidpointCompletions": {
+    "alias": "Document Midpoint Completions"
+   },
+   "documentThirdQuartileCompletions": {
+    "alias": "Document Third Quartile Completions"
+   },
+   "downloadClicks": {
+    "alias": "Download Clicks"
+   },
+   "externalWebsiteConversions": {
+    "alias": "External Website Conversions"
+   },
+   "externalWebsitePostClickConversions": {
+    "alias": "External Website Post Click Conversions"
+   },
+   "externalWebsitePostViewConversions": {
+    "alias": "External Website Post View Conversions"
+   },
+   "follows": {
+    "alias": "Follows"
+   },
+   "fullScreenPlays": {
+    "alias": "Full Screen Plays"
+   },
+   "headlineClicks": {
+    "alias": "Headline Clicks"
+   },
+   "headlineImpressions": {
+    "alias": "Headline Impressions"
+   },
+   "impressions": {
+    "alias": "Impressions"
+   },
+   "jobApplications": {
+    "alias": "Job Applications"
+   },
+   "jobApplyClicks": {
+    "alias": "Job Apply Clicks"
+   },
+   "landingPageClicks": {
+    "alias": "Landing Page Clicks"
+   },
+   "leadGenerationMailContactInfoShares": {
+    "alias": "Lead Generation Mail Contact Info Shares"
+   },
+   "leadGenerationMailInterestedClicks": {
+    "alias": "Lead Generation Mail Interested Clicks"
+   },
+   "likes": {
+    "alias": "Likes"
+   },
+   "oneClickLeadFormOpens": {
+    "alias": "One Click Lead Form Opens"
+   },
+   "oneClickLeads": {
+    "alias": "One Click Leads"
+   },
+   "opens": {
+    "alias": "Opens"
+   },
+   "otherEngagements": {
+    "alias": "Other Engagements"
+   },
+   "postClickJobApplications": {
+    "alias": "Post Click Job Applications"
+   },
+   "postClickJobApplyClicks": {
+    "alias": "Post Click Job Apply Clicks"
+   },
+   "postClickRegistrations": {
+    "alias": "Post Click Registrations"
+   },
+   "postViewJobApplications": {
+    "alias": "Post View Job Applications"
+   },
+   "postViewJobApplyClicks": {
+    "alias": "Post View Job Apply Clicks"
+   },
+   "postViewRegistrations": {
+    "alias": "Post View Registrations"
+   },
+   "qualifiedLeads": {
+    "alias": "Qualified Leads"
+   },
+   "reactions": {
+    "alias": "Reactions"
+   },
+   "registrations": {
+    "alias": "Registrations"
+   },
+   "sends": {
+    "alias": "Sends"
+   },
+   "shares": {
+    "alias": "Shares"
+   },
+   "subscriptionClicks": {
+    "alias": "Subscription Clicks"
+   },
+   "talentLeads": {
+    "alias": "Talent Leads"
+   },
+   "textUrlClicks": {
+    "alias": "Text URL Clicks"
+   },
+   "totalEngagements": {
+    "alias": "Total Engagements"
+   },
+   "validWorkEmailLeads": {
+    "alias": "Valid Work Email Leads"
+   },
+   "videoCompletions": {
+    "alias": "Video Completions"
+   },
+   "videoFirstQuartileCompletions": {
+    "alias": "Video First Quartile Completions"
+   },
+   "videoMidpointCompletions": {
+    "alias": "Video Midpoint Completions"
+   },
+   "videoStarts": {
+    "alias": "Video Starts"
+   },
+   "videoThirdQuartileCompletions": {
+    "alias": "Video Third Quartile Completions"
+   },
+   "videoViews": {
+    "alias": "Video Views"
+   },
+   "viralClicks": {
+    "alias": "Viral Clicks"
+   },
+   "viralCommentLikes": {
+    "alias": "Viral Comment Likes"
+   },
+   "viralComments": {
+    "alias": "Viral Comments"
+   },
+   "viralCompanyPageClicks": {
+    "alias": "Viral Company Page Clicks"
+   },
+   "viralDocumentCompletions": {
+    "alias": "Viral Document Completions"
+   },
+   "viralDocumentFirstQuartileCompletions": {
+    "alias": "Viral Document First Quartile Completions"
+   },
+   "viralDocumentMidpointCompletions": {
+    "alias": "Viral Document Midpoint Completions"
+   },
+   "viralDocumentThirdQuartileCompletions": {
+    "alias": "Viral Document Third Quartile Completions"
+   },
+   "viralDownloadClicks": {
+    "alias": "Viral Download Clicks"
+   },
+   "viralExternalWebsiteConversions": {
+    "alias": "Viral External Website Conversions"
+   },
+   "viralExternalWebsitePostClickConversions": {
+    "alias": "Viral External Website Post Click Conversions"
+   },
+   "viralExternalWebsitePostViewConversions": {
+    "alias": "Viral External Website Post View Conversions"
+   },
+   "viralFollows": {
+    "alias": "Viral Follows"
+   },
+   "viralFullScreenPlays": {
+    "alias": "Viral Full Screen Plays"
+   },
+   "viralImpressions": {
+    "alias": "Viral Impressions"
+   },
+   "viralJobApplications": {
+    "alias": "Viral Job Applications"
+   },
+   "viralJobApplyClicks": {
+    "alias": "Viral Job Apply Clicks"
+   },
+   "viralLandingPageClicks": {
+    "alias": "Viral Landing Page Clicks"
+   },
+   "viralLikes": {
+    "alias": "Viral Likes"
+   },
+   "viralOneClickLeadFormOpens": {
+    "alias": "Viral One Click Lead Form Opens"
+   },
+   "viralOneClickLeads": {
+    "alias": "Viral One Click Leads"
+   },
+   "viralOtherEngagements": {
+    "alias": "Viral Other Engagements"
+   },
+   "viralPostClickJobApplications": {
+    "alias": "Viral Post Click Job Applications"
+   },
+   "viralPostClickJobApplyClicks": {
+    "alias": "Viral Post Click Job Apply Clicks"
+   },
+   "viralPostClickRegistrations": {
+    "alias": "Viral Post Click Registrations"
+   },
+   "viralPostViewJobApplications": {
+    "alias": "Viral Post View Job Applications"
+   },
+   "viralPostViewJobApplyClicks": {
+    "alias": "Viral Post View Job Apply Clicks"
+   },
+   "viralPostViewRegistrations": {
+    "alias": "Viral Post View Registrations"
+   },
+   "viralReactions": {
+    "alias": "Viral Reactions"
+   },
+   "viralRegistrations": {
+    "alias": "Viral Registrations"
+   },
+   "viralShares": {
+    "alias": "Viral Shares"
+   },
+   "viralSubscriptionClicks": {
+    "alias": "Viral Subscription Clicks"
+   },
+   "viralTotalEngagements": {
+    "alias": "Viral Total Engagements"
+   },
+   "viralVideoCompletions": {
+    "alias": "Viral Video Completions"
+   },
+   "viralVideoFirstQuartileCompletions": {
+    "alias": "Viral Video First Quartile Completions"
+   },
+   "viralVideoMidpointCompletions": {
+    "alias": "Viral Video Midpoint Completions"
+   },
+   "viralVideoStarts": {
+    "alias": "Viral Video Starts"
+   },
+   "viralVideoThirdQuartileCompletions": {
+    "alias": "Viral Video Third Quartile Completions"
+   },
+   "viralVideoViews": {
+    "alias": "Viral Video Views"
+   }
+  }
+ },
+ "Ad Analytics": {
+  "columns": {
+   "actionClicks": {
+    "alias": "Action Clicks"
+   },
+   "adUnitClicks": {
+    "alias": "Ad Unit Clicks"
+   },
+   "approximateMemberReach": {
+    "alias": "Approximate Member Reach",
+    "description": "Non-demographic pivots only (i.e. not MEMBER_). The estimated number of unique member accounts with at least one impression. This metric is an updated and more accurate version of legacy metric approximateUniqueImpressions. This metric is only available when the number of days in the date range is less than or equal to 92 days. This metric is fully launched in Jan 2024."
+   },
+   "averageDwellTime": {
+    "alias": "Average Dwell Time"
+   },
+   "audiencePenetration": {
+    "alias": "Audience Penetration"
+   },
+   "cardClicks": {
+    "alias": "Card Clicks",
+    "description": "Non-demographic pivots only (i.e. not MEMBER_). The number of clicks for each card of a carousel ad. The first card click of the carousel ad results in an immediate cardClick and click, whereas scrolling to other cards and clicking will count as additional cardClick."
+   },
+   "cardImpressions": {
+    "alias": "Card Impressions",
+    "description": "Non-demographic pivots only (i.e. not MEMBER_). The number of impressions shown for each card of a carousel ad. The first card of the carousel ad results in an immediate cardImpression and impression, whereas scrolling to other cards will count as additional cardImpressions."
+   },
+   "clicks": {
+    "alias": "Clicks"
+   },
+   "commentLikes": {
+    "alias": "Comment Likes"
+   },
+   "comments": {
+    "alias": "Comments"
+   },
+   "companyPageClicks": {
+    "alias": "Company Page Clicks"
+   },
+   "conversionValueInLocalCurrency": {
+    "alias": "Conversion Value In Local Currency",
+    "description": "Non-demographic pivots only (i.e. not MEMBER_). Value of the conversions in the account's local currency based on rules defined by the advertiser. Conversion value is set by the advertiser at a per conversion level, and aggregated across the query time range."
+   },
+   "costInLocalCurrency": {
+    "alias": "Cost In Local Currency"
+   },
+   "costInUsd": {
+    "alias": "Cost In USD"
+   },
+   "costPerQualifiedLead": {
+    "alias": "Cost Per Qualified Lead"
+   },
+   "dateRangeStart": {
+    "alias": "Date Range Start"
+   },
+   "dateRangeEnd": {
+    "alias": "Date Range End"
+   },
+   "documentCompletions": {
+    "alias": "Document Completions"
+   },
+   "documentFirstQuartileCompletions": {
+    "alias": "Document First Quartile Completions"
+   },
+   "documentMidpointCompletions": {
+    "alias": "Document Midpoint Completions"
+   },
+   "documentThirdQuartileCompletions": {
+    "alias": "Document Third Quartile Completions"
+   },
+   "downloadClicks": {
+    "alias": "Download Clicks"
+   },
+   "externalWebsiteConversions": {
+    "alias": "External Website Conversions"
+   },
+   "externalWebsitePostClickConversions": {
+    "alias": "External Website Post Click Conversions"
+   },
+   "externalWebsitePostViewConversions": {
+    "alias": "External Website Post View Conversions"
+   },
+   "follows": {
+    "alias": "Follows"
+   },
+   "fullScreenPlays": {
+    "alias": "Full Screen Plays"
+   },
+   "headlineClicks": {
+    "alias": "Headline Clicks"
+   },
+   "headlineImpressions": {
+    "alias": "Headline Impressions"
+   },
+   "impressions": {
+    "alias": "Impressions"
+   },
+   "jobApplications": {
+    "alias": "Job Applications"
+   },
+   "jobApplyClicks": {
+    "alias": "Job Apply Clicks"
+   },
+   "landingPageClicks": {
+    "alias": "Landing Page Clicks"
+   },
+   "leadGenerationMailContactInfoShares": {
+    "alias": "Lead Generation Mail Contact Info Shares"
+   },
+   "leadGenerationMailInterestedClicks": {
+    "alias": "Lead Generation Mail Interested Clicks"
+   },
+   "likes": {
+    "alias": "Likes"
+   },
+   "oneClickLeadFormOpens": {
+    "alias": "One Click Lead Form Opens"
+   },
+   "oneClickLeads": {
+    "alias": "One Click Leads"
+   },
+   "opens": {
+    "alias": "Opens"
+   },
+   "otherEngagements": {
+    "alias": "Other Engagements"
+   },
+   "pivotValues": {
+    "alias": "Pivot Values"
+   },
+   "postClickJobApplications": {
+    "alias": "Post Click Job Applications"
+   },
+   "postClickJobApplyClicks": {
+    "alias": "Post Click Job Apply Clicks"
+   },
+   "postClickRegistrations": {
+    "alias": "Post Click Registrations"
+   },
+   "postViewJobApplications": {
+    "alias": "Post View Job Applications"
+   },
+   "postViewJobApplyClicks": {
+    "alias": "Post View Job Apply Clicks"
+   },
+   "postViewRegistrations": {
+    "alias": "Post View Registrations"
+   },
+   "qualifiedLeads": {
+    "alias": "Qualified Leads"
+   },
+   "reactions": {
+    "alias": "Reactions"
+   },
+   "registrations": {
+    "alias": "Registrations"
+   },
+   "sends": {
+    "alias": "Sends"
+   },
+   "shares": {
+    "alias": "Shares"
+   },
+   "subscriptionClicks": {
+    "alias": "Subscription Clicks"
+   },
+   "talentLeads": {
+    "alias": "Talent Leads"
+   },
+   "textUrlClicks": {
+    "alias": "Text URL Clicks"
+   },
+   "totalEngagements": {
+    "alias": "Total Engagements"
+   },
+   "validWorkEmailLeads": {
+    "alias": "Valid Work Email Leads"
+   },
+   "videoCompletions": {
+    "alias": "Video Completions"
+   },
+   "videoFirstQuartileCompletions": {
+    "alias": "Video First Quartile Completions"
+   },
+   "videoMidpointCompletions": {
+    "alias": "Video Midpoint Completions"
+   },
+   "videoStarts": {
+    "alias": "Video Starts"
+   },
+   "videoThirdQuartileCompletions": {
+    "alias": "Video Third Quartile Completions"
+   },
+   "videoViews": {
+    "alias": "Video Views"
+   },
+   "viralCardClicks": {
+    "alias": "Viral Card Clicks",
+    "description": "Non-demographic pivots only (i.e. not MEMBER_). The number of viralClicks for each card of a carousel ad. The first viralCardClick of the carousel ad results in an immediate viralCardClick and viralClick, whereas scrolling to other cards and clicking will count as additional viralCardClick."
+   },
+   "viralCardImpressions": {
+    "alias": "Viral Card Impressions",
+    "description": "Non-demographic pivots only (i.e. not MEMBER_). The number of viralImpressions shown for each card of a carousel ad. The first card of the carousel ad results in an immediate viralCardImpression and viralImpression, whereas scrolling to other cards will count as additional viralCardImpressions."
+   },
+   "viralClicks": {
+    "alias": "Viral Clicks"
+   },
+   "viralCommentLikes": {
+    "alias": "Viral Comment Likes"
+   },
+   "viralComments": {
+    "alias": "Viral Comments"
+   },
+   "viralCompanyPageClicks": {
+    "alias": "Viral Company Page Clicks"
+   },
+   "viralDocumentCompletions": {
+    "alias": "Viral Document Completions"
+   },
+   "viralDocumentFirstQuartileCompletions": {
+    "alias": "Viral Document First Quartile Completions"
+   },
+   "viralDocumentMidpointCompletions": {
+    "alias": "Viral Document Midpoint Completions"
+   },
+   "viralDocumentThirdQuartileCompletions": {
+    "alias": "Viral Document Third Quartile Completions"
+   },
+   "viralDownloadClicks": {
+    "alias": "Viral Download Clicks"
+   },
+   "viralExternalWebsiteConversions": {
+    "alias": "Viral External Website Conversions"
+   },
+   "viralExternalWebsitePostClickConversions": {
+    "alias": "Viral External Website Post Click Conversions"
+   },
+   "viralExternalWebsitePostViewConversions": {
+    "alias": "Viral External Website Post View Conversions"
+   },
+   "viralFollows": {
+    "alias": "Viral Follows"
+   },
+   "viralFullScreenPlays": {
+    "alias": "Viral Full Screen Plays"
+   },
+   "viralImpressions": {
+    "alias": "Viral Impressions"
+   },
+   "viralJobApplications": {
+    "alias": "Viral Job Applications"
+   },
+   "viralJobApplyClicks": {
+    "alias": "Viral Job Apply Clicks"
+   },
+   "viralLandingPageClicks": {
+    "alias": "Viral Landing Page Clicks"
+   },
+   "viralLikes": {
+    "alias": "Viral Likes"
+   },
+   "viralOneClickLeadFormOpens": {
+    "alias": "Viral One Click Lead Form Opens"
+   },
+   "viralOneClickLeads": {
+    "alias": "Viral One Click Leads"
+   },
+   "viralOtherEngagements": {
+    "alias": "Viral Other Engagements"
+   },
+   "viralPostClickJobApplications": {
+    "alias": "Viral Post Click Job Applications"
+   },
+   "viralPostClickJobApplyClicks": {
+    "alias": "Viral Post Click Job Apply Clicks"
+   },
+   "viralPostClickRegistrations": {
+    "alias": "Viral Post Click Registrations"
+   },
+   "viralPostViewJobApplications": {
+    "alias": "Viral Post View Job Applications"
+   },
+   "viralPostViewJobApplyClicks": {
+    "alias": "Viral Post View Job Apply Clicks"
+   },
+   "viralPostViewRegistrations": {
+    "alias": "Viral Post View Registrations"
+   },
+   "viralReactions": {
+    "alias": "Viral Reactions"
+   },
+   "viralRegistrations": {
+    "alias": "Viral Registrations"
+   },
+   "viralShares": {
+    "alias": "Viral Shares"
+   },
+   "viralSubscriptionClicks": {
+    "alias": "Viral Subscription Clicks"
+   },
+   "viralTotalEngagements": {
+    "alias": "Viral Total Engagements"
+   },
+   "viralVideoCompletions": {
+    "alias": "Viral Video Completions"
+   },
+   "viralVideoFirstQuartileCompletions": {
+    "alias": "Viral Video First Quartile Completions"
+   },
+   "viralVideoMidpointCompletions": {
+    "alias": "Viral Video Midpoint Completions"
+   },
+   "viralVideoStarts": {
+    "alias": "Viral Video Starts"
+   },
+   "viralVideoThirdQuartileCompletions": {
+    "alias": "Viral Video Third Quartile Completions"
+   },
+   "viralVideoViews": {
+    "alias": "Viral Video Views"
+   }
+  }
+ },
+ "Campaign Groups": {
+  "columns": {
+   "account": {
+    "alias": "Account"
+   },
+   "accountInfo": {
+    "alias": "Account Info",
+    "description": "Information about the advertising account associated with the campaign. This is a read only field. Please refer to Additional Info Fields to learn how to access this field. Stored as a JSON string."
+   },
+   "backfilled": {
+    "alias": "Backfilled"
+   },
+   "id": {
+    "alias": "ID"
+   },
+   "name": {
+    "alias": "Name"
+   },
+   "runSchedule": {
+    "alias": "Run Schedule",
+    "description": "Scheduled date range to run associated campaigns under this campaign group. The start date must be non-null. Represents the inclusive (greater than or equal to) value in which to start the range. The end date is optional and if unset, it indicates an open range with no end date. This field is required if totalBudget is set. Stored as a JSON string."
+   },
+   "servingStatuses": {
+    "alias": "Serving Statuses",
+    "description": "Array of enums that determine whether or not campaigns within the campaign group may be served. Unlike status, which is user-managed, the values are controlled by the service. This is a read-only field. Possible values are:RUNNABLE Campaign group is currently active; billing information, budgetary constraints, or start and end dates are valid. Stored as a JSON string."
+   },
+   "status": {
+    "alias": "Status"
+   },
+   "totalBudget": {
+    "alias": "Total Budget",
+    "description": "If budgetOptimization.budgetOptimizationStrategy is DYNAMIC, the total budget of the campaign group will be shared among all campaigns within the same campaign group. Otherwise, it represents the maximum amount to be spent over the life of the campaign group. The amount of money as a real number string. The currency must match the ISO currency code of the account. Stored as a JSON string."
+   },
+   "test": {
+    "alias": "Test"
+   },
+   "allowedCampaignTypes": {
+    "alias": "Allowed Campaign Types",
+    "description": "Array of enums that indicates allowed campaign types within the specific campaign group. Possible values are:TEXT_AD - Text-based ads that show up in the right column or top of the page on LinkedIn. Stored as a JSON string."
+   },
+   "objectiveType": {
+    "alias": "Objective Type"
+   },
+   "budgetOptimization": {
+    "alias": "Budget Optimization",
+    "description": "Denotes the strategy used for bidding in auction and budget optimization across campaigns under the campaign group. Campaigns under the campaign group must have the same bid strategy. Possible values for bidStrategy: MAXIMUM_DELIVERY. Possible values for budgetOptimizationStrategy: DYNAMIC. Stored as a JSON string."
+   },
+   "dailyBudget": {
+    "alias": "Daily Budget"
+   }
+  }
+ },
+ "Campaigns": {
+  "columns": {
+   "id": {
+    "alias": "ID"
+   },
+   "account": {
+    "alias": "Account"
+   },
+   "accountInfo": {
+    "alias": "Account Info",
+    "description": "Information about the advertising account associated with the campaign. This is a read only field. Please refer to Additional Info Fields to learn how to access this field. Stored as a JSON string."
+   },
+   "associatedEntity": {
+    "alias": "Associated Entity"
+   },
+   "associatedEntityInfo": {
+    "alias": "Associated Entity Info",
+    "description": "Information about the associatedEntity. If the entity is an organization, an OrganizationInfo object is returned. If the entity is a person, a PersonInfo object is returned. For all other entity types an empty record will be returned. This is a read only field. Please refer to Additional Info Fields to learn how to access this field. Stored as a JSON string."
+   },
+   "audienceExpansionEnabled": {
+    "alias": "Audience Expansion Enabled"
+   },
+   "campaignGroup": {
+    "alias": "Campaign Group"
+   },
+   "campaignGroupInfo": {
+    "alias": "Campaign Group Info",
+    "description": "Information about the Campaign Group associated with the campaign. This is a read only filed. Please refer to Additional Info Fields to learn how to access this field. Stored as a JSON string."
+   },
+   "costType": {
+    "alias": "Cost Type"
+   },
+   "creativeSelection": {
+    "alias": "Creative Selection"
+   },
+   "dailyBudget": {
+    "alias": "Daily Budget",
+    "description": "Maximum amount to spend per day UTC. The amount of money as a real number string. ISO currency code. The currency must match that of the parent account. Stored as a JSON string."
+   },
+   "locale": {
+    "alias": "Locale",
+    "description": "Locale of the campaign. An uppercase two-letter country code as defined by ISO-3166 and a lowercase two-letter language code as defined by ISO-639. The country and language combination must match one of the supported locales. Stored as a JSON string."
+   },
+   "name": {
+    "alias": "Name"
+   },
+   "objectiveType": {
+    "alias": "Objective Type"
+   },
+   "offsiteDeliveryEnabled": {
+    "alias": "Offsite Delivery Enabled"
+   },
+   "offsitePreferences": {
+    "alias": "Offsite Preferences",
+    "description": "Offsite preferences that an advertiser specifies for this campaign. An example OffsitePreference is an object that contains App Categories, App Store URLs, Web Domain Names for which this campaign should be included/excluded. See the OffsitePreferences object for more details and examples. Stored as a JSON string."
+   },
+   "runSchedule": {
+    "alias": "Run Schedule",
+    "description": "Scheduled date range to run associated creatives. Object with start (inclusive) and end (exclusive) timestamp fields. The start date must be non-null. The end date is optional and if unset, it indicates an open range. Stored as a JSON string."
+   },
+   "targetingCriteria": {
+    "alias": "Targeting Criteria",
+    "description": "Specifies targeting criteria that the member should match. This is a more advanced boolean expression than the previous targeting field. It provides a generic AND/OR construct to include and exclude different targeting facets when defining audiences for campaigns. Stored as a JSON string."
+   },
+   "totalBudget": {
+    "alias": "Total Budget",
+    "description": "Maximum amount to spend over the life of the campaign. The amount of money as a real number string. ISO currency code. The currency must match that of the account. Deprecated for campaigns not using lifetime pacing. Stored as a JSON string."
+   },
+   "type": {
+    "alias": "Type"
+   },
+   "unitCost": {
+    "alias": "Unit Cost",
+    "description": "Amount to bid per click, impression, or other event depending on the pricing model. The amount of money as a real number string. The amount should be non-negative if the bidding strategy is manual, target cost, or cost cap bidding. The default is 0 with the currency code set to match that of the associated account. ISO currency code. Stored as a JSON string."
+   },
+   "status": {
+    "alias": "Status"
+   },
+   "optimizationTargetType": {
+    "alias": "Optimization Target Type"
+   },
+   "format": {
+    "alias": "Format"
+   },
+   "pacingStrategy": {
+    "alias": "Pacing Strategy"
+   },
+   "test": {
+    "alias": "Test"
+   },
+   "servingStatuses": {
+    "alias": "Serving Statuses",
+    "description": "Array of enums that determine whether or not a campaign may be served; unlike 'status', which is user-managed, the values are controlled by the service. This is a read-only field. Possible values are:RUNNABLE Campaign is eligible for serving. Stored as a JSON string."
+   },
+   "connectedTelevisionOnly": {
+    "alias": "Connected Television Only"
+   },
+   "optimizationPreference": {
+    "alias": "Optimization Preference",
+    "description": "Allows granular optimization customization on this campaign on top of optimizationTargetType. FrequencyOptimizationPreference is the first type of optimizationPreference we support now. Note: Applicable only from versions 202408 and above. Stored as a JSON string."
+   }
+  }
+ },
+ "Creatives": {
+  "columns": {
+   "account": {
+    "alias": "Account"
+   },
+   "campaign": {
+    "alias": "Campaign"
+   },
+   "content": {
+    "alias": "Content"
+   },
+   "createdAt": {
+    "alias": "Created At"
+   },
+   "createdBy": {
+    "alias": "Created By"
+   },
+   "id": {
+    "alias": "ID"
+   },
+   "intendedStatus": {
+    "alias": "Intended Status"
+   },
+   "isServing": {
+    "alias": "Is Serving"
+   },
+   "lastModifiedAt": {
+    "alias": "Last Modified At"
+   },
+   "lastModifiedBy": {
+    "alias": "Last Modified By"
+   },
+   "leadgenCallToAction": {
+    "alias": "Leadgen Call To Action",
+    "description": "The field is needed for call to action. This currently only applies if the campaign objective is LEAD_GENERATION. Stored as a JSON string."
+   },
+   "review": {
+    "alias": "Review",
+    "description": "Creative review status. The review status cannot be set/updated via the API but is started when the creative is activated (i.e., moves from draft state to active state). Hence, the review is absent (null) when the creative is in DRAFT state. Read-only. Stored as a JSON string."
+   },
+   "servingHoldReasons": {
+    "alias": "Serving Hold Reasons",
+    "description": "Array that contains all the reasons why the creative is not serving. In the case a creative is being served, this field will be null and not present in the response. Stored as a JSON string."
+   },
+   "name": {
+    "alias": "Name"
+   }
+  }
+ }
+}

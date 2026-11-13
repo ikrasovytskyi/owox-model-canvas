@@ -1,0 +1,33 @@
+{
+ "Public Holidays": {
+  "columns": {
+   "id": {
+    "alias": "ID"
+   },
+   "date": {
+    "alias": "Date",
+    "description": "The holiday's start date; the API's end date is not loaded, so a holiday that lasts several days shows only its first day."
+   },
+   "name": {
+    "alias": "Name",
+    "description": "The holiday's name in the configured language, or `Unknown` when the API has no name in that language."
+   },
+   "type": {
+    "alias": "Type",
+    "description": "The holiday type from the OpenHolidays list (Public, Bank, Optional, School, BackToSchool, EndOfLessons); `Unknown` when the API returns none."
+   },
+   "regionalScope": {
+    "alias": "Regional Scope",
+    "description": "Where the holiday applies: National, Regional or Local; `Unknown` when the API returns none."
+   },
+   "temporalScope": {
+    "alias": "Temporal Scope",
+    "description": "How much of the day the holiday covers: FullDay or HalfDay; `Unknown` when the API returns none."
+   },
+   "nationwide": {
+    "alias": "Nationwide",
+    "description": "True when the holiday applies in the whole country; false when only some subdivisions observe it, and the connector does not load which ones."
+   }
+  }
+ }
+}

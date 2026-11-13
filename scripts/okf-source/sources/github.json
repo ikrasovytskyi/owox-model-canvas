@@ -4,13 +4,13 @@
   "questions": [
     "How have stars and contributors grown, day by day?",
     "Who contributes most to the repository, and are they people or bots?",
-    "Which license, language and default branch does the repository have, and how active is it (open issues, last push)?"
+    "Which language and default branch does the repository have, and how active is it (open issues, last push)?"
   ],
   "endpoints": {
     "Repository Information": {
-      "description": "One row for the repository: its `id`, name, full name, owner, URLs, description, language, license, visibility, default branch, feature switches (issues, wiki, pages, discussions, projects), flags (private, fork, archived, disabled, template) and counters: stars, watchers, forks, open issues, network count, subscribers and size.\n\nThe counters are as of the run, not a history; the daily history of stars and contributors is in Repository Statistics. `forks`, `open_issues` and `watchers` repeat `forks_count`, `open_issues_count` and `watchers_count`, as GitHub returns them.",
+      "description": "One row for the repository: its `id`, name, full name (`owner/repo`), URLs, description, language, visibility, default branch, feature switches (issues, wiki, pages, discussions, projects), flags (private, fork, archived, disabled, template) and counters: stars, watchers, forks, open issues, network count, subscribers and size.\n\nThe counters are as of the run, not a history; the daily history of stars and contributors is in Repository Statistics. `forks`, `open_issues` and `watchers` repeat `forks_count`, `open_issues_count` and `watchers_count`, as GitHub returns them. Two traps: GitHub's `watchers` and `watchers_count` count stars, and the people watching the repository are `subscribers_count`; open issues include open pull requests. The owner and license columns stay empty, because GitHub nests them in objects the connector does not unpack.",
       "questions": [
-        "What are the repository's language, license, visibility and default branch?",
+        "What are the repository's language, visibility and default branch?",
         "How many stars, forks, watchers and open issues does it have now?",
         "When was it created, last updated and last pushed to, and is it archived?"
       ]
@@ -24,7 +24,7 @@
       ]
     },
     "Repository Contributors": {
-      "description": "One row per contributor the GitHub API lists for the repository: login, user `id`, profile and avatar URLs, `type` (User or Bot), whether the person is a site admin and the number of `contributions`. It lists the first page the API returns, at most 100 contributors, ordered by GitHub.\n\nThe table does not repeat the repository, so it describes the one repository the connector is configured for.",
+      "description": "One row per contributor the GitHub API lists for the repository: login, user `id`, profile and avatar URLs, `type` (User or Bot), whether the person is a site admin and the number of `contributions`. It lists the first page the API returns, at most 100 contributors, sorted by number of commits from most to fewest; anonymous contributors are not included, and GitHub notes the list can be a few hours old.\n\nThe table does not repeat the repository, so it describes the one repository the connector is configured for.",
       "questions": [
         "Who are the top ten contributors by contributions?",
         "What share of contributions comes from bots?",

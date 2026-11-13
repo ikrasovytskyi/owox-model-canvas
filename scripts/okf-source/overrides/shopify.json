@@ -1,0 +1,1319 @@
+{
+ "Abandoned Checkouts": {
+  "columns": {
+   "id": {
+    "alias": "ID"
+   },
+   "abandonedCheckoutUrl": {
+    "alias": "Abandoned Checkout URL"
+   },
+   "completedAt": {
+    "alias": "Completed At"
+   },
+   "createdAt": {
+    "alias": "Created At"
+   },
+   "updatedAt": {
+    "alias": "Updated At"
+   },
+   "defaultCursor": {
+    "alias": "Default Cursor"
+   },
+   "lineItemsQuantity": {
+    "alias": "Line Items Quantity"
+   },
+   "totalPriceSet": {
+    "alias": "Total Price Set",
+    "description": "Total price of the checkout, taxes, discounts and shipping included, in the store currency; the amount only, as the connector does not keep the currency code it requests."
+   },
+   "billingAddressCity": {
+    "alias": "Billing Address City"
+   },
+   "billingAddressCountry": {
+    "alias": "Billing Address Country"
+   },
+   "billingAddressProvince": {
+    "alias": "Billing Address Province"
+   },
+   "billingAddressZip": {
+    "alias": "Billing Address Zip"
+   },
+   "shippingAddressCity": {
+    "alias": "Shipping Address City"
+   },
+   "shippingAddressCountry": {
+    "alias": "Shipping Address Country"
+   },
+   "shippingAddressProvince": {
+    "alias": "Shipping Address Province"
+   },
+   "shippingAddressZip": {
+    "alias": "Shipping Address Zip"
+   },
+   "customerId": {
+    "alias": "Customer ID",
+    "description": "Customer globally-unique ID. FK to [Customers](./customers.md)"
+   },
+   "customerFirstName": {
+    "alias": "Customer First Name",
+    "description": "First name of the customer who started the checkout; empty when the checkout has no customer."
+   },
+   "customerLastName": {
+    "alias": "Customer Last Name",
+    "description": "Last name of the customer who started the checkout; empty when the checkout has no customer."
+   },
+   "customerEmail": {
+    "alias": "Customer Email"
+   }
+  }
+ },
+ "Article Metafields": {
+  "columns": {
+   "id": {
+    "alias": "ID"
+   },
+   "namespace": {
+    "alias": "Namespace"
+   },
+   "key": {
+    "alias": "Key"
+   },
+   "value": {
+    "alias": "Value"
+   },
+   "type": {
+    "alias": "Type"
+   },
+   "ownerId": {
+    "alias": "Owner ID",
+    "description": "The ID of the owner resource. FK to [Articles](./articles.md)"
+   },
+   "ownerType": {
+    "alias": "Owner Type"
+   },
+   "createdAt": {
+    "alias": "Created At"
+   },
+   "updatedAt": {
+    "alias": "Updated At"
+   }
+  }
+ },
+ "Articles": {
+  "columns": {
+   "id": {
+    "alias": "ID"
+   },
+   "title": {
+    "alias": "Title"
+   },
+   "handle": {
+    "alias": "Handle"
+   },
+   "body": {
+    "alias": "Body"
+   },
+   "summary": {
+    "alias": "Summary"
+   },
+   "authorName": {
+    "alias": "Author Name"
+   },
+   "blogId": {
+    "alias": "Blog ID",
+    "description": "The ID of the blog containing the article. FK to [Blogs](./blogs.md)"
+   },
+   "blogTitle": {
+    "alias": "Blog Title"
+   },
+   "isPublished": {
+    "alias": "Is Published"
+   },
+   "publishedAt": {
+    "alias": "Published At"
+   },
+   "tags": {
+    "alias": "Tags"
+   },
+   "templateSuffix": {
+    "alias": "Template Suffix"
+   },
+   "imageUrl": {
+    "alias": "Image URL"
+   },
+   "createdAt": {
+    "alias": "Created At"
+   },
+   "updatedAt": {
+    "alias": "Updated At"
+   }
+  }
+ },
+ "Blog Metafields": {
+  "columns": {
+   "id": {
+    "alias": "ID"
+   },
+   "namespace": {
+    "alias": "Namespace"
+   },
+   "key": {
+    "alias": "Key"
+   },
+   "value": {
+    "alias": "Value"
+   },
+   "type": {
+    "alias": "Type"
+   },
+   "ownerId": {
+    "alias": "Owner ID",
+    "description": "The ID of the owner resource. FK to [Blogs](./blogs.md)"
+   },
+   "ownerType": {
+    "alias": "Owner Type"
+   },
+   "createdAt": {
+    "alias": "Created At"
+   },
+   "updatedAt": {
+    "alias": "Updated At"
+   }
+  }
+ },
+ "Blogs": {
+  "columns": {
+   "id": {
+    "alias": "ID"
+   },
+   "title": {
+    "alias": "Title"
+   },
+   "handle": {
+    "alias": "Handle"
+   },
+   "templateSuffix": {
+    "alias": "Template Suffix"
+   },
+   "createdAt": {
+    "alias": "Created At"
+   },
+   "updatedAt": {
+    "alias": "Updated At"
+   }
+  }
+ },
+ "Collection Metafields": {
+  "columns": {
+   "id": {
+    "alias": "ID"
+   },
+   "namespace": {
+    "alias": "Namespace"
+   },
+   "key": {
+    "alias": "Key"
+   },
+   "value": {
+    "alias": "Value"
+   },
+   "type": {
+    "alias": "Type"
+   },
+   "ownerId": {
+    "alias": "Owner ID",
+    "description": "The ID of the owner resource. FK to [Collections](./collections.md)"
+   },
+   "ownerType": {
+    "alias": "Owner Type"
+   },
+   "createdAt": {
+    "alias": "Created At"
+   },
+   "updatedAt": {
+    "alias": "Updated At"
+   }
+  }
+ },
+ "Collections": {
+  "columns": {
+   "id": {
+    "alias": "ID"
+   },
+   "title": {
+    "alias": "Title"
+   },
+   "handle": {
+    "alias": "Handle"
+   },
+   "description": {
+    "alias": "Description"
+   },
+   "descriptionHtml": {
+    "alias": "Description HTML"
+   },
+   "sortOrder": {
+    "alias": "Sort Order"
+   },
+   "templateSuffix": {
+    "alias": "Template Suffix"
+   },
+   "productsCount": {
+    "alias": "Products Count"
+   },
+   "imageUrl": {
+    "alias": "Image URL"
+   },
+   "updatedAt": {
+    "alias": "Updated At"
+   }
+  }
+ },
+ "Customer Metafields": {
+  "columns": {
+   "id": {
+    "alias": "ID"
+   },
+   "namespace": {
+    "alias": "Namespace"
+   },
+   "key": {
+    "alias": "Key"
+   },
+   "value": {
+    "alias": "Value"
+   },
+   "type": {
+    "alias": "Type"
+   },
+   "ownerId": {
+    "alias": "Owner ID",
+    "description": "The ID of the owner resource. FK to [Customers](./customers.md)"
+   },
+   "ownerType": {
+    "alias": "Owner Type"
+   },
+   "createdAt": {
+    "alias": "Created At"
+   },
+   "updatedAt": {
+    "alias": "Updated At"
+   }
+  }
+ },
+ "Customers": {
+  "columns": {
+   "id": {
+    "alias": "ID"
+   },
+   "firstName": {
+    "alias": "First Name"
+   },
+   "lastName": {
+    "alias": "Last Name"
+   },
+   "displayName": {
+    "alias": "Display Name"
+   },
+   "email": {
+    "alias": "Email"
+   },
+   "phone": {
+    "alias": "Phone"
+   },
+   "state": {
+    "alias": "State"
+   },
+   "locale": {
+    "alias": "Locale"
+   },
+   "taxExempt": {
+    "alias": "Tax Exempt"
+   },
+   "verifiedEmail": {
+    "alias": "Verified Email"
+   },
+   "emailMarketingConsentState": {
+    "alias": "Email Marketing Consent State"
+   },
+   "smsMarketingConsentState": {
+    "alias": "SMS Marketing Consent State"
+   },
+   "numberOfOrders": {
+    "alias": "Number Of Orders"
+   },
+   "amountSpent": {
+    "alias": "Amount Spent",
+    "description": "The total the customer has spent across their orders, as the amount only: the connector requests the currency code with it but does not keep it."
+   },
+   "tags": {
+    "alias": "Tags"
+   },
+   "note": {
+    "alias": "Note"
+   },
+   "defaultAddressCity": {
+    "alias": "Default Address City"
+   },
+   "defaultAddressCountry": {
+    "alias": "Default Address Country"
+   },
+   "defaultAddressProvince": {
+    "alias": "Default Address Province"
+   },
+   "defaultAddressZip": {
+    "alias": "Default Address Zip"
+   },
+   "createdAt": {
+    "alias": "Created At"
+   },
+   "updatedAt": {
+    "alias": "Updated At"
+   }
+  }
+ },
+ "Discount Codes": {
+  "columns": {
+   "id": {
+    "alias": "ID"
+   },
+   "code": {
+    "alias": "Code",
+    "description": "The discount's first code; a discount that has several codes shows only one of them here."
+   },
+   "discountType": {
+    "alias": "Discount Type"
+   },
+   "title": {
+    "alias": "Title"
+   },
+   "status": {
+    "alias": "Status"
+   },
+   "startsAt": {
+    "alias": "Starts At"
+   },
+   "endsAt": {
+    "alias": "Ends At"
+   },
+   "usageLimit": {
+    "alias": "Usage Limit",
+    "description": "The maximum number of times the discount can be redeemed; empty when usage is unlimited."
+   },
+   "appliesOncePerCustomer": {
+    "alias": "Applies Once Per Customer",
+    "description": "True when each customer can use the discount only once; empty, not false, otherwise."
+   },
+   "asyncUsageCount": {
+    "alias": "Async Usage Count",
+    "description": "The number of times the discount has been used, updated asynchronously so it can lag behind; empty, not 0, for a discount never used."
+   },
+   "createdAt": {
+    "alias": "Created At"
+   },
+   "updatedAt": {
+    "alias": "Updated At"
+   }
+  }
+ },
+ "Fulfillment Orders": {
+  "columns": {
+   "id": {
+    "alias": "ID"
+   },
+   "status": {
+    "alias": "Status"
+   },
+   "requestStatus": {
+    "alias": "Request Status"
+   },
+   "orderId": {
+    "alias": "Order ID",
+    "description": "The ID of the order associated with this fulfillment order. FK to [Orders](./orders.md)"
+   },
+   "orderName": {
+    "alias": "Order Name"
+   },
+   "assignedLocationId": {
+    "alias": "Assigned Location ID",
+    "description": "The ID of the location assigned to fulfill this order. FK to [Locations](./locations.md)"
+   },
+   "assignedLocationName": {
+    "alias": "Assigned Location Name"
+   },
+   "fulfillAt": {
+    "alias": "Fulfill At"
+   },
+   "deliveryMethod": {
+    "alias": "Delivery Method"
+   },
+   "createdAt": {
+    "alias": "Created At"
+   },
+   "updatedAt": {
+    "alias": "Updated At"
+   }
+  }
+ },
+ "Inventory Items": {
+  "columns": {
+   "id": {
+    "alias": "ID"
+   },
+   "sku": {
+    "alias": "SKU"
+   },
+   "tracked": {
+    "alias": "Tracked"
+   },
+   "requiresShipping": {
+    "alias": "Requires Shipping"
+   },
+   "harmonizedSystemCode": {
+    "alias": "Harmonized System Code"
+   },
+   "countryCodeOfOrigin": {
+    "alias": "Country Code Of Origin"
+   },
+   "variantId": {
+    "alias": "Variant ID"
+   },
+   "createdAt": {
+    "alias": "Created At"
+   },
+   "updatedAt": {
+    "alias": "Updated At"
+   }
+  }
+ },
+ "Location Metafields": {
+  "columns": {
+   "id": {
+    "alias": "ID"
+   },
+   "namespace": {
+    "alias": "Namespace"
+   },
+   "key": {
+    "alias": "Key"
+   },
+   "value": {
+    "alias": "Value"
+   },
+   "type": {
+    "alias": "Type"
+   },
+   "ownerId": {
+    "alias": "Owner ID",
+    "description": "The ID of the owner resource. FK to [Locations](./locations.md)"
+   },
+   "ownerType": {
+    "alias": "Owner Type"
+   },
+   "createdAt": {
+    "alias": "Created At"
+   },
+   "updatedAt": {
+    "alias": "Updated At"
+   }
+  }
+ },
+ "Locations": {
+  "columns": {
+   "id": {
+    "alias": "ID"
+   },
+   "name": {
+    "alias": "Name"
+   },
+   "isActive": {
+    "alias": "Is Active"
+   },
+   "isPrimary": {
+    "alias": "Is Primary"
+   },
+   "isFulfillmentService": {
+    "alias": "Is Fulfillment Service"
+   },
+   "fulfillsOnlineOrders": {
+    "alias": "Fulfills Online Orders"
+   },
+   "hasActiveInventory": {
+    "alias": "Has Active Inventory"
+   },
+   "shipsInventory": {
+    "alias": "Ships Inventory"
+   },
+   "addressLine1": {
+    "alias": "Address Line 1"
+   },
+   "addressLine2": {
+    "alias": "Address Line 2"
+   },
+   "city": {
+    "alias": "City"
+   },
+   "province": {
+    "alias": "Province"
+   },
+   "provinceCode": {
+    "alias": "Province Code"
+   },
+   "country": {
+    "alias": "Country"
+   },
+   "countryCode": {
+    "alias": "Country Code"
+   },
+   "zip": {
+    "alias": "Zip"
+   },
+   "phone": {
+    "alias": "Phone"
+   },
+   "createdAt": {
+    "alias": "Created At"
+   },
+   "updatedAt": {
+    "alias": "Updated At"
+   }
+  }
+ },
+ "Order Metafields": {
+  "columns": {
+   "id": {
+    "alias": "ID"
+   },
+   "namespace": {
+    "alias": "Namespace"
+   },
+   "key": {
+    "alias": "Key"
+   },
+   "value": {
+    "alias": "Value"
+   },
+   "type": {
+    "alias": "Type"
+   },
+   "ownerId": {
+    "alias": "Owner ID",
+    "description": "The ID of the owner resource. FK to [Orders](./orders.md)"
+   },
+   "ownerType": {
+    "alias": "Owner Type"
+   },
+   "createdAt": {
+    "alias": "Created At"
+   },
+   "updatedAt": {
+    "alias": "Updated At"
+   }
+  }
+ },
+ "Orders": {
+  "columns": {
+   "id": {
+    "alias": "ID"
+   },
+   "name": {
+    "alias": "Name"
+   },
+   "email": {
+    "alias": "Email",
+    "description": "The email address associated with the customer for this order; empty when none was provided at checkout. `customerEmail` is the linked customer account's address."
+   },
+   "phone": {
+    "alias": "Phone",
+    "description": "The phone number associated with the customer for this order, not read from the linked customer account; empty when none was provided at checkout. The customer account's phone is `phone` in [Customers](./customers.md), via `customerId`."
+   },
+   "displayFinancialStatus": {
+    "alias": "Display Financial Status"
+   },
+   "displayFulfillmentStatus": {
+    "alias": "Display Fulfillment Status"
+   },
+   "confirmed": {
+    "alias": "Confirmed"
+   },
+   "closed": {
+    "alias": "Closed"
+   },
+   "cancelledAt": {
+    "alias": "Cancelled At"
+   },
+   "cancelReason": {
+    "alias": "Cancel Reason"
+   },
+   "currencyCode": {
+    "alias": "Currency Code",
+    "description": "The store currency when the order was placed; every money column of this table is in it."
+   },
+   "subtotalPrice": {
+    "alias": "Subtotal Price",
+    "description": "Sum of the line-item prices after discounts and before returns, in the store currency; `currentSubtotalPrice` is after returns and refunds."
+   },
+   "totalPrice": {
+    "alias": "Total Price",
+    "description": "Total price of the order, including taxes and discounts, before returns, in the store currency; `currentTotalPrice` is after returns, `originalTotalPrice` at order creation."
+   },
+   "totalTax": {
+    "alias": "Total Tax",
+    "description": "Total tax before returns, in the store currency; `currentTotalTax` is after returns and refunds."
+   },
+   "totalShippingPrice": {
+    "alias": "Total Shipping Price",
+    "description": "The total shipping costs returned to the customer, in the store currency (Shopify `totalShippingPriceSet`); `currentShippingPrice` is the current shipping price after refunds and discounts."
+   },
+   "totalDiscounts": {
+    "alias": "Total Discounts",
+    "description": "Total discounted on the order before returns, in the store currency; `currentTotalDiscounts` is after returns and refunds, and `cartDiscountAmount` holds the order-level part only."
+   },
+   "discountCodes": {
+    "alias": "Discount Codes",
+    "description": "The discount codes used on the order, as comma-separated text without amounts or types; `discountApplications` holds those as JSON."
+   },
+   "discountApplications": {
+    "alias": "Discount Applications",
+    "description": "Every discount applied to the order (codes, automatic, manual, script) as a JSON array of up to 20, ordered by index; each one's `targetType` says whether it applies to line items or to shipping lines."
+   },
+   "totalRefunded": {
+    "alias": "Total Refunded"
+   },
+   "totalOutstanding": {
+    "alias": "Total Outstanding"
+   },
+   "totalWeight": {
+    "alias": "Total Weight",
+    "description": "Total weight of the order before returns, in grams; `currentTotalWeight` is after returns and refunds."
+   },
+   "fullyPaid": {
+    "alias": "Fully Paid"
+   },
+   "taxesIncluded": {
+    "alias": "Taxes Included"
+   },
+   "taxExempt": {
+    "alias": "Tax Exempt"
+   },
+   "customerId": {
+    "alias": "Customer ID",
+    "description": "The ID of the customer. FK to [Customers](./customers.md)"
+   },
+   "customerEmail": {
+    "alias": "Customer Email",
+    "description": "The email of the customer account linked to the order; empty when the order has no customer, and it can differ from the order's own `email`."
+   },
+   "shippingAddressCity": {
+    "alias": "Shipping Address City"
+   },
+   "shippingAddressCountry": {
+    "alias": "Shipping Address Country"
+   },
+   "shippingAddressProvince": {
+    "alias": "Shipping Address Province"
+   },
+   "shippingAddressZip": {
+    "alias": "Shipping Address Zip"
+   },
+   "billingAddressCity": {
+    "alias": "Billing Address City"
+   },
+   "billingAddressCountry": {
+    "alias": "Billing Address Country"
+   },
+   "billingAddressProvince": {
+    "alias": "Billing Address Province"
+   },
+   "billingAddressZip": {
+    "alias": "Billing Address Zip"
+   },
+   "tags": {
+    "alias": "Tags"
+   },
+   "note": {
+    "alias": "Note"
+   },
+   "sourceName": {
+    "alias": "Source Name"
+   },
+   "checkoutToken": {
+    "alias": "Checkout Token"
+   },
+   "cartToken": {
+    "alias": "Cart Token"
+   },
+   "processedAt": {
+    "alias": "Processed At"
+   },
+   "closedAt": {
+    "alias": "Closed At"
+   },
+   "createdAt": {
+    "alias": "Created At"
+   },
+   "updatedAt": {
+    "alias": "Updated At"
+   },
+   "customer": {
+    "alias": "Customer (ID Only)",
+    "description": "The ID of the order's customer, the same value as `customerId`: the connector requests the customer's contact and address but keeps only the ID."
+   },
+   "currentTotalDiscounts": {
+    "alias": "Current Total Discounts",
+    "description": "Total discounted on the order after returns and refunds, in the store currency; `totalDiscounts` is the amount before returns."
+   },
+   "currentTotalTax": {
+    "alias": "Current Total Tax",
+    "description": "Tax on the order's line items after returns and refunds, in the store currency; `totalTax` is the amount before returns."
+   },
+   "number": {
+    "alias": "Number"
+   },
+   "confirmationNumber": {
+    "alias": "Confirmation Number"
+   },
+   "legacyResourceId": {
+    "alias": "Legacy Resource ID"
+   },
+   "test": {
+    "alias": "Test"
+   },
+   "edited": {
+    "alias": "Edited"
+   },
+   "originalTotalPrice": {
+    "alias": "Original Total Price"
+   },
+   "currentTotalPrice": {
+    "alias": "Current Total Price"
+   },
+   "netPayment": {
+    "alias": "Net Payment"
+   },
+   "totalReceived": {
+    "alias": "Total Received"
+   },
+   "totalCapturable": {
+    "alias": "Total Capturable"
+   },
+   "totalTipReceived": {
+    "alias": "Total Tip Received"
+   },
+   "currentSubtotalPrice": {
+    "alias": "Current Subtotal Price",
+    "description": "Subtotal of the order after returns and refunds, in the store currency; `subtotalPrice` is the amount before returns."
+   },
+   "cartDiscountAmount": {
+    "alias": "Cart Discount Amount"
+   },
+   "currentCartDiscountAmount": {
+    "alias": "Current Cart Discount Amount"
+   },
+   "currentShippingPrice": {
+    "alias": "Current Shipping Price"
+   },
+   "totalRefundedShipping": {
+    "alias": "Total Refunded Shipping"
+   },
+   "currentTotalDuties": {
+    "alias": "Current Total Duties"
+   },
+   "originalTotalDuties": {
+    "alias": "Original Total Duties"
+   },
+   "currentTotalAdditionalFees": {
+    "alias": "Current Total Additional Fees"
+   },
+   "originalTotalAdditionalFees": {
+    "alias": "Original Total Additional Fees"
+   },
+   "refundDiscrepancy": {
+    "alias": "Refund Discrepancy"
+   },
+   "presentmentCurrencyCode": {
+    "alias": "Presentment Currency Code"
+   },
+   "unpaid": {
+    "alias": "Unpaid"
+   },
+   "refundable": {
+    "alias": "Refundable"
+   },
+   "capturable": {
+    "alias": "Capturable"
+   },
+   "canMarkAsPaid": {
+    "alias": "Can Mark As Paid"
+   },
+   "paymentGatewayNames": {
+    "alias": "Payment Gateway Names"
+   },
+   "estimatedTaxes": {
+    "alias": "Estimated Taxes"
+   },
+   "fulfillable": {
+    "alias": "Fulfillable"
+   },
+   "requiresShipping": {
+    "alias": "Requires Shipping"
+   },
+   "subtotalLineItemsQuantity": {
+    "alias": "Subtotal Line Items Quantity"
+   },
+   "currentSubtotalLineItemsQuantity": {
+    "alias": "Current Subtotal Line Items Quantity"
+   },
+   "currentTotalWeight": {
+    "alias": "Current Total Weight"
+   },
+   "restockable": {
+    "alias": "Restockable"
+   },
+   "canNotifyCustomer": {
+    "alias": "Can Notify Customer"
+   },
+   "statusPageUrl": {
+    "alias": "Status Page URL"
+   },
+   "hasTimelineComment": {
+    "alias": "Has Timeline Comment"
+   },
+   "merchantEditable": {
+    "alias": "Merchant Editable"
+   },
+   "merchantEditableErrors": {
+    "alias": "Merchant Editable Errors"
+   },
+   "dutiesIncluded": {
+    "alias": "Duties Included"
+   },
+   "poNumber": {
+    "alias": "PO Number"
+   },
+   "sourceIdentifier": {
+    "alias": "Source Identifier"
+   },
+   "registeredSourceUrl": {
+    "alias": "Registered Source URL"
+   },
+   "productNetwork": {
+    "alias": "Product Network"
+   },
+   "customerAcceptsMarketing": {
+    "alias": "Customer Accepts Marketing"
+   },
+   "customerLocale": {
+    "alias": "Customer Locale"
+   },
+   "billingAddressMatchesShippingAddress": {
+    "alias": "Billing Address Matches Shipping Address"
+   },
+   "lineItems": {
+    "alias": "Line Items",
+    "description": "The order's line items as a JSON array of up to 250, each with quantity, unit prices before and after discounts and its discount allocations; an allocation points to `discountApplications` by index."
+   },
+   "shippingLines": {
+    "alias": "Shipping Lines",
+    "description": "The order's shipping lines as a JSON array of up to 50, each with its title and price before and after discounts."
+   },
+   "refunds": {
+    "alias": "Refunds",
+    "description": "The order's refunds as a JSON array of up to 50, each with its time, note, total and the line items refunded."
+   }
+  }
+ },
+ "Page Metafields": {
+  "columns": {
+   "id": {
+    "alias": "ID"
+   },
+   "namespace": {
+    "alias": "Namespace"
+   },
+   "key": {
+    "alias": "Key"
+   },
+   "value": {
+    "alias": "Value"
+   },
+   "type": {
+    "alias": "Type"
+   },
+   "ownerId": {
+    "alias": "Owner ID",
+    "description": "The ID of the owner resource. FK to [Pages](./pages.md)"
+   },
+   "ownerType": {
+    "alias": "Owner Type"
+   },
+   "createdAt": {
+    "alias": "Created At"
+   },
+   "updatedAt": {
+    "alias": "Updated At"
+   }
+  }
+ },
+ "Pages": {
+  "columns": {
+   "id": {
+    "alias": "ID"
+   },
+   "title": {
+    "alias": "Title"
+   },
+   "handle": {
+    "alias": "Handle"
+   },
+   "body": {
+    "alias": "Body"
+   },
+   "bodySummary": {
+    "alias": "Body Summary"
+   },
+   "isPublished": {
+    "alias": "Is Published"
+   },
+   "templateSuffix": {
+    "alias": "Template Suffix"
+   },
+   "publishedAt": {
+    "alias": "Published At"
+   },
+   "createdAt": {
+    "alias": "Created At"
+   },
+   "updatedAt": {
+    "alias": "Updated At"
+   }
+  }
+ },
+ "Product Metafields": {
+  "columns": {
+   "id": {
+    "alias": "ID"
+   },
+   "namespace": {
+    "alias": "Namespace"
+   },
+   "key": {
+    "alias": "Key"
+   },
+   "value": {
+    "alias": "Value"
+   },
+   "type": {
+    "alias": "Type"
+   },
+   "ownerId": {
+    "alias": "Owner ID",
+    "description": "The ID of the owner resource. FK to [Products](./products.md)"
+   },
+   "ownerType": {
+    "alias": "Owner Type"
+   },
+   "createdAt": {
+    "alias": "Created At"
+   },
+   "updatedAt": {
+    "alias": "Updated At"
+   }
+  }
+ },
+ "Product Variant Metafields": {
+  "columns": {
+   "id": {
+    "alias": "ID"
+   },
+   "namespace": {
+    "alias": "Namespace"
+   },
+   "key": {
+    "alias": "Key"
+   },
+   "value": {
+    "alias": "Value"
+   },
+   "type": {
+    "alias": "Type"
+   },
+   "ownerId": {
+    "alias": "Owner ID",
+    "description": "The ID of the owner resource. FK to [Product Variants](./product-variants.md)"
+   },
+   "ownerType": {
+    "alias": "Owner Type"
+   },
+   "createdAt": {
+    "alias": "Created At"
+   },
+   "updatedAt": {
+    "alias": "Updated At"
+   }
+  }
+ },
+ "Product Variants": {
+  "columns": {
+   "id": {
+    "alias": "ID"
+   },
+   "title": {
+    "alias": "Title"
+   },
+   "displayName": {
+    "alias": "Display Name"
+   },
+   "sku": {
+    "alias": "SKU"
+   },
+   "barcode": {
+    "alias": "Barcode"
+   },
+   "price": {
+    "alias": "Price"
+   },
+   "compareAtPrice": {
+    "alias": "Compare At Price"
+   },
+   "position": {
+    "alias": "Position"
+   },
+   "inventoryQuantity": {
+    "alias": "Inventory Quantity",
+    "description": "The total quantity of the variant that can be sold; stock per location is not in any table here."
+   },
+   "inventoryPolicy": {
+    "alias": "Inventory Policy",
+    "description": "Whether customers can buy the variant once it is out of stock: `CONTINUE` lets them, `DENY` does not."
+   },
+   "inventoryItemId": {
+    "alias": "Inventory Item ID",
+    "description": "The ID of the inventory item. FK to [Inventory Items](./inventory-items.md)"
+   },
+   "productId": {
+    "alias": "Product ID",
+    "description": "The ID of the product. FK to [Products](./products.md)"
+   },
+   "productTitle": {
+    "alias": "Product Title"
+   },
+   "taxable": {
+    "alias": "Taxable"
+   },
+   "taxCode": {
+    "alias": "Tax Code",
+    "description": "A tax code for the variant; Shopify marks the field deprecated and does not define it."
+   },
+   "availableForSale": {
+    "alias": "Available For Sale"
+   },
+   "createdAt": {
+    "alias": "Created At"
+   },
+   "updatedAt": {
+    "alias": "Updated At"
+   }
+  }
+ },
+ "Products": {
+  "columns": {
+   "id": {
+    "alias": "ID"
+   },
+   "title": {
+    "alias": "Title"
+   },
+   "handle": {
+    "alias": "Handle"
+   },
+   "description": {
+    "alias": "Description"
+   },
+   "descriptionHtml": {
+    "alias": "Description HTML"
+   },
+   "vendor": {
+    "alias": "Vendor"
+   },
+   "productType": {
+    "alias": "Product Type",
+    "description": "The product type the merchant defines for the product, used to group and filter products."
+   },
+   "status": {
+    "alias": "Status",
+    "description": "The product status, which controls its visibility across all sales channels: `ACTIVE`, `ARCHIVED`, `DRAFT` or `UNLISTED`."
+   },
+   "tags": {
+    "alias": "Tags"
+   },
+   "templateSuffix": {
+    "alias": "Template Suffix"
+   },
+   "totalInventory": {
+    "alias": "Total Inventory"
+   },
+   "variantsCount": {
+    "alias": "Variants Count"
+   },
+   "featuredImageUrl": {
+    "alias": "Featured Image URL"
+   },
+   "priceRangeMinAmount": {
+    "alias": "Price Range Min Amount",
+    "description": "The lowest price among the product's variants."
+   },
+   "priceRangeMaxAmount": {
+    "alias": "Price Range Max Amount",
+    "description": "The highest price among the product's variants."
+   },
+   "seoTitle": {
+    "alias": "SEO Title",
+    "description": "The page title the merchant set for search engine results (Shopify `seo.title`)."
+   },
+   "seoDescription": {
+    "alias": "SEO Description",
+    "description": "The meta description the merchant set for search engine results (Shopify `seo.description`)."
+   },
+   "onlineStoreUrl": {
+    "alias": "Online Store URL"
+   },
+   "publishedAt": {
+    "alias": "Published At"
+   },
+   "createdAt": {
+    "alias": "Created At"
+   },
+   "updatedAt": {
+    "alias": "Updated At"
+   }
+  }
+ },
+ "Shop Metafields": {
+  "columns": {
+   "id": {
+    "alias": "ID"
+   },
+   "namespace": {
+    "alias": "Namespace"
+   },
+   "key": {
+    "alias": "Key"
+   },
+   "value": {
+    "alias": "Value"
+   },
+   "type": {
+    "alias": "Type"
+   },
+   "ownerId": {
+    "alias": "Owner ID",
+    "description": "The ID of the owner resource. FK to [Shop](./shop.md)"
+   },
+   "ownerType": {
+    "alias": "Owner Type"
+   },
+   "createdAt": {
+    "alias": "Created At"
+   },
+   "updatedAt": {
+    "alias": "Updated At"
+   }
+  }
+ },
+ "Shop": {
+  "columns": {
+   "id": {
+    "alias": "ID"
+   },
+   "name": {
+    "alias": "Name"
+   },
+   "email": {
+    "alias": "Email"
+   },
+   "myshopifyDomain": {
+    "alias": "Myshopify Domain"
+   },
+   "primaryDomain": {
+    "alias": "Primary Domain"
+   },
+   "currencyCode": {
+    "alias": "Currency Code",
+    "description": "Three-letter code of the currency the store sells in now; each order keeps the store currency of its own day in its `currencyCode`."
+   },
+   "timezoneAbbreviation": {
+    "alias": "Timezone Abbreviation",
+    "description": "Short abbreviation of the store's time zone; `ianaTimezone` holds its full IANA name."
+   },
+   "ianaTimezone": {
+    "alias": "IANA Timezone",
+    "description": "The store's time zone as an IANA name; use it to read timestamps as the store's local days."
+   },
+   "weightUnit": {
+    "alias": "Weight Unit"
+   },
+   "billingAddressCity": {
+    "alias": "Billing Address City"
+   },
+   "billingAddressCountry": {
+    "alias": "Billing Address Country"
+   },
+   "billingAddressProvince": {
+    "alias": "Billing Address Province"
+   },
+   "billingAddressZip": {
+    "alias": "Billing Address Zip"
+   },
+   "plan": {
+    "alias": "Plan"
+   },
+   "contactEmail": {
+    "alias": "Contact Email"
+   },
+   "customerAccountsV2": {
+    "alias": "Login Required at Checkout",
+    "description": "Whether customers must log in to their account before checkout (Shopify `customerAccountsV2.loginRequiredAtCheckout`), as `true` or `false` text; despite the name, it is not an accounts version."
+   },
+   "taxesIncluded": {
+    "alias": "Taxes Included"
+   },
+   "taxShipping": {
+    "alias": "Tax Shipping"
+   },
+   "createdAt": {
+    "alias": "Created At"
+   },
+   "updatedAt": {
+    "alias": "Updated At"
+   }
+  }
+ },
+ "Tender Transactions": {
+  "columns": {
+   "id": {
+    "alias": "ID"
+   },
+   "amount": {
+    "alias": "Amount"
+   },
+   "currencyCode": {
+    "alias": "Currency Code",
+    "description": "Three-letter code of the currency `amount` is in."
+   },
+   "remoteReference": {
+    "alias": "Remote Reference"
+   },
+   "test": {
+    "alias": "Test"
+   },
+   "orderId": {
+    "alias": "Order ID",
+    "description": "The ID of the order. FK to [Orders](./orders.md)"
+   },
+   "processedAt": {
+    "alias": "Processed At"
+   }
+  }
+ }
+}

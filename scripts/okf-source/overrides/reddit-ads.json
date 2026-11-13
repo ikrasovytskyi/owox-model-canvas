@@ -1,0 +1,2158 @@
+{
+ "Ad Account User": {
+  "columns": {
+   "email": {
+    "alias": "Email"
+   },
+   "firstname": {
+    "alias": "Firstname"
+   },
+   "id": {
+    "alias": "ID"
+   },
+   "lastname": {
+    "alias": "Lastname"
+   },
+   "phone": {
+    "alias": "Phone"
+   },
+   "reddit_user_id": {
+    "alias": "Reddit User ID"
+   },
+   "reddit_username": {
+    "alias": "Reddit Username"
+   }
+  }
+ },
+ "Ad Account": {
+  "columns": {
+   "admin_approval": {
+    "alias": "Admin Approval"
+   },
+   "attribution_type": {
+    "alias": "Attribution Type"
+   },
+   "business_id": {
+    "alias": "Business ID"
+   },
+   "click_attribution_window": {
+    "alias": "Click Attribution Window"
+   },
+   "created_at": {
+    "alias": "Created At"
+   },
+   "currency": {
+    "alias": "Currency"
+   },
+   "id": {
+    "alias": "ID"
+   },
+   "modified_at": {
+    "alias": "Modified At"
+   },
+   "name": {
+    "alias": "Name"
+   },
+   "pixel_partner_preferences": {
+    "alias": "Pixel Partner Preferences"
+   },
+   "primary_contact_member_id": {
+    "alias": "Primary Contact Member ID",
+    "description": "The ID of the primary contact member. FK to [Ad Account User](./ad-account-user.md)"
+   },
+   "suspension_reason": {
+    "alias": "Suspension Reason"
+   },
+   "time_zone_id": {
+    "alias": "Time Zone ID"
+   },
+   "type": {
+    "alias": "Type"
+   },
+   "view_attribution_window": {
+    "alias": "View Attribution Window"
+   },
+   "excluded_communities": {
+    "alias": "Excluded Communities"
+   },
+   "excluded_keywords": {
+    "alias": "Excluded Keywords"
+   }
+  }
+ },
+ "Ad Groups": {
+  "columns": {
+   "ad_account_id": {
+    "alias": "Ad Account ID"
+   },
+   "app_id": {
+    "alias": "App ID"
+   },
+   "bid_strategy": {
+    "alias": "Bid Strategy"
+   },
+   "bid_type": {
+    "alias": "Bid Type"
+   },
+   "bid_value": {
+    "alias": "Bid Value"
+   },
+   "campaign_id": {
+    "alias": "Campaign ID",
+    "description": "The ID of the campaign the ad group belongs to. FK to [Campaigns](./campaigns.md)"
+   },
+   "campaign_objective_type": {
+    "alias": "Campaign Objective Type"
+   },
+   "configured_status": {
+    "alias": "Configured Status"
+   },
+   "created_at": {
+    "alias": "Created At"
+   },
+   "effective_status": {
+    "alias": "Effective Status"
+   },
+   "end_time": {
+    "alias": "End Time"
+   },
+   "goal_type": {
+    "alias": "Goal Type"
+   },
+   "goal_value": {
+    "alias": "Goal Value"
+   },
+   "id": {
+    "alias": "ID"
+   },
+   "modified_at": {
+    "alias": "Modified At"
+   },
+   "name": {
+    "alias": "Name"
+   },
+   "optimization_strategy_type": {
+    "alias": "Optimization Strategy Type"
+   },
+   "optimization_goal": {
+    "alias": "Optimization Goal"
+   },
+   "product_set_id": {
+    "alias": "Product Set ID"
+   },
+   "schedule": {
+    "alias": "Schedule"
+   },
+   "shopping_targeting": {
+    "alias": "Shopping Targeting"
+   },
+   "shopping_type": {
+    "alias": "Shopping Type"
+   },
+   "skadnetwork_metadata": {
+    "alias": "Skadnetwork Metadata"
+   },
+   "start_time": {
+    "alias": "Start Time"
+   },
+   "targeting": {
+    "alias": "Targeting"
+   },
+   "is_campaign_budget_optimization": {
+    "alias": "Is Campaign Budget Optimization"
+   },
+   "view_through_conversion_type": {
+    "alias": "View Through Conversion Type"
+   }
+  }
+ },
+ "Ad Performance by Account": {
+  "columns": {
+   "ad_id": {
+    "alias": "Ad ID",
+    "description": "The ID of the ad. FK to [Ad Performance](./ad-performance.md)"
+   },
+   "date": {
+    "alias": "Date",
+    "description": "The date for this metric. FK to [Ad Performance](./ad-performance.md)"
+   },
+   "clicks": {
+    "alias": "Clicks"
+   },
+   "conversion_add_to_cart_avg_value": {
+    "alias": "Conversion Add To Cart Average Value"
+   },
+   "conversion_add_to_cart_clicks": {
+    "alias": "Conversion Add To Cart Clicks"
+   },
+   "conversion_add_to_cart_ecpa": {
+    "alias": "Conversion Add To Cart eCPA"
+   },
+   "conversion_add_to_cart_total_items": {
+    "alias": "Conversion Add To Cart Total Items"
+   },
+   "conversion_add_to_cart_total_value": {
+    "alias": "Conversion Add To Cart Total Value"
+   },
+   "conversion_add_to_cart_views": {
+    "alias": "Conversion Add To Cart Views"
+   },
+   "conversion_add_to_wishlist_avg_value": {
+    "alias": "Conversion Add To Wishlist Average Value"
+   },
+   "conversion_add_to_wishlist_clicks": {
+    "alias": "Conversion Add To Wishlist Clicks"
+   },
+   "conversion_add_to_wishlist_ecpa": {
+    "alias": "Conversion Add To Wishlist eCPA"
+   },
+   "conversion_add_to_wishlist_total_items": {
+    "alias": "Conversion Add To Wishlist Total Items"
+   },
+   "conversion_add_to_wishlist_total_value": {
+    "alias": "Conversion Add To Wishlist Total Value"
+   },
+   "conversion_add_to_wishlist_views": {
+    "alias": "Conversion Add To Wishlist Views"
+   },
+   "conversion_lead_avg_value": {
+    "alias": "Conversion Lead Average Value"
+   },
+   "conversion_lead_clicks": {
+    "alias": "Conversion Lead Clicks"
+   },
+   "conversion_lead_ecpa": {
+    "alias": "Conversion Lead eCPA"
+   },
+   "conversion_lead_total_value": {
+    "alias": "Conversion Lead Total Value"
+   },
+   "conversion_lead_views": {
+    "alias": "Conversion Lead Views"
+   },
+   "conversion_page_visit_clicks": {
+    "alias": "Conversion Page Visit Clicks"
+   },
+   "conversion_page_visit_ecpa": {
+    "alias": "Conversion Page Visit eCPA"
+   },
+   "conversion_page_visit_views": {
+    "alias": "Conversion Page Visit Views"
+   },
+   "conversion_purchase_avg_value": {
+    "alias": "Conversion Purchase Average Value"
+   },
+   "conversion_purchase_clicks": {
+    "alias": "Conversion Purchase Clicks"
+   },
+   "conversion_purchase_ecpa": {
+    "alias": "Conversion Purchase eCPA"
+   },
+   "conversion_purchase_total_items": {
+    "alias": "Conversion Purchase Total Items"
+   },
+   "conversion_purchase_total_value": {
+    "alias": "Conversion Purchase Total Value"
+   },
+   "conversion_purchase_views": {
+    "alias": "Conversion Purchase Views"
+   },
+   "conversion_roas": {
+    "alias": "Conversion ROAS"
+   },
+   "conversion_search_clicks": {
+    "alias": "Conversion Search Clicks"
+   },
+   "conversion_search_ecpa": {
+    "alias": "Conversion Search eCPA"
+   },
+   "conversion_search_views": {
+    "alias": "Conversion Search Views"
+   },
+   "conversion_sign_up_clicks": {
+    "alias": "Conversion Sign Up Clicks"
+   },
+   "conversion_sign_up_ecpa": {
+    "alias": "Conversion Sign Up eCPA"
+   },
+   "conversion_sign_up_views": {
+    "alias": "Conversion Sign Up Views"
+   },
+   "conversion_signup_avg_value": {
+    "alias": "Conversion Signup Average Value"
+   },
+   "conversion_signup_total_value": {
+    "alias": "Conversion Signup Total Value"
+   },
+   "conversion_view_content_clicks": {
+    "alias": "Conversion View Content Clicks"
+   },
+   "conversion_view_content_ecpa": {
+    "alias": "Conversion View Content eCPA"
+   },
+   "conversion_view_content_views": {
+    "alias": "Conversion View Content Views"
+   },
+   "cpc": {
+    "alias": "CPC"
+   },
+   "ctr": {
+    "alias": "CTR"
+   },
+   "cpv": {
+    "alias": "CPV",
+    "description": "[Broken] The cost-per-view for this period."
+   },
+   "ecpm": {
+    "alias": "eCPM"
+   },
+   "engaged_click": {
+    "alias": "Engaged Click"
+   },
+   "hour": {
+    "alias": "Hour"
+   },
+   "impressions": {
+    "alias": "Impressions"
+   },
+   "post_id": {
+    "alias": "Post ID"
+   },
+   "spend": {
+    "alias": "Spend"
+   },
+   "key_conversion_ecpa": {
+    "alias": "Key Conversion eCPA"
+   },
+   "key_conversion_total_count": {
+    "alias": "Key Conversion Total Count",
+    "description": "Total count of key conversions for the row; their cost per action is `key_conversion_ecpa`."
+   },
+   "reach": {
+    "alias": "Reach"
+   },
+   "frequency": {
+    "alias": "Frequency"
+   },
+   "account_id": {
+    "alias": "Account ID",
+    "description": "[ONLY in AD_ACCOUNT_ID based report] as account_id The ID of the account. FK to [Ad Account](./ad-account.md)"
+   },
+   "currency": {
+    "alias": "Currency"
+   }
+  }
+ },
+ "Ad Performance by Ad Group": {
+  "columns": {
+   "ad_id": {
+    "alias": "Ad ID",
+    "description": "The ID of the ad. FK to [Ad Performance](./ad-performance.md)"
+   },
+   "ad_group_id": {
+    "alias": "Ad Group ID",
+    "description": "[ONLY in AD_GROUP_ID based report] The ID of the ad group. FK to [Ad Groups](./ad-groups.md)"
+   },
+   "date": {
+    "alias": "Date",
+    "description": "The date for this metric. FK to [Ad Performance](./ad-performance.md)"
+   },
+   "clicks": {
+    "alias": "Clicks"
+   },
+   "conversion_add_to_cart_avg_value": {
+    "alias": "Conversion Add To Cart Average Value"
+   },
+   "conversion_add_to_cart_clicks": {
+    "alias": "Conversion Add To Cart Clicks"
+   },
+   "conversion_add_to_cart_ecpa": {
+    "alias": "Conversion Add To Cart eCPA"
+   },
+   "conversion_add_to_cart_total_items": {
+    "alias": "Conversion Add To Cart Total Items"
+   },
+   "conversion_add_to_cart_total_value": {
+    "alias": "Conversion Add To Cart Total Value"
+   },
+   "conversion_add_to_cart_views": {
+    "alias": "Conversion Add To Cart Views"
+   },
+   "conversion_add_to_wishlist_avg_value": {
+    "alias": "Conversion Add To Wishlist Average Value"
+   },
+   "conversion_add_to_wishlist_clicks": {
+    "alias": "Conversion Add To Wishlist Clicks"
+   },
+   "conversion_add_to_wishlist_ecpa": {
+    "alias": "Conversion Add To Wishlist eCPA"
+   },
+   "conversion_add_to_wishlist_total_items": {
+    "alias": "Conversion Add To Wishlist Total Items"
+   },
+   "conversion_add_to_wishlist_total_value": {
+    "alias": "Conversion Add To Wishlist Total Value"
+   },
+   "conversion_add_to_wishlist_views": {
+    "alias": "Conversion Add To Wishlist Views"
+   },
+   "conversion_lead_avg_value": {
+    "alias": "Conversion Lead Average Value"
+   },
+   "conversion_lead_clicks": {
+    "alias": "Conversion Lead Clicks"
+   },
+   "conversion_lead_ecpa": {
+    "alias": "Conversion Lead eCPA"
+   },
+   "conversion_lead_total_value": {
+    "alias": "Conversion Lead Total Value"
+   },
+   "conversion_lead_views": {
+    "alias": "Conversion Lead Views"
+   },
+   "conversion_page_visit_clicks": {
+    "alias": "Conversion Page Visit Clicks"
+   },
+   "conversion_page_visit_ecpa": {
+    "alias": "Conversion Page Visit eCPA"
+   },
+   "conversion_page_visit_views": {
+    "alias": "Conversion Page Visit Views"
+   },
+   "conversion_purchase_avg_value": {
+    "alias": "Conversion Purchase Average Value"
+   },
+   "conversion_purchase_clicks": {
+    "alias": "Conversion Purchase Clicks"
+   },
+   "conversion_purchase_ecpa": {
+    "alias": "Conversion Purchase eCPA"
+   },
+   "conversion_purchase_total_items": {
+    "alias": "Conversion Purchase Total Items"
+   },
+   "conversion_purchase_total_value": {
+    "alias": "Conversion Purchase Total Value"
+   },
+   "conversion_purchase_views": {
+    "alias": "Conversion Purchase Views"
+   },
+   "conversion_roas": {
+    "alias": "Conversion ROAS"
+   },
+   "conversion_search_clicks": {
+    "alias": "Conversion Search Clicks"
+   },
+   "conversion_search_ecpa": {
+    "alias": "Conversion Search eCPA"
+   },
+   "conversion_search_views": {
+    "alias": "Conversion Search Views"
+   },
+   "conversion_sign_up_clicks": {
+    "alias": "Conversion Sign Up Clicks"
+   },
+   "conversion_sign_up_ecpa": {
+    "alias": "Conversion Sign Up eCPA"
+   },
+   "conversion_sign_up_views": {
+    "alias": "Conversion Sign Up Views"
+   },
+   "conversion_signup_avg_value": {
+    "alias": "Conversion Signup Average Value"
+   },
+   "conversion_signup_total_value": {
+    "alias": "Conversion Signup Total Value"
+   },
+   "conversion_view_content_clicks": {
+    "alias": "Conversion View Content Clicks"
+   },
+   "conversion_view_content_ecpa": {
+    "alias": "Conversion View Content eCPA"
+   },
+   "conversion_view_content_views": {
+    "alias": "Conversion View Content Views"
+   },
+   "cpc": {
+    "alias": "CPC"
+   },
+   "ctr": {
+    "alias": "CTR"
+   },
+   "cpv": {
+    "alias": "CPV",
+    "description": "[Broken] The cost-per-view for this period."
+   },
+   "ecpm": {
+    "alias": "eCPM"
+   },
+   "engaged_click": {
+    "alias": "Engaged Click"
+   },
+   "hour": {
+    "alias": "Hour"
+   },
+   "impressions": {
+    "alias": "Impressions"
+   },
+   "post_id": {
+    "alias": "Post ID"
+   },
+   "spend": {
+    "alias": "Spend"
+   },
+   "key_conversion_ecpa": {
+    "alias": "Key Conversion eCPA"
+   },
+   "key_conversion_total_count": {
+    "alias": "Key Conversion Total Count",
+    "description": "Total count of key conversions for the row; their cost per action is `key_conversion_ecpa`."
+   },
+   "reach": {
+    "alias": "Reach"
+   },
+   "frequency": {
+    "alias": "Frequency"
+   },
+   "currency": {
+    "alias": "Currency"
+   }
+  }
+ },
+ "Ad Performance by Campaign": {
+  "columns": {
+   "ad_id": {
+    "alias": "Ad ID",
+    "description": "The ID of the ad. FK to [Ad Performance](./ad-performance.md)"
+   },
+   "campaign_id": {
+    "alias": "Campaign ID",
+    "description": "[ONLY in CAMPAIGN_ID based report] The ID of the campaign. FK to [Campaigns](./campaigns.md)"
+   },
+   "date": {
+    "alias": "Date",
+    "description": "The date for this metric. FK to [Ad Performance](./ad-performance.md)"
+   },
+   "dma": {
+    "alias": "DMA",
+    "description": "[ONLY in DMA based report] The Designated Market Area (DMA) targeted for the reports."
+   },
+   "clicks": {
+    "alias": "Clicks"
+   },
+   "conversion_add_to_cart_avg_value": {
+    "alias": "Conversion Add To Cart Average Value"
+   },
+   "conversion_add_to_cart_clicks": {
+    "alias": "Conversion Add To Cart Clicks"
+   },
+   "conversion_add_to_cart_ecpa": {
+    "alias": "Conversion Add To Cart eCPA"
+   },
+   "conversion_add_to_cart_total_items": {
+    "alias": "Conversion Add To Cart Total Items"
+   },
+   "conversion_add_to_cart_total_value": {
+    "alias": "Conversion Add To Cart Total Value"
+   },
+   "conversion_add_to_cart_views": {
+    "alias": "Conversion Add To Cart Views"
+   },
+   "conversion_add_to_wishlist_avg_value": {
+    "alias": "Conversion Add To Wishlist Average Value"
+   },
+   "conversion_add_to_wishlist_clicks": {
+    "alias": "Conversion Add To Wishlist Clicks"
+   },
+   "conversion_add_to_wishlist_ecpa": {
+    "alias": "Conversion Add To Wishlist eCPA"
+   },
+   "conversion_add_to_wishlist_total_items": {
+    "alias": "Conversion Add To Wishlist Total Items"
+   },
+   "conversion_add_to_wishlist_total_value": {
+    "alias": "Conversion Add To Wishlist Total Value"
+   },
+   "conversion_add_to_wishlist_views": {
+    "alias": "Conversion Add To Wishlist Views"
+   },
+   "conversion_lead_avg_value": {
+    "alias": "Conversion Lead Average Value"
+   },
+   "conversion_lead_clicks": {
+    "alias": "Conversion Lead Clicks"
+   },
+   "conversion_lead_ecpa": {
+    "alias": "Conversion Lead eCPA"
+   },
+   "conversion_lead_total_value": {
+    "alias": "Conversion Lead Total Value"
+   },
+   "conversion_lead_views": {
+    "alias": "Conversion Lead Views"
+   },
+   "conversion_page_visit_clicks": {
+    "alias": "Conversion Page Visit Clicks"
+   },
+   "conversion_page_visit_ecpa": {
+    "alias": "Conversion Page Visit eCPA"
+   },
+   "conversion_page_visit_views": {
+    "alias": "Conversion Page Visit Views"
+   },
+   "conversion_purchase_avg_value": {
+    "alias": "Conversion Purchase Average Value"
+   },
+   "conversion_purchase_clicks": {
+    "alias": "Conversion Purchase Clicks"
+   },
+   "conversion_purchase_ecpa": {
+    "alias": "Conversion Purchase eCPA"
+   },
+   "conversion_purchase_total_items": {
+    "alias": "Conversion Purchase Total Items"
+   },
+   "conversion_purchase_total_value": {
+    "alias": "Conversion Purchase Total Value"
+   },
+   "conversion_purchase_views": {
+    "alias": "Conversion Purchase Views"
+   },
+   "conversion_roas": {
+    "alias": "Conversion ROAS"
+   },
+   "conversion_search_clicks": {
+    "alias": "Conversion Search Clicks"
+   },
+   "conversion_search_ecpa": {
+    "alias": "Conversion Search eCPA"
+   },
+   "conversion_search_views": {
+    "alias": "Conversion Search Views"
+   },
+   "conversion_sign_up_clicks": {
+    "alias": "Conversion Sign Up Clicks"
+   },
+   "conversion_sign_up_ecpa": {
+    "alias": "Conversion Sign Up eCPA"
+   },
+   "conversion_sign_up_views": {
+    "alias": "Conversion Sign Up Views"
+   },
+   "conversion_signup_avg_value": {
+    "alias": "Conversion Signup Average Value"
+   },
+   "conversion_signup_total_value": {
+    "alias": "Conversion Signup Total Value"
+   },
+   "conversion_view_content_clicks": {
+    "alias": "Conversion View Content Clicks"
+   },
+   "conversion_view_content_ecpa": {
+    "alias": "Conversion View Content eCPA"
+   },
+   "conversion_view_content_views": {
+    "alias": "Conversion View Content Views"
+   },
+   "cpc": {
+    "alias": "CPC"
+   },
+   "ctr": {
+    "alias": "CTR"
+   },
+   "cpv": {
+    "alias": "CPV",
+    "description": "[Broken] The cost-per-view for this period."
+   },
+   "ecpm": {
+    "alias": "eCPM"
+   },
+   "engaged_click": {
+    "alias": "Engaged Click"
+   },
+   "hour": {
+    "alias": "Hour"
+   },
+   "impressions": {
+    "alias": "Impressions"
+   },
+   "post_id": {
+    "alias": "Post ID"
+   },
+   "spend": {
+    "alias": "Spend"
+   },
+   "key_conversion_ecpa": {
+    "alias": "Key Conversion eCPA"
+   },
+   "key_conversion_total_count": {
+    "alias": "Key Conversion Total Count",
+    "description": "Total count of key conversions for the row; their cost per action is `key_conversion_ecpa`."
+   },
+   "reach": {
+    "alias": "Reach"
+   },
+   "frequency": {
+    "alias": "Frequency"
+   },
+   "currency": {
+    "alias": "Currency"
+   }
+  }
+ },
+ "Ad Performance by Community": {
+  "columns": {
+   "ad_id": {
+    "alias": "Ad ID",
+    "description": "The ID of the ad. FK to [Ad Performance](./ad-performance.md)"
+   },
+   "date": {
+    "alias": "Date",
+    "description": "The date for this metric. FK to [Ad Performance](./ad-performance.md)"
+   },
+   "clicks": {
+    "alias": "Clicks"
+   },
+   "conversion_add_to_cart_avg_value": {
+    "alias": "Conversion Add To Cart Average Value"
+   },
+   "conversion_add_to_cart_clicks": {
+    "alias": "Conversion Add To Cart Clicks"
+   },
+   "conversion_add_to_cart_ecpa": {
+    "alias": "Conversion Add To Cart eCPA"
+   },
+   "conversion_add_to_cart_total_items": {
+    "alias": "Conversion Add To Cart Total Items"
+   },
+   "conversion_add_to_cart_total_value": {
+    "alias": "Conversion Add To Cart Total Value"
+   },
+   "conversion_add_to_cart_views": {
+    "alias": "Conversion Add To Cart Views"
+   },
+   "conversion_add_to_wishlist_avg_value": {
+    "alias": "Conversion Add To Wishlist Average Value"
+   },
+   "conversion_add_to_wishlist_clicks": {
+    "alias": "Conversion Add To Wishlist Clicks"
+   },
+   "conversion_add_to_wishlist_ecpa": {
+    "alias": "Conversion Add To Wishlist eCPA"
+   },
+   "conversion_add_to_wishlist_total_items": {
+    "alias": "Conversion Add To Wishlist Total Items"
+   },
+   "conversion_add_to_wishlist_total_value": {
+    "alias": "Conversion Add To Wishlist Total Value"
+   },
+   "conversion_add_to_wishlist_views": {
+    "alias": "Conversion Add To Wishlist Views"
+   },
+   "conversion_lead_avg_value": {
+    "alias": "Conversion Lead Average Value"
+   },
+   "conversion_lead_clicks": {
+    "alias": "Conversion Lead Clicks"
+   },
+   "conversion_lead_ecpa": {
+    "alias": "Conversion Lead eCPA"
+   },
+   "conversion_lead_total_value": {
+    "alias": "Conversion Lead Total Value"
+   },
+   "conversion_lead_views": {
+    "alias": "Conversion Lead Views"
+   },
+   "conversion_page_visit_clicks": {
+    "alias": "Conversion Page Visit Clicks"
+   },
+   "conversion_page_visit_ecpa": {
+    "alias": "Conversion Page Visit eCPA"
+   },
+   "conversion_page_visit_views": {
+    "alias": "Conversion Page Visit Views"
+   },
+   "conversion_purchase_avg_value": {
+    "alias": "Conversion Purchase Average Value"
+   },
+   "conversion_purchase_clicks": {
+    "alias": "Conversion Purchase Clicks"
+   },
+   "conversion_purchase_ecpa": {
+    "alias": "Conversion Purchase eCPA"
+   },
+   "conversion_purchase_total_items": {
+    "alias": "Conversion Purchase Total Items"
+   },
+   "conversion_purchase_total_value": {
+    "alias": "Conversion Purchase Total Value"
+   },
+   "conversion_purchase_views": {
+    "alias": "Conversion Purchase Views"
+   },
+   "conversion_roas": {
+    "alias": "Conversion ROAS"
+   },
+   "conversion_search_clicks": {
+    "alias": "Conversion Search Clicks"
+   },
+   "conversion_search_ecpa": {
+    "alias": "Conversion Search eCPA"
+   },
+   "conversion_search_views": {
+    "alias": "Conversion Search Views"
+   },
+   "conversion_sign_up_clicks": {
+    "alias": "Conversion Sign Up Clicks"
+   },
+   "conversion_sign_up_ecpa": {
+    "alias": "Conversion Sign Up eCPA"
+   },
+   "conversion_sign_up_views": {
+    "alias": "Conversion Sign Up Views"
+   },
+   "conversion_signup_avg_value": {
+    "alias": "Conversion Signup Average Value"
+   },
+   "conversion_signup_total_value": {
+    "alias": "Conversion Signup Total Value"
+   },
+   "conversion_view_content_clicks": {
+    "alias": "Conversion View Content Clicks"
+   },
+   "conversion_view_content_ecpa": {
+    "alias": "Conversion View Content eCPA"
+   },
+   "conversion_view_content_views": {
+    "alias": "Conversion View Content Views"
+   },
+   "community": {
+    "alias": "Community",
+    "description": "[ONLY in COMMUNITY based report] The community/subreddit being targeted."
+   },
+   "cpc": {
+    "alias": "CPC"
+   },
+   "ctr": {
+    "alias": "CTR"
+   },
+   "cpv": {
+    "alias": "CPV",
+    "description": "[Broken] The cost-per-view for this period."
+   },
+   "ecpm": {
+    "alias": "eCPM"
+   },
+   "engaged_click": {
+    "alias": "Engaged Click"
+   },
+   "hour": {
+    "alias": "Hour"
+   },
+   "impressions": {
+    "alias": "Impressions"
+   },
+   "post_id": {
+    "alias": "Post ID"
+   },
+   "spend": {
+    "alias": "Spend"
+   },
+   "key_conversion_ecpa": {
+    "alias": "Key Conversion eCPA"
+   },
+   "key_conversion_total_count": {
+    "alias": "Key Conversion Total Count",
+    "description": "Total count of key conversions for the row; their cost per action is `key_conversion_ecpa`."
+   },
+   "reach": {
+    "alias": "Reach"
+   },
+   "frequency": {
+    "alias": "Frequency"
+   },
+   "currency": {
+    "alias": "Currency"
+   }
+  }
+ },
+ "Ad Performance by Country": {
+  "columns": {
+   "ad_id": {
+    "alias": "Ad ID",
+    "description": "The ID of the ad. FK to [Ad Performance](./ad-performance.md)"
+   },
+   "date": {
+    "alias": "Date",
+    "description": "The date for this metric. FK to [Ad Performance](./ad-performance.md)"
+   },
+   "clicks": {
+    "alias": "Clicks"
+   },
+   "conversion_add_to_cart_avg_value": {
+    "alias": "Conversion Add To Cart Average Value"
+   },
+   "conversion_add_to_cart_clicks": {
+    "alias": "Conversion Add To Cart Clicks"
+   },
+   "conversion_add_to_cart_ecpa": {
+    "alias": "Conversion Add To Cart eCPA"
+   },
+   "conversion_add_to_cart_total_items": {
+    "alias": "Conversion Add To Cart Total Items"
+   },
+   "conversion_add_to_cart_total_value": {
+    "alias": "Conversion Add To Cart Total Value"
+   },
+   "conversion_add_to_cart_views": {
+    "alias": "Conversion Add To Cart Views"
+   },
+   "conversion_add_to_wishlist_avg_value": {
+    "alias": "Conversion Add To Wishlist Average Value"
+   },
+   "conversion_add_to_wishlist_clicks": {
+    "alias": "Conversion Add To Wishlist Clicks"
+   },
+   "conversion_add_to_wishlist_ecpa": {
+    "alias": "Conversion Add To Wishlist eCPA"
+   },
+   "conversion_add_to_wishlist_total_items": {
+    "alias": "Conversion Add To Wishlist Total Items"
+   },
+   "conversion_add_to_wishlist_total_value": {
+    "alias": "Conversion Add To Wishlist Total Value"
+   },
+   "conversion_add_to_wishlist_views": {
+    "alias": "Conversion Add To Wishlist Views"
+   },
+   "conversion_lead_avg_value": {
+    "alias": "Conversion Lead Average Value"
+   },
+   "conversion_lead_clicks": {
+    "alias": "Conversion Lead Clicks"
+   },
+   "conversion_lead_ecpa": {
+    "alias": "Conversion Lead eCPA"
+   },
+   "conversion_lead_total_value": {
+    "alias": "Conversion Lead Total Value"
+   },
+   "conversion_lead_views": {
+    "alias": "Conversion Lead Views"
+   },
+   "conversion_page_visit_clicks": {
+    "alias": "Conversion Page Visit Clicks"
+   },
+   "conversion_page_visit_ecpa": {
+    "alias": "Conversion Page Visit eCPA"
+   },
+   "conversion_page_visit_views": {
+    "alias": "Conversion Page Visit Views"
+   },
+   "conversion_purchase_avg_value": {
+    "alias": "Conversion Purchase Average Value"
+   },
+   "conversion_purchase_clicks": {
+    "alias": "Conversion Purchase Clicks"
+   },
+   "conversion_purchase_ecpa": {
+    "alias": "Conversion Purchase eCPA"
+   },
+   "conversion_purchase_total_items": {
+    "alias": "Conversion Purchase Total Items"
+   },
+   "conversion_purchase_total_value": {
+    "alias": "Conversion Purchase Total Value"
+   },
+   "conversion_purchase_views": {
+    "alias": "Conversion Purchase Views"
+   },
+   "conversion_roas": {
+    "alias": "Conversion ROAS"
+   },
+   "conversion_search_clicks": {
+    "alias": "Conversion Search Clicks"
+   },
+   "conversion_search_ecpa": {
+    "alias": "Conversion Search eCPA"
+   },
+   "conversion_search_views": {
+    "alias": "Conversion Search Views"
+   },
+   "conversion_sign_up_clicks": {
+    "alias": "Conversion Sign Up Clicks"
+   },
+   "conversion_sign_up_ecpa": {
+    "alias": "Conversion Sign Up eCPA"
+   },
+   "conversion_sign_up_views": {
+    "alias": "Conversion Sign Up Views"
+   },
+   "conversion_signup_avg_value": {
+    "alias": "Conversion Signup Average Value"
+   },
+   "conversion_signup_total_value": {
+    "alias": "Conversion Signup Total Value"
+   },
+   "conversion_view_content_clicks": {
+    "alias": "Conversion View Content Clicks"
+   },
+   "conversion_view_content_ecpa": {
+    "alias": "Conversion View Content eCPA"
+   },
+   "conversion_view_content_views": {
+    "alias": "Conversion View Content Views"
+   },
+   "country": {
+    "alias": "Country",
+    "description": "[ONLY in COUNTRY based report] The country targeted for the report."
+   },
+   "cpc": {
+    "alias": "CPC"
+   },
+   "ctr": {
+    "alias": "CTR"
+   },
+   "cpv": {
+    "alias": "CPV",
+    "description": "[Broken] The cost-per-view for this period."
+   },
+   "ecpm": {
+    "alias": "eCPM"
+   },
+   "engaged_click": {
+    "alias": "Engaged Click"
+   },
+   "hour": {
+    "alias": "Hour"
+   },
+   "impressions": {
+    "alias": "Impressions"
+   },
+   "post_id": {
+    "alias": "Post ID"
+   },
+   "spend": {
+    "alias": "Spend"
+   },
+   "key_conversion_ecpa": {
+    "alias": "Key Conversion eCPA"
+   },
+   "key_conversion_total_count": {
+    "alias": "Key Conversion Total Count",
+    "description": "Total count of key conversions for the row; their cost per action is `key_conversion_ecpa`."
+   },
+   "reach": {
+    "alias": "Reach"
+   },
+   "frequency": {
+    "alias": "Frequency"
+   },
+   "currency": {
+    "alias": "Currency"
+   }
+  }
+ },
+ "Ad Performance by DMA": {
+  "columns": {
+   "ad_id": {
+    "alias": "Ad ID",
+    "description": "The ID of the ad. FK to [Ad Performance](./ad-performance.md)"
+   },
+   "date": {
+    "alias": "Date",
+    "description": "The date for this metric. FK to [Ad Performance](./ad-performance.md)"
+   },
+   "dma": {
+    "alias": "DMA",
+    "description": "[ONLY in DMA based report] The Designated Market Area (DMA) targeted for the reports."
+   },
+   "clicks": {
+    "alias": "Clicks"
+   },
+   "conversion_add_to_cart_avg_value": {
+    "alias": "Conversion Add To Cart Average Value"
+   },
+   "conversion_add_to_cart_clicks": {
+    "alias": "Conversion Add To Cart Clicks"
+   },
+   "conversion_add_to_cart_ecpa": {
+    "alias": "Conversion Add To Cart eCPA"
+   },
+   "conversion_add_to_cart_total_items": {
+    "alias": "Conversion Add To Cart Total Items"
+   },
+   "conversion_add_to_cart_total_value": {
+    "alias": "Conversion Add To Cart Total Value"
+   },
+   "conversion_add_to_cart_views": {
+    "alias": "Conversion Add To Cart Views"
+   },
+   "conversion_add_to_wishlist_avg_value": {
+    "alias": "Conversion Add To Wishlist Average Value"
+   },
+   "conversion_add_to_wishlist_clicks": {
+    "alias": "Conversion Add To Wishlist Clicks"
+   },
+   "conversion_add_to_wishlist_ecpa": {
+    "alias": "Conversion Add To Wishlist eCPA"
+   },
+   "conversion_add_to_wishlist_total_items": {
+    "alias": "Conversion Add To Wishlist Total Items"
+   },
+   "conversion_add_to_wishlist_total_value": {
+    "alias": "Conversion Add To Wishlist Total Value"
+   },
+   "conversion_add_to_wishlist_views": {
+    "alias": "Conversion Add To Wishlist Views"
+   },
+   "conversion_lead_avg_value": {
+    "alias": "Conversion Lead Average Value"
+   },
+   "conversion_lead_clicks": {
+    "alias": "Conversion Lead Clicks"
+   },
+   "conversion_lead_ecpa": {
+    "alias": "Conversion Lead eCPA"
+   },
+   "conversion_lead_total_value": {
+    "alias": "Conversion Lead Total Value"
+   },
+   "conversion_lead_views": {
+    "alias": "Conversion Lead Views"
+   },
+   "conversion_page_visit_clicks": {
+    "alias": "Conversion Page Visit Clicks"
+   },
+   "conversion_page_visit_ecpa": {
+    "alias": "Conversion Page Visit eCPA"
+   },
+   "conversion_page_visit_views": {
+    "alias": "Conversion Page Visit Views"
+   },
+   "conversion_purchase_avg_value": {
+    "alias": "Conversion Purchase Average Value"
+   },
+   "conversion_purchase_clicks": {
+    "alias": "Conversion Purchase Clicks"
+   },
+   "conversion_purchase_ecpa": {
+    "alias": "Conversion Purchase eCPA"
+   },
+   "conversion_purchase_total_items": {
+    "alias": "Conversion Purchase Total Items"
+   },
+   "conversion_purchase_total_value": {
+    "alias": "Conversion Purchase Total Value"
+   },
+   "conversion_purchase_views": {
+    "alias": "Conversion Purchase Views"
+   },
+   "conversion_roas": {
+    "alias": "Conversion ROAS"
+   },
+   "conversion_search_clicks": {
+    "alias": "Conversion Search Clicks"
+   },
+   "conversion_search_ecpa": {
+    "alias": "Conversion Search eCPA"
+   },
+   "conversion_search_views": {
+    "alias": "Conversion Search Views"
+   },
+   "conversion_sign_up_clicks": {
+    "alias": "Conversion Sign Up Clicks"
+   },
+   "conversion_sign_up_ecpa": {
+    "alias": "Conversion Sign Up eCPA"
+   },
+   "conversion_sign_up_views": {
+    "alias": "Conversion Sign Up Views"
+   },
+   "conversion_signup_avg_value": {
+    "alias": "Conversion Signup Average Value"
+   },
+   "conversion_signup_total_value": {
+    "alias": "Conversion Signup Total Value"
+   },
+   "conversion_view_content_clicks": {
+    "alias": "Conversion View Content Clicks"
+   },
+   "conversion_view_content_ecpa": {
+    "alias": "Conversion View Content eCPA"
+   },
+   "conversion_view_content_views": {
+    "alias": "Conversion View Content Views"
+   },
+   "cpc": {
+    "alias": "CPC"
+   },
+   "ctr": {
+    "alias": "CTR"
+   },
+   "cpv": {
+    "alias": "CPV",
+    "description": "[Broken] The cost-per-view for this period."
+   },
+   "ecpm": {
+    "alias": "eCPM"
+   },
+   "engaged_click": {
+    "alias": "Engaged Click"
+   },
+   "hour": {
+    "alias": "Hour"
+   },
+   "impressions": {
+    "alias": "Impressions"
+   },
+   "post_id": {
+    "alias": "Post ID"
+   },
+   "spend": {
+    "alias": "Spend"
+   },
+   "key_conversion_ecpa": {
+    "alias": "Key Conversion eCPA"
+   },
+   "key_conversion_total_count": {
+    "alias": "Key Conversion Total Count",
+    "description": "Total count of key conversions for the row; their cost per action is `key_conversion_ecpa`."
+   },
+   "reach": {
+    "alias": "Reach"
+   },
+   "frequency": {
+    "alias": "Frequency"
+   },
+   "currency": {
+    "alias": "Currency"
+   }
+  }
+ },
+ "Ad Performance by Interest": {
+  "columns": {
+   "ad_id": {
+    "alias": "Ad ID",
+    "description": "The ID of the ad. FK to [Ad Performance](./ad-performance.md)"
+   },
+   "date": {
+    "alias": "Date",
+    "description": "The date for this metric. FK to [Ad Performance](./ad-performance.md)"
+   },
+   "clicks": {
+    "alias": "Clicks"
+   },
+   "conversion_add_to_cart_avg_value": {
+    "alias": "Conversion Add To Cart Average Value"
+   },
+   "conversion_add_to_cart_clicks": {
+    "alias": "Conversion Add To Cart Clicks"
+   },
+   "conversion_add_to_cart_ecpa": {
+    "alias": "Conversion Add To Cart eCPA"
+   },
+   "conversion_add_to_cart_total_items": {
+    "alias": "Conversion Add To Cart Total Items"
+   },
+   "conversion_add_to_cart_total_value": {
+    "alias": "Conversion Add To Cart Total Value"
+   },
+   "conversion_add_to_cart_views": {
+    "alias": "Conversion Add To Cart Views"
+   },
+   "conversion_add_to_wishlist_avg_value": {
+    "alias": "Conversion Add To Wishlist Average Value"
+   },
+   "conversion_add_to_wishlist_clicks": {
+    "alias": "Conversion Add To Wishlist Clicks"
+   },
+   "conversion_add_to_wishlist_ecpa": {
+    "alias": "Conversion Add To Wishlist eCPA"
+   },
+   "conversion_add_to_wishlist_total_items": {
+    "alias": "Conversion Add To Wishlist Total Items"
+   },
+   "conversion_add_to_wishlist_total_value": {
+    "alias": "Conversion Add To Wishlist Total Value"
+   },
+   "conversion_add_to_wishlist_views": {
+    "alias": "Conversion Add To Wishlist Views"
+   },
+   "conversion_lead_avg_value": {
+    "alias": "Conversion Lead Average Value"
+   },
+   "conversion_lead_clicks": {
+    "alias": "Conversion Lead Clicks"
+   },
+   "conversion_lead_ecpa": {
+    "alias": "Conversion Lead eCPA"
+   },
+   "conversion_lead_total_value": {
+    "alias": "Conversion Lead Total Value"
+   },
+   "conversion_lead_views": {
+    "alias": "Conversion Lead Views"
+   },
+   "conversion_page_visit_clicks": {
+    "alias": "Conversion Page Visit Clicks"
+   },
+   "conversion_page_visit_ecpa": {
+    "alias": "Conversion Page Visit eCPA"
+   },
+   "conversion_page_visit_views": {
+    "alias": "Conversion Page Visit Views"
+   },
+   "conversion_purchase_avg_value": {
+    "alias": "Conversion Purchase Average Value"
+   },
+   "conversion_purchase_clicks": {
+    "alias": "Conversion Purchase Clicks"
+   },
+   "conversion_purchase_ecpa": {
+    "alias": "Conversion Purchase eCPA"
+   },
+   "conversion_purchase_total_items": {
+    "alias": "Conversion Purchase Total Items"
+   },
+   "conversion_purchase_total_value": {
+    "alias": "Conversion Purchase Total Value"
+   },
+   "conversion_purchase_views": {
+    "alias": "Conversion Purchase Views"
+   },
+   "conversion_roas": {
+    "alias": "Conversion ROAS"
+   },
+   "conversion_search_clicks": {
+    "alias": "Conversion Search Clicks"
+   },
+   "conversion_search_ecpa": {
+    "alias": "Conversion Search eCPA"
+   },
+   "conversion_search_views": {
+    "alias": "Conversion Search Views"
+   },
+   "conversion_sign_up_clicks": {
+    "alias": "Conversion Sign Up Clicks"
+   },
+   "conversion_sign_up_ecpa": {
+    "alias": "Conversion Sign Up eCPA"
+   },
+   "conversion_sign_up_views": {
+    "alias": "Conversion Sign Up Views"
+   },
+   "conversion_signup_avg_value": {
+    "alias": "Conversion Signup Average Value"
+   },
+   "conversion_signup_total_value": {
+    "alias": "Conversion Signup Total Value"
+   },
+   "conversion_view_content_clicks": {
+    "alias": "Conversion View Content Clicks"
+   },
+   "conversion_view_content_ecpa": {
+    "alias": "Conversion View Content eCPA"
+   },
+   "conversion_view_content_views": {
+    "alias": "Conversion View Content Views"
+   },
+   "cpc": {
+    "alias": "CPC"
+   },
+   "ctr": {
+    "alias": "CTR"
+   },
+   "cpv": {
+    "alias": "CPV",
+    "description": "[Broken] The cost-per-view for this period."
+   },
+   "ecpm": {
+    "alias": "eCPM"
+   },
+   "engaged_click": {
+    "alias": "Engaged Click"
+   },
+   "hour": {
+    "alias": "Hour"
+   },
+   "impressions": {
+    "alias": "Impressions"
+   },
+   "interest": {
+    "alias": "Interest",
+    "description": "[ONLY in INTEREST based report] The interests of the users being targeted."
+   },
+   "post_id": {
+    "alias": "Post ID"
+   },
+   "spend": {
+    "alias": "Spend"
+   },
+   "key_conversion_ecpa": {
+    "alias": "Key Conversion eCPA"
+   },
+   "key_conversion_total_count": {
+    "alias": "Key Conversion Total Count",
+    "description": "Total count of key conversions for the row; their cost per action is `key_conversion_ecpa`."
+   },
+   "reach": {
+    "alias": "Reach"
+   },
+   "frequency": {
+    "alias": "Frequency"
+   },
+   "currency": {
+    "alias": "Currency"
+   }
+  }
+ },
+ "Ad Performance by Keyword": {
+  "columns": {
+   "ad_id": {
+    "alias": "Ad ID",
+    "description": "The ID of the ad. FK to [Ad Performance](./ad-performance.md)"
+   },
+   "date": {
+    "alias": "Date",
+    "description": "The date for this metric. FK to [Ad Performance](./ad-performance.md)"
+   },
+   "clicks": {
+    "alias": "Clicks"
+   },
+   "conversion_add_to_cart_avg_value": {
+    "alias": "Conversion Add To Cart Average Value"
+   },
+   "conversion_add_to_cart_clicks": {
+    "alias": "Conversion Add To Cart Clicks"
+   },
+   "conversion_add_to_cart_ecpa": {
+    "alias": "Conversion Add To Cart eCPA"
+   },
+   "conversion_add_to_cart_total_items": {
+    "alias": "Conversion Add To Cart Total Items"
+   },
+   "conversion_add_to_cart_total_value": {
+    "alias": "Conversion Add To Cart Total Value"
+   },
+   "conversion_add_to_cart_views": {
+    "alias": "Conversion Add To Cart Views"
+   },
+   "conversion_add_to_wishlist_avg_value": {
+    "alias": "Conversion Add To Wishlist Average Value"
+   },
+   "conversion_add_to_wishlist_clicks": {
+    "alias": "Conversion Add To Wishlist Clicks"
+   },
+   "conversion_add_to_wishlist_ecpa": {
+    "alias": "Conversion Add To Wishlist eCPA"
+   },
+   "conversion_add_to_wishlist_total_items": {
+    "alias": "Conversion Add To Wishlist Total Items"
+   },
+   "conversion_add_to_wishlist_total_value": {
+    "alias": "Conversion Add To Wishlist Total Value"
+   },
+   "conversion_add_to_wishlist_views": {
+    "alias": "Conversion Add To Wishlist Views"
+   },
+   "conversion_lead_avg_value": {
+    "alias": "Conversion Lead Average Value"
+   },
+   "conversion_lead_clicks": {
+    "alias": "Conversion Lead Clicks"
+   },
+   "conversion_lead_ecpa": {
+    "alias": "Conversion Lead eCPA"
+   },
+   "conversion_lead_total_value": {
+    "alias": "Conversion Lead Total Value"
+   },
+   "conversion_lead_views": {
+    "alias": "Conversion Lead Views"
+   },
+   "conversion_page_visit_clicks": {
+    "alias": "Conversion Page Visit Clicks"
+   },
+   "conversion_page_visit_ecpa": {
+    "alias": "Conversion Page Visit eCPA"
+   },
+   "conversion_page_visit_views": {
+    "alias": "Conversion Page Visit Views"
+   },
+   "conversion_purchase_avg_value": {
+    "alias": "Conversion Purchase Average Value"
+   },
+   "conversion_purchase_clicks": {
+    "alias": "Conversion Purchase Clicks"
+   },
+   "conversion_purchase_ecpa": {
+    "alias": "Conversion Purchase eCPA"
+   },
+   "conversion_purchase_total_items": {
+    "alias": "Conversion Purchase Total Items"
+   },
+   "conversion_purchase_total_value": {
+    "alias": "Conversion Purchase Total Value"
+   },
+   "conversion_purchase_views": {
+    "alias": "Conversion Purchase Views"
+   },
+   "conversion_roas": {
+    "alias": "Conversion ROAS"
+   },
+   "conversion_search_clicks": {
+    "alias": "Conversion Search Clicks"
+   },
+   "conversion_search_ecpa": {
+    "alias": "Conversion Search eCPA"
+   },
+   "conversion_search_views": {
+    "alias": "Conversion Search Views"
+   },
+   "conversion_sign_up_clicks": {
+    "alias": "Conversion Sign Up Clicks"
+   },
+   "conversion_sign_up_ecpa": {
+    "alias": "Conversion Sign Up eCPA"
+   },
+   "conversion_sign_up_views": {
+    "alias": "Conversion Sign Up Views"
+   },
+   "conversion_signup_avg_value": {
+    "alias": "Conversion Signup Average Value"
+   },
+   "conversion_signup_total_value": {
+    "alias": "Conversion Signup Total Value"
+   },
+   "conversion_view_content_clicks": {
+    "alias": "Conversion View Content Clicks"
+   },
+   "conversion_view_content_ecpa": {
+    "alias": "Conversion View Content eCPA"
+   },
+   "conversion_view_content_views": {
+    "alias": "Conversion View Content Views"
+   },
+   "cpc": {
+    "alias": "CPC"
+   },
+   "ctr": {
+    "alias": "CTR"
+   },
+   "cpv": {
+    "alias": "CPV",
+    "description": "[Broken] The cost-per-view for this period."
+   },
+   "ecpm": {
+    "alias": "eCPM"
+   },
+   "engaged_click": {
+    "alias": "Engaged Click"
+   },
+   "hour": {
+    "alias": "Hour"
+   },
+   "impressions": {
+    "alias": "Impressions"
+   },
+   "post_id": {
+    "alias": "Post ID"
+   },
+   "spend": {
+    "alias": "Spend"
+   },
+   "key_conversion_ecpa": {
+    "alias": "Key Conversion eCPA"
+   },
+   "key_conversion_total_count": {
+    "alias": "Key Conversion Total Count",
+    "description": "Total count of key conversions for the row; their cost per action is `key_conversion_ecpa`."
+   },
+   "reach": {
+    "alias": "Reach"
+   },
+   "frequency": {
+    "alias": "Frequency"
+   },
+   "currency": {
+    "alias": "Currency"
+   },
+   "keyword": {
+    "alias": "Keyword",
+    "description": "[ONLY in KEYWORD based report] The keyword for the ad."
+   }
+  }
+ },
+ "Ad Performance by Placement": {
+  "columns": {
+   "ad_id": {
+    "alias": "Ad ID",
+    "description": "The ID of the ad. FK to [Ad Performance](./ad-performance.md)"
+   },
+   "date": {
+    "alias": "Date",
+    "description": "The date for this metric. FK to [Ad Performance](./ad-performance.md)"
+   },
+   "clicks": {
+    "alias": "Clicks"
+   },
+   "conversion_add_to_cart_avg_value": {
+    "alias": "Conversion Add To Cart Average Value"
+   },
+   "conversion_add_to_cart_clicks": {
+    "alias": "Conversion Add To Cart Clicks"
+   },
+   "conversion_add_to_cart_ecpa": {
+    "alias": "Conversion Add To Cart eCPA"
+   },
+   "conversion_add_to_cart_total_items": {
+    "alias": "Conversion Add To Cart Total Items"
+   },
+   "conversion_add_to_cart_total_value": {
+    "alias": "Conversion Add To Cart Total Value"
+   },
+   "conversion_add_to_cart_views": {
+    "alias": "Conversion Add To Cart Views"
+   },
+   "conversion_add_to_wishlist_avg_value": {
+    "alias": "Conversion Add To Wishlist Average Value"
+   },
+   "conversion_add_to_wishlist_clicks": {
+    "alias": "Conversion Add To Wishlist Clicks"
+   },
+   "conversion_add_to_wishlist_ecpa": {
+    "alias": "Conversion Add To Wishlist eCPA"
+   },
+   "conversion_add_to_wishlist_total_items": {
+    "alias": "Conversion Add To Wishlist Total Items"
+   },
+   "conversion_add_to_wishlist_total_value": {
+    "alias": "Conversion Add To Wishlist Total Value"
+   },
+   "conversion_add_to_wishlist_views": {
+    "alias": "Conversion Add To Wishlist Views"
+   },
+   "conversion_lead_avg_value": {
+    "alias": "Conversion Lead Average Value"
+   },
+   "conversion_lead_clicks": {
+    "alias": "Conversion Lead Clicks"
+   },
+   "conversion_lead_ecpa": {
+    "alias": "Conversion Lead eCPA"
+   },
+   "conversion_lead_total_value": {
+    "alias": "Conversion Lead Total Value"
+   },
+   "conversion_lead_views": {
+    "alias": "Conversion Lead Views"
+   },
+   "conversion_page_visit_clicks": {
+    "alias": "Conversion Page Visit Clicks"
+   },
+   "conversion_page_visit_ecpa": {
+    "alias": "Conversion Page Visit eCPA"
+   },
+   "conversion_page_visit_views": {
+    "alias": "Conversion Page Visit Views"
+   },
+   "conversion_purchase_avg_value": {
+    "alias": "Conversion Purchase Average Value"
+   },
+   "conversion_purchase_clicks": {
+    "alias": "Conversion Purchase Clicks"
+   },
+   "conversion_purchase_ecpa": {
+    "alias": "Conversion Purchase eCPA"
+   },
+   "conversion_purchase_total_items": {
+    "alias": "Conversion Purchase Total Items"
+   },
+   "conversion_purchase_total_value": {
+    "alias": "Conversion Purchase Total Value"
+   },
+   "conversion_purchase_views": {
+    "alias": "Conversion Purchase Views"
+   },
+   "conversion_roas": {
+    "alias": "Conversion ROAS"
+   },
+   "conversion_search_clicks": {
+    "alias": "Conversion Search Clicks"
+   },
+   "conversion_search_ecpa": {
+    "alias": "Conversion Search eCPA"
+   },
+   "conversion_search_views": {
+    "alias": "Conversion Search Views"
+   },
+   "conversion_sign_up_clicks": {
+    "alias": "Conversion Sign Up Clicks"
+   },
+   "conversion_sign_up_ecpa": {
+    "alias": "Conversion Sign Up eCPA"
+   },
+   "conversion_sign_up_views": {
+    "alias": "Conversion Sign Up Views"
+   },
+   "conversion_signup_avg_value": {
+    "alias": "Conversion Signup Average Value"
+   },
+   "conversion_signup_total_value": {
+    "alias": "Conversion Signup Total Value"
+   },
+   "conversion_view_content_clicks": {
+    "alias": "Conversion View Content Clicks"
+   },
+   "conversion_view_content_ecpa": {
+    "alias": "Conversion View Content eCPA"
+   },
+   "conversion_view_content_views": {
+    "alias": "Conversion View Content Views"
+   },
+   "cpc": {
+    "alias": "CPC"
+   },
+   "ctr": {
+    "alias": "CTR"
+   },
+   "cpv": {
+    "alias": "CPV",
+    "description": "[Broken] The cost-per-view for this period."
+   },
+   "ecpm": {
+    "alias": "eCPM"
+   },
+   "engaged_click": {
+    "alias": "Engaged Click"
+   },
+   "hour": {
+    "alias": "Hour"
+   },
+   "impressions": {
+    "alias": "Impressions"
+   },
+   "post_id": {
+    "alias": "Post ID"
+   },
+   "spend": {
+    "alias": "Spend"
+   },
+   "key_conversion_ecpa": {
+    "alias": "Key Conversion eCPA"
+   },
+   "key_conversion_total_count": {
+    "alias": "Key Conversion Total Count",
+    "description": "Total count of key conversions for the row; their cost per action is `key_conversion_ecpa`."
+   },
+   "reach": {
+    "alias": "Reach"
+   },
+   "frequency": {
+    "alias": "Frequency"
+   },
+   "currency": {
+    "alias": "Currency"
+   },
+   "placement": {
+    "alias": "Placement",
+    "description": "[ONLY in PLACEMENT based report] Enum representing the placement of a creative."
+   }
+  }
+ },
+ "Ad Performance": {
+  "columns": {
+   "ad_id": {
+    "alias": "Ad ID",
+    "description": "The ID of the ad. FK to [Ads](./ads.md)"
+   },
+   "date": {
+    "alias": "Date"
+   },
+   "clicks": {
+    "alias": "Clicks"
+   },
+   "conversion_add_to_cart_avg_value": {
+    "alias": "Conversion Add To Cart Average Value"
+   },
+   "conversion_add_to_cart_clicks": {
+    "alias": "Conversion Add To Cart Clicks"
+   },
+   "conversion_add_to_cart_ecpa": {
+    "alias": "Conversion Add To Cart eCPA"
+   },
+   "conversion_add_to_cart_total_items": {
+    "alias": "Conversion Add To Cart Total Items"
+   },
+   "conversion_add_to_cart_total_value": {
+    "alias": "Conversion Add To Cart Total Value"
+   },
+   "conversion_add_to_cart_views": {
+    "alias": "Conversion Add To Cart Views"
+   },
+   "conversion_add_to_wishlist_avg_value": {
+    "alias": "Conversion Add To Wishlist Average Value"
+   },
+   "conversion_add_to_wishlist_clicks": {
+    "alias": "Conversion Add To Wishlist Clicks"
+   },
+   "conversion_add_to_wishlist_ecpa": {
+    "alias": "Conversion Add To Wishlist eCPA"
+   },
+   "conversion_add_to_wishlist_total_items": {
+    "alias": "Conversion Add To Wishlist Total Items"
+   },
+   "conversion_add_to_wishlist_total_value": {
+    "alias": "Conversion Add To Wishlist Total Value"
+   },
+   "conversion_add_to_wishlist_views": {
+    "alias": "Conversion Add To Wishlist Views"
+   },
+   "conversion_lead_avg_value": {
+    "alias": "Conversion Lead Average Value"
+   },
+   "conversion_lead_clicks": {
+    "alias": "Conversion Lead Clicks"
+   },
+   "conversion_lead_ecpa": {
+    "alias": "Conversion Lead eCPA"
+   },
+   "conversion_lead_total_value": {
+    "alias": "Conversion Lead Total Value"
+   },
+   "conversion_lead_views": {
+    "alias": "Conversion Lead Views"
+   },
+   "conversion_page_visit_clicks": {
+    "alias": "Conversion Page Visit Clicks"
+   },
+   "conversion_page_visit_ecpa": {
+    "alias": "Conversion Page Visit eCPA"
+   },
+   "conversion_page_visit_views": {
+    "alias": "Conversion Page Visit Views"
+   },
+   "conversion_purchase_avg_value": {
+    "alias": "Conversion Purchase Average Value"
+   },
+   "conversion_purchase_clicks": {
+    "alias": "Conversion Purchase Clicks"
+   },
+   "conversion_purchase_ecpa": {
+    "alias": "Conversion Purchase eCPA"
+   },
+   "conversion_purchase_total_items": {
+    "alias": "Conversion Purchase Total Items"
+   },
+   "conversion_purchase_total_value": {
+    "alias": "Conversion Purchase Total Value"
+   },
+   "conversion_purchase_views": {
+    "alias": "Conversion Purchase Views"
+   },
+   "conversion_roas": {
+    "alias": "Conversion ROAS"
+   },
+   "conversion_search_clicks": {
+    "alias": "Conversion Search Clicks"
+   },
+   "conversion_search_ecpa": {
+    "alias": "Conversion Search eCPA"
+   },
+   "conversion_search_views": {
+    "alias": "Conversion Search Views"
+   },
+   "conversion_sign_up_clicks": {
+    "alias": "Conversion Sign Up Clicks"
+   },
+   "conversion_sign_up_ecpa": {
+    "alias": "Conversion Sign Up eCPA"
+   },
+   "conversion_sign_up_views": {
+    "alias": "Conversion Sign Up Views"
+   },
+   "conversion_signup_avg_value": {
+    "alias": "Conversion Signup Average Value"
+   },
+   "conversion_signup_total_value": {
+    "alias": "Conversion Signup Total Value"
+   },
+   "conversion_view_content_clicks": {
+    "alias": "Conversion View Content Clicks"
+   },
+   "conversion_view_content_ecpa": {
+    "alias": "Conversion View Content eCPA"
+   },
+   "conversion_view_content_views": {
+    "alias": "Conversion View Content Views"
+   },
+   "cpc": {
+    "alias": "CPC"
+   },
+   "ctr": {
+    "alias": "CTR"
+   },
+   "cpv": {
+    "alias": "CPV",
+    "description": "[Broken] The cost-per-view for this period."
+   },
+   "ecpm": {
+    "alias": "eCPM"
+   },
+   "engaged_click": {
+    "alias": "Engaged Click"
+   },
+   "hour": {
+    "alias": "Hour"
+   },
+   "impressions": {
+    "alias": "Impressions"
+   },
+   "post_id": {
+    "alias": "Post ID"
+   },
+   "spend": {
+    "alias": "Spend"
+   },
+   "key_conversion_ecpa": {
+    "alias": "Key Conversion eCPA"
+   },
+   "key_conversion_total_count": {
+    "alias": "Key Conversion Total Count",
+    "description": "Total count of key conversions for the row; their cost per action is `key_conversion_ecpa`."
+   },
+   "reach": {
+    "alias": "Reach"
+   },
+   "frequency": {
+    "alias": "Frequency"
+   },
+   "currency": {
+    "alias": "Currency"
+   }
+  }
+ },
+ "Ads": {
+  "columns": {
+   "type": {
+    "alias": "Type"
+   },
+   "ad_account_id": {
+    "alias": "Ad Account ID"
+   },
+   "ad_group_id": {
+    "alias": "Ad Group ID",
+    "description": "The ID of the ad group that this ad belongs to. FK to [Ad Groups](./ad-groups.md)"
+   },
+   "campaign_id": {
+    "alias": "Campaign ID"
+   },
+   "campaign_objective_type": {
+    "alias": "Campaign Objective Type"
+   },
+   "click_url": {
+    "alias": "Click URL"
+   },
+   "click_url_parsed": {
+    "alias": "Click URL Parsed"
+   },
+   "configured_status": {
+    "alias": "Configured Status"
+   },
+   "created_at": {
+    "alias": "Created At"
+   },
+   "effective_status": {
+    "alias": "Effective Status"
+   },
+   "event_trackers": {
+    "alias": "Event Trackers"
+   },
+   "id": {
+    "alias": "ID"
+   },
+   "modified_at": {
+    "alias": "Modified At"
+   },
+   "name": {
+    "alias": "Name"
+   },
+   "preview_expiry": {
+    "alias": "Preview Expiry"
+   },
+   "preview_url": {
+    "alias": "Preview URL"
+   },
+   "rejection_reason": {
+    "alias": "Rejection Reason"
+   },
+   "skadnetwork_metadata": {
+    "alias": "Skadnetwork Metadata"
+   },
+   "post_id": {
+    "alias": "Post ID"
+   },
+   "post_url": {
+    "alias": "Post URL"
+   },
+   "products": {
+    "alias": "Products"
+   },
+   "profile_id": {
+    "alias": "Profile ID"
+   },
+   "profile_username": {
+    "alias": "Profile Username"
+   },
+   "shopping_creative": {
+    "alias": "Shopping Creative"
+   }
+  }
+ },
+ "Campaigns": {
+  "columns": {
+   "ad_account_id": {
+    "alias": "Ad Account ID",
+    "description": "The ID of the ad account. FK to [Ad Account](./ad-account.md)"
+   },
+   "configured_status": {
+    "alias": "Configured Status"
+   },
+   "created_at": {
+    "alias": "Created At"
+   },
+   "effective_status": {
+    "alias": "Effective Status"
+   },
+   "funding_instrument_id": {
+    "alias": "Funding Instrument ID",
+    "description": "Campaign level funding instrument ID. FK to [Funding Instruments](./funding-instruments.md)"
+   },
+   "goal_type": {
+    "alias": "Goal Type"
+   },
+   "goal_value": {
+    "alias": "Goal Value"
+   },
+   "id": {
+    "alias": "ID"
+   },
+   "app_id": {
+    "alias": "App ID"
+   },
+   "modified_at": {
+    "alias": "Modified At"
+   },
+   "name": {
+    "alias": "Name"
+   },
+   "objective": {
+    "alias": "Objective"
+   },
+   "special_ad_categories": {
+    "alias": "Special Ad Categories"
+   },
+   "spend_cap": {
+    "alias": "Spend Cap"
+   },
+   "skadnetwork_metadata": {
+    "alias": "Skadnetwork Metadata"
+   }
+  }
+ },
+ "Custom Audiences": {
+  "columns": {
+   "name": {
+    "alias": "Name"
+   },
+   "id": {
+    "alias": "ID"
+   },
+   "status": {
+    "alias": "Status"
+   },
+   "ad_account_id": {
+    "alias": "Ad Account ID",
+    "description": "The ID of the ad account that owns this custom audience. FK to [Ad Account](./ad-account.md)"
+   },
+   "created_at": {
+    "alias": "Created At"
+   },
+   "modified_at": {
+    "alias": "Modified At"
+   },
+   "size_range_upper": {
+    "alias": "Size Range Upper"
+   },
+   "size_range_lower": {
+    "alias": "Size Range Lower"
+   },
+   "type": {
+    "alias": "Type"
+   }
+  }
+ },
+ "Funding Instruments": {
+  "columns": {
+   "id": {
+    "alias": "ID"
+   },
+   "name": {
+    "alias": "Name"
+   },
+   "currency": {
+    "alias": "Currency"
+   },
+   "credit_limit": {
+    "alias": "Credit Limit"
+   },
+   "billable_amount": {
+    "alias": "Billable Amount"
+   },
+   "start_time": {
+    "alias": "Start Time"
+   },
+   "end_time": {
+    "alias": "End Time"
+   },
+   "is_servable": {
+    "alias": "Is Servable"
+   },
+   "reasons_not_servable": {
+    "alias": "Reasons Not Servable"
+   }
+  }
+ },
+ "Lead Gen Forms": {
+  "columns": {
+   "ad_account_id": {
+    "alias": "Ad Account ID",
+    "description": "The ID of the ad account that the form belongs to. FK to [Ad Account](./ad-account.md)"
+   },
+   "id": {
+    "alias": "ID"
+   },
+   "name": {
+    "alias": "Name"
+   },
+   "privacy_link": {
+    "alias": "Privacy Link"
+   },
+   "prompt": {
+    "alias": "Prompt"
+   },
+   "questions": {
+    "alias": "Questions"
+   },
+   "created_at": {
+    "alias": "Created At"
+   },
+   "modified_at": {
+    "alias": "Modified At"
+   }
+  }
+ }
+}

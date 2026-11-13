@@ -174,10 +174,12 @@ const endpoints = item.endpoints.map((uuid) => {
 const authoredPath = join(HERE, 'sources', `${key}.json`)
 if (!existsSync(authoredPath)) fail(`No authored file ${relative(REPO, authoredPath)}: descriptions, questions and joins are written by hand.`)
 const authored = readJson(authoredPath)
+const overridesPath = join(HERE, 'overrides', `${key}.json`)
+const overrides = existsSync(overridesPath) ? readJson(overridesPath) : {}
 
 let files
 try {
-  const model = buildModel({ source, endpoints, authored })
+  const model = buildModel({ source, endpoints, authored, overrides })
   files = renderBundle(model, {
     svgPath: `../../res/screens/sources/${key}.svg`,
     exploreUrl: `https://model.owox.com/?okf=${exploreTarget(key)}`,

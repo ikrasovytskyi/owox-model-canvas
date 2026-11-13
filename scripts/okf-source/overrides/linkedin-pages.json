@@ -1,0 +1,77 @@
+{
+ "Follower Statistics": {
+  "columns": {
+   "organization_urn": {
+    "alias": "Organization URN",
+    "description": "The LinkedIn organization page the counts belong to, as a URN of the form `urn:li:organization:{id}`."
+   },
+   "category_type": {
+    "alias": "Category Type"
+   },
+   "segment_name": {
+    "alias": "Segment Name"
+   },
+   "segment_value": {
+    "alias": "Segment Value"
+   },
+   "organic_follower_count": {
+    "alias": "Followers (Organic and Paid)",
+    "description": "Followers in this segment; for these demographic facets LinkedIn rolls organic and paid followers into this one count."
+   },
+   "paid_follower_count": {
+    "alias": "Paid Follower Count",
+    "description": "Paid followers in this segment; LinkedIn says not to read it for the demographic facets, whose totals are in `organic_follower_count`."
+   }
+  }
+ },
+ "Time-Bound Follower Statistics": {
+  "columns": {
+   "organization_urn": {
+    "alias": "Organization URN",
+    "description": "The LinkedIn organization page the counts belong to, as a URN of the form `urn:li:organization:{id}`."
+   },
+   "time_range_start": {
+    "alias": "Time Range Start",
+    "description": "Start of the day the gains are counted for, inclusive; the connector asks LinkedIn for one row per day."
+   },
+   "time_range_end": {
+    "alias": "Time Range End",
+    "description": "End of that day, exclusive: the start of the next day."
+   },
+   "organic_follower_gain": {
+    "alias": "Organic Follower Gain"
+   },
+   "paid_follower_gain": {
+    "alias": "Paid Follower Gain"
+   },
+   "follower_counts_by_association_type": {
+    "alias": "Follower Counts By Association Type",
+    "description": "Followers segmented by association type (empty in time-bound responses). Stored as a JSON string."
+   },
+   "follower_counts_by_seniority": {
+    "alias": "Follower Counts By Seniority",
+    "description": "Followers segmented by seniority (empty in time-bound responses). Stored as a JSON string."
+   },
+   "follower_counts_by_industry": {
+    "alias": "Follower Counts By Industry",
+    "description": "Followers segmented by industry (empty in time-bound responses). Stored as a JSON string."
+   },
+   "follower_counts_by_function": {
+    "alias": "Follower Counts By Function",
+    "description": "Followers segmented by function (empty in time-bound responses). Stored as a JSON string."
+   },
+   "follower_counts_by_staff_count_range": {
+    "alias": "Follower Counts By Staff Count Range",
+    "description": "Followers segmented by staff count range (empty in time-bound responses). Stored as a JSON string."
+   },
+   "follower_counts_by_geo_country": {
+    "alias": "Follower Counts By Geo Country",
+    "description": "Followers segmented by country (empty in time-bound responses). Stored as a JSON string."
+   },
+   "follower_counts_by_geo": {
+    "alias": "Follower Counts By Geo",
+    "description": "Followers segmented by geographic area (empty in time-bound responses). Stored as a JSON string."
+   }
+  }
+ }
+}

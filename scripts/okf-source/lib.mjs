@@ -7,17 +7,21 @@
 //   authored   the model description, each endpoint's description, the
 //              example questions, the joins (scripts/okf-source/sources/<key>.json)
 
-/** schema.md types (the owox.com endpoint files) -> the OKF field types the canvas accepts. */
+/**
+ * schema.md types (the owox.com endpoint files) -> the OKF field types the canvas accepts.
+ * Follows what the connector writes to BigQuery (GoogleBigQueryStorage._convertTypeToStorageType):
+ * NUMBER -> FLOAT64, ARRAY and OBJECT -> STRING (serialised as JSON text). Taken from OWOX/models (2026-11-13), which had it right.
+ */
 export const TYPE_MAP = {
   STRING: 'STRING',
   INTEGER: 'INTEGER',
   FLOAT: 'FLOAT',
-  NUMBER: 'NUMERIC',
+  NUMBER: 'FLOAT',
   BOOLEAN: 'BOOLEAN',
   DATE: 'DATE',
   TIMESTAMP: 'TIMESTAMP',
-  ARRAY: 'JSON',
-  OBJECT: 'JSON',
+  ARRAY: 'STRING',
+  OBJECT: 'STRING',
   DATETIME: 'DATETIME',
   JSON: 'JSON',
 }
@@ -87,6 +91,15 @@ const q = (s) => `"${String(s).replace(/\\/g, '\\\\').replace(/"/g, '\\"')}"`
 const block = (key, text) =>
   [`${key}: |`, ...String(text).trim().split('\n').map((l) => (l === '' ? '' : `  ${l}`))].join('\n')
 
+/** `ad_group_id` -> `Ad Group ID`; used only where OWOX/models gave the column no alias. */
+export const aliasOf = (column) =>
+  column
+    .replace(/([a-z\d])([A-Z])/g, '$1 $2')
+    .split(/[_\s.]+/)
+    .filter(Boolean)
+    .map((w) => (/^id$/i.test(w) ? 'ID' : w[0].toUpperCase() + w.slice(1)))
+    .join(' ')
+
 const cell = (s) => String(s).replace(/\|/g, '\\|').replace(/\n/g, ' ')
 
 /** `https://github.com/.../blob/main/path#L9` -> the same file at a commit, no line anchor (lines move). */
@@ -102,7 +115,7 @@ export function pinned(url, sha, kind = 'blob') {
  * endpoints: [{ name, key, destinationTable, summary, timeSeries, definitionSourceUrl, vendorDocsUrl, rows, uniqueKeys }]
  * authored:  the sources/<key>.json file
  */
-export function buildModel({ source, endpoints, authored }) {
+export function buildModel({ source, endpoints, authored, overrides = {} }) {
   const byName = new Map(endpoints.map((e) => [e.name, e]))
   const problems = []
 
@@ -121,6 +134,15 @@ export function buildModel({ source, endpoints, authored }) {
   }
   for (const name of Object.keys(authored.endpoints ?? {})) {
     if (!byName.has(name)) problems.push(`authored file names endpoint "${name}", which the Data Source does not have`)
+  }
+
+  // overrides/<key>.json (alias and description text per column, taken from OWOX/models): must point at real endpoints and columns.
+  for (const [name, o] of Object.entries(overrides)) {
+    const e = byName.get(name)
+    if (!e) { problems.push(`overrides name endpoint "${name}", which the Data Source does not have`); continue }
+    for (const c of Object.keys(o.columns ?? {})) {
+      if (!e.rows.some((r) => r.column === c)) problems.push(`overrides: ${name} has no field ${c}`)
+    }
   }
 
   const joins = (authored.joins ?? []).map((j, i) => ({ ...j, n: i + 1 }))
@@ -160,7 +182,10 @@ export function buildModel({ source, endpoints, authored }) {
       if (j.cardinality === 'N:1') {
         const hit = new Set((j.on ?? []).map(([, r]) => r))
         const missing = (to.uniqueKeys ?? []).filter((k) => !hit.has(k))
-        if (missing.length) problems.push(`${label}: N:1 but the key pairs do not cover ${j.to}'s unique keys (${missing.join(', ')})`)
+        // A column the connector does not list as a key can still be unique on its own (Ad Account.account_id next to id,
+        // Tweets.tweet_id next to id); `uniqueAlone` names it and the note says so (bundles/AGENTS.md, join rule 1).
+        const alone = (j.uniqueAlone ?? []).some((c) => hit.has(c) && to.rows.some((x) => x.column === c))
+        if (missing.length && !alone) problems.push(`${label}: N:1 but the key pairs do not cover ${j.to}'s unique keys (${missing.join(', ')})`)
       }
     }
   }
@@ -168,7 +193,7 @@ export function buildModel({ source, endpoints, authored }) {
 
   const docs = [...endpoints]
     .sort((a, b) => a.name.localeCompare(b.name))
-    .map((e) => ({ endpoint: e, slug: slugify(e.name), authored: authored.endpoints[e.name], joins: joins.filter((j) => j.from === e.name) }))
+    .map((e) => ({ endpoint: e, slug: slugify(e.name), authored: authored.endpoints[e.name], overrides: overrides[e.name]?.columns ?? {}, joins: joins.filter((j) => j.from === e.name) }))
   return { source, authored, docs, joins }
 }
 
@@ -216,11 +241,12 @@ export function renderMart(model, doc) {
   out.push('')
   out.push('# Schema')
   out.push('')
-  out.push('| Column | Type | Description |')
-  out.push('|--------|------|-------------|')
+  out.push('| Column | Type | Alias | Description |')
+  out.push('|--------|------|-------|-------------|')
   for (const r of e.rows) {
-    const d = r.description ? cell(r.description) : ''
-    out.push(`| \`${r.column}\` | ${TYPE_MAP[r.type]} | ${pk.has(r.column) ? `PK. ${d}`.trim() : d} |`)
+    const o = doc.overrides[r.column] ?? {}
+    const d = cell(o.description ?? r.description ?? '')
+    out.push(`| \`${r.column}\` | ${TYPE_MAP[r.type]} | ${cell(o.alias ?? aliasOf(r.column))} | ${pk.has(r.column) ? `PK. ${d}`.trim() : d} |`)
   }
   out.push('')
   out.push('# Example Questions')
