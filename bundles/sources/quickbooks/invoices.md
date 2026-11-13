@@ -24,8 +24,8 @@ sources:
 | `id` | STRING | ID | PK. QuickBooks entity Id (string). Primary key together with realm_id. |
 | `realm_id` | STRING | Realm ID | PK. Company (realm) id, stamped from the RealmId parameter. FK to [Company info](./company-info.md) |
 | `sync_token` | STRING | Sync Token | Version counter; changes on every edit. |
-| `create_time` | TIMESTAMP | Create Time | When the record was created in QuickBooks (UTC timestamp). |
-| `last_updated_time` | TIMESTAMP | Last Updated Time | When the record was last changed in QuickBooks (MetaData.LastUpdatedTime); the connector reads only records changed after its Load changes since setting. |
+| `create_time` | DATETIME | Create Time | When the record was created in QuickBooks (UTC timestamp). |
+| `last_updated_time` | DATETIME | Last Updated Time | When the record was last changed in QuickBooks (MetaData.LastUpdatedTime); the connector reads only records changed after its Load changes since setting. |
 | `doc_number` | STRING | Doc Number | Document number shown on the form (for example the invoice or bill number); can be empty when the company does not use automatic numbering. |
 | `txn_date` | DATE | Transaction Date | Business date of the transaction (not the edit date). |
 | `total_amt` | FLOAT | Total Amount | Total amount of the document including tax, in the document currency. |
@@ -33,7 +33,7 @@ sources:
 | `currency_name` | STRING | Currency Name | Currency name that goes with currency_id, for example United States Dollar. |
 | `exchange_rate` | FLOAT | Exchange Rate | Rate that converts the document currency to the company's home currency; 1 or empty when the document is in the home currency. |
 | `private_note` | STRING | Private Note | Internal memo entered on the document; not shown to the customer or vendor. |
-| `line` | JSON | Line | Line array kept as JSON. Unnest in SQL: DetailType decides which *LineDetail object is present. Stored as a JSON string. |
+| `line` | STRING | Line | Line array kept as JSON. Unnest in SQL: DetailType decides which *LineDetail object is present. Stored as a JSON string. |
 | `due_date` | DATE | Due Date | Date the invoice is due for payment. |
 | `balance` | FLOAT | Balance | Unpaid remainder; 0 when fully paid. |
 | `customer_id` | STRING | Customer ID | Id of the customer on the document; joins to customer.id. FK to [Customers](./customers.md) |
@@ -53,8 +53,8 @@ sources:
 | `ship_date` | DATE | Ship Date | Date the goods were or will be shipped. |
 | `tracking_num` | STRING | Tracking Num | Shipping tracking number entered on the invoice. |
 | `total_tax` | FLOAT | Total Tax | Total sales tax on the document, in the document currency. |
-| `txn_tax_detail` | JSON | Transaction Tax Detail | Tax detail of the document as JSON: total tax, tax code and the per-rate tax lines. Stored as a JSON string. |
-| `linked_txn` | JSON | Linked Transaction | Header-level links (payments, estimates) as JSON: TxnId, TxnType. Stored as a JSON string. |
+| `txn_tax_detail` | STRING | Transaction Tax Detail | Tax detail of the document as JSON: total tax, tax code and the per-rate tax lines. Stored as a JSON string. |
+| `linked_txn` | STRING | Linked Transaction | Header-level links (payments, estimates) as JSON: TxnId, TxnType. Stored as a JSON string. |
 | `home_total_amt` | FLOAT | Home Total Amount | Total amount converted to the company's home currency. |
 | `home_balance` | FLOAT | Home Balance | Open balance converted to the company's home currency. |
 

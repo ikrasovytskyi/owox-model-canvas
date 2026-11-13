@@ -24,8 +24,8 @@ sources:
 | `id` | STRING | ID | PK. QuickBooks entity Id (string). Primary key together with realm_id. |
 | `realm_id` | STRING | Realm ID | PK. Company (realm) id, stamped from the RealmId parameter. FK to [Company info](./company-info.md) |
 | `sync_token` | STRING | Sync Token | Version counter; changes on every edit. |
-| `create_time` | TIMESTAMP | Create Time | When the record was created in QuickBooks (UTC timestamp). |
-| `last_updated_time` | TIMESTAMP | Last Updated Time | When the record was last changed in QuickBooks (MetaData.LastUpdatedTime); the connector reads every record, whatever this time. |
+| `create_time` | DATETIME | Create Time | When the record was created in QuickBooks (UTC timestamp). |
+| `last_updated_time` | DATETIME | Last Updated Time | When the record was last changed in QuickBooks (MetaData.LastUpdatedTime); the connector reads every record, whatever this time. |
 | `name` | STRING | Name | Name of the account in the chart of accounts. |
 | `fully_qualified_name` | STRING | Fully Qualified Name | Parent:Child path for sub-accounts. |
 | `account_type` | STRING | Account Type | Bank, Accounts Receivable, Expense, Income, Credit Card… |

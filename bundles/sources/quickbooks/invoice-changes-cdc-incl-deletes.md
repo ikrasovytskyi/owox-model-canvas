@@ -25,11 +25,11 @@ sources:
 | `realm_id` | STRING | Realm ID | PK. Company (realm) id, stamped from the RealmId parameter. FK to [Company info](./company-info.md) |
 | `entity` | STRING | Entity | Entity name, constant per node. |
 | `status` | STRING | Status | "Deleted" for hard-deleted objects; absent for live ones. Live rows carry the full payload. |
-| `last_updated_time` | TIMESTAMP | Last Updated Time | PK. When the invoice was last changed in QuickBooks (UTC), as returned by the change data capture feed. |
+| `last_updated_time` | DATETIME | Last Updated Time | PK. When the invoice was last changed in QuickBooks (UTC), as returned by the change data capture feed. |
 | `sync_token` | STRING | Sync Token | Version counter; changes on every edit. |
 | `txn_date` | DATE | Transaction Date | Date of the invoice. |
 | `total_amt` | FLOAT | Total Amount | Total amount of the document including tax, in the document currency. |
-| `payload` | JSON | Payload | Whole object as JSON (CDC returns the full payload, so the main node's columns can be re-derived). Stored as a JSON string. |
+| `payload` | STRING | Payload | Whole object as JSON (CDC returns the full payload, so the main node's columns can be re-derived). Stored as a JSON string. |
 
 # Example Questions
 

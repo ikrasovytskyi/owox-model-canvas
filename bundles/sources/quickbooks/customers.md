@@ -24,8 +24,8 @@ sources:
 | `id` | STRING | ID | PK. QuickBooks entity Id (string). Primary key together with realm_id. |
 | `realm_id` | STRING | Realm ID | PK. Company (realm) id, stamped from the RealmId parameter. FK to [Company info](./company-info.md) |
 | `sync_token` | STRING | Sync Token | Version counter; changes on every edit. |
-| `create_time` | TIMESTAMP | Create Time | When the record was created in QuickBooks (UTC timestamp). |
-| `last_updated_time` | TIMESTAMP | Last Updated Time | When the record was last changed in QuickBooks (MetaData.LastUpdatedTime); the connector reads only records changed after its Load changes since setting. |
+| `create_time` | DATETIME | Create Time | When the record was created in QuickBooks (UTC timestamp). |
+| `last_updated_time` | DATETIME | Last Updated Time | When the record was last changed in QuickBooks (MetaData.LastUpdatedTime); the connector reads only records changed after its Load changes since setting. |
 | `display_name` | STRING | Display Name | Name shown on forms and lists, unique across customers, vendors and employees in the company. |
 | `company_name` | STRING | Company Name | Business name of the customer. |
 | `given_name` | STRING | Given Name | First name of the customer contact. |
@@ -47,7 +47,7 @@ sources:
 | `bill_addr_city` | STRING | Bill Addr City | City of the billing address. |
 | `bill_addr_country` | STRING | Bill Addr Country | Country of the customer's billing address. |
 | `bill_addr_postal_code` | STRING | Bill Addr Postal Code | Postal or ZIP code of the billing address. |
-| `bill_addr` | JSON | Bill Addr | Full billing address as JSON. Stored as a JSON string. |
+| `bill_addr` | STRING | Bill Addr | Full billing address as JSON. Stored as a JSON string. |
 | `active` | BOOLEAN | Active | True when the record is active; false when it has been made inactive (QuickBooks never hard-deletes lists). |
 
 # Example Questions

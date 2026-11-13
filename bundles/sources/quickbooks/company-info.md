@@ -24,8 +24,8 @@ sources:
 | `id` | STRING | ID | QuickBooks entity Id (string). Primary key together with realm_id. |
 | `realm_id` | STRING | Realm ID | PK. Company (realm) id, stamped from the RealmId parameter. |
 | `sync_token` | STRING | Sync Token | Version counter; changes on every edit. |
-| `create_time` | TIMESTAMP | Create Time | When the record was created in QuickBooks (UTC timestamp). |
-| `last_updated_time` | TIMESTAMP | Last Updated Time | When the record was last changed in QuickBooks (MetaData.LastUpdatedTime); the connector reads every record, whatever this time. |
+| `create_time` | DATETIME | Create Time | When the record was created in QuickBooks (UTC timestamp). |
+| `last_updated_time` | DATETIME | Last Updated Time | When the record was last changed in QuickBooks (MetaData.LastUpdatedTime); the connector reads every record, whatever this time. |
 | `company_name` | STRING | Company Name | Name the company uses for business, as shown on forms. |
 | `legal_name` | STRING | Legal Name | Legal name of the company. |
 | `country` | STRING | Country | Country of the company. |
@@ -33,9 +33,9 @@ sources:
 | `fiscal_year_start_month` | STRING | Fiscal Year Start Month | Month the fiscal year starts, as a month name such as January. |
 | `email` | STRING | Email | Company email address. |
 | `company_addr_country` | STRING | Company Addr Country | Country of the company address. |
-| `company_addr` | JSON | Company Addr | Company address as JSON: lines, city, country subdivision, postal code and country. Stored as a JSON string. |
+| `company_addr` | STRING | Company Addr | Company address as JSON: lines, city, country subdivision, postal code and country. Stored as a JSON string. |
 | `supported_languages` | STRING | Supported Languages | Languages the company file supports, as a comma-separated list of language codes. |
-| `name_value` | JSON | Name Value | Extra settings as Name/Value pairs (industry type, subscription status…). Stored as a JSON string. |
+| `name_value` | STRING | Name Value | Extra settings as Name/Value pairs (industry type, subscription status…). Stored as a JSON string. |
 
 # Example Questions
 

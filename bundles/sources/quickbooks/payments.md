@@ -24,8 +24,8 @@ sources:
 | `id` | STRING | ID | PK. QuickBooks entity Id (string). Primary key together with realm_id. |
 | `realm_id` | STRING | Realm ID | PK. Company (realm) id, stamped from the RealmId parameter. FK to [Company info](./company-info.md) |
 | `sync_token` | STRING | Sync Token | Version counter; changes on every edit. |
-| `create_time` | TIMESTAMP | Create Time | When the record was created in QuickBooks (UTC timestamp). |
-| `last_updated_time` | TIMESTAMP | Last Updated Time | When the record was last changed in QuickBooks (MetaData.LastUpdatedTime); the connector reads only records changed after its Load changes since setting. |
+| `create_time` | DATETIME | Create Time | When the record was created in QuickBooks (UTC timestamp). |
+| `last_updated_time` | DATETIME | Last Updated Time | When the record was last changed in QuickBooks (MetaData.LastUpdatedTime); the connector reads only records changed after its Load changes since setting. |
 | `txn_date` | DATE | Transaction Date | Business date of the transaction (not the edit date). |
 | `total_amt` | FLOAT | Total Amount | Total amount of the payment received, in the document currency. |
 | `currency_id` | STRING | Currency ID | Currency code of the document, for example USD; empty when multicurrency is off. |
@@ -41,7 +41,7 @@ sources:
 | `payment_method_name` | STRING | Payment Method Name | Name of the preferred payment method that payment_method_id points to, for example Cash or Check. |
 | `payment_ref_num` | STRING | Payment Ref Num | Check or reference number. |
 | `process_payment` | BOOLEAN | Process Payment | True when the payment is to be processed through QuickBooks Payments. |
-| `line` | JSON | Line | Line[] as JSON; each line has Amount and LinkedTxn[] {TxnId, TxnType} pointing at the Invoice it settles. Stored as a JSON string. |
+| `line` | STRING | Line | Line[] as JSON; each line has Amount and LinkedTxn[] {TxnId, TxnType} pointing at the Invoice it settles. Stored as a JSON string. |
 
 # Example Questions
 

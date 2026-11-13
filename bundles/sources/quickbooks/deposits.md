@@ -24,8 +24,8 @@ sources:
 | `id` | STRING | ID | PK. QuickBooks entity Id (string). Primary key together with realm_id. |
 | `realm_id` | STRING | Realm ID | PK. Company (realm) id, stamped from the RealmId parameter. FK to [Company info](./company-info.md) |
 | `sync_token` | STRING | Sync Token | Version counter; changes on every edit. |
-| `create_time` | TIMESTAMP | Create Time | When the record was created in QuickBooks (UTC timestamp). |
-| `last_updated_time` | TIMESTAMP | Last Updated Time | When the record was last changed in QuickBooks (MetaData.LastUpdatedTime); the connector reads only records changed after its Load changes since setting. |
+| `create_time` | DATETIME | Create Time | When the record was created in QuickBooks (UTC timestamp). |
+| `last_updated_time` | DATETIME | Last Updated Time | When the record was last changed in QuickBooks (MetaData.LastUpdatedTime); the connector reads only records changed after its Load changes since setting. |
 | `doc_number` | STRING | Doc Number | Document number shown on the form (for example the invoice or bill number); can be empty when the company does not use automatic numbering. |
 | `txn_date` | DATE | Transaction Date | Business date of the transaction (not the edit date). |
 | `total_amt` | FLOAT | Total Amount | Total amount of the deposit, in the document currency. |
@@ -33,7 +33,7 @@ sources:
 | `currency_name` | STRING | Currency Name | Currency name that goes with currency_id, for example United States Dollar. |
 | `exchange_rate` | FLOAT | Exchange Rate | Rate that converts the document currency to the company's home currency; 1 or empty when the document is in the home currency. |
 | `private_note` | STRING | Private Note | Internal memo entered on the document; not shown to the customer or vendor. |
-| `line` | JSON | Line | Line[] as JSON; lines either link received Payments (LinkedTxn) or post directly (DepositLineDetail.AccountRef, Entity). Stored as a JSON string. |
+| `line` | STRING | Line | Line[] as JSON; lines either link received Payments (LinkedTxn) or post directly (DepositLineDetail.AccountRef, Entity). Stored as a JSON string. |
 | `deposit_to_account_id` | STRING | Deposit To Account ID | Id of the account the money is deposited to; joins to account.id. FK to [Accounts](./accounts.md) |
 | `deposit_to_account_name` | STRING | Deposit To Account Name | Name of the account that deposit_to_account_id points to. |
 | `cash_back_amount` | FLOAT | Cash Back Amount | Amount of cash taken back from the deposit. |

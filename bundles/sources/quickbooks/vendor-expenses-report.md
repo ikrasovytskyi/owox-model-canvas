@@ -23,16 +23,16 @@ sources:
 |--------|------|-------|-------------|
 | `realm_id` | STRING | Realm ID | PK. Company (realm) id, stamped from the RealmId parameter. FK to [Company info](./company-info.md) |
 | `report_name` | STRING | Report Name | PK. Name of the QuickBooks report, for example ProfitAndLoss. |
-| `report_time` | TIMESTAMP | Report Time | When QuickBooks produced the snapshot. |
+| `report_time` | DATETIME | Report Time | When QuickBooks produced the snapshot. |
 | `report_basis` | STRING | Report Basis | Cash or Accrual (absent on aging reports). |
 | `start_period` | DATE | Start Period | PK. First day of the reporting period. |
 | `end_period` | DATE | End Period | PK. Last day of the reporting period. |
 | `summarize_columns_by` | STRING | Summarize Columns By | How the report columns are split, for example Total, Month or Customers. |
 | `currency` | STRING | Currency | Currency code the report amounts are in. |
-| `header_options` | JSON | Header Options | Name/Value pairs; NoReportData=true means an empty report. Stored as a JSON string. |
+| `header_options` | STRING | Header Options | Name/Value pairs; NoReportData=true means an empty report. Stored as a JSON string. |
 | `accounting_method_param` | STRING | Accounting Method Param | PK. AccountingMethod parameter used for the request (ReportBasis echoes it). |
-| `report_rows` | JSON | Report Rows | Nested Section/Data rows as JSON. Flatten in SQL; ColData.id is the Account/Customer/Vendor Id. Stored as a JSON string. |
-| `report_columns` | JSON | Report Columns | Column metadata (ColTitle, ColType) as JSON; index-aligned with every ColData array. Stored as a JSON string. |
+| `report_rows` | STRING | Report Rows | Nested Section/Data rows as JSON. Flatten in SQL; ColData.id is the Account/Customer/Vendor Id. Stored as a JSON string. |
+| `report_columns` | STRING | Report Columns | Column metadata (ColTitle, ColType) as JSON; index-aligned with every ColData array. Stored as a JSON string. |
 
 # Example Questions
 

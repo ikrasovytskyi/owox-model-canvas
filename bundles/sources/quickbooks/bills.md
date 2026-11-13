@@ -24,8 +24,8 @@ sources:
 | `id` | STRING | ID | PK. QuickBooks entity Id (string). Primary key together with realm_id. |
 | `realm_id` | STRING | Realm ID | PK. Company (realm) id, stamped from the RealmId parameter. FK to [Company info](./company-info.md) |
 | `sync_token` | STRING | Sync Token | Version counter; changes on every edit. |
-| `create_time` | TIMESTAMP | Create Time | When the record was created in QuickBooks (UTC timestamp). |
-| `last_updated_time` | TIMESTAMP | Last Updated Time | When the record was last changed in QuickBooks (MetaData.LastUpdatedTime); the connector reads only records changed after its Load changes since setting. |
+| `create_time` | DATETIME | Create Time | When the record was created in QuickBooks (UTC timestamp). |
+| `last_updated_time` | DATETIME | Last Updated Time | When the record was last changed in QuickBooks (MetaData.LastUpdatedTime); the connector reads only records changed after its Load changes since setting. |
 | `doc_number` | STRING | Doc Number | Document number shown on the form (for example the invoice or bill number); can be empty when the company does not use automatic numbering. |
 | `txn_date` | DATE | Transaction Date | Business date of the transaction (not the edit date). |
 | `total_amt` | FLOAT | Total Amount | Total amount of the document including tax, in the document currency. |
@@ -33,7 +33,7 @@ sources:
 | `currency_name` | STRING | Currency Name | Currency name that goes with currency_id, for example United States Dollar. |
 | `exchange_rate` | FLOAT | Exchange Rate | Rate that converts the document currency to the company's home currency; 1 or empty when the document is in the home currency. |
 | `private_note` | STRING | Private Note | Internal memo entered on the document; not shown to the customer or vendor. |
-| `line` | JSON | Line | Line[] as JSON; DetailType is AccountBasedExpenseLineDetail (AccountRef) or ItemBasedExpenseLineDetail (ItemRef). Stored as a JSON string. |
+| `line` | STRING | Line | Line[] as JSON; DetailType is AccountBasedExpenseLineDetail (AccountRef) or ItemBasedExpenseLineDetail (ItemRef). Stored as a JSON string. |
 | `due_date` | DATE | Due Date | Date the bill is due for payment. |
 | `balance` | FLOAT | Balance | Open amount still to be paid on the bill, in the bill currency. |
 | `vendor_id` | STRING | Vendor ID | Id of the vendor on the document; joins to vendor.id. FK to [Vendors](./vendors.md) |
@@ -44,7 +44,7 @@ sources:
 | `sales_term_name` | STRING | Sales Term Name | Name of the payment terms that sales_term_id points to. |
 | `department_id` | STRING | Department ID | Id of the department (location) the document is tagged with; empty when locations are off. |
 | `department_name` | STRING | Department Name | Name of the department (location) that department_id points to. |
-| `linked_txn` | JSON | Linked Transaction | Transactions linked to this one (for example the payments applied to a bill) as a JSON array of transaction id and type; flatten with UNNEST or JSON functions in SQL. Stored as a JSON string. |
+| `linked_txn` | STRING | Linked Transaction | Transactions linked to this one (for example the payments applied to a bill) as a JSON array of transaction id and type; flatten with UNNEST or JSON functions in SQL. Stored as a JSON string. |
 | `home_balance` | FLOAT | Home Balance | Open balance of the bill converted to the company's home currency. |
 
 # Example Questions

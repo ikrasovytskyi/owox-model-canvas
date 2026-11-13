@@ -24,8 +24,8 @@ sources:
 | `id` | STRING | ID | PK. QuickBooks entity Id (string). Primary key together with realm_id. |
 | `realm_id` | STRING | Realm ID | PK. Company (realm) id, stamped from the RealmId parameter. FK to [Company info](./company-info.md) |
 | `sync_token` | STRING | Sync Token | Version counter; changes on every edit. |
-| `create_time` | TIMESTAMP | Create Time | When the record was created in QuickBooks (UTC timestamp). |
-| `last_updated_time` | TIMESTAMP | Last Updated Time | When the record was last changed in QuickBooks (MetaData.LastUpdatedTime); the connector reads only records changed after its Load changes since setting. |
+| `create_time` | DATETIME | Create Time | When the record was created in QuickBooks (UTC timestamp). |
+| `last_updated_time` | DATETIME | Last Updated Time | When the record was last changed in QuickBooks (MetaData.LastUpdatedTime); the connector reads only records changed after its Load changes since setting. |
 | `doc_number` | STRING | Doc Number | Document number shown on the form (for example the invoice or bill number); can be empty when the company does not use automatic numbering. |
 | `txn_date` | DATE | Transaction Date | Business date of the transaction (not the edit date). |
 | `total_amt` | FLOAT | Total Amount | Total amount paid, the sum of the payment's lines, in the document currency. |
@@ -43,7 +43,7 @@ sources:
 | `check_print_status` | STRING | Check Print Status | Print state of the check: NotSet, NeedToPrint or PrintComplete. |
 | `credit_card_account_id` | STRING | Credit Card Account ID | Id of the credit card account the payment was made with; joins to account.id. FK to [Accounts](./accounts.md) |
 | `credit_card_account_name` | STRING | Credit Card Account Name | Name of the account that credit_card_account_id points to. |
-| `line` | JSON | Line | Line[] as JSON; LinkedTxn[] {TxnId, TxnType=Bill} names the bills settled. Stored as a JSON string. |
+| `line` | STRING | Line | Line[] as JSON; LinkedTxn[] {TxnId, TxnType=Bill} names the bills settled. Stored as a JSON string. |
 
 # Example Questions
 

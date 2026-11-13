@@ -11,6 +11,7 @@
  * schema.md types (the owox.com endpoint files) -> the OKF field types the canvas accepts.
  * Follows what the connector writes to BigQuery (GoogleBigQueryStorage._convertTypeToStorageType):
  * NUMBER -> FLOAT64, ARRAY and OBJECT -> STRING (serialised as JSON text). Taken from OWOX/models (2026-11-13), which had it right.
+ * A custom connector's manifest says more than schema.md does (QuickBooks: datetime, array, object); overrides/<key>.json may carry a `type` per column for that.
  */
 export const TYPE_MAP = {
   STRING: 'STRING',
@@ -142,6 +143,8 @@ export function buildModel({ source, endpoints, authored, overrides = {} }) {
     if (!e) { problems.push(`overrides name endpoint "${name}", which the Data Source does not have`); continue }
     for (const c of Object.keys(o.columns ?? {})) {
       if (!e.rows.some((r) => r.column === c)) problems.push(`overrides: ${name} has no field ${c}`)
+      const t = o.columns[c].type
+      if (t && !Object.values(TYPE_MAP).includes(t)) problems.push(`overrides: ${name}.${c} has type ${t}, which is not an OKF field type`)
     }
   }
 
@@ -246,7 +249,7 @@ export function renderMart(model, doc) {
   for (const r of e.rows) {
     const o = doc.overrides[r.column] ?? {}
     const d = cell(o.description ?? r.description ?? '')
-    out.push(`| \`${r.column}\` | ${TYPE_MAP[r.type]} | ${cell(o.alias ?? aliasOf(r.column))} | ${pk.has(r.column) ? `PK. ${d}`.trim() : d} |`)
+    out.push(`| \`${r.column}\` | ${o.type ?? TYPE_MAP[r.type]} | ${cell(o.alias ?? aliasOf(r.column))} | ${pk.has(r.column) ? `PK. ${d}`.trim() : d} |`)
   }
   out.push('')
   out.push('# Example Questions')
