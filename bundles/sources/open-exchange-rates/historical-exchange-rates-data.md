@@ -24,12 +24,12 @@ sources:
 
 # Schema
 
-| Column | Type | Description |
-|--------|------|-------------|
-| `date` | DATE | PK. Date of exchange rate |
-| `base` | STRING | PK. Base currency |
-| `currency` | STRING | PK. Target currency |
-| `rate` | NUMERIC | Exchange rate |
+| Column | Type | Alias | Description |
+|--------|------|-------|-------------|
+| `date` | DATE | Date | PK. The UTC day the rate is for; a load for today's date holds the latest rate at load time, not the day's closing value. |
+| `base` | STRING | Base | PK. Three-letter code of the currency every rate on the row is relative to; USD unless the connector's base is changed, which needs a Developer, Enterprise or Unlimited plan. |
+| `currency` | STRING | Currency | PK. Three-letter code of the currency the rate is quoted in. |
+| `rate` | FLOAT | Rate | Units of `currency` for one unit of `base`: the last value Open Exchange Rates published for that UTC day. |
 
 # Example Questions
 
