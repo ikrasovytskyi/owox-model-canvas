@@ -29,57 +29,57 @@ sources:
 | `Type` | STRING | Type | Row type: Account, Campaign, Ad Group, Keyword, etc. |
 | `Status` | STRING | Status | Status of the entity (Active, Paused, Deleted, etc.) |
 | `Id` | STRING | ID | PK. Unique ID for the entity (Campaign, Ad Group, etc.) |
-| `ParentId` | STRING | ParentId | Parent entity ID (e.g., Account for Campaign, Campaign for Ad Group) |
-| `CampaignId` | STRING | CampaignId | Campaign unique ID |
+| `ParentId` | STRING | Parent ID | Parent entity ID (e.g., Account for Campaign, Campaign for Ad Group) |
+| `CampaignId` | STRING | Campaign ID | Campaign unique ID |
 | `Campaign` | STRING | Campaign | Campaign name |
-| `CampaignType` | STRING | CampaignType | Type of campaign (Search, Shopping, Audience, etc.) |
-| `CampaignSubType` | STRING | CampaignSubType | Sub-type of the campaign |
-| `StartDate` | STRING | StartDate | Start date for the campaign or ad group (YYYY-MM-DD) |
-| `EndDate` | STRING | EndDate | End date for the campaign or ad group (YYYY-MM-DD) |
-| `Budget` | NUMERIC | Budget | Campaign budget |
-| `BudgetType` | STRING | BudgetType | Type of budget (Daily, Monthly, etc.) |
-| `BidStrategyName` | STRING | BidStrategyName | Name of the bid strategy |
-| `BidStrategyType` | STRING | BidStrategyType | Type of bid strategy (Manual CPC, Target CPA, etc.) |
+| `CampaignType` | STRING | Campaign Type | Type of campaign (Search, Shopping, Audience, etc.) |
+| `CampaignSubType` | STRING | Campaign Sub Type | Sub-type of the campaign |
+| `StartDate` | STRING | Start Date | Start date for the campaign or ad group (YYYY-MM-DD) |
+| `EndDate` | STRING | End Date | End date for the campaign or ad group (YYYY-MM-DD) |
+| `Budget` | FLOAT | Budget | Campaign budget |
+| `BudgetType` | STRING | Budget Type | Type of budget (Daily, Monthly, etc.) |
+| `BidStrategyName` | STRING | Bid Strategy Name | Name of the bid strategy |
+| `BidStrategyType` | STRING | Bid Strategy Type | Type of bid strategy (Manual CPC, Target CPA, etc.) |
 | `Language` | STRING | Language | Language targeting |
-| `AdGroup` | STRING | AdGroup | Ad group name |
-| `AdGroupType` | STRING | AdGroupType | Type of ad group (e.g., Standard, Hotel) |
-| `AssetGroup` | STRING | AssetGroup | Asset group name (if using Asset Groups/PMax) |
-| `AssetGroupId` | STRING | AssetGroupId | Asset group unique ID |
+| `AdGroup` | STRING | Ad Group | Ad group name |
+| `AdGroupType` | STRING | Ad Group Type | Type of ad group (e.g., Standard, Hotel) |
+| `AssetGroup` | STRING | Asset Group | Asset group name (if using Asset Groups/PMax) |
+| `AssetGroupId` | STRING | Asset Group ID | Asset group unique ID |
 | `Keyword` | STRING | Keyword | Keyword text |
-| `MatchType` | STRING | MatchType | Keyword match type (Broad, Phrase, Exact) |
-| `Bid` | NUMERIC | Bid | Bid amount for the keyword/ad group/campaign |
-| `DeviceType` | STRING | DeviceType | Device type (Computer, Mobile, Tablet) |
-| `OSNames` | STRING | OSNames | Device operating systems targeted |
-| `CountryCode` | STRING | CountryCode | Country code (e.g., US, GB) |
-| `StateOrProvinceCode` | STRING | StateOrProvinceCode | State or province code |
-| `City` | STRING | City | City name |
-| `Clicks` | NUMERIC | Clicks | Number of clicks received |
-| `Impressions` | NUMERIC | Impressions | Number of times the ad was shown |
-| `Spend` | NUMERIC | Spend | Total cost or spend |
-| `CurrencyCode` | STRING | CurrencyCode | Currency used for reporting |
-| `AvgCPC` | NUMERIC | AvgCPC | Average cost per click |
-| `AvgCPM` | NUMERIC | AvgCPM | Average cost per thousand impressions |
-| `CTR` | NUMERIC | CTR | Click-through rate |
-| `Avgposition` | NUMERIC | Avgposition | Average ad position |
-| `QualityScore` | NUMERIC | QualityScore | Quality score (if available) |
-| `Conversions` | NUMERIC | Conversions | Number of conversions |
-| `CPA` | NUMERIC | CPA | Cost per acquisition/conversion |
-| `TrackingTemplate` | STRING | TrackingTemplate | URL tracking template for this entity |
-| `FinalUrlSuffix` | STRING | FinalUrlSuffix | Suffix appended to the final URL for tracking |
-| `FinalUrl` | STRING | FinalUrl | The actual landing page URL |
-| `FinalUrlParsed` | STRING | FinalUrlParsed | FinalUrl resolved to its landing page when it is a short link; otherwise the same value. Requires FinalUrl and Process Short Links. |
-| `MobileFinalUrl` | STRING | MobileFinalUrl | Mobile-specific landing page URL |
-| `MobileFinalUrlParsed` | STRING | MobileFinalUrlParsed | MobileFinalUrl resolved to its landing page when it is a short link; otherwise the same value. Requires MobileFinalUrl and Process Short Links. |
-| `DisplayUrl` | STRING | DisplayUrl | Display URL shown in the ad |
+| `MatchType` | STRING | Match Type | Keyword match type (Broad, Phrase, Exact) |
+| `Bid` | FLOAT | Bid | Bid amount for the keyword/ad group/campaign |
+| `DeviceType` | STRING | Device Type | Device type (Computer, Mobile, Tablet) |
+| `OSNames` | STRING | OS Names | Device operating systems targeted |
+| `CountryCode` | STRING | Country Code | Country code (e.g., US, GB) |
+| `StateOrProvinceCode` | STRING | State Or Province Code | Code of the state or province, next to `CountryCode` and `City`. |
+| `City` | STRING | City | Name of the city. |
+| `Clicks` | FLOAT | Clicks | Number of clicks received |
+| `Impressions` | FLOAT | Impressions | Number of times the ad was shown |
+| `Spend` | FLOAT | Spend | Total cost or spend |
+| `CurrencyCode` | STRING | Currency Code | Currency used for reporting |
+| `AvgCPC` | FLOAT | Average CPC | Average cost per click |
+| `AvgCPM` | FLOAT | Average CPM | Average cost per thousand impressions |
+| `CTR` | FLOAT | CTR | Click-through rate |
+| `Avgposition` | FLOAT | Avgposition | Average ad position |
+| `QualityScore` | FLOAT | Quality Score | Quality score (if available) |
+| `Conversions` | FLOAT | Conversions | A Bulk performance-data column that stays empty: the connector downloads entity data only (DataScope EntityData). Conversions are in the two report tables. |
+| `CPA` | FLOAT | CPA | Cost per acquisition/conversion |
+| `TrackingTemplate` | STRING | Tracking Template | URL tracking template for this entity |
+| `FinalUrlSuffix` | STRING | Final URL Suffix | Suffix appended to the final URL for tracking |
+| `FinalUrl` | STRING | Final URL | The actual landing page URL |
+| `FinalUrlParsed` | STRING | Final URL Parsed | FinalUrl resolved to its landing page when it is a short link; otherwise the same value. Requires FinalUrl and Process Short Links. |
+| `MobileFinalUrl` | STRING | Mobile Final URL | Mobile-specific landing page URL |
+| `MobileFinalUrlParsed` | STRING | Mobile Final URL Parsed | MobileFinalUrl resolved to its landing page when it is a short link; otherwise the same value. Requires MobileFinalUrl and Process Short Links. |
+| `DisplayUrl` | STRING | Display URL | Display URL shown in the ad |
 | `Domain` | STRING | Domain | Domain of the landing page |
 | `Promotion` | STRING | Promotion | Promotion details (if any) |
-| `DevicePreference` | STRING | DevicePreference | Device preference setting (All, Mobile only, etc.) |
-| `EditorialStatus` | STRING | EditorialStatus | Editorial status for compliance (e.g., Approved, Disapproved) |
-| `EditorialReasonCode` | STRING | EditorialReasonCode | Code describing editorial review reason |
-| `FeedId` | STRING | FeedId | Feed ID if used with product ads |
-| `SitelinkExtensionLinkText` | STRING | SitelinkExtensionLinkText | Sitelink extension visible text |
-| `BusinessName` | STRING | BusinessName | Name of the business |
-| `PhoneNumber` | STRING | PhoneNumber | Phone number associated with the ad |
+| `DevicePreference` | STRING | Device Preference | Device preference setting (All, Mobile only, etc.) |
+| `EditorialStatus` | STRING | Editorial Status | Editorial status for compliance (e.g., Approved, Disapproved) |
+| `EditorialReasonCode` | STRING | Editorial Reason Code | Code describing editorial review reason |
+| `FeedId` | STRING | Feed ID | Feed ID if used with product ads |
+| `SitelinkExtensionLinkText` | STRING | Sitelink Extension Link Text | Sitelink extension visible text |
+| `BusinessName` | STRING | Business Name | Name of the business |
+| `PhoneNumber` | STRING | Phone Number | Phone number associated with the ad |
 
 # Example Questions
 
