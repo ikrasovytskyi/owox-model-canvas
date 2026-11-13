@@ -3,7 +3,7 @@ title: "Time-Bound Follower Statistics"
 description: |
   Followers gained in each time range: `time_range_start` and `time_range_end`, `organic_follower_gain` and `paid_follower_gain`, one row per page and range. The seven `follower_counts_by_*` columns are JSON columns that LinkedIn leaves empty in time-bound answers, because it does not split time-bound counts by segment.
 
-  Use it for growth over time and for how much of the growth is paid. For who the followers are, use Follower Statistics.
+  Use it for growth over time and for how much of the growth is paid. LinkedIn serves these counts from 12 months before the request date to 2 days before it, so older days cannot be loaded. For who the followers are, use Follower Statistics.
 tags: ["owox", "connector", "linkedin-pages"]
 type: "OWOX Data Mart"
 sources:
@@ -24,20 +24,20 @@ sources:
 
 # Schema
 
-| Column | Type | Description |
-|--------|------|-------------|
-| `organization_urn` | STRING | PK. Organization URN |
-| `time_range_start` | TIMESTAMP | PK. Start timestamp of the time range |
-| `time_range_end` | TIMESTAMP | PK. End timestamp of the time range |
-| `organic_follower_gain` | INTEGER | Number of organic followers gained during the time period |
-| `paid_follower_gain` | INTEGER | Number of paid followers gained during the time period |
-| `follower_counts_by_association_type` | JSON | Followers segmented by association type (empty in time-bound responses) |
-| `follower_counts_by_seniority` | JSON | Followers segmented by seniority (empty in time-bound responses) |
-| `follower_counts_by_industry` | JSON | Followers segmented by industry (empty in time-bound responses) |
-| `follower_counts_by_function` | JSON | Followers segmented by function (empty in time-bound responses) |
-| `follower_counts_by_staff_count_range` | JSON | Followers segmented by staff count range (empty in time-bound responses) |
-| `follower_counts_by_geo_country` | JSON | Followers segmented by country (empty in time-bound responses) |
-| `follower_counts_by_geo` | JSON | Followers segmented by geographic area (empty in time-bound responses) |
+| Column | Type | Alias | Description |
+|--------|------|-------|-------------|
+| `organization_urn` | STRING | Organization URN | PK. The LinkedIn organization page the counts belong to, as a URN of the form `urn:li:organization:{id}`. |
+| `time_range_start` | TIMESTAMP | Time Range Start | PK. Start of the day the gains are counted for, inclusive; the connector asks LinkedIn for one row per day. |
+| `time_range_end` | TIMESTAMP | Time Range End | PK. End of that day, exclusive: the start of the next day. |
+| `organic_follower_gain` | INTEGER | Organic Follower Gain | Number of organic followers gained during the time period |
+| `paid_follower_gain` | INTEGER | Paid Follower Gain | Number of paid followers gained during the time period |
+| `follower_counts_by_association_type` | STRING | Follower Counts By Association Type | Followers segmented by association type (empty in time-bound responses). Stored as a JSON string. |
+| `follower_counts_by_seniority` | STRING | Follower Counts By Seniority | Followers segmented by seniority (empty in time-bound responses). Stored as a JSON string. |
+| `follower_counts_by_industry` | STRING | Follower Counts By Industry | Followers segmented by industry (empty in time-bound responses). Stored as a JSON string. |
+| `follower_counts_by_function` | STRING | Follower Counts By Function | Followers segmented by function (empty in time-bound responses). Stored as a JSON string. |
+| `follower_counts_by_staff_count_range` | STRING | Follower Counts By Staff Count Range | Followers segmented by staff count range (empty in time-bound responses). Stored as a JSON string. |
+| `follower_counts_by_geo_country` | STRING | Follower Counts By Geo Country | Followers segmented by country (empty in time-bound responses). Stored as a JSON string. |
+| `follower_counts_by_geo` | STRING | Follower Counts By Geo | Followers segmented by geographic area (empty in time-bound responses). Stored as a JSON string. |
 
 # Example Questions
 

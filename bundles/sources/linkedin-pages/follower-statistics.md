@@ -1,9 +1,9 @@
 ---
 title: "Follower Statistics"
 description: |
-  The page's lifetime followers, split by one segment at a time. `category_type` names the split (association type, seniority, industry, function, staff count range, geo country, geo), `segment_name` the facet and `segment_value` the segment, usually a LinkedIn URN such as `urn:li:seniority:3` or a value such as `EMPLOYEE`. One row per page, category and segment.
+  The page's lifetime followers, split by one segment at a time. `category_type` names the split (association type, seniority, industry, function, staff count range, geo country, geo), `segment_name` the facet and `segment_value` the segment, either a LinkedIn URN such as `urn:li:seniority:3` or a value such as `EMPLOYEE`. One row per page, category and segment.
 
-  For the demographic splits LinkedIn puts the total of organic and paid followers into `organic_follower_count` and says not to read `paid_follower_count`, so read the audience from `organic_follower_count` and treat the paid column as meaningful only where LinkedIn fills it. It is a snapshot of lifetime counts, not a history.
+  For the demographic splits LinkedIn puts the total of organic and paid followers into `organic_follower_count` and says not to read `paid_follower_count`, so read the audience from `organic_follower_count` and treat the paid column as meaningful only where LinkedIn fills it. It is a snapshot of lifetime counts, not a history. LinkedIn returns at most the top 100 segments of each facet, so a page with followers in more than 100 countries has rows for the top 100 only.
 tags: ["owox", "connector", "linkedin-pages"]
 type: "OWOX Data Mart"
 sources:
@@ -24,14 +24,14 @@ sources:
 
 # Schema
 
-| Column | Type | Description |
-|--------|------|-------------|
-| `organization_urn` | STRING | PK. Organization URN |
-| `category_type` | STRING | PK. Type of follower category (followerCountsByAssociationType, followerCountsBySeniority, etc.) |
-| `segment_name` | STRING | PK. Name of the segment identifier (associationType, seniority, industry, function, staffCountRange, geo) |
-| `segment_value` | STRING | PK. Value of the segment identifier (e.g., urn:li:seniority:3, EMPLOYEE, etc.) |
-| `organic_follower_count` | INTEGER | Count of organic followers in this segment |
-| `paid_follower_count` | INTEGER | Count of paid followers in this segment |
+| Column | Type | Alias | Description |
+|--------|------|-------|-------------|
+| `organization_urn` | STRING | Organization URN | PK. The LinkedIn organization page the counts belong to, as a URN of the form `urn:li:organization:{id}`. |
+| `category_type` | STRING | Category Type | PK. Type of follower category (followerCountsByAssociationType, followerCountsBySeniority, etc.) |
+| `segment_name` | STRING | Segment Name | PK. Name of the segment identifier (associationType, seniority, industry, function, staffCountRange, geo) |
+| `segment_value` | STRING | Segment Value | PK. Value of the segment identifier (e.g., urn:li:seniority:3, EMPLOYEE, etc.) |
+| `organic_follower_count` | INTEGER | Followers (Organic and Paid) | Followers in this segment; for these demographic facets LinkedIn rolls organic and paid followers into this one count. |
+| `paid_follower_count` | INTEGER | Paid Follower Count | Paid followers in this segment; LinkedIn says not to read it for the demographic facets, whose totals are in `organic_follower_count`. |
 
 # Example Questions
 
