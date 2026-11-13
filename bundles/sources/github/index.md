@@ -24,7 +24,7 @@ sources:
 
 - How have stars and contributors grown, day by day?
 - Who contributes most to the repository, and are they people or bots?
-- Which license, language and default branch does the repository have, and how active is it (open issues, last push)?
+- Which language and default branch does the repository have, and how active is it (open issues, last push)?
 
 # Explore this model
 

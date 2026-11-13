@@ -24,11 +24,11 @@ sources:
 
 # Schema
 
-| Column | Type | Description |
-|--------|------|-------------|
-| `date` | DATE | PK. Date of the data snapshot |
-| `stars` | INTEGER | Number of stars for the repository |
-| `contributors` | INTEGER | Number of contributors to the repository |
+| Column | Type | Alias | Description |
+|--------|------|-------|-------------|
+| `date` | DATE | Date | PK. The day the connector ran and read the counts; a day it did not run has no row. |
+| `stars` | INTEGER | Stars | Stars the repository had on the run day, GitHub's `stargazers_count`. |
+| `contributors` | INTEGER | Contributors | Contributors on the first page GitHub returned on the run day, so never more than 100. |
 
 # Example Questions
 

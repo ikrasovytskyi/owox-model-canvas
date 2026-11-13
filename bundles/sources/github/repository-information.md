@@ -1,9 +1,9 @@
 ---
 title: "Repository Information"
 description: |
-  One row for the repository: its `id`, name, full name, owner, URLs, description, language, license, visibility, default branch, feature switches (issues, wiki, pages, discussions, projects), flags (private, fork, archived, disabled, template) and counters: stars, watchers, forks, open issues, network count, subscribers and size.
+  One row for the repository: its `id`, name, full name (`owner/repo`), URLs, description, language, visibility, default branch, feature switches (issues, wiki, pages, discussions, projects), flags (private, fork, archived, disabled, template) and counters: stars, watchers, forks, open issues, network count, subscribers and size.
 
-  The counters are as of the run, not a history; the daily history of stars and contributors is in Repository Statistics. `forks`, `open_issues` and `watchers` repeat `forks_count`, `open_issues_count` and `watchers_count`, as GitHub returns them.
+  The counters are as of the run, not a history; the daily history of stars and contributors is in Repository Statistics. `forks`, `open_issues` and `watchers` repeat `forks_count`, `open_issues_count` and `watchers_count`, as GitHub returns them. Two traps: GitHub's `watchers` and `watchers_count` count stars, and the people watching the repository are `subscribers_count`; open issues include open pull requests. The owner and license columns stay empty, because GitHub nests them in objects the connector does not unpack.
 tags: ["owox", "connector", "github"]
 type: "OWOX Data Mart"
 sources:
@@ -24,53 +24,53 @@ sources:
 
 # Schema
 
-| Column | Type | Description |
-|--------|------|-------------|
-| `id` | STRING | PK. Repository ID |
-| `node_id` | STRING | Repository node ID |
-| `name` | STRING | Repository name |
-| `full_name` | STRING | Full repository name (owner/repo) |
-| `private` | BOOLEAN | Whether the repository is private |
-| `owner_login` | STRING | Repository owner login |
-| `owner_id` | STRING | Repository owner ID |
-| `owner_type` | STRING | Repository owner type (User/Organization) |
-| `html_url` | STRING | Repository HTML URL |
-| `description` | STRING | Repository description |
-| `fork` | BOOLEAN | Whether the repository is a fork |
-| `created_at` | DATE | Repository creation date |
-| `updated_at` | DATE | Repository last update date |
-| `pushed_at` | DATE | Repository last push date |
-| `homepage` | STRING | Repository homepage URL |
-| `size` | INTEGER | Repository size in KB |
-| `stargazers_count` | INTEGER | Number of stars |
-| `watchers_count` | INTEGER | Number of watchers |
-| `language` | STRING | Primary programming language |
-| `has_issues` | BOOLEAN | Whether the repository has issues enabled |
-| `has_projects` | BOOLEAN | Whether the repository has projects enabled |
-| `has_downloads` | BOOLEAN | Whether the repository has downloads enabled |
-| `has_wiki` | BOOLEAN | Whether the repository has wiki enabled |
-| `has_pages` | BOOLEAN | Whether the repository has pages enabled |
-| `has_discussions` | BOOLEAN | Whether the repository has discussions enabled |
-| `forks_count` | INTEGER | Number of forks |
-| `archived` | BOOLEAN | Whether the repository is archived |
-| `disabled` | BOOLEAN | Whether the repository is disabled |
-| `open_issues_count` | INTEGER | Number of open issues |
-| `license_key` | STRING | Repository license key |
-| `license_name` | STRING | Repository license name |
-| `allow_forking` | BOOLEAN | Whether forking is allowed |
-| `is_template` | BOOLEAN | Whether the repository is a template |
-| `web_commit_signoff_required` | BOOLEAN | Whether web commit signoff is required |
-| `topics` | STRING | Repository topics (comma-separated) |
-| `visibility` | STRING | Repository visibility (public/private) |
-| `forks` | INTEGER | Number of forks |
-| `open_issues` | INTEGER | Number of open issues |
-| `watchers` | INTEGER | Number of watchers |
-| `default_branch` | STRING | Default branch name |
-| `network_count` | INTEGER | Network count |
-| `subscribers_count` | INTEGER | Number of subscribers |
+| Column | Type | Alias | Description |
+|--------|------|-------|-------------|
+| `id` | STRING | ID | PK. Repository ID |
+| `node_id` | STRING | Node ID | Repository node ID |
+| `name` | STRING | Name | Repository name |
+| `full_name` | STRING | Full Name | Full repository name (owner/repo) |
+| `private` | BOOLEAN | Private | Whether the repository is private |
+| `owner_login` | STRING | Owner Login | Meant for the owner's login, but GitHub returns the owner as an object the connector does not unpack, so the column stays empty; `full_name` starts with the owner's login. |
+| `owner_id` | STRING | Owner ID | Meant for the owner's ID, but GitHub returns the owner as an object the connector does not unpack, so the column stays empty. |
+| `owner_type` | STRING | Owner Type | Meant for the owner's type (User or Organization), but GitHub returns the owner as an object the connector does not unpack, so the column stays empty. |
+| `html_url` | STRING | HTML URL | Repository HTML URL |
+| `description` | STRING | Description | Repository description |
+| `fork` | BOOLEAN | Fork | Whether the repository is a fork |
+| `created_at` | DATE | Created At | Repository creation date |
+| `updated_at` | DATE | Updated At | Repository last update date |
+| `pushed_at` | DATE | Pushed At | Repository last push date |
+| `homepage` | STRING | Homepage | Repository homepage URL |
+| `size` | INTEGER | Size | Repository size in KB |
+| `stargazers_count` | INTEGER | Stargazers Count | Number of users who starred the repository. |
+| `watchers_count` | INTEGER | Watchers Count (Stars) | Number of users who starred the repository, the same as `stargazers_count`: GitHub kept the old name; people watching the repository are in `subscribers_count`. |
+| `language` | STRING | Language | Primary programming language |
+| `has_issues` | BOOLEAN | Has Issues | Whether the repository has issues enabled |
+| `has_projects` | BOOLEAN | Has Projects | Whether the repository has projects enabled |
+| `has_downloads` | BOOLEAN | Has Downloads | Whether the repository has downloads enabled |
+| `has_wiki` | BOOLEAN | Has Wiki | Whether the repository has wiki enabled |
+| `has_pages` | BOOLEAN | Has Pages | Whether the repository has pages enabled |
+| `has_discussions` | BOOLEAN | Has Discussions | Whether the repository has discussions enabled |
+| `forks_count` | INTEGER | Forks Count | Number of forks of the repository. |
+| `archived` | BOOLEAN | Archived | Whether the repository is archived |
+| `disabled` | BOOLEAN | Disabled | Whether the repository is disabled |
+| `open_issues_count` | INTEGER | Open Issues Count | Open issues of the repository, open pull requests included: GitHub's REST API counts every pull request as an issue. |
+| `license_key` | STRING | License Key | Meant for the license key, but GitHub returns the license as an object the connector does not unpack, so the column stays empty. |
+| `license_name` | STRING | License Name | Meant for the license name, but GitHub returns the license as an object the connector does not unpack, so the column stays empty. |
+| `allow_forking` | BOOLEAN | Allow Forking | Whether forking is allowed |
+| `is_template` | BOOLEAN | Is Template | Whether the repository is a template |
+| `web_commit_signoff_required` | BOOLEAN | Web Commit Signoff Required | Whether web commit signoff is required |
+| `topics` | STRING | Topics | Meant as comma-separated topics, but GitHub returns an array the connector passes through unchanged, so the column holds JSON array text such as `["a","b"]`. |
+| `visibility` | STRING | Visibility | Repository visibility (public/private) |
+| `forks` | INTEGER | Forks | Same value as `forks_count`; GitHub returns both. |
+| `open_issues` | INTEGER | Open Issues | Same value as `open_issues_count`, so it includes open pull requests. |
+| `watchers` | INTEGER | Watchers (Stars) | Same value as `watchers_count`: the number of stars, not of watchers. |
+| `default_branch` | STRING | Default Branch | Default branch name |
+| `network_count` | INTEGER | Network Count | A count GitHub returns next to `forks_count` without defining it in its REST reference; for the number of forks use `forks_count`. |
+| `subscribers_count` | INTEGER | Watchers (Subscribers) | Number of users watching the repository, that is, getting its notifications; GitHub's `watchers` fields count stars instead. |
 
 # Example Questions
 
-- What are the repository's language, license, visibility and default branch?
+- What are the repository's language, visibility and default branch?
 - How many stars, forks, watchers and open issues does it have now?
 - When was it created, last updated and last pushed to, and is it archived?
