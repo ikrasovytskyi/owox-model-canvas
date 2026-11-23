@@ -7,7 +7,7 @@ description: |
   
   Two kinds of table. The catalogue from the Data API, snapshots rewritten on every run: [Channel](./channel.md) with its lifetime
   counters, [Videos](./videos.md) with titles, tags, durations and lifetime views, [Playlists](./playlists.md) and
-  [Playlist items](./playlist-items.md) as the topic dimension, and [Comment threads](./comment-threads.md) for what viewers ask.
+  [Playlist items](./playlist-items.md) as the topic dimension.
   The series from the Analytics API, one row per day, loaded by date window with a 3-day lag: [Channel daily](./channel-daily.md)
   is the reference every breakdown is checked against; [Video daily](./video-daily.md), [Traffic sources daily](./traffic-sources-daily.md),
   [Geography daily](./geography-daily.md), [Devices daily](./devices-daily.md) and [Demographics daily](./demographics-daily.md) cut the
@@ -40,7 +40,6 @@ sources:
 | [Videos](./videos.md) | 25 | Every public upload with its metadata and lifetime counters as of the run: title, description, tags, category, duration, publish time, privacy, views, likes and comments. |
 | [Playlists](./playlists.md) | 8 | The channel's playlists (series, courses, product lines) with item counts and privacy. |
 | [Playlist items](./playlist-items.md) | 9 | Which video sits in which playlist at which position: the bridge between playlists and videos. |
-| [Comment threads](./comment-threads.md) | 12 | Every top-level comment on the channel's videos with author, text, likes and reply count. |
 | [Channel daily](./channel-daily.md) | 14 | One row per day for the whole channel: views, watch time, average view duration and percentage, likes, dislikes, comments, shares, subscribers gained and lost, playlist adds. |
 | [Video daily](./video-daily.md) | 13 | Per video and day: views, watch time, average view duration and percentage, likes, dislikes, comments, shares, subscribers gained and lost. |
 | [Traffic sources daily](./traffic-sources-daily.md) | 5 | Views and watch time per day and traffic source type: YouTube search, suggested videos, browse (home and subscriptions), external links, playlists, channel pages, notifications, Shorts feed, advertising. |
@@ -53,7 +52,7 @@ sources:
 
 - Are views, watch time and subscribers up this month against last in `channel_daily`, and is the growth from new videos or the back catalogue (`video_daily` × `videos.published_at`)?
 - Do people find the channel through YouTube search and suggestions or through our own links (`traffic_sources_daily`), and did the video we published turn into `Sessions` and leads on the site?
-- Which videos hold attention (`video_daily.average_view_percentage`) rather than just getting clicks, and what do viewers ask under them in `comment_threads`?
+- Which videos hold attention (`video_daily.average_view_percentage`) rather than just getting clicks?
 
 # Explore this model
 
