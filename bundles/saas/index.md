@@ -13,10 +13,12 @@ description: |
   - **Growth** — brings in new accounts at an acquisition cost the business can sustain.
   - **Revenue** — grows recurring revenue faster than churn and downgrades take it back, and collects what it bills.
   - **Customer Success** — keeps customers satisfied and engaged, so they renew and grow.
+  - **Product** — turns trials into paying accounts and keeps the people on each account using the product.
 
   **Key metrics**
   - Recurring revenue growth — [Subscription Events · Net New MRR](./subscription-events.md?field=net_new_mrr).
   - Acquisition cost — [Marketing Spend · CAC (per signup)](./marketing-spend.md?field=cac).
+  - Trial conversion — [Trials · Is Converted](./trials.md?field=is_converted) by [Trials · Trial Source](./trials.md?field=trial_source).
   - Customer satisfaction — [Support Tickets · CSAT Score](./support-tickets.md?field=csat_score).
   - First response — [Support Tickets · First Response (minutes)](./support-tickets.md?field=first_response_mins).
 
@@ -60,6 +62,16 @@ timestamp: 2026-10-20T20:05:36Z
 One click opens this model in a free OWOX canvas you can poke around in — no account needed.
 
 <!-- OWOX:GENERATED:END -->
+
+## Contexts
+
+The solution pages read three contexts that share one model: a Data Mart listed under more than one context is shared, so Growth's accounts, Revenue's subscriptions and Product's trials are the same rows.
+
+| Context | What it answers | Data Marts |
+|---------|-----------------|------------|
+| Growth | Which channels bring in accounts at a cost per signup the business can sustain, and on which plans? | [Marketing Spend](./marketing-spend.md), [Account](./account.md) |
+| Revenue | Is recurring revenue growing faster than churn and downgrades take it back, and is the billed revenue collected? | [Subscription Events](./subscription-events.md), [Subscription](./subscription.md), [Invoices](./invoices.md), [Plan](./plan.md), [Account](./account.md) |
+| Product | Do trials turn into paying accounts, and are the people on those accounts using the product? | [Usage (daily)](./usage-daily.md), [Trials](./trials.md), [User](./user.md), [Plan](./plan.md), [Account](./account.md) |
 
 ## Model preview
 
