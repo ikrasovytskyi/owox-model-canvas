@@ -41,7 +41,7 @@ sources:
 # Example Questions
 
 - What is MRR today, by `product` and by billing interval?
-- How did MRR move this month: new, expansion, contraction, churn?
+- How did invoiced subscription revenue on `invoice line items` change from last month to this month, by subscription?
 
 ## Joins
 

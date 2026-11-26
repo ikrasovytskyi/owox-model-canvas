@@ -44,7 +44,7 @@ sources:
 # Example Questions
 
 - How much did we net after Stripe fees last month, and how much was fees?
-- Which balance transactions made up payout po_… and do they sum to its amount?
+- Which fees, refunds and disputes became available between two dates, and how much did they take off the net?
 - How much revenue became available for payout each week versus how much was charged?
 
 ## Joins

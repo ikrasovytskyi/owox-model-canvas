@@ -6,8 +6,8 @@ description: |
   
   [Balance transactions](./balance-transactions.md) is the spine: every movement of money, with gross `amount`, Stripe's `fee`
   and the `net` that reaches the balance, dated by `created` and by `available_on`. [Charges](./charges.md), [Refunds](./refunds.md),
-  [Disputes](./disputes.md) and [Payouts](./payouts.md) are the money side and each points at its balance transaction; a payout's
-  transactions sum to its amount, which is how Stripe reconciles to the bank statement. [Customers](./customers.md),
+  [Disputes](./disputes.md) and [Payouts](./payouts.md) are the money side: charges, refunds and payouts each hold the id of their own
+  balance transaction, and disputes hold a list of theirs. No column says which payout took a balance transaction. [Customers](./customers.md),
   [Invoices](./invoices.md) with [Invoice line items](./invoice-line-items.md), [Subscriptions](./subscriptions.md) with
   [Subscription items](./subscription-items.md), [Products](./products.md) and [Prices](./prices.md) are the billing side: MRR is
   subscription items × prices, invoiced revenue is line items × prices. [Payment intents](./payment-intents.md) hold the checkouts
@@ -50,8 +50,8 @@ sources:
 
 # Example Questions
 
-- How much did we net after fees, refunds and disputes last month, and did every `payout` reach the bank for the amount its `balance transactions` add up to?
-- What is MRR today from `subscription items` × `prices`, and how did it move: new, expansion, contraction, churn?
+- How much did we net after fees, refunds and disputes last month, and how does that compare with the paid `payouts` that arrived in the same month?
+- What is MRR today from `subscription items` × `prices`, and which `products` carry it?
 - Which `customers` and `invoices` are past due or failing payment, and how much revenue is at risk?
 
 # Explore this model

@@ -46,8 +46,8 @@ sources:
 # Example Questions
 
 - When did each payout arrive at the bank, and which ones failed?
-- How many days pass between a charge's created date and its payout's arrival date?
+- How many days pass between a charge's created date and the day its funds become available, from `balance transactions`?
 
 ## Joins
 
-- [Balance transactions](./balance-transactions.md) — `balance_transaction = id` [1:1] — The payout's own balance transaction (type payout); the transactions it contains are found with the payout filter on the API or by available_on.
+- [Balance transactions](./balance-transactions.md) — `balance_transaction = id` [1:1] — The payout's own balance transaction (type payout); no column lists the transactions it contains, so compare them by period using available_on.

@@ -38,5 +38,5 @@ sources:
 
 # Example Questions
 
-- What changed on subscription sub_… and when?
+- Which events did Stripe record for subscription sub_…, and when?
 - How many invoice.payment_failed events fired this week?
