@@ -13,7 +13,7 @@ description: |
   subscription items × prices, invoiced revenue is line items × prices. [Payment intents](./payment-intents.md) hold the checkouts
   that never became charges, and [Events](./events.md) is the audit trail.
   
-  Three amounts, three dates: `charges.amount` with `created` for what was sold, `balance_transactions.net` with `available_on` for what
+  Three amounts, three dates: `charges.amount_captured` on succeeded charges, with `created`, for what was sold, `balance_transactions.net` with `available_on` for what
   reached the balance, `payouts.amount` with `arrival_date` for what reached the bank. Money fields are integers in the smallest currency unit.
   
   In the business model Customers join [Customers](../e-commerce/customers.md) and [Account](../saas/account.md) on the ids and emails you store;
